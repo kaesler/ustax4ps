@@ -1,0 +1,6 @@
+{
+  "name": "RetirementModelPureScript",
+  "dependencies": {
+    "purty": "^6.3.0"
+  }
+}
