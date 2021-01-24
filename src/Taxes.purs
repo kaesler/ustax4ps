@@ -100,6 +100,12 @@ type QualifiedInvestmentIncome
 type DistributionPeriod
   = Number
 
+data Triple a
+  = Triple a a a
+
+third :: forall a. Triple a -> a
+third (Triple _ _ a) = a
+
 nonNeg :: Number -> Number
 nonNeg x
   | x < 0.0 = 0.0
@@ -224,8 +230,11 @@ bracketWidth fs rate =
         ( do
             let
               brackets = (ordinaryBracketStarts fs)
+
               rates = Set.toUnfoldable (Map.keys brackets) :: List OrdinaryRate
+
               ratesTail = unsafePartial (fromJust (tail rates))
+
               pairs = zip rates ratesTail
             pair <- find (\p -> fst p == rate) pairs
             let
@@ -306,4 +315,36 @@ applyOrdinaryIncomeBrackets fs taxableOrdinaryincome =
     in
       ( Tuple (nonNeg (incomeYetToBeTaxed - incomeInThisBracket))
           (taxSoFar + taxInThisBracket)
+      )
+
+applyQualifiedBrackets :: FilingStatus -> TaxableOrdinaryIncome -> QualifiedInvestmentIncome -> Number
+applyQualifiedBrackets fs taxableOrdinaryIncome qualifiedInvestmentIncome =
+  let
+    brackets = Map.toUnfoldable (qualifiedBracketStarts fs) :: List (Tuple QualifiedRate BracketStart)
+
+    bracketsDescending = reverse brackets
+  in
+    third (foldr func (Triple taxableOrdinaryIncome qualifiedInvestmentIncome 0.0) bracketsDescending)
+  where
+  totalIncome = taxableOrdinaryIncome + qualifiedInvestmentIncome
+
+  func :: (Tuple QualifiedRate BracketStart) -> (Triple Number) -> (Triple Number)
+  func (Tuple rate (BracketStart start)) (Triple totalIncomeInHigherBrackets gainsYetToBeTaxed gainsTaxSoFar) =
+    let
+      totalIncomeYetToBeTaxed = nonNeg (totalIncome - totalIncomeInHigherBrackets)
+
+      ordinaryIncomeYetToBeTaxed = nonNeg (totalIncomeYetToBeTaxed - gainsYetToBeTaxed)
+
+      totalIncomeInThisBracket = nonNeg (totalIncomeYetToBeTaxed - toNumber start)
+
+      ordinaryIncomeInThisBracket = nonNeg (ordinaryIncomeYetToBeTaxed - toNumber start)
+
+      gainsInThisBracket = nonNeg (totalIncomeInThisBracket - ordinaryIncomeInThisBracket)
+
+      taxInThisBracket = gainsInThisBracket * qualifiedRateAsFraction rate
+    in
+      ( Triple
+          (totalIncomeInHigherBrackets + totalIncomeInThisBracket)
+          (nonNeg (gainsYetToBeTaxed - gainsInThisBracket))
+          (gainsTaxSoFar + taxInThisBracket)
       )
