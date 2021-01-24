@@ -6,18 +6,17 @@ module Taxes
   ) where
 
 -- TODO: push the partials out of here
-import Data.Maybe (Maybe(..), fromJust)
-import Data.Tuple (Tuple(..), fst, snd)
-import Data.Array (fromFoldable, zip, find, tail)
 import Data.Int (toNumber)
+import Data.List (List, (!!), find, foldr, reverse, tail, zip)
 import Data.Map (Map)
 import Data.Map as Map
-import Data.Ord ((<))
-import Data.List ((!!))
+import Data.Maybe (Maybe(..), fromJust)
+import Data.Ord ((<), min)
 import Data.Set as Set
 import Data.Show (class Show, show)
+import Data.Tuple (Tuple(..), fst, snd)
 import Partial.Unsafe (unsafePartial)
-import Prelude (class Eq, class Ord, (/), (+), (-), bind, (==))
+import Prelude (class Eq, class Ord, bind, (*), (+), (-), (/), (==))
 
 type Year
   = Int
@@ -218,27 +217,24 @@ standardDeduction HeadOfHousehold = StandardDeduction (18800 + over65Increment)
 
 standardDeduction Single = StandardDeduction (12550 + over65Increment)
 
-bracketWidth :: (Partial) => FilingStatus -> OrdinaryRate -> Int
+bracketWidth :: FilingStatus -> OrdinaryRate -> Int
 bracketWidth fs rate =
-  --unsafePartial
-  ( fromJust
-      ( do
-          let
-            brackets = (ordinaryBracketStarts fs)
-
-            rates = fromFoldable (Map.keys brackets)
-
-            ratesTail = unsafePartial (fromJust (tail rates))
-
-            pairs = zip rates ratesTail
-          pair <- find (\p -> fst p == rate) pairs
-          let
-            successor = snd pair
-          BracketStart rateStart <- Map.lookup rate brackets
-          BracketStart successorStart <- Map.lookup successor brackets
-          Just (successorStart - rateStart)
-      )
-  )
+  unsafePartial
+    ( fromJust
+        ( do
+            let
+              brackets = (ordinaryBracketStarts fs)
+              rates = Set.toUnfoldable (Map.keys brackets) :: List OrdinaryRate
+              ratesTail = unsafePartial (fromJust (tail rates))
+              pairs = zip rates ratesTail
+            pair <- find (\p -> fst p == rate) pairs
+            let
+              successor = snd pair
+            BracketStart rateStart <- Map.lookup rate brackets
+            BracketStart successorStart <- Map.lookup successor brackets
+            Just (successorStart - rateStart)
+        )
+    )
 
 ltcgTaxStart :: FilingStatus -> Int
 ltcgTaxStart fs =
@@ -246,3 +242,68 @@ ltcgTaxStart fs =
     BracketStart n = unsafePartial (fromJust (Map.values (qualifiedBracketStarts fs) !! 1))
   in
     n
+
+taxableSocialSecurityAdjusted :: Year -> FilingStatus -> SocialSecurityBenefits -> SSRelevantIncome -> Number
+taxableSocialSecurityAdjusted year filingStatus ssBenefits relevantIncome =
+  let
+    unadjusted = taxableSocialSecurity filingStatus ssBenefits relevantIncome
+
+    adjustmentFactor = 1.0 + (0.03 * toNumber (year - 2021))
+
+    adjusted = unadjusted * adjustmentFactor
+  in
+    min adjusted ssBenefits * 0.85
+
+taxableSocialSecurity :: FilingStatus -> SocialSecurityBenefits -> SSRelevantIncome -> Number
+taxableSocialSecurity filingStatus ssBenefits relevantIncome =
+  let
+    lowBase = case filingStatus of
+      Single -> 25000.0
+      HeadOfHousehold -> 25000.0
+
+    highBase = case filingStatus of
+      Single -> 34000.0
+      HeadOfHousehold -> 34000.0
+
+    combinedIncome = relevantIncome + (ssBenefits / 2.0)
+  in
+    f combinedIncome (Tuple lowBase highBase)
+  where
+  f :: CombinedIncome -> Tuple CombinedIncome CombinedIncome -> Number
+  f combinedIncome (Tuple lowBase highBase)
+    | combinedIncome < lowBase = 0.0
+    | combinedIncome < highBase =
+      let
+        fractionTaxable = 0.5
+
+        maxSocSecTaxable = ssBenefits * fractionTaxable
+      in
+        min ((combinedIncome - lowBase) * fractionTaxable) maxSocSecTaxable
+    | true =
+      let
+        fractionTaxable = 0.85
+
+        maxSocSecTaxable = ssBenefits * fractionTaxable
+      in
+        min (4500.0 + ((combinedIncome - highBase) * fractionTaxable)) maxSocSecTaxable
+
+applyOrdinaryIncomeBrackets :: FilingStatus -> TaxableOrdinaryIncome -> Number
+applyOrdinaryIncomeBrackets fs taxableOrdinaryincome =
+  let
+    -- Note: is this how one uses toUnfoldable?
+    brackets = Map.toUnfoldable (ordinaryBracketStarts fs) :: List (Tuple OrdinaryRate BracketStart)
+
+    bracketsDescending = reverse brackets
+  in
+    snd (foldr func (Tuple taxableOrdinaryincome 0.0) bracketsDescending)
+  where
+  func :: (Tuple OrdinaryRate BracketStart) -> Tuple Number Number -> Tuple Number Number
+  func (Tuple rate (BracketStart start)) (Tuple incomeYetToBeTaxed taxSoFar) =
+    let
+      incomeInThisBracket = nonNeg (incomeYetToBeTaxed - toNumber start)
+
+      taxInThisBracket = incomeInThisBracket * ordinaryRateAsFraction rate
+    in
+      ( Tuple (nonNeg (incomeYetToBeTaxed - incomeInThisBracket))
+          (taxSoFar + taxInThisBracket)
+      )
