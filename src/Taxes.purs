@@ -5,7 +5,9 @@ module Taxes
   , ordinaryBracketStarts
   ) where
 
--- TODO: push the partials out of here
+-- TODO: unit tests
+-- TODO: verifagainst Typescript impl
+-- TODO: Try Emacs for PS
 import Data.Int (toNumber)
 import Data.List (List, (!!), find, foldr, reverse, tail, zip)
 import Data.Map (Map)
@@ -212,8 +214,10 @@ distributionPeriods =
     , Tuple (Age 114) 2.1
     ]
 
-rmdFractionForAge :: Age -> Number
-rmdFractionForAge age = 1.0 / unsafePartial (fromJust (Map.lookup age distributionPeriods))
+rmdFractionForAge :: Age -> Maybe Number
+rmdFractionForAge age = do
+  distributionPeriod <- Map.lookup age distributionPeriods
+  Just (1.0 / distributionPeriod)
 
 over65Increment :: Int
 over65Increment = 1350
@@ -223,31 +227,26 @@ standardDeduction HeadOfHousehold = StandardDeduction (18800 + over65Increment)
 
 standardDeduction Single = StandardDeduction (12550 + over65Increment)
 
-bracketWidth :: FilingStatus -> OrdinaryRate -> Int
-bracketWidth fs rate =
-  unsafePartial
-    ( fromJust
-        ( do
-            let
-              brackets = (ordinaryBracketStarts fs)
+bracketWidth :: FilingStatus -> OrdinaryRate -> Maybe Int
+bracketWidth fs rate = do
+  let
+    brackets = (ordinaryBracketStarts fs)
 
-              rates = Set.toUnfoldable (Map.keys brackets) :: List OrdinaryRate
-
-              ratesTail = unsafePartial (fromJust (tail rates))
-
-              pairs = zip rates ratesTail
-            pair <- find (\p -> fst p == rate) pairs
-            let
-              successor = snd pair
-            BracketStart rateStart <- Map.lookup rate brackets
-            BracketStart successorStart <- Map.lookup successor brackets
-            Just (successorStart - rateStart)
-        )
-    )
+    rates = Set.toUnfoldable (Map.keys brackets) :: List OrdinaryRate
+  ratesTail <- (tail rates)
+  let
+    pairs = zip rates ratesTail
+  pair <- find (\p -> fst p == rate) pairs
+  let
+    successor = snd pair
+  BracketStart rateStart <- Map.lookup rate brackets
+  BracketStart successorStart <- Map.lookup successor brackets
+  Just (successorStart - rateStart)
 
 ltcgTaxStart :: FilingStatus -> Int
 ltcgTaxStart fs =
   let
+    -- Note: Safe by inspection of the data.
     BracketStart n = unsafePartial (fromJust (Map.values (qualifiedBracketStarts fs) !! 1))
   in
     n
