@@ -1,12 +1,24 @@
 module Taxes
-  ( FilingStatus(..)
-  , OrdinaryRate
+  ( Age
+  , FilingStatus(..)
+  , Year
   , BracketStart
+  , OrdinaryRate
+  , QualifiedRate
+  , StandardDeduction
   , ordinaryBracketStarts
+  , rmdFractionForAge
+  , standardDeduction
+  , bracketWidth
+  , ltcgTaxStart
+  , taxableSocialSecurityAdjusted
+  , applyOrdinaryIncomeBrackets
+  , applyQualifiedBrackets
   ) where
 
 -- TODO: unit tests
 -- TODO: verifagainst Typescript impl
+-- TODO: bundle for use in Google sheets
 -- TODO: Try Emacs for PS
 import Data.Int (toNumber)
 import Data.List (List, (!!), find, foldr, reverse, tail, zip)
@@ -38,6 +50,10 @@ derive instance eqFilingStatus :: Eq FilingStatus
 
 derive instance ordFilingStatus :: Ord FilingStatus
 
+instance showFilingStatus :: Show FilingStatus where
+    show HeadOfHousehold = "HeadOfHousehold"
+    show Single = "Single"
+  
 newtype OrdinaryRate
   = OrdinaryRate Int
 
