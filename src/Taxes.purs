@@ -10,7 +10,7 @@ module Taxes
   , rmdFractionForAge
   , standardDeduction
   , bracketWidth
-  , ltcgTaxStart
+  , startOfNonZeroQualifiedRateBracket
   , taxableSocialSecurityAdjusted
   , applyOrdinaryIncomeBrackets
   , applyQualifiedBrackets
@@ -259,8 +259,8 @@ bracketWidth fs rate = do
   BracketStart successorStart <- Map.lookup successor brackets
   Just (successorStart - rateStart)
 
-ltcgTaxStart :: FilingStatus -> Int
-ltcgTaxStart fs =
+startOfNonZeroQualifiedRateBracket :: FilingStatus -> Int
+startOfNonZeroQualifiedRateBracket fs =
   let
     -- Note: Safe by inspection of the data.
     BracketStart n = unsafePartial (fromJust (Map.values (qualifiedBracketStarts fs) !! 1))

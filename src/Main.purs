@@ -1,11 +1,15 @@
 module Main where
 
 import Prelude
+
 import Effect (Effect)
 import Effect.Console (log)
-import Taxes (FilingStatus(..))
+import Taxes (FilingStatus(..), applyOrdinaryIncomeBrackets)
 
 main :: Effect Unit
-main = do
-  log $ show Single
-  log "Hello sailor!"
+main = 
+  let answer = applyOrdinaryIncomeBrackets HeadOfHousehold 5000000.0
+  in
+    do
+      log $ show answer
+      log "Hello sailor!"
