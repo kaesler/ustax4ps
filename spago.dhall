@@ -2,9 +2,9 @@
 Welcome to a Spago project!
 You can edit this file as you like.
 -}
-{ name = "my-project"
+{ name = "retirement-model-purescript"
 , dependencies =
-  [ "assert"
+  [ "aff"
   , "console"
   , "effect"
   , "integers"
@@ -14,6 +14,7 @@ You can edit this file as you like.
   , "partial"
   , "prelude"
   , "psci-support"
+  , "spec"
   , "tuples"
   ]
 , packages = ./packages.dhall
