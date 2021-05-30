@@ -20,8 +20,9 @@ module Taxes
 -- TODO: verifagainst Typescript impl
 -- TODO: bundle for use in Google sheets
 -- TODO: Try Emacs for PS
-import Data.Int (toNumber)
-import Data.List (List, (!!), find, foldr, reverse, tail, zip)
+import Data.Function ((<<<))
+import Data.Int (round, toNumber)
+import Data.List (List, (!!), find, foldl, reverse, tail, zip)
 import Data.Map (Map)
 import Data.Map as Map
 import Data.Maybe (Maybe(..), fromJust)
@@ -51,9 +52,9 @@ derive instance eqFilingStatus :: Eq FilingStatus
 derive instance ordFilingStatus :: Ord FilingStatus
 
 instance showFilingStatus :: Show FilingStatus where
-    show HeadOfHousehold = "HeadOfHousehold"
-    show Single = "Single"
-  
+  show HeadOfHousehold = "HeadOfHousehold"
+  show Single = "Single"
+
 newtype OrdinaryRate
   = OrdinaryRate Int
 
@@ -115,6 +116,9 @@ type TaxableOrdinaryIncome
 type QualifiedInvestmentIncome
   = Number
 
+type MassachusettsGrossIncome
+  = Number
+
 type DistributionPeriod
   = Number
 
@@ -124,10 +128,38 @@ data Triple a
 third :: forall a. Triple a -> a
 third (Triple _ _ a) = a
 
+type FederalTaxResults
+  = { ssRelevantOtherIncome :: Number
+    , taxableSocSec :: Number
+    , stdDeduction :: StandardDeduction
+    , taxableOrdinaryIncome :: Number
+    , taxOnOrdinaryIncome :: Number
+    , taxOnQualifiedIncome :: Number
+    }
+
 nonNeg :: Number -> Number
 nonNeg x
   | x < 0.0 = 0.0
   | true = x
+
+roundHalfUp :: Number -> Number
+roundHalfUp = toNumber <<< round
+
+maStateTaxRate :: Number
+maStateTaxRate = 0.05
+
+maStateTaxDue :: Year -> FilingStatus -> MassachusettsGrossIncome -> Number
+maStateTaxDue year filingStatus maGrossIncome =
+  let
+    personalExemption = if filingStatus == HeadOfHousehold then 6800.0 else 4400.0
+
+    ageExemption = 700.0
+
+    dependents = if filingStatus == HeadOfHousehold then 1.0 else 0.0
+
+    dependentsExemption = 1000.0 * dependents
+  in
+    maStateTaxRate * nonNeg (maGrossIncome - personalExemption - ageExemption - dependentsExemption)
 
 topRateOnOrdinaryIncome :: OrdinaryRate
 topRateOnOrdinaryIncome = OrdinaryRate 37
@@ -319,10 +351,10 @@ applyOrdinaryIncomeBrackets fs taxableOrdinaryincome =
 
     bracketsDescending = reverse brackets
   in
-    snd (foldr func (Tuple taxableOrdinaryincome 0.0) bracketsDescending)
+    snd (foldl func (Tuple taxableOrdinaryincome 0.0) bracketsDescending)
   where
-  func :: (Tuple OrdinaryRate BracketStart) -> Tuple Number Number -> Tuple Number Number
-  func (Tuple rate (BracketStart start)) (Tuple incomeYetToBeTaxed taxSoFar) =
+  func :: (Tuple Number Number) -> (Tuple OrdinaryRate BracketStart) -> Tuple Number Number
+  func (Tuple incomeYetToBeTaxed taxSoFar) (Tuple rate (BracketStart start)) =
     let
       incomeInThisBracket = nonNeg (incomeYetToBeTaxed - toNumber start)
 
@@ -339,12 +371,12 @@ applyQualifiedBrackets fs taxableOrdinaryIncome qualifiedInvestmentIncome =
 
     bracketsDescending = reverse brackets
   in
-    third (foldr func (Triple taxableOrdinaryIncome qualifiedInvestmentIncome 0.0) bracketsDescending)
+    third (foldl func (Triple taxableOrdinaryIncome qualifiedInvestmentIncome 0.0) bracketsDescending)
   where
   totalIncome = taxableOrdinaryIncome + qualifiedInvestmentIncome
 
-  func :: (Tuple QualifiedRate BracketStart) -> (Triple Number) -> (Triple Number)
-  func (Tuple rate (BracketStart start)) (Triple totalIncomeInHigherBrackets gainsYetToBeTaxed gainsTaxSoFar) =
+  func :: (Triple Number) -> (Tuple QualifiedRate BracketStart) -> (Triple Number)
+  func (Triple totalIncomeInHigherBrackets gainsYetToBeTaxed gainsTaxSoFar) (Tuple rate (BracketStart start)) =
     let
       totalIncomeYetToBeTaxed = nonNeg (totalIncome - totalIncomeInHigherBrackets)
 
