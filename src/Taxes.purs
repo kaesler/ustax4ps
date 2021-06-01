@@ -1,37 +1,39 @@
 module Taxes
   ( Age
-  , FilingStatus(..)
-  , Year
   , BracketStart
+  , FilingStatus(..)
+  , OrdinaryIncome
   , OrdinaryRate
+  , QualifiedIncome
   , QualifiedRate
+  , SocSec
   , StandardDeduction
-  , ordinaryBracketStarts
-  , rmdFractionForAge
-  , standardDeduction
-  , bracketWidth
-  , startOfNonZeroQualifiedRateBracket
-  , taxableSocialSecurityAdjusted
+  , Year
   , applyOrdinaryIncomeBrackets
   , applyQualifiedBrackets
+  , bracketWidth
+  , federalTaxDue
+  , federalTaxDueDebug
+  , federalTaxResults
+  , ordinaryBracketStarts
+  , rmdFractionForAge
+  , roundHalfUp
+  , standardDeduction
+  , startOfNonZeroQualifiedRateBracket
+  , taxableSocialSecurityAdjusted
   ) where
 
--- TODO: unit tests
--- TODO: verifagainst Typescript impl
--- TODO: bundle for use in Google sheets
--- TODO: Try Emacs for PS
-import Data.Function ((<<<))
+import Prelude
 import Data.Int (round, toNumber)
 import Data.List (List, (!!), find, foldl, reverse, tail, zip)
 import Data.Map (Map)
 import Data.Map as Map
 import Data.Maybe (Maybe(..), fromJust)
-import Data.Ord ((<), min)
 import Data.Set as Set
-import Data.Show (class Show, show)
 import Data.Tuple (Tuple(..), fst, snd)
+import Effect (Effect)
+import Effect.Console (log)
 import Partial.Unsafe (unsafePartial)
-import Prelude (class Eq, class Ord, bind, (*), (+), (-), (/), (==))
 
 type Year
   = Int
@@ -95,7 +97,7 @@ derive instance eqStandardDeduction :: Eq StandardDeduction
 
 derive instance ordStandardDeduction :: Ord StandardDeduction
 
-type SocialSecurityBenefits
+type SocSec
   = Number
 
 type SSRelevantIncome
@@ -110,10 +112,10 @@ type OrdinaryBracketStarts
 type QualifiedBracketStarts
   = Map QualifiedRate BracketStart
 
-type TaxableOrdinaryIncome
+type OrdinaryIncome
   = Number
 
-type QualifiedInvestmentIncome
+type QualifiedIncome
   = Number
 
 type MassachusettsGrossIncome
@@ -160,6 +162,58 @@ maStateTaxDue year filingStatus maGrossIncome =
     dependentsExemption = 1000.0 * dependents
   in
     maStateTaxRate * nonNeg (maGrossIncome - personalExemption - ageExemption - dependentsExemption)
+
+federalTaxResults :: Year -> FilingStatus -> SocSec -> OrdinaryIncome -> QualifiedIncome -> FederalTaxResults
+federalTaxResults year filingStatus socSec ordinaryIncome qualifiedIncome =
+  let
+    ssRelevantOtherIncome = ordinaryIncome + qualifiedIncome
+
+    taxableSocSec = taxableSocialSecurity filingStatus socSec ssRelevantOtherIncome
+
+    StandardDeduction sd = standardDeduction filingStatus
+
+    taxableOrdinaryIncome = nonNeg (taxableSocSec + ordinaryIncome - toNumber sd)
+
+    taxOnOrdinaryIncome = applyOrdinaryIncomeBrackets filingStatus taxableOrdinaryIncome
+
+    taxOnQualifiedIncome = applyQualifiedBrackets filingStatus taxableOrdinaryIncome qualifiedIncome
+  in
+    { ssRelevantOtherIncome: ssRelevantOtherIncome
+    , taxableSocSec: taxableSocSec
+    , stdDeduction: standardDeduction filingStatus
+    , taxableOrdinaryIncome: taxableOrdinaryIncome
+    , taxOnOrdinaryIncome: taxOnOrdinaryIncome
+    , taxOnQualifiedIncome: taxOnQualifiedIncome
+    }
+
+federalTaxDue :: Year -> FilingStatus -> SocSec -> OrdinaryIncome -> QualifiedIncome -> Number
+federalTaxDue year filingStatus socSec ordinaryIncome qualifiedIncome =
+  let
+    results = federalTaxResults year filingStatus socSec ordinaryIncome qualifiedIncome
+  in
+    results.taxOnOrdinaryIncome + results.taxOnQualifiedIncome
+
+federalTaxDueDebug :: Year -> FilingStatus -> SocSec -> OrdinaryIncome -> QualifiedIncome -> Effect Unit
+federalTaxDueDebug year filingStatus socSec ordinaryIncome qualifiedIncome =
+  let
+    r = federalTaxResults year filingStatus socSec ordinaryIncome qualifiedIncome
+
+    StandardDeduction sd = r.stdDeduction
+  in
+    do
+      log "Inputs"
+      log (" fs: " <> show filingStatus)
+      log (" socSec: " <> show socSec)
+      log (" ordinaryIncome: " <> show ordinaryIncome)
+      log (" qualifiedIncome: " <> show qualifiedIncome)
+      log "Outputs"
+      log ("  ssRelevantOtherIncome: " <> show r.ssRelevantOtherIncome)
+      log ("  taxableSocSec: " <> show r.taxableSocSec)
+      log ("  standardDeduction: " <> show sd)
+      log ("  taxableOrdinaryIncome: " <> show r.taxableOrdinaryIncome)
+      log ("  taxOnOrdinaryIncome: " <> show r.taxOnOrdinaryIncome)
+      log ("  taxOnQualifiedIncome: " <> show r.taxOnQualifiedIncome)
+      log ("  result: " <> show (r.taxOnOrdinaryIncome + r.taxOnQualifiedIncome))
 
 topRateOnOrdinaryIncome :: OrdinaryRate
 topRateOnOrdinaryIncome = OrdinaryRate 37
@@ -299,7 +353,7 @@ startOfNonZeroQualifiedRateBracket fs =
   in
     n
 
-taxableSocialSecurityAdjusted :: Year -> FilingStatus -> SocialSecurityBenefits -> SSRelevantIncome -> Number
+taxableSocialSecurityAdjusted :: Year -> FilingStatus -> SocSec -> SSRelevantIncome -> Number
 taxableSocialSecurityAdjusted year filingStatus ssBenefits relevantIncome =
   let
     unadjusted = taxableSocialSecurity filingStatus ssBenefits relevantIncome
@@ -310,7 +364,7 @@ taxableSocialSecurityAdjusted year filingStatus ssBenefits relevantIncome =
   in
     min adjusted ssBenefits * 0.85
 
-taxableSocialSecurity :: FilingStatus -> SocialSecurityBenefits -> SSRelevantIncome -> Number
+taxableSocialSecurity :: FilingStatus -> SocSec -> SSRelevantIncome -> Number
 taxableSocialSecurity filingStatus ssBenefits relevantIncome =
   let
     lowBase = case filingStatus of
@@ -343,15 +397,15 @@ taxableSocialSecurity filingStatus ssBenefits relevantIncome =
       in
         min (4500.0 + ((combinedIncome - highBase) * fractionTaxable)) maxSocSecTaxable
 
-applyOrdinaryIncomeBrackets :: FilingStatus -> TaxableOrdinaryIncome -> Number
-applyOrdinaryIncomeBrackets fs taxableOrdinaryincome =
+applyOrdinaryIncomeBrackets :: FilingStatus -> OrdinaryIncome -> Number
+applyOrdinaryIncomeBrackets fs ordinaryincome =
   let
     -- Note: is this how one uses toUnfoldable?
     brackets = Map.toUnfoldable (ordinaryBracketStarts fs) :: List (Tuple OrdinaryRate BracketStart)
 
     bracketsDescending = reverse brackets
   in
-    snd (foldl func (Tuple taxableOrdinaryincome 0.0) bracketsDescending)
+    snd (foldl func (Tuple ordinaryincome 0.0) bracketsDescending)
   where
   func :: (Tuple Number Number) -> (Tuple OrdinaryRate BracketStart) -> Tuple Number Number
   func (Tuple incomeYetToBeTaxed taxSoFar) (Tuple rate (BracketStart start)) =
@@ -364,16 +418,16 @@ applyOrdinaryIncomeBrackets fs taxableOrdinaryincome =
           (taxSoFar + taxInThisBracket)
       )
 
-applyQualifiedBrackets :: FilingStatus -> TaxableOrdinaryIncome -> QualifiedInvestmentIncome -> Number
-applyQualifiedBrackets fs taxableOrdinaryIncome qualifiedInvestmentIncome =
+applyQualifiedBrackets :: FilingStatus -> OrdinaryIncome -> QualifiedIncome -> Number
+applyQualifiedBrackets fs ordinaryIncome qualifiedIncome =
   let
     brackets = Map.toUnfoldable (qualifiedBracketStarts fs) :: List (Tuple QualifiedRate BracketStart)
 
     bracketsDescending = reverse brackets
   in
-    third (foldl func (Triple taxableOrdinaryIncome qualifiedInvestmentIncome 0.0) bracketsDescending)
+    third (foldl func (Triple ordinaryIncome qualifiedIncome 0.0) bracketsDescending)
   where
-  totalIncome = taxableOrdinaryIncome + qualifiedInvestmentIncome
+  totalIncome = ordinaryIncome + qualifiedIncome
 
   func :: (Triple Number) -> (Tuple QualifiedRate BracketStart) -> (Triple Number)
   func (Triple totalIncomeInHigherBrackets gainsYetToBeTaxed gainsTaxSoFar) (Tuple rate (BracketStart start)) =
