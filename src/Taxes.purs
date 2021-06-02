@@ -7,6 +7,7 @@ module Taxes
   , QualifiedIncome
   , QualifiedRate
   , SocSec
+  , SSRelevantOtherIncome
   , StandardDeduction
   , Year
   , applyOrdinaryIncomeBrackets
@@ -100,7 +101,7 @@ derive instance ordStandardDeduction :: Ord StandardDeduction
 type SocSec
   = Number
 
-type SSRelevantIncome
+type SSRelevantOtherIncome
   = Number
 
 type CombinedIncome
@@ -353,7 +354,7 @@ startOfNonZeroQualifiedRateBracket fs =
   in
     n
 
-taxableSocialSecurityAdjusted :: Year -> FilingStatus -> SocSec -> SSRelevantIncome -> Number
+taxableSocialSecurityAdjusted :: Year -> FilingStatus -> SocSec -> SSRelevantOtherIncome -> Number
 taxableSocialSecurityAdjusted year filingStatus ssBenefits relevantIncome =
   let
     unadjusted = taxableSocialSecurity filingStatus ssBenefits relevantIncome
@@ -364,7 +365,7 @@ taxableSocialSecurityAdjusted year filingStatus ssBenefits relevantIncome =
   in
     min adjusted ssBenefits * 0.85
 
-taxableSocialSecurity :: FilingStatus -> SocSec -> SSRelevantIncome -> Number
+taxableSocialSecurity :: FilingStatus -> SocSec -> SSRelevantOtherIncome -> Number
 taxableSocialSecurity filingStatus ssBenefits relevantIncome =
   let
     lowBase = case filingStatus of

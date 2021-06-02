@@ -5,6 +5,7 @@ You can edit this file as you like.
 { name = "retirement-model-purescript"
 , dependencies =
   [ "aff"
+  , "arrays"
   , "console"
   , "effect"
   , "foldable-traversable"
@@ -15,6 +16,7 @@ You can edit this file as you like.
   , "partial"
   , "prelude"
   , "psci-support"
+  , "quickcheck"
   , "spec"
   , "tuples"
   ]
