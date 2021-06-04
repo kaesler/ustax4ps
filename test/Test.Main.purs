@@ -1,15 +1,16 @@
 module Test.Main where
 
 import Prelude
-import Data.Array.NonEmpty.Internal (NonEmptyArray(..))
+import Data.Array as Array
+import Data.Int (toNumber)
 import Data.Traversable (sequence)
+import Data.Tuple (Tuple(..), curry)
 import Effect (Effect)
 import Effect.Aff (Aff, launchAff_)
 import Effect.Class (liftEffect)
 import Effect.Console (log)
-import Taxes (FilingStatus(..), OrdinaryIncome, SSRelevantOtherIncome, SocSec, applyOrdinaryIncomeBrackets, federalTaxDue, roundHalfUp)
-import Test.QuickCheck (class Arbitrary, quickCheck)
-import Test.QuickCheck.Gen (choose, elements)
+import PropertyTests (runPropertyTests)
+import Taxes (FilingStatus(..), OrdinaryRate, StandardDeduction(..), applyOrdinaryIncomeBrackets, federalTaxDue, incomeToEndOfOrdinaryBracket, nonNeg, ordinaryRatesExceptTop, roundHalfUp, standardDeduction, taxToEndOfOrdinaryBracket)
 import Test.Spec (Spec, it, describe)
 import Test.Spec.Assertions (shouldEqual)
 import Test.Spec.Reporter.Console (consoleReporter)
@@ -21,15 +22,64 @@ type Expectation
 
 main :: Effect Unit
 main = do
-  log "Running prop tests"
-  quickCheck prop_monotonic
+  runPropertyTests
   log "Running Spec tests"
   launchAff_
     $ runSpec [ consoleReporter ] do
+        correctAtBracketBoundaries
         testsAgainstScala
 
 logInAff :: String -> Aff Unit
 logInAff msg = liftEffect $ log msg
+
+correctAtBracketBoundaries :: Spec Unit
+correctAtBracketBoundaries =
+  describe "Correct at bracket boundaries" do
+    it "Correct at bracket bundaries for Single" do
+      assertCorrectTaxDueAtBracketBoundaries Single
+    it "Correct at bracket boundaries for HeadOfHousehold" do
+      assertCorrectTaxDueAtBracketBoundaries HeadOfHousehold
+
+assertCorrectTaxDueAtBracketBoundary :: FilingStatus -> OrdinaryRate -> Expectation
+assertCorrectTaxDueAtBracketBoundary filingStatus bracketRate =
+  let
+    StandardDeduction deduction = standardDeduction filingStatus
+
+    income = incomeToEndOfOrdinaryBracket filingStatus bracketRate
+
+    taxableIncome = nonNeg $ income - toNumber deduction
+
+    expectedTax = roundHalfUp $ taxToEndOfOrdinaryBracket filingStatus bracketRate
+
+    computedTax = roundHalfUp $ applyOrdinaryIncomeBrackets filingStatus taxableIncome
+  in
+    do
+      computedTax `shouldEqual` expectedTax
+
+assertCorrectTaxDueAtBracketBoundaries :: FilingStatus -> Expectation
+assertCorrectTaxDueAtBracketBoundaries filingStatus =
+  let
+    brackets = ordinaryRatesExceptTop filingStatus
+
+    incomes = map (incomeToEndOfOrdinaryBracket filingStatus) brackets
+
+    expectedTaxes = map (taxToEndOfOrdinaryBracket filingStatus) brackets
+
+    StandardDeduction deduction = standardDeduction filingStatus
+
+    expectations = Array.zipWith (curry taxDueIsAsExpected) incomes expectedTaxes
+      where
+      taxDueIsAsExpected :: (Tuple Number Number) -> Expectation
+      taxDueIsAsExpected (Tuple income expectedTax) =
+        let
+          taxableIncome = nonNeg $ income - toNumber deduction
+
+          computedTax = roundHalfUp $ applyOrdinaryIncomeBrackets filingStatus taxableIncome
+        in
+          do
+            computedTax `shouldEqual` roundHalfUp expectedTax
+  in
+    (sequence expectations) *> (pure unit)
 
 testsAgainstScala :: Spec Unit
 testsAgainstScala =
@@ -54,34 +104,3 @@ testsAgainstScala =
     describe "Taxes.federalTaxDue" do
       it "matches outputs sampled from Scala implementation" do
         combinedExpectations
-
-----------------------------------
--- Avoid orphan type class instances by wrapping the types in newtypes.
-data TestFilingStatus
-  = TestFilingStatus FilingStatus
-
-instance arbFilingStatus :: Arbitrary TestFilingStatus where
-  arbitrary = elements $ map TestFilingStatus (NonEmptyArray [ Single, HeadOfHousehold ])
-
-data TestSocSec
-  = TestSocSec SocSec
-
-instance arbSocSec :: Arbitrary TestSocSec where
-  arbitrary = map TestSocSec $ choose 0.0 50000.0
-
-data TestOrdinaryIncome
-  = TestOrdinaryIncome OrdinaryIncome
-
-instance arbOrdinaryIncome :: Arbitrary TestOrdinaryIncome where
-  arbitrary = map TestOrdinaryIncome $ choose 0.0 100000.0
-
-data TestSsRelevantOtherIncome
-  = TestSsRelevantOtherIncome SSRelevantOtherIncome
-
-instance arbTestSsRelevantOtherIncome :: Arbitrary TestSsRelevantOtherIncome where
-  arbitrary = map TestSsRelevantOtherIncome $ choose 0.0 100000.0
-
-prop_monotonic :: TestFilingStatus -> TestOrdinaryIncome -> TestOrdinaryIncome -> Boolean
-prop_monotonic = \(TestFilingStatus fs) (TestOrdinaryIncome i1) (TestOrdinaryIncome i2) ->
-  (i1 <= i2)
-    == (applyOrdinaryIncomeBrackets fs i1 <= applyOrdinaryIncomeBrackets fs i2)

@@ -3,12 +3,12 @@ module Taxes
   , BracketStart
   , FilingStatus(..)
   , OrdinaryIncome
-  , OrdinaryRate
+  , OrdinaryRate(..)
   , QualifiedIncome
   , QualifiedRate
   , SocSec
   , SSRelevantOtherIncome
-  , StandardDeduction
+  , StandardDeduction(..)
   , Year
   , applyOrdinaryIncomeBrackets
   , applyQualifiedBrackets
@@ -16,18 +16,27 @@ module Taxes
   , federalTaxDue
   , federalTaxDueDebug
   , federalTaxResults
+  , incomeToEndOfOrdinaryBracket
+  , nonNeg
   , ordinaryBracketStarts
+  , ordinaryRateAsFraction
+  , ordinaryRatesExceptTop
   , rmdFractionForAge
   , roundHalfUp
   , standardDeduction
   , startOfNonZeroQualifiedRateBracket
   , taxableSocialSecurityAdjusted
+  , topRateOnOrdinaryIncome
+  , taxToEndOfOrdinaryBracket
+  , unsafeBracketWidth
   ) where
 
 import Prelude
+import Data.Array as Array
+import Data.Foldable as Data
 import Data.Int (round, toNumber)
 import Data.List (List, (!!), find, foldl, reverse, tail, zip)
-import Data.Map (Map)
+import Data.Map (Map, keys)
 import Data.Map as Map
 import Data.Maybe (Maybe(..), fromJust)
 import Data.Set as Set
@@ -242,7 +251,59 @@ ordinaryBracketStarts HeadOfHousehold =
     , Tuple topRateOnOrdinaryIncome (BracketStart 523600)
     ]
 
--- Note: could be a constant. Keep as example of Partial
+ordinaryRateSuccessor :: FilingStatus -> OrdinaryRate -> Maybe OrdinaryRate
+ordinaryRateSuccessor fs rate =
+  let
+    brackets = ordinaryBracketStarts fs
+
+    rates = Array.fromFoldable $ keys brackets
+
+    ratesTail = Array.drop 1 rates
+
+    pairs = Array.zip rates ratesTail
+
+    pair = Array.find (\p -> fst p == rate) pairs
+  in
+    map snd pair
+
+ordinaryRatesExceptTop :: FilingStatus -> (Array OrdinaryRate)
+ordinaryRatesExceptTop fs =
+  let
+    brackets = ordinaryBracketStarts fs
+
+    rates = Array.fromFoldable $ keys brackets
+  in
+    Array.dropEnd 1 rates
+
+incomeToEndOfOrdinaryBracket :: FilingStatus -> OrdinaryRate -> Number
+incomeToEndOfOrdinaryBracket filingStatus bracketRate =
+  let
+    bracketStarts = ordinaryBracketStarts filingStatus
+
+    successorRate = unsafePartial $ fromJust (ordinaryRateSuccessor filingStatus bracketRate)
+
+    BracketStart startOfSuccessor = unsafePartial $ fromJust (Map.lookup successorRate bracketStarts)
+
+    StandardDeduction deduction = standardDeduction filingStatus
+  in
+    toNumber (startOfSuccessor + deduction)
+
+taxToEndOfOrdinaryBracket :: FilingStatus -> OrdinaryRate -> Number
+taxToEndOfOrdinaryBracket filingStatus bracketRate =
+  let
+    relevantRates = Array.takeWhile (_ <= bracketRate) (ordinaryRatesExceptTop filingStatus)
+
+    bracketWidths = map (unsafeBracketWidth filingStatus) relevantRates
+
+    pairs = relevantRates `Array.zip` bracketWidths
+
+    taxesDue = map taxForBracket pairs
+      where
+      taxForBracket (Tuple ordinaryRate width) = (toNumber width) * (ordinaryRateAsFraction ordinaryRate)
+  in
+    Data.sum taxesDue
+
+-- Note: could be a constant. Keep as example of use of unsafePartial
 bottomRateOnOrdinaryIncome :: FilingStatus -> OrdinaryRate
 bottomRateOnOrdinaryIncome fs =
   let
@@ -345,6 +406,9 @@ bracketWidth fs rate = do
   BracketStart rateStart <- Map.lookup rate brackets
   BracketStart successorStart <- Map.lookup successor brackets
   Just (successorStart - rateStart)
+
+unsafeBracketWidth :: FilingStatus -> OrdinaryRate -> Int
+unsafeBracketWidth fs or = unsafePartial $ fromJust $ bracketWidth fs or
 
 startOfNonZeroQualifiedRateBracket :: FilingStatus -> Int
 startOfNonZeroQualifiedRateBracket fs =
