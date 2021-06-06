@@ -13,6 +13,8 @@ import Test.QuickCheck.Gen (choose, elements)
 runPropertyTests :: Effect Unit
 runPropertyTests = do
   log "Running prop tests"
+  -- TODO: try using quickCheckGen here and do away with the
+  -- TestXXX newtypes
   quickCheck prop_monotonic
 
 --Avoid orphan type class instances by wrapping the types in newtypes.
