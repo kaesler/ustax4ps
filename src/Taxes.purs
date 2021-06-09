@@ -1,6 +1,7 @@
 module Taxes
   ( Age
   , BracketStart
+  , FederalTaxResults(..)
   , FilingStatus(..)
   , OrdinaryIncome
   , OrdinaryRate(..)
@@ -33,6 +34,7 @@ module Taxes
   ) where
 
 import Prelude
+
 import Data.Array as Array
 import Data.Foldable as Data
 import Data.Int (round, toNumber)
@@ -41,6 +43,7 @@ import Data.Map (Map, keys)
 import Data.Map as Map
 import Data.Maybe (Maybe(..), fromJust)
 import Data.Set as Set
+import Data.Traversable (sequenceDefault)
 import Data.Tuple (Tuple(..), fst, snd)
 import Effect (Effect)
 import Effect.Console (log)
@@ -108,6 +111,8 @@ derive instance eqStandardDeduction :: Eq StandardDeduction
 
 derive instance ordStandardDeduction :: Ord StandardDeduction
 
+instance showStandardDeduction :: Show StandardDeduction where
+  show (StandardDeduction sd) = show sd 
 type SocSec
   = Number
 
@@ -141,14 +146,17 @@ data Triple a
 third :: forall a. Triple a -> a
 third (Triple _ _ a) = a
 
-type FederalTaxResults
-  = { ssRelevantOtherIncome :: Number
+newtype FederalTaxResults
+  = FederalTaxResults { ssRelevantOtherIncome :: Number
     , taxableSocSec :: Number
     , stdDeduction :: StandardDeduction
     , taxableOrdinaryIncome :: Number
     , taxOnOrdinaryIncome :: Number
     , taxOnQualifiedIncome :: Number
-    }
+    } 
+
+instance showFederalTaxResults :: Show FederalTaxResults where
+  show (FederalTaxResults r) = (show r)
 
 nonNeg :: Number -> Number
 nonNeg x
@@ -187,7 +195,7 @@ federalTaxResults year filingStatus socSec ordinaryIncome qualifiedIncome =
 
     taxOnQualifiedIncome = applyQualifiedBrackets filingStatus taxableOrdinaryIncome qualifiedIncome
   in
-    { ssRelevantOtherIncome: ssRelevantOtherIncome
+    FederalTaxResults { ssRelevantOtherIncome: ssRelevantOtherIncome
     , taxableSocSec: taxableSocSec
     , stdDeduction: standardDeduction filingStatus
     , taxableOrdinaryIncome: taxableOrdinaryIncome
@@ -196,24 +204,23 @@ federalTaxResults year filingStatus socSec ordinaryIncome qualifiedIncome =
     }
 
 federalTaxDue :: Year -> FilingStatus -> SocSec -> OrdinaryIncome -> QualifiedIncome -> Number
-federalTaxDue year filingStatus socSec ordinaryIncome qualifiedIncome =
+federalTaxDue year filingStatus socSec taxableOrdinaryIncome qualifiedIncome =
   let
-    results = federalTaxResults year filingStatus socSec ordinaryIncome qualifiedIncome
+    FederalTaxResults results = federalTaxResults year filingStatus socSec taxableOrdinaryIncome qualifiedIncome
   in
     results.taxOnOrdinaryIncome + results.taxOnQualifiedIncome
 
 federalTaxDueDebug :: Year -> FilingStatus -> SocSec -> OrdinaryIncome -> QualifiedIncome -> Effect Unit
-federalTaxDueDebug year filingStatus socSec ordinaryIncome qualifiedIncome =
+federalTaxDueDebug year filingStatus socSec taxableOrdinaryIncome qualifiedIncome =
   let
-    r = federalTaxResults year filingStatus socSec ordinaryIncome qualifiedIncome
-
+    FederalTaxResults r = federalTaxResults year filingStatus socSec taxableOrdinaryIncome qualifiedIncome
     StandardDeduction sd = r.stdDeduction
   in
     do
       log "Inputs"
       log (" fs: " <> show filingStatus)
       log (" socSec: " <> show socSec)
-      log (" ordinaryIncome: " <> show ordinaryIncome)
+      log (" taxableOrdinaryIncome: " <> show taxableOrdinaryIncome)
       log (" qualifiedIncome: " <> show qualifiedIncome)
       log "Outputs"
       log ("  ssRelevantOtherIncome: " <> show r.ssRelevantOtherIncome)
@@ -483,15 +490,15 @@ applyOrdinaryIncomeBrackets fs ordinaryincome =
       )
 
 applyQualifiedBrackets :: FilingStatus -> OrdinaryIncome -> QualifiedIncome -> Number
-applyQualifiedBrackets fs ordinaryIncome qualifiedIncome =
+applyQualifiedBrackets fs taxableOrdinaryIncome qualifiedIncome =
   let
     brackets = Map.toUnfoldable (qualifiedBracketStarts fs) :: List (Tuple QualifiedRate BracketStart)
 
     bracketsDescending = reverse brackets
   in
-    third (foldl func (Triple ordinaryIncome qualifiedIncome 0.0) bracketsDescending)
+    third (foldl func (Triple 0.0 qualifiedIncome 0.0) bracketsDescending)
   where
-  totalIncome = ordinaryIncome + qualifiedIncome
+  totalIncome = taxableOrdinaryIncome + qualifiedIncome
 
   func :: (Triple Number) -> (Tuple QualifiedRate BracketStart) -> (Triple Number)
   func (Triple totalIncomeInHigherBrackets gainsYetToBeTaxed gainsTaxSoFar) (Tuple rate (BracketStart start)) =

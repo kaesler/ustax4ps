@@ -15,7 +15,7 @@ import Test.Spec (Spec, it, describe)
 import Test.Spec.Assertions (shouldEqual)
 import Test.Spec.Reporter.Console (consoleReporter)
 import Test.Spec.Runner (runSpec)
-import TestDataFromScala (TestCase, cases)
+import TestDataFromScala (TestCase(..), cases)
 
 type Expectation
   = Aff Unit
@@ -88,27 +88,35 @@ testsAgainstScala =
     year = 2021
 
     makeFederalExpectation :: TestCase -> Expectation
-    makeFederalExpectation tc =
+    makeFederalExpectation (TestCase tc) =
       let
         calculated = roundHalfUp $ federalTaxDue year tc.filingStatus (toNumber tc.socSec) (toNumber tc.ordinaryIncomeNonSS) (toNumber tc.qualifiedIncome)
       in
         do
           calculated `shouldEqual` (toNumber tc.federalTaxDue)
 
+    federalExpectations :: Array Expectation
+    federalExpectations = map makeFederalExpectation cases
+
+    combinedFederalExpectations :: Expectation
+    combinedFederalExpectations = (sequence federalExpectations) *> (pure unit)
+
     makeStateExpectation :: TestCase -> Expectation
-    makeStateExpectation tc =
+    makeStateExpectation (TestCase tc) =
       let
         calculated = roundHalfUp $ maStateTaxDue year tc.dependents tc.filingStatus (toNumber (tc.ordinaryIncomeNonSS + tc.qualifiedIncome))
       in
         do
           calculated `shouldEqual` (toNumber tc.stateTaxDue)
 
-    federalExpectations :: Array Expectation
-    federalExpectations = map makeFederalExpectation cases
+    stateExpectations :: Array Expectation
+    stateExpectations = map makeStateExpectation cases
 
-    combinedFederalExpectations :: Expectation
-    combinedFederalExpectations = (sequence federalExpectations) *> (pure unit)
+    combinedStateExpectations :: Expectation
+    combinedStateExpectations = (sequence stateExpectations) *> (pure unit)
   in
-    describe "Taxes.federalTaxDue" do
-      it "matches outputs sampled from Scala implementation" do
+    describe "Taxes" do
+      it ".federalTaxDue matches outputs sampled from Scala implementation" do
         combinedFederalExpectations
+      it ".stateTaxDue matches outputs sampled from Scala implementation" do
+        combinedStateExpectations
