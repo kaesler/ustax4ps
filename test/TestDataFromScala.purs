@@ -6,2012 +6,2016 @@ module TestDataFromScala
 import Taxes (FilingStatus(..))
 
 type TestCase
-  = { filingStatus :: FilingStatus
+  = { age :: Int
+    , dependents :: Int
+    , filingStatus :: FilingStatus
     , socSec :: Int
-    , ordinaryIncome :: Int
+    , ordinaryIncomeNonSS :: Int
     , qualifiedIncome :: Int
     , federalTaxDue :: Int
+    , stateTaxDue :: Int
     }
 
 cases :: Array TestCase
 cases =
-  [ { filingStatus: Single, socSec: 9696, ordinaryIncome: 50000, qualifiedIncome: 50000, federalTaxDue: 13004 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 34471, federalTaxDue: 4831 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 40941, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 14456, ordinaryIncome: 0, qualifiedIncome: 34957, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 4133 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 50000, qualifiedIncome: 46991, federalTaxDue: 10537 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1662, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 38870, ordinaryIncome: 33145, qualifiedIncome: 47777, federalTaxDue: 14418 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 13423, qualifiedIncome: 0, federalTaxDue: 153 }
-  , { filingStatus: Single, socSec: 986, ordinaryIncome: 26873, qualifiedIncome: 2218, federalTaxDue: 1417 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 1440 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 18092, federalTaxDue: 15754 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 13152, qualifiedIncome: 18993, federalTaxDue: 1777 }
-  , { filingStatus: HeadOfHousehold, socSec: 25298, ordinaryIncome: 50000, qualifiedIncome: 27195, federalTaxDue: 9546 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 44403, qualifiedIncome: 0, federalTaxDue: 3461 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 30095, qualifiedIncome: 0, federalTaxDue: 1744 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 47027, qualifiedIncome: 6124, federalTaxDue: 3776 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 41471, federalTaxDue: 161 }
-  , { filingStatus: Single, socSec: 21506, ordinaryIncome: 26774, qualifiedIncome: 21883, federalTaxDue: 5435 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 40168, qualifiedIncome: 1, federalTaxDue: 2118 }
-  , { filingStatus: Single, socSec: 45321, ordinaryIncome: 35349, qualifiedIncome: 0, federalTaxDue: 5947 }
-  , { filingStatus: HeadOfHousehold, socSec: 1413, ordinaryIncome: 0, qualifiedIncome: 353, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 38473, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 10885 }
-  , { filingStatus: Single, socSec: 6419, ordinaryIncome: 47009, qualifiedIncome: 38401, federalTaxDue: 9914 }
-  , { filingStatus: HeadOfHousehold, socSec: 7847, ordinaryIncome: 1, qualifiedIncome: 14108, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 44728, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 3298 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 15220, ordinaryIncome: 0, qualifiedIncome: 12562, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 33815, ordinaryIncome: 50000, qualifiedIncome: 1, federalTaxDue: 10014 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 9332, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 36559, ordinaryIncome: 1, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 49901, qualifiedIncome: 50000, federalTaxDue: 7134 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 3298 }
-  , { filingStatus: HeadOfHousehold, socSec: 10415, ordinaryIncome: 10161, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 33515, qualifiedIncome: 40437, federalTaxDue: 1337 }
-  , { filingStatus: Single, socSec: 40811, ordinaryIncome: 50000, qualifiedIncome: 20369, federalTaxDue: 14378 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 13504, qualifiedIncome: 36916, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 9313, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 31048, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 20058, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 2227 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 42495, qualifiedIncome: 1357, federalTaxDue: 3232 }
-  , { filingStatus: Single, socSec: 34168, ordinaryIncome: 41001, qualifiedIncome: 42825, federalTaxDue: 14524 }
-  , { filingStatus: HeadOfHousehold, socSec: 15051, ordinaryIncome: 50000, qualifiedIncome: 19962, federalTaxDue: 6109 }
-  , { filingStatus: Single, socSec: 23241, ordinaryIncome: 2602, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 48006, federalTaxDue: 20241 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 743, ordinaryIncome: 9726, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 44811, ordinaryIncome: 11583, qualifiedIncome: 0, federalTaxDue: 218 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 21228, qualifiedIncome: 47212, federalTaxDue: 108 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 50000, qualifiedIncome: 1, federalTaxDue: 3298 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 8877, qualifiedIncome: 13775, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 45539, ordinaryIncome: 50000, qualifiedIncome: 37169, federalTaxDue: 17782 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 30363, qualifiedIncome: 42214, federalTaxDue: 12166 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 3298 }
-  , { filingStatus: Single, socSec: 13551, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 1440 }
-  , { filingStatus: HeadOfHousehold, socSec: 7202, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 15036, qualifiedIncome: 24015, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 35580, ordinaryIncome: 31012, qualifiedIncome: 50000, federalTaxDue: 10199 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 19822, qualifiedIncome: 43178, federalTaxDue: 12878 }
-  , { filingStatus: HeadOfHousehold, socSec: 2456, ordinaryIncome: 44100, qualifiedIncome: 690, federalTaxDue: 2841 }
-  , { filingStatus: HeadOfHousehold, socSec: 17101, ordinaryIncome: 50000, qualifiedIncome: 32177, federalTaxDue: 8412 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 1931, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 689, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 47264, ordinaryIncome: 50000, qualifiedIncome: 2689, federalTaxDue: 10105 }
-  , { filingStatus: Single, socSec: 24819, ordinaryIncome: 29772, qualifiedIncome: 648, federalTaxDue: 3146 }
-  , { filingStatus: HeadOfHousehold, socSec: 3138, ordinaryIncome: 28719, qualifiedIncome: 1, federalTaxDue: 1014 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 37597, qualifiedIncome: 0, federalTaxDue: 1810 }
-  , { filingStatus: Single, socSec: 12350, ordinaryIncome: 1, qualifiedIncome: 32422, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 48359, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 14017, ordinaryIncome: 50000, qualifiedIncome: 50000, federalTaxDue: 13812 }
-  , { filingStatus: Single, socSec: 5844, ordinaryIncome: 7409, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 29350, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 9179 }
-  , { filingStatus: HeadOfHousehold, socSec: 21279, ordinaryIncome: 40968, qualifiedIncome: 0, federalTaxDue: 4385 }
-  , { filingStatus: HeadOfHousehold, socSec: 198, ordinaryIncome: 1, qualifiedIncome: 30867, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 49278, ordinaryIncome: 1, qualifiedIncome: 30826, federalTaxDue: 260 }
-  , { filingStatus: HeadOfHousehold, socSec: 40559, ordinaryIncome: 50000, qualifiedIncome: 1, federalTaxDue: 8448 }
-  , { filingStatus: Single, socSec: 20990, ordinaryIncome: 11212, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 34673, qualifiedIncome: 41399, federalTaxDue: 1732 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 7402, ordinaryIncome: 12345, qualifiedIncome: 26749, federalTaxDue: 474 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1586, qualifiedIncome: 5139, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1078, ordinaryIncome: 0, qualifiedIncome: 35150, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 33518, qualifiedIncome: 0, federalTaxDue: 1337 }
-  , { filingStatus: Single, socSec: 37985, ordinaryIncome: 1, qualifiedIncome: 36765, federalTaxDue: 1729 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 17665, qualifiedIncome: 50000, federalTaxDue: 13427 }
-  , { filingStatus: HeadOfHousehold, socSec: 46215, ordinaryIncome: 1, qualifiedIncome: 35921, federalTaxDue: 563 }
-  , { filingStatus: Single, socSec: 37483, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 6226, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 30306, qualifiedIncome: 849, federalTaxDue: 1770 }
-  , { filingStatus: Single, socSec: 28529, ordinaryIncome: 1, qualifiedIncome: 50000, federalTaxDue: 4036 }
-  , { filingStatus: HeadOfHousehold, socSec: 13428, ordinaryIncome: 49336, qualifiedIncome: 1, federalTaxDue: 4588 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 31897, qualifiedIncome: 1, federalTaxDue: 4001 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 1064, qualifiedIncome: 7063, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 43874, ordinaryIncome: 50000, qualifiedIncome: 50000, federalTaxDue: 19395 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 22805, federalTaxDue: 233 }
-  , { filingStatus: Single, socSec: 31117, ordinaryIncome: 50000, qualifiedIncome: 22500, federalTaxDue: 12884 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 34593, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 2075, federalTaxDue: 3298 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 25931, qualifiedIncome: 50000, federalTaxDue: 830 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 24611, qualifiedIncome: 0, federalTaxDue: 2384 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 4168, qualifiedIncome: 39345, federalTaxDue: 6151 }
-  , { filingStatus: Single, socSec: 36407, ordinaryIncome: 15237, qualifiedIncome: 1, federalTaxDue: 556 }
-  , { filingStatus: Single, socSec: 30053, ordinaryIncome: 33373, qualifiedIncome: 18840, federalTaxDue: 8478 }
-  , { filingStatus: Single, socSec: 9914, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 30765, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 12420, qualifiedIncome: 44249, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 26565, federalTaxDue: 17025 }
-  , { filingStatus: HeadOfHousehold, socSec: 1475, ordinaryIncome: 1974, qualifiedIncome: 35855, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 23599, qualifiedIncome: 16332, federalTaxDue: 970 }
-  , { filingStatus: Single, socSec: 604, ordinaryIncome: 0, qualifiedIncome: 31227, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 7489, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 29716, qualifiedIncome: 45002, federalTaxDue: 1027 }
-  , { filingStatus: HeadOfHousehold, socSec: 15184, ordinaryIncome: 36556, qualifiedIncome: 7775, federalTaxDue: 3233 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 24945, qualifiedIncome: 45328, federalTaxDue: 480 }
-  , { filingStatus: HeadOfHousehold, socSec: 3270, ordinaryIncome: 43907, qualifiedIncome: 50000, federalTaxDue: 6266 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 21281, qualifiedIncome: 12131, federalTaxDue: 113 }
-  , { filingStatus: Single, socSec: 9329, ordinaryIncome: 0, qualifiedIncome: 25647, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 39276, ordinaryIncome: 32524, qualifiedIncome: 0, federalTaxDue: 3593 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1896, ordinaryIncome: 11741, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 41373, qualifiedIncome: 1, federalTaxDue: 3098 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 23117, qualifiedIncome: 43912, federalTaxDue: 297 }
-  , { filingStatus: HeadOfHousehold, socSec: 7085, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 4021 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 31487, ordinaryIncome: 20314, qualifiedIncome: 1, federalTaxDue: 641 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 11189, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 29898, qualifiedIncome: 1, federalTaxDue: 3557 }
-  , { filingStatus: HeadOfHousehold, socSec: 31325, ordinaryIncome: 0, qualifiedIncome: 18418, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 1, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 23473, qualifiedIncome: 43170, federalTaxDue: 13680 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 23725, federalTaxDue: 13772 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 1498, qualifiedIncome: 42053, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 49489, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 8054 }
-  , { filingStatus: HeadOfHousehold, socSec: 19008, ordinaryIncome: 0, qualifiedIncome: 17558, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 22098, ordinaryIncome: 26157, qualifiedIncome: 31295, federalTaxDue: 6816 }
-  , { filingStatus: Single, socSec: 26331, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 39192, ordinaryIncome: 20635, qualifiedIncome: 43433, federalTaxDue: 7241 }
-  , { filingStatus: Single, socSec: 41697, ordinaryIncome: 7306, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 25275, ordinaryIncome: 24796, qualifiedIncome: 0, federalTaxDue: 1206 }
-  , { filingStatus: Single, socSec: 509, ordinaryIncome: 2915, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 35350, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 46625, ordinaryIncome: 26535, qualifiedIncome: 0, federalTaxDue: 3474 }
-  , { filingStatus: HeadOfHousehold, socSec: 6548, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 37688, qualifiedIncome: 9984, federalTaxDue: 1821 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 36931, ordinaryIncome: 38784, qualifiedIncome: 0, federalTaxDue: 4864 }
-  , { filingStatus: HeadOfHousehold, socSec: 37936, ordinaryIncome: 50000, qualifiedIncome: 20921, federalTaxDue: 11095 }
-  , { filingStatus: Single, socSec: 22224, ordinaryIncome: 10384, qualifiedIncome: 8731, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 28326, ordinaryIncome: 12235, qualifiedIncome: 46539, federalTaxDue: 2946 }
-  , { filingStatus: HeadOfHousehold, socSec: 16066, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 30407, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 23155, qualifiedIncome: 1, federalTaxDue: 926 }
-  , { filingStatus: Single, socSec: 39362, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 6522 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 4726, qualifiedIncome: 19485, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 34367, ordinaryIncome: 42463, qualifiedIncome: 48693, federalTaxDue: 15763 }
-  , { filingStatus: HeadOfHousehold, socSec: 41658, ordinaryIncome: 15108, qualifiedIncome: 1, federalTaxDue: 111 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 22755, qualifiedIncome: 50000, federalTaxDue: 14547 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 29943, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 42194, ordinaryIncome: 0, qualifiedIncome: 35365, federalTaxDue: 344 }
-  , { filingStatus: Single, socSec: 6072, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 38534, qualifiedIncome: 27054, federalTaxDue: 14576 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 5971, qualifiedIncome: 25485, federalTaxDue: 1792 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 18874, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 7182, ordinaryIncome: 0, qualifiedIncome: 28021, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 6378, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 45787, qualifiedIncome: 50000, federalTaxDue: 19614 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 35275, qualifiedIncome: 0, federalTaxDue: 4751 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 35962, qualifiedIncome: 50000, federalTaxDue: 7198 }
-  , { filingStatus: HeadOfHousehold, socSec: 36845, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 2177 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 33096, qualifiedIncome: 12120, federalTaxDue: 1295 }
-  , { filingStatus: HeadOfHousehold, socSec: 43132, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 31538, qualifiedIncome: 1, federalTaxDue: 3922 }
-  , { filingStatus: Single, socSec: 16947, ordinaryIncome: 7182, qualifiedIncome: 50000, federalTaxDue: 3362 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 14045, qualifiedIncome: 3642, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 3299, ordinaryIncome: 34149, qualifiedIncome: 23008, federalTaxDue: 3417 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 35152, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 35974, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 10418 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 8113 }
-  , { filingStatus: Single, socSec: 4951, ordinaryIncome: 0, qualifiedIncome: 49248, federalTaxDue: 1327 }
-  , { filingStatus: HeadOfHousehold, socSec: 48043, ordinaryIncome: 1, qualifiedIncome: 50000, federalTaxDue: 4061 }
-  , { filingStatus: Single, socSec: 32139, ordinaryIncome: 9454, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 16774, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 1, federalTaxDue: 12348 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 14707, qualifiedIncome: 50000, federalTaxDue: 1642 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 1, qualifiedIncome: 21500, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 23599, ordinaryIncome: 0, qualifiedIncome: 39867, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 19482, ordinaryIncome: 0, qualifiedIncome: 5034, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 41387, ordinaryIncome: 0, qualifiedIncome: 12236, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 50000, federalTaxDue: 1440 }
-  , { filingStatus: HeadOfHousehold, socSec: 512, ordinaryIncome: 1934, qualifiedIncome: 17396, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 28248, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 37183, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 6021 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 1, qualifiedIncome: 16601, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 19231, ordinaryIncome: 34241, qualifiedIncome: 0, federalTaxDue: 3787 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 35582, federalTaxDue: 15550 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 26771, qualifiedIncome: 42865, federalTaxDue: 662 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 33149, federalTaxDue: 488 }
-  , { filingStatus: Single, socSec: 25757, ordinaryIncome: 32267, qualifiedIncome: 50000, federalTaxDue: 12111 }
-  , { filingStatus: HeadOfHousehold, socSec: 17004, ordinaryIncome: 34455, qualifiedIncome: 1, federalTaxDue: 2886 }
-  , { filingStatus: HeadOfHousehold, socSec: 42337, ordinaryIncome: 35608, qualifiedIncome: 0, federalTaxDue: 4434 }
-  , { filingStatus: Single, socSec: 36269, ordinaryIncome: 1303, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 14869, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 29712, federalTaxDue: 7945 }
-  , { filingStatus: Single, socSec: 5189, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 470, qualifiedIncome: 22711, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 8981, ordinaryIncome: 41537, qualifiedIncome: 27276, federalTaxDue: 7356 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 9290, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 16449, ordinaryIncome: 0, qualifiedIncome: 4014, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 41918, ordinaryIncome: 14226, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 43719, qualifiedIncome: 0, federalTaxDue: 3379 }
-  , { filingStatus: Single, socSec: 27125, ordinaryIncome: 3446, qualifiedIncome: 8895, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 31069, qualifiedIncome: 0, federalTaxDue: 1861 }
-  , { filingStatus: HeadOfHousehold, socSec: 6025, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 44190, ordinaryIncome: 50000, qualifiedIncome: 50000, federalTaxDue: 16627 }
-  , { filingStatus: HeadOfHousehold, socSec: 47841, ordinaryIncome: 37332, qualifiedIncome: 50000, federalTaxDue: 14522 }
-  , { filingStatus: Single, socSec: 9588, ordinaryIncome: 13480, qualifiedIncome: 14410, federalTaxDue: 342 }
-  , { filingStatus: Single, socSec: 46411, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 48613, federalTaxDue: 7586 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 33294, qualifiedIncome: 50000, federalTaxDue: 2671 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 42644, qualifiedIncome: 20547, federalTaxDue: 14504 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 1, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 18191, qualifiedIncome: 8121, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 10990, ordinaryIncome: 0, qualifiedIncome: 40224, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 25435, qualifiedIncome: 12821, federalTaxDue: 1185 }
-  , { filingStatus: HeadOfHousehold, socSec: 41646, ordinaryIncome: 45107, qualifiedIncome: 40431, federalTaxDue: 13639 }
-  , { filingStatus: Single, socSec: 11753, ordinaryIncome: 46481, qualifiedIncome: 0, federalTaxDue: 5114 }
-  , { filingStatus: HeadOfHousehold, socSec: 18510, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 4510, qualifiedIncome: 49341, federalTaxDue: 1341 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 840, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 28792, ordinaryIncome: 35799, qualifiedIncome: 1, federalTaxDue: 4621 }
-  , { filingStatus: Single, socSec: 41176, ordinaryIncome: 50000, qualifiedIncome: 40490, federalTaxDue: 17464 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 40607, qualifiedIncome: 50000, federalTaxDue: 8452 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 10630, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 11242, ordinaryIncome: 7755, qualifiedIncome: 30067, federalTaxDue: 341 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 34418, qualifiedIncome: 50000, federalTaxDue: 2953 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 22257, qualifiedIncome: 0, federalTaxDue: 1861 }
-  , { filingStatus: Single, socSec: 2432, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 4381 }
-  , { filingStatus: Single, socSec: 21471, ordinaryIncome: 29859, qualifiedIncome: 50000, federalTaxDue: 10478 }
-  , { filingStatus: Single, socSec: 36067, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 33113, ordinaryIncome: 22595, qualifiedIncome: 9465, federalTaxDue: 2875 }
-  , { filingStatus: HeadOfHousehold, socSec: 41696, ordinaryIncome: 36574, qualifiedIncome: 1, federalTaxDue: 4616 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 12705, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 34395, ordinaryIncome: 42779, qualifiedIncome: 47926, federalTaxDue: 12793 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 30188, qualifiedIncome: 1, federalTaxDue: 1756 }
-  , { filingStatus: HeadOfHousehold, socSec: 7515, ordinaryIncome: 23226, qualifiedIncome: 1, federalTaxDue: 407 }
-  , { filingStatus: Single, socSec: 11494, ordinaryIncome: 0, qualifiedIncome: 7779, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 50000, federalTaxDue: 10988 }
-  , { filingStatus: HeadOfHousehold, socSec: 47246, ordinaryIncome: 1, qualifiedIncome: 8469, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 34328, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 7956, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 24387, ordinaryIncome: 50000, qualifiedIncome: 43702, federalTaxDue: 14806 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 1695, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 22361, qualifiedIncome: 50000, federalTaxDue: 11173 }
-  , { filingStatus: HeadOfHousehold, socSec: 34243, ordinaryIncome: 12584, qualifiedIncome: 31368, federalTaxDue: 2110 }
-  , { filingStatus: Single, socSec: 27150, ordinaryIncome: 0, qualifiedIncome: 24914, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 33532, federalTaxDue: 4690 }
-  , { filingStatus: HeadOfHousehold, socSec: 8711, ordinaryIncome: 9113, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 8113 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 40212, qualifiedIncome: 16336, federalTaxDue: 3296 }
-  , { filingStatus: HeadOfHousehold, socSec: 22204, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 34499, federalTaxDue: 2230 }
-  , { filingStatus: Single, socSec: 793, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 4214 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 29726, qualifiedIncome: 36515, federalTaxDue: 3491 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 42554, qualifiedIncome: 50000, federalTaxDue: 5150 }
-  , { filingStatus: HeadOfHousehold, socSec: 32669, ordinaryIncome: 40740, qualifiedIncome: 33914, federalTaxDue: 9745 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 12348 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 50000, qualifiedIncome: 50000, federalTaxDue: 7161 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 9365, qualifiedIncome: 5839, federalTaxDue: 524 }
-  , { filingStatus: HeadOfHousehold, socSec: 14336, ordinaryIncome: 50000, qualifiedIncome: 1, federalTaxDue: 4760 }
-  , { filingStatus: Single, socSec: 6438, ordinaryIncome: 16936, qualifiedIncome: 0, federalTaxDue: 304 }
-  , { filingStatus: Single, socSec: 20369, ordinaryIncome: 0, qualifiedIncome: 46075, federalTaxDue: 1705 }
-  , { filingStatus: Single, socSec: 29456, ordinaryIncome: 7538, qualifiedIncome: 18147, federalTaxDue: 359 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 2363, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 24606, ordinaryIncome: 31835, qualifiedIncome: 27726, federalTaxDue: 4562 }
-  , { filingStatus: HeadOfHousehold, socSec: 18700, ordinaryIncome: 132, qualifiedIncome: 81, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 11614, ordinaryIncome: 0, qualifiedIncome: 39875, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 26212, ordinaryIncome: 5526, qualifiedIncome: 20140, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 6818, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 45861, ordinaryIncome: 40, qualifiedIncome: 26584, federalTaxDue: 386 }
-  , { filingStatus: HeadOfHousehold, socSec: 22686, ordinaryIncome: 2550, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 18383, qualifiedIncome: 50000, federalTaxDue: 2561 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 23605, qualifiedIncome: 1, federalTaxDue: 346 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 8113 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 1440 }
-  , { filingStatus: HeadOfHousehold, socSec: 5659, ordinaryIncome: 0, qualifiedIncome: 49603, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 25897, federalTaxDue: 14098 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 10210, ordinaryIncome: 50000, qualifiedIncome: 40205, federalTaxDue: 11631 }
-  , { filingStatus: Single, socSec: 48005, ordinaryIncome: 16465, qualifiedIncome: 3528, federalTaxDue: 1668 }
-  , { filingStatus: Single, socSec: 25904, ordinaryIncome: 2864, qualifiedIncome: 50000, federalTaxDue: 4206 }
-  , { filingStatus: HeadOfHousehold, socSec: 13568, ordinaryIncome: 0, qualifiedIncome: 10753, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 45266, ordinaryIncome: 15142, qualifiedIncome: 48834, federalTaxDue: 7962 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 50000, qualifiedIncome: 39200, federalTaxDue: 5541 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 30707, qualifiedIncome: 0, federalTaxDue: 3737 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 44252, qualifiedIncome: 26067, federalTaxDue: 2608 }
-  , { filingStatus: Single, socSec: 33051, ordinaryIncome: 50000, qualifiedIncome: 1, federalTaxDue: 9871 }
-  , { filingStatus: HeadOfHousehold, socSec: 19028, ordinaryIncome: 12773, qualifiedIncome: 23158, federalTaxDue: 685 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 15245, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 46337, ordinaryIncome: 43821, qualifiedIncome: 0, federalTaxDue: 6663 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 48021, qualifiedIncome: 1903, federalTaxDue: 12183 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 28765, ordinaryIncome: 0, qualifiedIncome: 30560, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 44840, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 2490, ordinaryIncome: 32906, qualifiedIncome: 0, federalTaxDue: 2336 }
-  , { filingStatus: HeadOfHousehold, socSec: 26656, ordinaryIncome: 20414, qualifiedIncome: 0, federalTaxDue: 464 }
-  , { filingStatus: Single, socSec: 35623, ordinaryIncome: 12659, qualifiedIncome: 50000, federalTaxDue: 9081 }
-  , { filingStatus: HeadOfHousehold, socSec: 16887, ordinaryIncome: 13020, qualifiedIncome: 50000, federalTaxDue: 1191 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 44902, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 2389, ordinaryIncome: 50000, qualifiedIncome: 33854, federalTaxDue: 9114 }
-  , { filingStatus: Single, socSec: 7732, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 1440 }
-  , { filingStatus: Single, socSec: 29949, ordinaryIncome: 0, qualifiedIncome: 30993, federalTaxDue: 77 }
-  , { filingStatus: HeadOfHousehold, socSec: 26553, ordinaryIncome: 50000, qualifiedIncome: 50000, federalTaxDue: 13254 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 14000, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 14982, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 5363, qualifiedIncome: 32481, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 4053, ordinaryIncome: 37363, qualifiedIncome: 50000, federalTaxDue: 4679 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 44419, qualifiedIncome: 29073, federalTaxDue: 2628 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 11060, ordinaryIncome: 35212, qualifiedIncome: 9853, federalTaxDue: 2652 }
-  , { filingStatus: HeadOfHousehold, socSec: 47478, ordinaryIncome: 10363, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 36952, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 5968 }
-  , { filingStatus: HeadOfHousehold, socSec: 43006, ordinaryIncome: 30576, qualifiedIncome: 50000, federalTaxDue: 11786 }
-  , { filingStatus: HeadOfHousehold, socSec: 16595, ordinaryIncome: 0, qualifiedIncome: 34697, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 17416, federalTaxDue: 3298 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 15135, ordinaryIncome: 1799, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 33753, qualifiedIncome: 1, federalTaxDue: 2183 }
-  , { filingStatus: HeadOfHousehold, socSec: 6188, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 30758, qualifiedIncome: 19240, federalTaxDue: 11000 }
-  , { filingStatus: Single, socSec: 599, ordinaryIncome: 0, qualifiedIncome: 38343, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 34632, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 5276, ordinaryIncome: 50000, qualifiedIncome: 33374, federalTaxDue: 5877 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 38832, federalTaxDue: 3874 }
-  , { filingStatus: Single, socSec: 16262, ordinaryIncome: 26159, qualifiedIncome: 0, federalTaxDue: 1842 }
-  , { filingStatus: HeadOfHousehold, socSec: 24592, ordinaryIncome: 0, qualifiedIncome: 18035, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 5239, qualifiedIncome: 44722, federalTaxDue: 648 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 22616, qualifiedIncome: 50000, federalTaxDue: 3619 }
-  , { filingStatus: HeadOfHousehold, socSec: 36025, ordinaryIncome: 20667, qualifiedIncome: 0, federalTaxDue: 899 }
-  , { filingStatus: HeadOfHousehold, socSec: 22282, ordinaryIncome: 50000, qualifiedIncome: 47754, federalTaxDue: 11937 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 29612, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 48300, qualifiedIncome: 50000, federalTaxDue: 6702 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 1, qualifiedIncome: 26392, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 31286, ordinaryIncome: 31564, qualifiedIncome: 0, federalTaxDue: 3808 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 36153, qualifiedIncome: 0, federalTaxDue: 2471 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 42132, ordinaryIncome: 17262, qualifiedIncome: 15817, federalTaxDue: 1964 }
-  , { filingStatus: Single, socSec: 19397, ordinaryIncome: 50000, qualifiedIncome: 31220, federalTaxDue: 12001 }
-  , { filingStatus: HeadOfHousehold, socSec: 16138, ordinaryIncome: 50000, qualifiedIncome: 14097, federalTaxDue: 5479 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 37923, qualifiedIncome: 37489, federalTaxDue: 5851 }
-  , { filingStatus: HeadOfHousehold, socSec: 38345, ordinaryIncome: 7498, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 50000, federalTaxDue: 10988 }
-  , { filingStatus: HeadOfHousehold, socSec: 11555, ordinaryIncome: 49567, qualifiedIncome: 0, federalTaxDue: 4425 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 50000, federalTaxDue: 7161 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 9520 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 39644, qualifiedIncome: 0, federalTaxDue: 2890 }
-  , { filingStatus: Single, socSec: 14085, ordinaryIncome: 0, qualifiedIncome: 18700, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 48561, qualifiedIncome: 8987, federalTaxDue: 11244 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 11743, qualifiedIncome: 340, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 38609, ordinaryIncome: 42983, qualifiedIncome: 33552, federalTaxDue: 11572 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 28297, ordinaryIncome: 31943, qualifiedIncome: 50000, federalTaxDue: 8779 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 34355, qualifiedIncome: 0, federalTaxDue: 4547 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 4285 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 6280, qualifiedIncome: 50000, federalTaxDue: 1440 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 37690, qualifiedIncome: 42202, federalTaxDue: 6495 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 14563, qualifiedIncome: 0, federalTaxDue: 66 }
-  , { filingStatus: HeadOfHousehold, socSec: 6062, ordinaryIncome: 30436, qualifiedIncome: 0, federalTaxDue: 1332 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 20720, qualifiedIncome: 50000, federalTaxDue: 10730 }
-  , { filingStatus: HeadOfHousehold, socSec: 7582, ordinaryIncome: 11153, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 48565, federalTaxDue: 3741 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 29618, qualifiedIncome: 44104, federalTaxDue: 947 }
-  , { filingStatus: HeadOfHousehold, socSec: 27543, ordinaryIncome: 50000, qualifiedIncome: 35979, federalTaxDue: 11378 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 18753, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 18196, ordinaryIncome: 1, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 45993, federalTaxDue: 6559 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 1, qualifiedIncome: 46824, federalTaxDue: 964 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 39363, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 4133 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 13315, qualifiedIncome: 22492, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 12711, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 7920, qualifiedIncome: 15591, federalTaxDue: 1104 }
-  , { filingStatus: HeadOfHousehold, socSec: 47177, ordinaryIncome: 21810, qualifiedIncome: 18164, federalTaxDue: 3471 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 9353, federalTaxDue: 11616 }
-  , { filingStatus: HeadOfHousehold, socSec: 49040, ordinaryIncome: 4926, qualifiedIncome: 45203, federalTaxDue: 4815 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 9149, ordinaryIncome: 17844, qualifiedIncome: 50000, federalTaxDue: 753 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 12348 }
-  , { filingStatus: HeadOfHousehold, socSec: 32853, ordinaryIncome: 21750, qualifiedIncome: 10, federalTaxDue: 966 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 21848, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 32641, qualifiedIncome: 1, federalTaxDue: 2050 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 26829, ordinaryIncome: 17735, qualifiedIncome: 0, federalTaxDue: 691 }
-  , { filingStatus: HeadOfHousehold, socSec: 47654, ordinaryIncome: 42638, qualifiedIncome: 29435, federalTaxDue: 12570 }
-  , { filingStatus: HeadOfHousehold, socSec: 10954, ordinaryIncome: 8604, qualifiedIncome: 19330, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 46257, qualifiedIncome: 0, federalTaxDue: 3684 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 46851, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 9226 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 31462, federalTaxDue: 344 }
-  , { filingStatus: HeadOfHousehold, socSec: 23448, ordinaryIncome: 349, qualifiedIncome: 20041, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 21132, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 19766, ordinaryIncome: 0, qualifiedIncome: 11731, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 21471, ordinaryIncome: 29754, qualifiedIncome: 4335, federalTaxDue: 2513 }
-  , { filingStatus: HeadOfHousehold, socSec: 39189, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 13986, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 3729, ordinaryIncome: 40685, qualifiedIncome: 13640, federalTaxDue: 2561 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 16426, qualifiedIncome: 252, federalTaxDue: 253 }
-  , { filingStatus: Single, socSec: 21019, ordinaryIncome: 34164, qualifiedIncome: 50000, federalTaxDue: 11536 }
-  , { filingStatus: Single, socSec: 6582, ordinaryIncome: 2583, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 41199, ordinaryIncome: 3001, qualifiedIncome: 25503, federalTaxDue: 644 }
-  , { filingStatus: HeadOfHousehold, socSec: 11085, ordinaryIncome: 36745, qualifiedIncome: 1, federalTaxDue: 2838 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 29659, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 14477, qualifiedIncome: 0, federalTaxDue: 58 }
-  , { filingStatus: Single, socSec: 24155, ordinaryIncome: 1, qualifiedIncome: 50000, federalTaxDue: 3098 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 1440 }
-  , { filingStatus: Single, socSec: 39974, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 11166 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 1, qualifiedIncome: 944, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 1788, qualifiedIncome: 43040, federalTaxDue: 396 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 1776, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 9831, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 34103, ordinaryIncome: 26263, qualifiedIncome: 50000, federalTaxDue: 8578 }
-  , { filingStatus: HeadOfHousehold, socSec: 30606, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 18299, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 43248, federalTaxDue: 427 }
-  , { filingStatus: HeadOfHousehold, socSec: 23987, ordinaryIncome: 45062, qualifiedIncome: 10217, federalTaxDue: 5365 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 34473, qualifiedIncome: 0, federalTaxDue: 2270 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 38693, federalTaxDue: 959 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 22829, qualifiedIncome: 2911, federalTaxDue: 893 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 17180, qualifiedIncome: 5050, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 5143, ordinaryIncome: 29025, qualifiedIncome: 12507, federalTaxDue: 2141 }
-  , { filingStatus: HeadOfHousehold, socSec: 1485, ordinaryIncome: 33666, qualifiedIncome: 15273, federalTaxDue: 1489 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 8248, qualifiedIncome: 50000, federalTaxDue: 7362 }
-  , { filingStatus: HeadOfHousehold, socSec: 2899, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 14434, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 33772, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 45238, ordinaryIncome: 1, qualifiedIncome: 5660, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 41472, ordinaryIncome: 1, qualifiedIncome: 25230, federalTaxDue: 77 }
-  , { filingStatus: Single, socSec: 43866, ordinaryIncome: 0, qualifiedIncome: 35821, federalTaxDue: 2028 }
-  , { filingStatus: Single, socSec: 29672, ordinaryIncome: 0, qualifiedIncome: 3726, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 49675, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 485, ordinaryIncome: 8492, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 20412, qualifiedIncome: 0, federalTaxDue: 1451 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 34351, federalTaxDue: 15366 }
-  , { filingStatus: HeadOfHousehold, socSec: 37631, ordinaryIncome: 14823, qualifiedIncome: 44084, federalTaxDue: 5412 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 15610, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 11275, ordinaryIncome: 39500, qualifiedIncome: 44240, federalTaxDue: 6049 }
-  , { filingStatus: HeadOfHousehold, socSec: 15506, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 32981, ordinaryIncome: 7911, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 42696, qualifiedIncome: 39226, federalTaxDue: 7400 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 41304, qualifiedIncome: 1, federalTaxDue: 3089 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 39569, federalTaxDue: 9423 }
-  , { filingStatus: Single, socSec: 28078, ordinaryIncome: 50000, qualifiedIncome: 31081, federalTaxDue: 13603 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 39734, qualifiedIncome: 30329, federalTaxDue: 5266 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 20988, qualifiedIncome: 0, federalTaxDue: 709 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 44139, qualifiedIncome: 50000, federalTaxDue: 16424 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 50000, federalTaxDue: 8113 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 7935, qualifiedIncome: 9759, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 17042, ordinaryIncome: 20819, qualifiedIncome: 1, federalTaxDue: 909 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 1, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 17666, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 43376, ordinaryIncome: 23748, qualifiedIncome: 1, federalTaxDue: 2689 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 18091, qualifiedIncome: 1, federalTaxDue: 419 }
-  , { filingStatus: HeadOfHousehold, socSec: 4330, ordinaryIncome: 44204, qualifiedIncome: 0, federalTaxDue: 3044 }
-  , { filingStatus: HeadOfHousehold, socSec: 30369, ordinaryIncome: 4373, qualifiedIncome: 12434, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 33770, ordinaryIncome: 0, qualifiedIncome: 21569, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1097, ordinaryIncome: 16321, qualifiedIncome: 27742, federalTaxDue: 335 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 24204, ordinaryIncome: 47847, qualifiedIncome: 1, federalTaxDue: 5508 }
-  , { filingStatus: HeadOfHousehold, socSec: 25035, ordinaryIncome: 2327, qualifiedIncome: 29744, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 17246, ordinaryIncome: 1, qualifiedIncome: 4014, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 18477, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 25724, ordinaryIncome: 5283, qualifiedIncome: 31200, federalTaxDue: 268 }
-  , { filingStatus: Single, socSec: 48206, ordinaryIncome: 4585, qualifiedIncome: 745, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 36102, qualifiedIncome: 1, federalTaxDue: 6691 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 45328, federalTaxDue: 6460 }
-  , { filingStatus: Single, socSec: 28496, ordinaryIncome: 6937, qualifiedIncome: 45747, federalTaxDue: 5263 }
-  , { filingStatus: HeadOfHousehold, socSec: 45379, ordinaryIncome: 50000, qualifiedIncome: 19800, federalTaxDue: 12319 }
-  , { filingStatus: HeadOfHousehold, socSec: 8404, ordinaryIncome: 21839, qualifiedIncome: 0, federalTaxDue: 221 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 25845, qualifiedIncome: 1, federalTaxDue: 1234 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 47330, federalTaxDue: 7100 }
-  , { filingStatus: HeadOfHousehold, socSec: 22332, ordinaryIncome: 4328, qualifiedIncome: 40473, federalTaxDue: 316 }
-  , { filingStatus: Single, socSec: 48991, ordinaryIncome: 31140, qualifiedIncome: 0, federalTaxDue: 4617 }
-  , { filingStatus: HeadOfHousehold, socSec: 18774, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 5705, ordinaryIncome: 1, qualifiedIncome: 38758, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 41544, ordinaryIncome: 22213, qualifiedIncome: 50000, federalTaxDue: 12846 }
-  , { filingStatus: HeadOfHousehold, socSec: 36118, ordinaryIncome: 25970, qualifiedIncome: 46985, federalTaxDue: 8509 }
-  , { filingStatus: Single, socSec: 29738, ordinaryIncome: 1, qualifiedIncome: 13259, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 31846, ordinaryIncome: 0, qualifiedIncome: 39603, federalTaxDue: 2105 }
-  , { filingStatus: HeadOfHousehold, socSec: 42829, ordinaryIncome: 48833, qualifiedIncome: 8113, federalTaxDue: 9832 }
-  , { filingStatus: Single, socSec: 19711, ordinaryIncome: 0, qualifiedIncome: 27294, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 8099, ordinaryIncome: 9972, qualifiedIncome: 50000, federalTaxDue: 2179 }
-  , { filingStatus: HeadOfHousehold, socSec: 16537, ordinaryIncome: 18726, qualifiedIncome: 26524, federalTaxDue: 1263 }
-  , { filingStatus: Single, socSec: 47575, ordinaryIncome: 32886, qualifiedIncome: 29265, federalTaxDue: 13212 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 46357, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 12603, qualifiedIncome: 50000, federalTaxDue: 12313 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 10131, qualifiedIncome: 28328, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 284, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 43984, ordinaryIncome: 20273, qualifiedIncome: 0, federalTaxDue: 1165 }
-  , { filingStatus: HeadOfHousehold, socSec: 10935, ordinaryIncome: 0, qualifiedIncome: 31003, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 34508, qualifiedIncome: 50000, federalTaxDue: 6805 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 8542, federalTaxDue: 3298 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 46621, qualifiedIncome: 25660, federalTaxDue: 6425 }
-  , { filingStatus: HeadOfHousehold, socSec: 17044, ordinaryIncome: 39996, qualifiedIncome: 0, federalTaxDue: 3836 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 21517, qualifiedIncome: 0, federalTaxDue: 137 }
-  , { filingStatus: Single, socSec: 28083, ordinaryIncome: 50000, qualifiedIncome: 13327, federalTaxDue: 10941 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 22012, qualifiedIncome: 0, federalTaxDue: 1807 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 27538, qualifiedIncome: 49500, federalTaxDue: 1157 }
-  , { filingStatus: Single, socSec: 49679, ordinaryIncome: 1, qualifiedIncome: 46395, federalTaxDue: 6708 }
-  , { filingStatus: Single, socSec: 16557, ordinaryIncome: 1, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 8609, qualifiedIncome: 50000, federalTaxDue: 1440 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 47604, qualifiedIncome: 1, federalTaxDue: 3845 }
-  , { filingStatus: Single, socSec: 20245, ordinaryIncome: 50000, qualifiedIncome: 19725, federalTaxDue: 10435 }
-  , { filingStatus: HeadOfHousehold, socSec: 26802, ordinaryIncome: 1, qualifiedIncome: 2105, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 24012, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 47360, qualifiedIncome: 34678, federalTaxDue: 4150 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 8721, qualifiedIncome: 3344, federalTaxDue: 193 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 49291, qualifiedIncome: 1, federalTaxDue: 4048 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 50000, federalTaxDue: 17713 }
-  , { filingStatus: Single, socSec: 27966, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 11184, ordinaryIncome: 0, qualifiedIncome: 6170, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 10738, qualifiedIncome: 36550, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 7541, ordinaryIncome: 0, qualifiedIncome: 366, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 10197, ordinaryIncome: 0, qualifiedIncome: 29568, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 38991, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 14532, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 24839, ordinaryIncome: 45807, qualifiedIncome: 48811, federalTaxDue: 11551 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 46041, qualifiedIncome: 34631, federalTaxDue: 7614 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 11467, qualifiedIncome: 5530, federalTaxDue: 261 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 35539, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 19545, qualifiedIncome: 0, federalTaxDue: 565 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 18212, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 34163, qualifiedIncome: 5586, federalTaxDue: 2233 }
-  , { filingStatus: Single, socSec: 16386, ordinaryIncome: 34054, qualifiedIncome: 44721, federalTaxDue: 9651 }
-  , { filingStatus: HeadOfHousehold, socSec: 5643, ordinaryIncome: 1, qualifiedIncome: 40409, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 47458, federalTaxDue: 10607 }
-  , { filingStatus: HeadOfHousehold, socSec: 647, ordinaryIncome: 38549, qualifiedIncome: 43779, federalTaxDue: 3284 }
-  , { filingStatus: Single, socSec: 31861, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 4800 }
-  , { filingStatus: HeadOfHousehold, socSec: 37231, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 31741, ordinaryIncome: 6854, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 15469, qualifiedIncome: 30718, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 13753, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 14739, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 19183, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 39636, ordinaryIncome: 40069, qualifiedIncome: 8238, federalTaxDue: 10113 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 40067, qualifiedIncome: 34496, federalTaxDue: 5981 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 22559, federalTaxDue: 6872 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 4488, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 30995, ordinaryIncome: 2086, qualifiedIncome: 633, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 9030, ordinaryIncome: 34501, qualifiedIncome: 50000, federalTaxDue: 8876 }
-  , { filingStatus: HeadOfHousehold, socSec: 3217, ordinaryIncome: 15240, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 29993, ordinaryIncome: 0, qualifiedIncome: 2335, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 33961, ordinaryIncome: 1, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 16770, federalTaxDue: 15556 }
-  , { filingStatus: HeadOfHousehold, socSec: 10130, ordinaryIncome: 18590, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 41034, qualifiedIncome: 44332, federalTaxDue: 14890 }
-  , { filingStatus: Single, socSec: 36542, ordinaryIncome: 7410, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1322, ordinaryIncome: 18296, qualifiedIncome: 49135, federalTaxDue: 2690 }
-  , { filingStatus: Single, socSec: 26743, ordinaryIncome: 50000, qualifiedIncome: 47662, federalTaxDue: 15841 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 39982, qualifiedIncome: 10261, federalTaxDue: 8901 }
-  , { filingStatus: Single, socSec: 21823, ordinaryIncome: 11905, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 41537, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 11458 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 50000, federalTaxDue: 1440 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 26488, qualifiedIncome: 24370, federalTaxDue: 10991 }
-  , { filingStatus: HeadOfHousehold, socSec: 45020, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 9054 }
-  , { filingStatus: Single, socSec: 34282, ordinaryIncome: 49568, qualifiedIncome: 0, federalTaxDue: 10006 }
-  , { filingStatus: HeadOfHousehold, socSec: 8163, ordinaryIncome: 26547, qualifiedIncome: 0, federalTaxDue: 921 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 3044, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 13123, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 40156, ordinaryIncome: 20766, qualifiedIncome: 37552, federalTaxDue: 10401 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 3421, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 5286, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 27764, qualifiedIncome: 0, federalTaxDue: 3084 }
-  , { filingStatus: Single, socSec: 23311, ordinaryIncome: 1, qualifiedIncome: 50000, federalTaxDue: 2919 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 3661, qualifiedIncome: 46312, federalTaxDue: 887 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 46793, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 38426, ordinaryIncome: 30604, qualifiedIncome: 0, federalTaxDue: 3959 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 12672, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 21954, qualifiedIncome: 1, federalTaxDue: 805 }
-  , { filingStatus: Single, socSec: 2220, ordinaryIncome: 50000, qualifiedIncome: 1, federalTaxDue: 4359 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 22502, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 4022, ordinaryIncome: 0, qualifiedIncome: 12299, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 13938, ordinaryIncome: 34295, qualifiedIncome: 50000, federalTaxDue: 6119 }
-  , { filingStatus: HeadOfHousehold, socSec: 34106, ordinaryIncome: 1, qualifiedIncome: 9505, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 4461, ordinaryIncome: 16763, qualifiedIncome: 50000, federalTaxDue: 40 }
-  , { filingStatus: HeadOfHousehold, socSec: 38389, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 9725, ordinaryIncome: 42607, qualifiedIncome: 0, federalTaxDue: 3403 }
-  , { filingStatus: HeadOfHousehold, socSec: 14684, ordinaryIncome: 6192, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 22521, ordinaryIncome: 20085, qualifiedIncome: 50000, federalTaxDue: 4252 }
-  , { filingStatus: Single, socSec: 43211, ordinaryIncome: 18588, qualifiedIncome: 48987, federalTaxDue: 12208 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 23662, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1580, ordinaryIncome: 1, qualifiedIncome: 10779, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 22843, ordinaryIncome: 6079, qualifiedIncome: 50000, federalTaxDue: 721 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 1, qualifiedIncome: 46889, federalTaxDue: 973 }
-  , { filingStatus: Single, socSec: 9863, ordinaryIncome: 0, qualifiedIncome: 448, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 20432, federalTaxDue: 6553 }
-  , { filingStatus: HeadOfHousehold, socSec: 15221, ordinaryIncome: 30451, qualifiedIncome: 23753, federalTaxDue: 2505 }
-  , { filingStatus: Single, socSec: 35979, ordinaryIncome: 40691, qualifiedIncome: 5823, federalTaxDue: 9210 }
-  , { filingStatus: Single, socSec: 46505, ordinaryIncome: 1, qualifiedIncome: 3642, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 1, federalTaxDue: 12348 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 45215, federalTaxDue: 722 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 45081, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 4125, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 20021, qualifiedIncome: 0, federalTaxDue: 612 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 29043, qualifiedIncome: 8042, federalTaxDue: 889 }
-  , { filingStatus: HeadOfHousehold, socSec: 48242, ordinaryIncome: 40175, qualifiedIncome: 12392, federalTaxDue: 9533 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 7976, federalTaxDue: 4684 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 50000, qualifiedIncome: 50000, federalTaxDue: 10988 }
-  , { filingStatus: HeadOfHousehold, socSec: 47744, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 9309 }
-  , { filingStatus: Single, socSec: 15146, ordinaryIncome: 50000, qualifiedIncome: 10532, federalTaxDue: 8103 }
-  , { filingStatus: Single, socSec: 37128, ordinaryIncome: 40652, qualifiedIncome: 0, federalTaxDue: 7339 }
-  , { filingStatus: Single, socSec: 33282, ordinaryIncome: 21919, qualifiedIncome: 1, federalTaxDue: 1769 }
-  , { filingStatus: HeadOfHousehold, socSec: 35947, ordinaryIncome: 1396, qualifiedIncome: 27171, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 39315, qualifiedIncome: 29262, federalTaxDue: 12252 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 5471, qualifiedIncome: 16681, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 4902, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 24854, ordinaryIncome: 21470, qualifiedIncome: 1, federalTaxDue: 1243 }
-  , { filingStatus: Single, socSec: 33665, ordinaryIncome: 1, qualifiedIncome: 30650, federalTaxDue: 206 }
-  , { filingStatus: HeadOfHousehold, socSec: 19084, ordinaryIncome: 44721, qualifiedIncome: 8843, federalTaxDue: 4611 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 33561, federalTaxDue: 4695 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 31333, federalTaxDue: 333 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 5374, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 28104, ordinaryIncome: 6120, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 28899, ordinaryIncome: 6963, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 42185, ordinaryIncome: 0, qualifiedIncome: 37627, federalTaxDue: 2520 }
-  , { filingStatus: HeadOfHousehold, socSec: 10819, ordinaryIncome: 18144, qualifiedIncome: 26850, federalTaxDue: 719 }
-  , { filingStatus: HeadOfHousehold, socSec: 47785, ordinaryIncome: 50000, qualifiedIncome: 50000, federalTaxDue: 17299 }
-  , { filingStatus: Single, socSec: 49021, ordinaryIncome: 50000, qualifiedIncome: 50000, federalTaxDue: 20357 }
-  , { filingStatus: HeadOfHousehold, socSec: 33485, ordinaryIncome: 0, qualifiedIncome: 41202, federalTaxDue: 470 }
-  , { filingStatus: Single, socSec: 26660, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 7302, ordinaryIncome: 4699, qualifiedIncome: 47616, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 6275, ordinaryIncome: 50000, qualifiedIncome: 43142, federalTaxDue: 7572 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 32296, qualifiedIncome: 42522, federalTaxDue: 5086 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 27471, qualifiedIncome: 7319, federalTaxDue: 732 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 28906, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 45930, ordinaryIncome: 8782, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 6096, ordinaryIncome: 26550, qualifiedIncome: 31804, federalTaxDue: 1158 }
-  , { filingStatus: Single, socSec: 38406, ordinaryIncome: 35356, qualifiedIncome: 0, federalTaxDue: 5303 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 29453, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 49019, qualifiedIncome: 50000, federalTaxDue: 6896 }
-  , { filingStatus: HeadOfHousehold, socSec: 13559, ordinaryIncome: 46176, qualifiedIncome: 24154, federalTaxDue: 5363 }
-  , { filingStatus: HeadOfHousehold, socSec: 29737, ordinaryIncome: 3597, qualifiedIncome: 34002, federalTaxDue: 364 }
-  , { filingStatus: HeadOfHousehold, socSec: 2975, ordinaryIncome: 43594, qualifiedIncome: 50000, federalTaxDue: 6114 }
-  , { filingStatus: HeadOfHousehold, socSec: 21407, ordinaryIncome: 46765, qualifiedIncome: 23476, federalTaxDue: 7221 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 14781, qualifiedIncome: 41268, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 23793, ordinaryIncome: 9773, qualifiedIncome: 17797, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 4377, ordinaryIncome: 0, qualifiedIncome: 16814, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 21210, ordinaryIncome: 1, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 2786, qualifiedIncome: 14770, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 34939, qualifiedIncome: 0, federalTaxDue: 6218 }
-  , { filingStatus: HeadOfHousehold, socSec: 29217, ordinaryIncome: 0, qualifiedIncome: 43682, federalTaxDue: 468 }
-  , { filingStatus: HeadOfHousehold, socSec: 4310, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 49203, ordinaryIncome: 36079, qualifiedIncome: 47065, federalTaxDue: 14061 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 3298 }
-  , { filingStatus: HeadOfHousehold, socSec: 7753, ordinaryIncome: 15493, qualifiedIncome: 13506, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 12625, federalTaxDue: 14934 }
-  , { filingStatus: Single, socSec: 6168, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 4844 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 48258, qualifiedIncome: 1, federalTaxDue: 11639 }
-  , { filingStatus: Single, socSec: 3025, ordinaryIncome: 50000, qualifiedIncome: 39884, federalTaxDue: 10165 }
-  , { filingStatus: HeadOfHousehold, socSec: 9519, ordinaryIncome: 5168, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 49783, ordinaryIncome: 11242, qualifiedIncome: 0, federalTaxDue: 366 }
-  , { filingStatus: HeadOfHousehold, socSec: 26517, ordinaryIncome: 0, qualifiedIncome: 45242, federalTaxDue: 239 }
-  , { filingStatus: HeadOfHousehold, socSec: 46780, ordinaryIncome: 0, qualifiedIncome: 37807, federalTaxDue: 747 }
-  , { filingStatus: Single, socSec: 47361, ordinaryIncome: 5136, qualifiedIncome: 26769, federalTaxDue: 1559 }
-  , { filingStatus: Single, socSec: 40360, ordinaryIncome: 1, qualifiedIncome: 1381, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 9852, qualifiedIncome: 0, federalTaxDue: 118 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 50000, federalTaxDue: 10988 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 47989, federalTaxDue: 1138 }
-  , { filingStatus: Single, socSec: 38955, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 10975 }
-  , { filingStatus: HeadOfHousehold, socSec: 11742, ordinaryIncome: 42328, qualifiedIncome: 0, federalTaxDue: 3575 }
-  , { filingStatus: HeadOfHousehold, socSec: 26040, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 5954 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 49092, qualifiedIncome: 50000, federalTaxDue: 6915 }
-  , { filingStatus: HeadOfHousehold, socSec: 27167, ordinaryIncome: 11489, qualifiedIncome: 50000, federalTaxDue: 2997 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 11089, federalTaxDue: 11876 }
-  , { filingStatus: HeadOfHousehold, socSec: 28417, ordinaryIncome: 50000, qualifiedIncome: 50000, federalTaxDue: 13682 }
-  , { filingStatus: HeadOfHousehold, socSec: 6952, ordinaryIncome: 0, qualifiedIncome: 48193, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 12373, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 32987, qualifiedIncome: 50000, federalTaxDue: 2594 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 37054, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 44212, qualifiedIncome: 32166, federalTaxDue: 2923 }
-  , { filingStatus: Single, socSec: 15057, ordinaryIncome: 1, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 16758, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 9472, ordinaryIncome: 34699, qualifiedIncome: 31785, federalTaxDue: 6298 }
-  , { filingStatus: Single, socSec: 26176, ordinaryIncome: 45875, qualifiedIncome: 0, federalTaxDue: 7678 }
-  , { filingStatus: Single, socSec: 6283, ordinaryIncome: 14407, qualifiedIncome: 37878, federalTaxDue: 1084 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 45270, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 7570 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 31713, qualifiedIncome: 42101, federalTaxDue: 1156 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 26601, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 45852, qualifiedIncome: 0, federalTaxDue: 3635 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 50000, federalTaxDue: 7161 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 25495, federalTaxDue: 462 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 41633, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 29963, qualifiedIncome: 0, federalTaxDue: 1729 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 16551, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 12627, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 1, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 40940, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 41073, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 3087 }
-  , { filingStatus: Single, socSec: 8240, ordinaryIncome: 1, qualifiedIncome: 41894, federalTaxDue: 224 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 27226, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 15119, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 34749, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 583, ordinaryIncome: 0, qualifiedIncome: 44828, federalTaxDue: 664 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 1, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 9492, qualifiedIncome: 16099, federalTaxDue: 1504 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 38578, qualifiedIncome: 15359, federalTaxDue: 2762 }
-  , { filingStatus: HeadOfHousehold, socSec: 3337, ordinaryIncome: 50000, qualifiedIncome: 30850, federalTaxDue: 5054 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 10004, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 34090, qualifiedIncome: 1, federalTaxDue: 2224 }
-  , { filingStatus: Single, socSec: 20914, ordinaryIncome: 25833, qualifiedIncome: 1, federalTaxDue: 2007 }
-  , { filingStatus: Single, socSec: 36232, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 11752, ordinaryIncome: 50000, qualifiedIncome: 50000, federalTaxDue: 13388 }
-  , { filingStatus: HeadOfHousehold, socSec: 48779, ordinaryIncome: 44622, qualifiedIncome: 0, federalTaxDue: 7217 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 45366, qualifiedIncome: 45678, federalTaxDue: 5261 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 49777, federalTaxDue: 1407 }
-  , { filingStatus: Single, socSec: 26315, ordinaryIncome: 16884, qualifiedIncome: 0, federalTaxDue: 550 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 24554, federalTaxDue: 382 }
-  , { filingStatus: HeadOfHousehold, socSec: 5951, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 18356, ordinaryIncome: 15072, qualifiedIncome: 29661, federalTaxDue: 2719 }
-  , { filingStatus: Single, socSec: 8710, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 1532, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 12734, ordinaryIncome: 1, qualifiedIncome: 5784, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 41053, qualifiedIncome: 4115, federalTaxDue: 3059 }
-  , { filingStatus: HeadOfHousehold, socSec: 757, ordinaryIncome: 50000, qualifiedIncome: 22265, federalTaxDue: 3375 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 38394, qualifiedIncome: 0, federalTaxDue: 2740 }
-  , { filingStatus: Single, socSec: 16290, ordinaryIncome: 25912, qualifiedIncome: 2788, federalTaxDue: 2073 }
-  , { filingStatus: HeadOfHousehold, socSec: 27158, ordinaryIncome: 35066, qualifiedIncome: 0, federalTaxDue: 3540 }
-  , { filingStatus: HeadOfHousehold, socSec: 40616, ordinaryIncome: 32089, qualifiedIncome: 0, federalTaxDue: 3565 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 45985, qualifiedIncome: 0, federalTaxDue: 2816 }
-  , { filingStatus: HeadOfHousehold, socSec: 30285, ordinaryIncome: 1249, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 43005, qualifiedIncome: 0, federalTaxDue: 2459 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 12348 }
-  , { filingStatus: HeadOfHousehold, socSec: 18856, ordinaryIncome: 23287, qualifiedIncome: 44572, federalTaxDue: 3461 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 19860, qualifiedIncome: 6130, federalTaxDue: 2789 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 30680, qualifiedIncome: 45208, federalTaxDue: 5053 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 13386, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 12098, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 3598, qualifiedIncome: 50000, federalTaxDue: 6082 }
-  , { filingStatus: Single, socSec: 15540, ordinaryIncome: 0, qualifiedIncome: 40107, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 42957, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 31227, ordinaryIncome: 0, qualifiedIncome: 46283, federalTaxDue: 639 }
-  , { filingStatus: Single, socSec: 2497, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 4388 }
-  , { filingStatus: Single, socSec: 36058, ordinaryIncome: 1032, qualifiedIncome: 50000, federalTaxDue: 6042 }
-  , { filingStatus: Single, socSec: 7174, ordinaryIncome: 48179, qualifiedIncome: 0, federalTaxDue: 4646 }
-  , { filingStatus: Single, socSec: 35644, ordinaryIncome: 0, qualifiedIncome: 44264, federalTaxDue: 4288 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 12348 }
-  , { filingStatus: HeadOfHousehold, socSec: 22376, ordinaryIncome: 9878, qualifiedIncome: 50000, federalTaxDue: 1572 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 12552, federalTaxDue: 14923 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 14859, qualifiedIncome: 0, federalTaxDue: 96 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 40486, federalTaxDue: 13 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 15258, qualifiedIncome: 20317, federalTaxDue: 4469 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 38358, qualifiedIncome: 27903, federalTaxDue: 1901 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 3560, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 16834, ordinaryIncome: 0, qualifiedIncome: 36503, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 29184, ordinaryIncome: 5372, qualifiedIncome: 37271, federalTaxDue: 3577 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 6646, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 40170, federalTaxDue: 9514 }
-  , { filingStatus: HeadOfHousehold, socSec: 43485, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 50000, qualifiedIncome: 11841, federalTaxDue: 3298 }
-  , { filingStatus: HeadOfHousehold, socSec: 17134, ordinaryIncome: 25021, qualifiedIncome: 0, federalTaxDue: 917 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 10351, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 25199, ordinaryIncome: 0, qualifiedIncome: 19849, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 29820, ordinaryIncome: 6643, qualifiedIncome: 50000, federalTaxDue: 2345 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 23722, federalTaxDue: 311 }
-  , { filingStatus: HeadOfHousehold, socSec: 31064, ordinaryIncome: 14686, qualifiedIncome: 49584, federalTaxDue: 4693 }
-  , { filingStatus: Single, socSec: 30783, ordinaryIncome: 7147, qualifiedIncome: 10278, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 37250, ordinaryIncome: 1, qualifiedIncome: 4596, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 31538, ordinaryIncome: 50000, qualifiedIncome: 50000, federalTaxDue: 17088 }
-  , { filingStatus: HeadOfHousehold, socSec: 43500, ordinaryIncome: 9439, qualifiedIncome: 31845, federalTaxDue: 1932 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 12317, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 41688, federalTaxDue: 9741 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 5314, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 23043, ordinaryIncome: 0, qualifiedIncome: 4983, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1694, ordinaryIncome: 31449, qualifiedIncome: 49259, federalTaxDue: 6257 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 20230, qualifiedIncome: 49756, federalTaxDue: 10561 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 24810, qualifiedIncome: 21715, federalTaxDue: 466 }
-  , { filingStatus: HeadOfHousehold, socSec: 27740, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 343 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 6887, qualifiedIncome: 42446, federalTaxDue: 8686 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 37281, qualifiedIncome: 1623, federalTaxDue: 2607 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 39343, qualifiedIncome: 0, federalTaxDue: 5654 }
-  , { filingStatus: Single, socSec: 17143, ordinaryIncome: 0, qualifiedIncome: 22944, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 44105, federalTaxDue: 556 }
-  , { filingStatus: Single, socSec: 20130, ordinaryIncome: 2337, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 41817, ordinaryIncome: 44382, qualifiedIncome: 50000, federalTaxDue: 14947 }
-  , { filingStatus: Single, socSec: 40651, ordinaryIncome: 26934, qualifiedIncome: 45915, federalTaxDue: 13105 }
-  , { filingStatus: HeadOfHousehold, socSec: 25778, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 12960, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1874, ordinaryIncome: 23297, qualifiedIncome: 50000, federalTaxDue: 4208 }
-  , { filingStatus: Single, socSec: 29285, ordinaryIncome: 751, qualifiedIncome: 47300, federalTaxDue: 4007 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 25759, qualifiedIncome: 39276, federalTaxDue: 2834 }
-  , { filingStatus: HeadOfHousehold, socSec: 6683, ordinaryIncome: 6743, qualifiedIncome: 12675, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 46295, qualifiedIncome: 50000, federalTaxDue: 6160 }
-  , { filingStatus: Single, socSec: 34440, ordinaryIncome: 23385, qualifiedIncome: 32975, federalTaxDue: 9152 }
-  , { filingStatus: HeadOfHousehold, socSec: 13618, ordinaryIncome: 47802, qualifiedIncome: 0, federalTaxDue: 4423 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 3298 }
-  , { filingStatus: HeadOfHousehold, socSec: 24057, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 45293, qualifiedIncome: 52, federalTaxDue: 7622 }
-  , { filingStatus: Single, socSec: 22545, ordinaryIncome: 8373, qualifiedIncome: 49371, federalTaxDue: 4828 }
-  , { filingStatus: HeadOfHousehold, socSec: 44716, ordinaryIncome: 29863, qualifiedIncome: 1, federalTaxDue: 3280 }
-  , { filingStatus: HeadOfHousehold, socSec: 10266, ordinaryIncome: 6041, qualifiedIncome: 34965, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1315, ordinaryIncome: 3132, qualifiedIncome: 46693, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 29930, ordinaryIncome: 33003, qualifiedIncome: 0, federalTaxDue: 4058 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 16528, qualifiedIncome: 16553, federalTaxDue: 2278 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 50000, qualifiedIncome: 31122, federalTaxDue: 4329 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 28902, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 42162, ordinaryIncome: 0, qualifiedIncome: 41300, federalTaxDue: 3911 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 13197, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 8662, qualifiedIncome: 50000, federalTaxDue: 1440 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 48077, qualifiedIncome: 35485, federalTaxDue: 17940 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 31571, qualifiedIncome: 12703, federalTaxDue: 1922 }
-  , { filingStatus: Single, socSec: 16534, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 1478 }
-  , { filingStatus: HeadOfHousehold, socSec: 49970, ordinaryIncome: 50000, qualifiedIncome: 44219, federalTaxDue: 16840 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 5217, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 5141, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 18230, qualifiedIncome: 32701, federalTaxDue: 10437 }
-  , { filingStatus: Single, socSec: 7724, ordinaryIncome: 0, qualifiedIncome: 42165, federalTaxDue: 265 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 20630, qualifiedIncome: 1, federalTaxDue: 1500 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 19354, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 8001, ordinaryIncome: 37263, qualifiedIncome: 0, federalTaxDue: 2586 }
-  , { filingStatus: Single, socSec: 12668, ordinaryIncome: 0, qualifiedIncome: 42485, federalTaxDue: 313 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 33953, qualifiedIncome: 48231, federalTaxDue: 6390 }
-  , { filingStatus: Single, socSec: 44293, ordinaryIncome: 50000, qualifiedIncome: 50000, federalTaxDue: 19473 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 6272, qualifiedIncome: 48649, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 19988, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 44084, qualifiedIncome: 0, federalTaxDue: 2588 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 47863, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 24726, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 33863, ordinaryIncome: 40053, qualifiedIncome: 50000, federalTaxDue: 12246 }
-  , { filingStatus: HeadOfHousehold, socSec: 19422, ordinaryIncome: 41462, qualifiedIncome: 39099, federalTaxDue: 7677 }
-  , { filingStatus: HeadOfHousehold, socSec: 28405, ordinaryIncome: 4911, qualifiedIncome: 38778, federalTaxDue: 891 }
-  , { filingStatus: Single, socSec: 12267, ordinaryIncome: 0, qualifiedIncome: 49042, federalTaxDue: 1296 }
-  , { filingStatus: Single, socSec: 6174, ordinaryIncome: 37213, qualifiedIncome: 0, federalTaxDue: 3228 }
-  , { filingStatus: Single, socSec: 26701, ordinaryIncome: 0, qualifiedIncome: 9673, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 18708, ordinaryIncome: 44130, qualifiedIncome: 50000, federalTaxDue: 13397 }
-  , { filingStatus: HeadOfHousehold, socSec: 24897, ordinaryIncome: 50000, qualifiedIncome: 50000, federalTaxDue: 12874 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 25824, qualifiedIncome: 1, federalTaxDue: 567 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 17276, ordinaryIncome: 2854, qualifiedIncome: 28245, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 22501, qualifiedIncome: 16259, federalTaxDue: 235 }
-  , { filingStatus: Single, socSec: 45567, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 44720, ordinaryIncome: 42592, qualifiedIncome: 9186, federalTaxDue: 11801 }
-  , { filingStatus: Single, socSec: 27205, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 10366, qualifiedIncome: 17779, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 3395, ordinaryIncome: 50000, qualifiedIncome: 50000, federalTaxDue: 11767 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 48207, qualifiedIncome: 18367, federalTaxDue: 3083 }
-  , { filingStatus: Single, socSec: 3964, ordinaryIncome: 44712, qualifiedIncome: 20670, federalTaxDue: 6070 }
-  , { filingStatus: Single, socSec: 24305, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 50000, federalTaxDue: 1440 }
-  , { filingStatus: Single, socSec: 27058, ordinaryIncome: 0, qualifiedIncome: 15196, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 37900, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 15783, ordinaryIncome: 0, qualifiedIncome: 21848, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 4491, ordinaryIncome: 11008, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 4133 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 43263, qualifiedIncome: 15852, federalTaxDue: 11109 }
-  , { filingStatus: Single, socSec: 39305, ordinaryIncome: 0, qualifiedIncome: 772, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 46191, qualifiedIncome: 0, federalTaxDue: 2841 }
-  , { filingStatus: HeadOfHousehold, socSec: 48146, ordinaryIncome: 46885, qualifiedIncome: 0, federalTaxDue: 8079 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 17261, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 36097, qualifiedIncome: 0, federalTaxDue: 1630 }
-  , { filingStatus: HeadOfHousehold, socSec: 17985, ordinaryIncome: 50000, qualifiedIncome: 3046, federalTaxDue: 5132 }
-  , { filingStatus: Single, socSec: 29274, ordinaryIncome: 28136, qualifiedIncome: 0, federalTaxDue: 2944 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 19026, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 36961, federalTaxDue: 3165 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 13755, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 34997, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 34053, federalTaxDue: 15321 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 1, federalTaxDue: 3298 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 4285 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 26941, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 26164, qualifiedIncome: 0, federalTaxDue: 3563 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 8118, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 45307, federalTaxDue: 736 }
-  , { filingStatus: Single, socSec: 4442, ordinaryIncome: 6097, qualifiedIncome: 29448, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 104, ordinaryIncome: 49804, qualifiedIncome: 0, federalTaxDue: 3285 }
-  , { filingStatus: HeadOfHousehold, socSec: 13545, ordinaryIncome: 44973, qualifiedIncome: 24030, federalTaxDue: 5016 }
-  , { filingStatus: Single, socSec: 23898, ordinaryIncome: 50000, qualifiedIncome: 50000, federalTaxDue: 15659 }
-  , { filingStatus: Single, socSec: 2777, ordinaryIncome: 40818, qualifiedIncome: 0, federalTaxDue: 3314 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 45427, ordinaryIncome: 1, qualifiedIncome: 30247, federalTaxDue: 672 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 6917, qualifiedIncome: 50000, federalTaxDue: 7003 }
-  , { filingStatus: HeadOfHousehold, socSec: 4103, ordinaryIncome: 30770, qualifiedIncome: 50000, federalTaxDue: 2912 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 218, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 21976, ordinaryIncome: 15890, qualifiedIncome: 27531, federalTaxDue: 3451 }
-  , { filingStatus: Single, socSec: 20793, ordinaryIncome: 0, qualifiedIncome: 35382, federalTaxDue: 61 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 19352, qualifiedIncome: 3834, federalTaxDue: 1607 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 46577, federalTaxDue: 2986 }
-  , { filingStatus: HeadOfHousehold, socSec: 27458, ordinaryIncome: 0, qualifiedIncome: 4798, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 25688, qualifiedIncome: 0, federalTaxDue: 2623 }
-  , { filingStatus: HeadOfHousehold, socSec: 19859, ordinaryIncome: 12692, qualifiedIncome: 19553, federalTaxDue: 399 }
-  , { filingStatus: HeadOfHousehold, socSec: 10581, ordinaryIncome: 0, qualifiedIncome: 13377, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 37390, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 42399, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 5690, ordinaryIncome: 8061, qualifiedIncome: 618, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 26279, qualifiedIncome: 1, federalTaxDue: 613 }
-  , { filingStatus: Single, socSec: 45651, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 50000, federalTaxDue: 17713 }
-  , { filingStatus: HeadOfHousehold, socSec: 27087, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 24877, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 225, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 8800, ordinaryIncome: 0, qualifiedIncome: 23540, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 6394, ordinaryIncome: 0, qualifiedIncome: 49731, federalTaxDue: 1400 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 5419, ordinaryIncome: 29755, qualifiedIncome: 0, federalTaxDue: 2029 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 23004, ordinaryIncome: 48498, qualifiedIncome: 1, federalTaxDue: 7662 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 28501, qualifiedIncome: 2952, federalTaxDue: 835 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 38492, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 5510, ordinaryIncome: 50000, qualifiedIncome: 47412, federalTaxDue: 11833 }
-  , { filingStatus: HeadOfHousehold, socSec: 777, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 7889, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 20751, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 17456, ordinaryIncome: 0, qualifiedIncome: 334, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 39356, ordinaryIncome: 4212, qualifiedIncome: 15701, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 12010, qualifiedIncome: 41302, federalTaxDue: 135 }
-  , { filingStatus: HeadOfHousehold, socSec: 29547, ordinaryIncome: 21502, qualifiedIncome: 1689, federalTaxDue: 922 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 1, qualifiedIncome: 38481, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 12784, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 1440 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 1, qualifiedIncome: 46314, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 9156, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 22783, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 26788, qualifiedIncome: 35737, federalTaxDue: 13294 }
-  , { filingStatus: HeadOfHousehold, socSec: 20404, ordinaryIncome: 34399, qualifiedIncome: 0, federalTaxDue: 3047 }
-  , { filingStatus: HeadOfHousehold, socSec: 33066, ordinaryIncome: 10678, qualifiedIncome: 50000, federalTaxDue: 4132 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 3018, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 29299, qualifiedIncome: 24117, federalTaxDue: 9097 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 41973, qualifiedIncome: 9705, federalTaxDue: 3170 }
-  , { filingStatus: HeadOfHousehold, socSec: 43167, ordinaryIncome: 37938, qualifiedIncome: 0, federalTaxDue: 4994 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 48314, federalTaxDue: 1187 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 14604, qualifiedIncome: 0, federalTaxDue: 372 }
-  , { filingStatus: HeadOfHousehold, socSec: 92, ordinaryIncome: 27858, qualifiedIncome: 42963, federalTaxDue: 779 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 23370, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 42529, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 37179, federalTaxDue: 830 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 45459, qualifiedIncome: 0, federalTaxDue: 2753 }
-  , { filingStatus: HeadOfHousehold, socSec: 4596, ordinaryIncome: 0, qualifiedIncome: 45764, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 42399, qualifiedIncome: 50000, federalTaxDue: 8936 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 20420, qualifiedIncome: 9611, federalTaxDue: 27 }
-  , { filingStatus: HeadOfHousehold, socSec: 18039, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 6204, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 28078, ordinaryIncome: 1715, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 44670, qualifiedIncome: 38066, federalTaxDue: 3931 }
-  , { filingStatus: HeadOfHousehold, socSec: 47401, ordinaryIncome: 10501, qualifiedIncome: 50000, federalTaxDue: 7374 }
-  , { filingStatus: HeadOfHousehold, socSec: 35135, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 1814 }
-  , { filingStatus: Single, socSec: 7183, ordinaryIncome: 15783, qualifiedIncome: 50000, federalTaxDue: 3437 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 34188, qualifiedIncome: 50000, federalTaxDue: 2895 }
-  , { filingStatus: Single, socSec: 5912, ordinaryIncome: 50000, qualifiedIncome: 38191, federalTaxDue: 10525 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 20498, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 16885, ordinaryIncome: 1, qualifiedIncome: 18701, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 29726, ordinaryIncome: 50000, qualifiedIncome: 4201, federalTaxDue: 7052 }
-  , { filingStatus: HeadOfHousehold, socSec: 40557, ordinaryIncome: 22326, qualifiedIncome: 15317, federalTaxDue: 2957 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 6652, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 40746, qualifiedIncome: 1, federalTaxDue: 3023 }
-  , { filingStatus: Single, socSec: 44634, ordinaryIncome: 47875, qualifiedIncome: 1, federalTaxDue: 10981 }
-  , { filingStatus: Single, socSec: 2517, ordinaryIncome: 41358, qualifiedIncome: 39607, federalTaxDue: 7673 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 18630, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 11032, ordinaryIncome: 0, qualifiedIncome: 33726, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 23628, ordinaryIncome: 20388, qualifiedIncome: 43236, federalTaxDue: 3573 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 31271, qualifiedIncome: 22721, federalTaxDue: 1886 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 50000, federalTaxDue: 4285 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 26723, qualifiedIncome: 11672, federalTaxDue: 1340 }
-  , { filingStatus: HeadOfHousehold, socSec: 28766, ordinaryIncome: 18620, qualifiedIncome: 33295, federalTaxDue: 2784 }
-  , { filingStatus: Single, socSec: 35361, ordinaryIncome: 29016, qualifiedIncome: 0, federalTaxDue: 3450 }
-  , { filingStatus: Single, socSec: 40265, ordinaryIncome: 5214, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 30495, ordinaryIncome: 0, qualifiedIncome: 39521, federalTaxDue: 1931 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 12410, qualifiedIncome: 15323, federalTaxDue: 1268 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 23378, federalTaxDue: 282 }
-  , { filingStatus: HeadOfHousehold, socSec: 4457, ordinaryIncome: 49330, qualifiedIncome: 0, federalTaxDue: 3672 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 32100, qualifiedIncome: 433, federalTaxDue: 1985 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 46913, qualifiedIncome: 0, federalTaxDue: 3763 }
-  , { filingStatus: HeadOfHousehold, socSec: 24763, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 90 }
-  , { filingStatus: HeadOfHousehold, socSec: 27418, ordinaryIncome: 9558, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 12856, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 50000, qualifiedIncome: 28144, federalTaxDue: 7710 }
-  , { filingStatus: HeadOfHousehold, socSec: 8179, ordinaryIncome: 10846, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 5997, federalTaxDue: 13940 }
-  , { filingStatus: HeadOfHousehold, socSec: 20416, ordinaryIncome: 26162, qualifiedIncome: 0, federalTaxDue: 1253 }
-  , { filingStatus: Single, socSec: 4759, ordinaryIncome: 1, qualifiedIncome: 39790, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 1440 }
-  , { filingStatus: HeadOfHousehold, socSec: 37826, ordinaryIncome: 44121, qualifiedIncome: 0, federalTaxDue: 6094 }
-  , { filingStatus: HeadOfHousehold, socSec: 17584, ordinaryIncome: 9891, qualifiedIncome: 50000, federalTaxDue: 557 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 49109, federalTaxDue: 3947 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 4509, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 39005, qualifiedIncome: 0, federalTaxDue: 1979 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 1, qualifiedIncome: 15289, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 40654, qualifiedIncome: 2665, federalTaxDue: 2176 }
-  , { filingStatus: Single, socSec: 39320, ordinaryIncome: 50000, qualifiedIncome: 3484, federalTaxDue: 11566 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 37718, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 14456, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 31719, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 1409, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 42218, qualifiedIncome: 41611, federalTaxDue: 7629 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 18394, qualifiedIncome: 14279, federalTaxDue: 449 }
-  , { filingStatus: Single, socSec: 5592, ordinaryIncome: 26593, qualifiedIncome: 16750, federalTaxDue: 1895 }
-  , { filingStatus: Single, socSec: 8079, ordinaryIncome: 0, qualifiedIncome: 17453, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 44314, ordinaryIncome: 18629, qualifiedIncome: 32044, federalTaxDue: 9847 }
-  , { filingStatus: Single, socSec: 34027, ordinaryIncome: 13478, qualifiedIncome: 0, federalTaxDue: 232 }
-  , { filingStatus: HeadOfHousehold, socSec: 31824, ordinaryIncome: 31804, qualifiedIncome: 12476, federalTaxDue: 4326 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 12251, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 28209, ordinaryIncome: 1, qualifiedIncome: 50000, federalTaxDue: 383 }
-  , { filingStatus: Single, socSec: 45222, ordinaryIncome: 23996, qualifiedIncome: 47058, federalTaxDue: 13485 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 21183, qualifiedIncome: 49605, federalTaxDue: 3202 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 32350, federalTaxDue: 420 }
-  , { filingStatus: HeadOfHousehold, socSec: 17332, ordinaryIncome: 14250, qualifiedIncome: 47963, federalTaxDue: 1288 }
-  , { filingStatus: Single, socSec: 43964, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 11783 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 49986, qualifiedIncome: 50000, federalTaxDue: 7157 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 25696, ordinaryIncome: 29369, qualifiedIncome: 40612, federalTaxDue: 6079 }
-  , { filingStatus: HeadOfHousehold, socSec: 36463, ordinaryIncome: 0, qualifiedIncome: 4683, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 14348, qualifiedIncome: 1, federalTaxDue: 949 }
-  , { filingStatus: HeadOfHousehold, socSec: 12905, ordinaryIncome: 14037, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 21886, ordinaryIncome: 0, qualifiedIncome: 44533, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 11188, qualifiedIncome: 18857, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 1440 }
-  , { filingStatus: HeadOfHousehold, socSec: 18983, ordinaryIncome: 44253, qualifiedIncome: 1, federalTaxDue: 4545 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 37959, federalTaxDue: 897 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 19233, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 22766, ordinaryIncome: 6366, qualifiedIncome: 50000, federalTaxDue: 777 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 49728, federalTaxDue: 10947 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 4133 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 19210, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 7129, ordinaryIncome: 11664, qualifiedIncome: 37175, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 11416, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 991, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 546, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 28357, ordinaryIncome: 49427, qualifiedIncome: 0, federalTaxDue: 6122 }
-  , { filingStatus: Single, socSec: 5720, ordinaryIncome: 42048, qualifiedIncome: 43573, federalTaxDue: 9190 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 36546, qualifiedIncome: 18114, federalTaxDue: 2573 }
-  , { filingStatus: HeadOfHousehold, socSec: 35470, ordinaryIncome: 12441, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 25585, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 47933, ordinaryIncome: 2649, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 31131, qualifiedIncome: 0, federalTaxDue: 1869 }
-  , { filingStatus: HeadOfHousehold, socSec: 3520, ordinaryIncome: 1, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 2803, qualifiedIncome: 50000, federalTaxDue: 1440 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 39376, ordinaryIncome: 42502, qualifiedIncome: 50000, federalTaxDue: 16904 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 1, federalTaxDue: 3298 }
-  , { filingStatus: HeadOfHousehold, socSec: 27620, ordinaryIncome: 23632, qualifiedIncome: 50000, federalTaxDue: 6380 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 7537, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 34330, qualifiedIncome: 49506, federalTaxDue: 2856 }
-  , { filingStatus: Single, socSec: 13266, ordinaryIncome: 30014, qualifiedIncome: 39260, federalTaxDue: 7025 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 11286, qualifiedIncome: 3470, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 36831, ordinaryIncome: 1, qualifiedIncome: 8424, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 20306, ordinaryIncome: 1, qualifiedIncome: 34246, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 38330, ordinaryIncome: 19468, qualifiedIncome: 48108, federalTaxDue: 11257 }
-  , { filingStatus: HeadOfHousehold, socSec: 9285, ordinaryIncome: 34817, qualifiedIncome: 47505, federalTaxDue: 4818 }
-  , { filingStatus: Single, socSec: 29872, ordinaryIncome: 30486, qualifiedIncome: 0, federalTaxDue: 3496 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 1, federalTaxDue: 4133 }
-  , { filingStatus: HeadOfHousehold, socSec: 45837, ordinaryIncome: 4100, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 23191, ordinaryIncome: 0, qualifiedIncome: 10190, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 9633, ordinaryIncome: 42012, qualifiedIncome: 17007, federalTaxDue: 6093 }
-  , { filingStatus: HeadOfHousehold, socSec: 10336, ordinaryIncome: 32776, qualifiedIncome: 45686, federalTaxDue: 4235 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 28862, ordinaryIncome: 39768, qualifiedIncome: 50000, federalTaxDue: 11022 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 18310, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 35829, ordinaryIncome: 78, qualifiedIncome: 50000, federalTaxDue: 1981 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 45697, qualifiedIncome: 15918, federalTaxDue: 11654 }
-  , { filingStatus: HeadOfHousehold, socSec: 27512, ordinaryIncome: 30026, qualifiedIncome: 39772, federalTaxDue: 6547 }
-  , { filingStatus: Single, socSec: 40995, ordinaryIncome: 36674, qualifiedIncome: 17186, federalTaxDue: 11003 }
-  , { filingStatus: Single, socSec: 43833, ordinaryIncome: 12313, qualifiedIncome: 30042, federalTaxDue: 5981 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 34219, qualifiedIncome: 0, federalTaxDue: 2239 }
-  , { filingStatus: HeadOfHousehold, socSec: 49329, ordinaryIncome: 4562, qualifiedIncome: 50000, federalTaxDue: 6213 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 26103, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 50000, qualifiedIncome: 28044, federalTaxDue: 7695 }
-  , { filingStatus: HeadOfHousehold, socSec: 12364, ordinaryIncome: 1, qualifiedIncome: 33593, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 2888, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 23919, ordinaryIncome: 37633, qualifiedIncome: 6215, federalTaxDue: 4254 }
-  , { filingStatus: HeadOfHousehold, socSec: 32358, ordinaryIncome: 9606, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 40326, qualifiedIncome: 5849, federalTaxDue: 10381 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 34809, qualifiedIncome: 6343, federalTaxDue: 1475 }
-  , { filingStatus: HeadOfHousehold, socSec: 44266, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1207, ordinaryIncome: 50000, qualifiedIncome: 1, federalTaxDue: 3421 }
-  , { filingStatus: HeadOfHousehold, socSec: 45821, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 9129 }
-  , { filingStatus: Single, socSec: 15374, ordinaryIncome: 34655, qualifiedIncome: 45685, federalTaxDue: 9726 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 28967, qualifiedIncome: 0, federalTaxDue: 882 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 35646, federalTaxDue: 2665 }
-  , { filingStatus: Single, socSec: 24469, ordinaryIncome: 27307, qualifiedIncome: 8584, federalTaxDue: 3391 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 1440 }
-  , { filingStatus: HeadOfHousehold, socSec: 43839, ordinaryIncome: 0, qualifiedIncome: 34720, federalTaxDue: 359 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 19048, qualifiedIncome: 12836, federalTaxDue: 3523 }
-  , { filingStatus: Single, socSec: 33400, ordinaryIncome: 27132, qualifiedIncome: 31668, federalTaxDue: 9656 }
-  , { filingStatus: Single, socSec: 9838, ordinaryIncome: 41769, qualifiedIncome: 20296, federalTaxDue: 6568 }
-  , { filingStatus: HeadOfHousehold, socSec: 37919, ordinaryIncome: 16811, qualifiedIncome: 50000, federalTaxDue: 6902 }
-  , { filingStatus: HeadOfHousehold, socSec: 21971, ordinaryIncome: 12047, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 25957, qualifiedIncome: 27857, federalTaxDue: 581 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 9968, federalTaxDue: 11708 }
-  , { filingStatus: Single, socSec: 10409, ordinaryIncome: 1, qualifiedIncome: 6506, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 27083, qualifiedIncome: 50000, federalTaxDue: 1118 }
-  , { filingStatus: HeadOfHousehold, socSec: 48192, ordinaryIncome: 32801, qualifiedIncome: 7867, federalTaxDue: 4912 }
-  , { filingStatus: HeadOfHousehold, socSec: 13952, ordinaryIncome: 0, qualifiedIncome: 19100, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 20317, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 28564, qualifiedIncome: 0, federalTaxDue: 4096 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 539, federalTaxDue: 4133 }
-  , { filingStatus: Single, socSec: 10351, ordinaryIncome: 50000, qualifiedIncome: 1, federalTaxDue: 5626 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 31211, federalTaxDue: 323 }
-  , { filingStatus: Single, socSec: 19509, ordinaryIncome: 46301, qualifiedIncome: 13121, federalTaxDue: 8493 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 4133 }
-  , { filingStatus: HeadOfHousehold, socSec: 34781, ordinaryIncome: 45534, qualifiedIncome: 50000, federalTaxDue: 13885 }
-  , { filingStatus: Single, socSec: 47071, ordinaryIncome: 8507, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 38428, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 17831, qualifiedIncome: 44351, federalTaxDue: 1576 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 17878, ordinaryIncome: 40030, qualifiedIncome: 50000, federalTaxDue: 12340 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 50000, qualifiedIncome: 20453, federalTaxDue: 6556 }
-  , { filingStatus: HeadOfHousehold, socSec: 42747, ordinaryIncome: 27787, qualifiedIncome: 10566, federalTaxDue: 3797 }
-  , { filingStatus: HeadOfHousehold, socSec: 38852, ordinaryIncome: 41688, qualifiedIncome: 1, federalTaxDue: 5606 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 5290, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 3906, qualifiedIncome: 14931, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 6564, ordinaryIncome: 0, qualifiedIncome: 23939, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 566, federalTaxDue: 9711 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 48359, qualifiedIncome: 9788, federalTaxDue: 4513 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 49179, qualifiedIncome: 50000, federalTaxDue: 10767 }
-  , { filingStatus: HeadOfHousehold, socSec: 38119, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 46009, qualifiedIncome: 40837, federalTaxDue: 4709 }
-  , { filingStatus: Single, socSec: 19255, ordinaryIncome: 37622, qualifiedIncome: 50000, federalTaxDue: 12065 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 1, federalTaxDue: 3298 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 30891, qualifiedIncome: 0, federalTaxDue: 1074 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 37927, ordinaryIncome: 6506, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 18640, qualifiedIncome: 1, federalTaxDue: 1893 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 6662, federalTaxDue: 4487 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 15180, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 13102, ordinaryIncome: 0, qualifiedIncome: 49769, federalTaxDue: 1405 }
-  , { filingStatus: HeadOfHousehold, socSec: 4342, ordinaryIncome: 21220, qualifiedIncome: 27387, federalTaxDue: 476 }
-  , { filingStatus: HeadOfHousehold, socSec: 19843, ordinaryIncome: 30027, qualifiedIncome: 0, federalTaxDue: 2048 }
-  , { filingStatus: HeadOfHousehold, socSec: 36582, ordinaryIncome: 0, qualifiedIncome: 16250, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 33524, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 5182 }
-  , { filingStatus: Single, socSec: 12879, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 1440 }
-  , { filingStatus: Single, socSec: 18047, ordinaryIncome: 1, qualifiedIncome: 48328, federalTaxDue: 1549 }
-  , { filingStatus: Single, socSec: 2423, ordinaryIncome: 41405, qualifiedIncome: 49613, federalTaxDue: 9165 }
-  , { filingStatus: HeadOfHousehold, socSec: 5175, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 3826 }
-  , { filingStatus: HeadOfHousehold, socSec: 13553, ordinaryIncome: 0, qualifiedIncome: 24938, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 4430, ordinaryIncome: 1, qualifiedIncome: 34203, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 23212, ordinaryIncome: 31372, qualifiedIncome: 0, federalTaxDue: 2518 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 5102, qualifiedIncome: 18329, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 16535, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 40998, qualifiedIncome: 1, federalTaxDue: 2218 }
-  , { filingStatus: Single, socSec: 26784, ordinaryIncome: 27760, qualifiedIncome: 30356, federalTaxDue: 8184 }
-  , { filingStatus: HeadOfHousehold, socSec: 5351, ordinaryIncome: 1, qualifiedIncome: 48376, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 47595, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 19979, qualifiedIncome: 23982, federalTaxDue: 8218 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 43672, federalTaxDue: 491 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 16103, qualifiedIncome: 6103, federalTaxDue: 1952 }
-  , { filingStatus: HeadOfHousehold, socSec: 37830, ordinaryIncome: 50000, qualifiedIncome: 50000, federalTaxDue: 15437 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 1440 }
-  , { filingStatus: Single, socSec: 21131, ordinaryIncome: 11104, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 46261, ordinaryIncome: 23651, qualifiedIncome: 4433, federalTaxDue: 3267 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 9227, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 3988, ordinaryIncome: 45596, qualifiedIncome: 47727, federalTaxDue: 6546 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 29613, qualifiedIncome: 50000, federalTaxDue: 13131 }
-  , { filingStatus: Single, socSec: 4542, ordinaryIncome: 7522, qualifiedIncome: 37964, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 23822, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 50000, qualifiedIncome: 32887, federalTaxDue: 4594 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 32459, qualifiedIncome: 16963, federalTaxDue: 1231 }
-  , { filingStatus: Single, socSec: 43249, ordinaryIncome: 26265, qualifiedIncome: 31744, federalTaxDue: 11318 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 46106, federalTaxDue: 856 }
-  , { filingStatus: Single, socSec: 16290, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 1440 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 23477, qualifiedIncome: 4431, federalTaxDue: 958 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 49069, qualifiedIncome: 45609, federalTaxDue: 10078 }
-  , { filingStatus: HeadOfHousehold, socSec: 15744, ordinaryIncome: 19053, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 24300, federalTaxDue: 16686 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 21481, qualifiedIncome: 0, federalTaxDue: 133 }
-  , { filingStatus: HeadOfHousehold, socSec: 12791, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 20031, ordinaryIncome: 49708, qualifiedIncome: 0, federalTaxDue: 5306 }
-  , { filingStatus: Single, socSec: 26813, ordinaryIncome: 37327, qualifiedIncome: 0, federalTaxDue: 5022 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 1, qualifiedIncome: 11395, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 27007, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 281 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 37623, ordinaryIncome: 37082, qualifiedIncome: 0, federalTaxDue: 5933 }
-  , { filingStatus: Single, socSec: 43437, ordinaryIncome: 50000, qualifiedIncome: 35032, federalTaxDue: 17068 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 41240, federalTaxDue: 16399 }
-  , { filingStatus: HeadOfHousehold, socSec: 27672, ordinaryIncome: 50000, qualifiedIncome: 36077, federalTaxDue: 11423 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 12348 }
-  , { filingStatus: Single, socSec: 19226, ordinaryIncome: 35490, qualifiedIncome: 47397, federalTaxDue: 11092 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 26220, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 38287, ordinaryIncome: 46743, qualifiedIncome: 0, federalTaxDue: 9927 }
-  , { filingStatus: HeadOfHousehold, socSec: 8288, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 23162, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 44971, ordinaryIncome: 28417, qualifiedIncome: 34811, federalTaxDue: 9376 }
-  , { filingStatus: HeadOfHousehold, socSec: 28012, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 4576, ordinaryIncome: 33045, qualifiedIncome: 1, federalTaxDue: 1730 }
-  , { filingStatus: HeadOfHousehold, socSec: 22913, ordinaryIncome: 38859, qualifiedIncome: 50000, federalTaxDue: 9411 }
-  , { filingStatus: HeadOfHousehold, socSec: 42167, ordinaryIncome: 0, qualifiedIncome: 13910, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 4285 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 37048, qualifiedIncome: 0, federalTaxDue: 2579 }
-  , { filingStatus: Single, socSec: 888, ordinaryIncome: 19082, qualifiedIncome: 23693, federalTaxDue: 594 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 17987, ordinaryIncome: 18353, qualifiedIncome: 30899, federalTaxDue: 3706 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 8522, qualifiedIncome: 23382, federalTaxDue: 2268 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 48656, qualifiedIncome: 0, federalTaxDue: 3137 }
-  , { filingStatus: Single, socSec: 27657, ordinaryIncome: 4304, qualifiedIncome: 40775, federalTaxDue: 3614 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 6669, federalTaxDue: 4488 }
-  , { filingStatus: Single, socSec: 27872, ordinaryIncome: 1, qualifiedIncome: 50000, federalTaxDue: 3888 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 14597, qualifiedIncome: 33224, federalTaxDue: 70 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 6628, qualifiedIncome: 7873, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 50000, federalTaxDue: 7161 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 39109, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 16842, qualifiedIncome: 50000, federalTaxDue: 2176 }
-  , { filingStatus: Single, socSec: 15542, ordinaryIncome: 0, qualifiedIncome: 19594, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 50000, qualifiedIncome: 50000, federalTaxDue: 10988 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 35074, federalTaxDue: 651 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 12811, qualifiedIncome: 13772, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 7180, qualifiedIncome: 22650, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 41730, ordinaryIncome: 1, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 37023, ordinaryIncome: 31000, qualifiedIncome: 26915, federalTaxDue: 10471 }
-  , { filingStatus: HeadOfHousehold, socSec: 35732, ordinaryIncome: 49088, qualifiedIncome: 43829, federalTaxDue: 13919 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 13232, qualifiedIncome: 1, federalTaxDue: 743 }
-  , { filingStatus: HeadOfHousehold, socSec: 42861, ordinaryIncome: 1, qualifiedIncome: 38075, federalTaxDue: 603 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 31715, qualifiedIncome: 20803, federalTaxDue: 1157 }
-  , { filingStatus: HeadOfHousehold, socSec: 19781, ordinaryIncome: 6218, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 41434, ordinaryIncome: 1, qualifiedIncome: 48293, federalTaxDue: 6482 }
-  , { filingStatus: HeadOfHousehold, socSec: 22371, ordinaryIncome: 33963, qualifiedIncome: 0, federalTaxDue: 3051 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 3066, qualifiedIncome: 41946, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1254, ordinaryIncome: 1, qualifiedIncome: 50000, federalTaxDue: 1440 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 41602, qualifiedIncome: 14018, federalTaxDue: 2290 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 7596, qualifiedIncome: 49273, federalTaxDue: 7077 }
-  , { filingStatus: Single, socSec: 42429, ordinaryIncome: 11831, qualifiedIncome: 50000, federalTaxDue: 10420 }
-  , { filingStatus: Single, socSec: 37225, ordinaryIncome: 50000, qualifiedIncome: 50000, federalTaxDue: 18152 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 35319, qualifiedIncome: 1, federalTaxDue: 1536 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 9690, qualifiedIncome: 20953, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 15657, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 30113, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 48148, ordinaryIncome: 12459, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 6940, ordinaryIncome: 20029, qualifiedIncome: 17540, federalTaxDue: 1244 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 15030, federalTaxDue: 3298 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 18649, qualifiedIncome: 50000, federalTaxDue: 2627 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 16078, qualifiedIncome: 43647, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 37806, qualifiedIncome: 50000, federalTaxDue: 3868 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 39070, ordinaryIncome: 1, qualifiedIncome: 50000, federalTaxDue: 6455 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 30057, qualifiedIncome: 31221, federalTaxDue: 2787 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 23878, ordinaryIncome: 39432, qualifiedIncome: 50000, federalTaxDue: 13331 }
-  , { filingStatus: HeadOfHousehold, socSec: 42643, ordinaryIncome: 35720, qualifiedIncome: 35427, federalTaxDue: 10906 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 41566, qualifiedIncome: 50000, federalTaxDue: 4883 }
-  , { filingStatus: Single, socSec: 4073, ordinaryIncome: 17213, qualifiedIncome: 19841, federalTaxDue: 678 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 34429, ordinaryIncome: 0, qualifiedIncome: 37523, federalTaxDue: 1625 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 45015, ordinaryIncome: 50000, qualifiedIncome: 1, federalTaxDue: 11882 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 41783, qualifiedIncome: 6015, federalTaxDue: 11030 }
-  , { filingStatus: Single, socSec: 3169, ordinaryIncome: 27102, qualifiedIncome: 0, federalTaxDue: 1575 }
-  , { filingStatus: Single, socSec: 3707, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 5526, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 3601, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 50000, qualifiedIncome: 34257, federalTaxDue: 4799 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 28721, qualifiedIncome: 13660, federalTaxDue: 857 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 42242, federalTaxDue: 276 }
-  , { filingStatus: Single, socSec: 17331, ordinaryIncome: 1, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 1, qualifiedIncome: 30817, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 23388, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 12348 }
-  , { filingStatus: HeadOfHousehold, socSec: 20631, ordinaryIncome: 1, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 12284, qualifiedIncome: 44622, federalTaxDue: 633 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 17292, qualifiedIncome: 0, federalTaxDue: 339 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 26688, qualifiedIncome: 38150, federalTaxDue: 2916 }
-  , { filingStatus: Single, socSec: 15091, ordinaryIncome: 37014, qualifiedIncome: 0, federalTaxDue: 4114 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 3298 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 18745, federalTaxDue: 3298 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 20102, qualifiedIncome: 1, federalTaxDue: 620 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 12507, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 2706, qualifiedIncome: 50000, federalTaxDue: 1440 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 25182, qualifiedIncome: 1, federalTaxDue: 1155 }
-  , { filingStatus: HeadOfHousehold, socSec: 25922, ordinaryIncome: 50000, qualifiedIncome: 4240, federalTaxDue: 6246 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 17796, qualifiedIncome: 1, federalTaxDue: 1706 }
-  , { filingStatus: Single, socSec: 6989, ordinaryIncome: 39218, qualifiedIncome: 30052, federalTaxDue: 6689 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 16616, qualifiedIncome: 36711, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 19809, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 44819, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 7012, ordinaryIncome: 36952, qualifiedIncome: 22810, federalTaxDue: 4996 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 9739, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 22983, ordinaryIncome: 6389, qualifiedIncome: 40077, federalTaxDue: 2999 }
-  , { filingStatus: HeadOfHousehold, socSec: 17218, ordinaryIncome: 61, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 40829, qualifiedIncome: 0, federalTaxDue: 2197 }
-  , { filingStatus: HeadOfHousehold, socSec: 3935, ordinaryIncome: 33956, qualifiedIncome: 34647, federalTaxDue: 1774 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 44297, qualifiedIncome: 32220, federalTaxDue: 13791 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 12473, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 41681, federalTaxDue: 5913 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 44672, qualifiedIncome: 41952, federalTaxDue: 4515 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 3298 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 6485, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 1, qualifiedIncome: 8722, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 34368, ordinaryIncome: 0, qualifiedIncome: 10566, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 30979, ordinaryIncome: 18102, qualifiedIncome: 0, federalTaxDue: 225 }
-  , { filingStatus: HeadOfHousehold, socSec: 42783, ordinaryIncome: 50000, qualifiedIncome: 35301, federalTaxDue: 14159 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 14799, qualifiedIncome: 1238, federalTaxDue: 90 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 15451, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 22610, qualifiedIncome: 0, federalTaxDue: 246 }
-  , { filingStatus: Single, socSec: 12089, ordinaryIncome: 18724, qualifiedIncome: 50000, federalTaxDue: 5318 }
-  , { filingStatus: HeadOfHousehold, socSec: 37423, ordinaryIncome: 0, qualifiedIncome: 17030, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 585, qualifiedIncome: 15890, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 44378, qualifiedIncome: 1, federalTaxDue: 7232 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 47465, qualifiedIncome: 28043, federalTaxDue: 3183 }
-  , { filingStatus: HeadOfHousehold, socSec: 45272, ordinaryIncome: 22682, qualifiedIncome: 1, federalTaxDue: 1714 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 46477, qualifiedIncome: 48001, federalTaxDue: 5909 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 24823, qualifiedIncome: 38694, federalTaxDue: 2494 }
-  , { filingStatus: Single, socSec: 42729, ordinaryIncome: 9812, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 17345, ordinaryIncome: 50000, qualifiedIncome: 50000, federalTaxDue: 14434 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 12320, ordinaryIncome: 22802, qualifiedIncome: 50000, federalTaxDue: 2666 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 47555, qualifiedIncome: 0, federalTaxDue: 3840 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 33632, qualifiedIncome: 39272, federalTaxDue: 15330 }
-  , { filingStatus: Single, socSec: 22069, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 41629, ordinaryIncome: 49789, qualifiedIncome: 191, federalTaxDue: 8630 }
-  , { filingStatus: HeadOfHousehold, socSec: 28824, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 11570, qualifiedIncome: 27145, federalTaxDue: 2257 }
-  , { filingStatus: HeadOfHousehold, socSec: 26285, ordinaryIncome: 27733, qualifiedIncome: 0, federalTaxDue: 1867 }
-  , { filingStatus: Single, socSec: 26092, ordinaryIncome: 1, qualifiedIncome: 50000, federalTaxDue: 3510 }
-  , { filingStatus: HeadOfHousehold, socSec: 13928, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 45485, ordinaryIncome: 47864, qualifiedIncome: 28018, federalTaxDue: 15929 }
-  , { filingStatus: HeadOfHousehold, socSec: 44577, ordinaryIncome: 16040, qualifiedIncome: 10424, federalTaxDue: 1293 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 45498, qualifiedIncome: 20782, federalTaxDue: 5390 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 40258, qualifiedIncome: 0, federalTaxDue: 2129 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 39, federalTaxDue: 4133 }
-  , { filingStatus: HeadOfHousehold, socSec: 39423, ordinaryIncome: 22393, qualifiedIncome: 38419, federalTaxDue: 7017 }
-  , { filingStatus: HeadOfHousehold, socSec: 7467, ordinaryIncome: 19820, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 37887, ordinaryIncome: 27509, qualifiedIncome: 34362, federalTaxDue: 10982 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 45340, federalTaxDue: 741 }
-  , { filingStatus: Single, socSec: 29366, ordinaryIncome: 1, qualifiedIncome: 16978, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 21969, qualifiedIncome: 1273, federalTaxDue: 182 }
-  , { filingStatus: HeadOfHousehold, socSec: 34299, ordinaryIncome: 37948, qualifiedIncome: 50000, federalTaxDue: 11778 }
-  , { filingStatus: Single, socSec: 21292, ordinaryIncome: 28277, qualifiedIncome: 2972, federalTaxDue: 2872 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 5378, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 12245, qualifiedIncome: 23604, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 44448, qualifiedIncome: 48146, federalTaxDue: 5384 }
-  , { filingStatus: Single, socSec: 34162, ordinaryIncome: 0, qualifiedIncome: 9279, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 15959, federalTaxDue: 15434 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 32316, qualifiedIncome: 0, federalTaxDue: 4094 }
-  , { filingStatus: HeadOfHousehold, socSec: 32206, ordinaryIncome: 10630, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 15791, federalTaxDue: 12582 }
-  , { filingStatus: HeadOfHousehold, socSec: 7324, ordinaryIncome: 10874, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 27427, ordinaryIncome: 50000, qualifiedIncome: 1, federalTaxDue: 8819 }
-  , { filingStatus: Single, socSec: 14410, ordinaryIncome: 1, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 47176, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 21396, ordinaryIncome: 50000, qualifiedIncome: 7411, federalTaxDue: 5683 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 8582, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 31239, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 25724, qualifiedIncome: 1, federalTaxDue: 1220 }
-  , { filingStatus: Single, socSec: 24088, ordinaryIncome: 50000, qualifiedIncome: 45006, federalTaxDue: 14946 }
-  , { filingStatus: HeadOfHousehold, socSec: 9421, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 19712, ordinaryIncome: 14080, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 7994, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 20534, ordinaryIncome: 1, qualifiedIncome: 50000, federalTaxDue: 2329 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 41417, qualifiedIncome: 48879, federalTaxDue: 8502 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 2721, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 5838, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 25503, federalTaxDue: 463 }
-  , { filingStatus: HeadOfHousehold, socSec: 12060, ordinaryIncome: 15129, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 37114, ordinaryIncome: 14658, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 43582, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 8920 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 36107, federalTaxDue: 2840 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 6492, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 8107, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 38384, federalTaxDue: 15971 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 1440 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 42524, qualifiedIncome: 1, federalTaxDue: 6478 }
-  , { filingStatus: HeadOfHousehold, socSec: 46712, ordinaryIncome: 6837, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 19655, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 12530, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 49458, ordinaryIncome: 2891, qualifiedIncome: 35453, federalTaxDue: 3974 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 21033, qualifiedIncome: 22182, federalTaxDue: 88 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 30205, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 44866, ordinaryIncome: 0, qualifiedIncome: 2734, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 47826, ordinaryIncome: 23729, qualifiedIncome: 0, federalTaxDue: 2912 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 48853, qualifiedIncome: 0, federalTaxDue: 3995 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 10224, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 85, ordinaryIncome: 28458, qualifiedIncome: 40657, federalTaxDue: 3790 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 20758, qualifiedIncome: 0, federalTaxDue: 686 }
-  , { filingStatus: Single, socSec: 2258, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 17681, ordinaryIncome: 0, qualifiedIncome: 46076, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 48743, qualifiedIncome: 34071, federalTaxDue: 8259 }
-  , { filingStatus: HeadOfHousehold, socSec: 24644, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 5812 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 23116, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 16399, ordinaryIncome: 34515, qualifiedIncome: 50000, federalTaxDue: 6743 }
-  , { filingStatus: HeadOfHousehold, socSec: 6295, ordinaryIncome: 37377, qualifiedIncome: 476, federalTaxDue: 2425 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 2089, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 18773, ordinaryIncome: 42898, qualifiedIncome: 15984, federalTaxDue: 4449 }
-  , { filingStatus: HeadOfHousehold, socSec: 10737, ordinaryIncome: 50000, qualifiedIncome: 24188, federalTaxDue: 5753 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 1, qualifiedIncome: 42994, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 36894, ordinaryIncome: 1, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 18081, ordinaryIncome: 4017, qualifiedIncome: 33204, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 22503, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 14905, ordinaryIncome: 23318, qualifiedIncome: 39073, federalTaxDue: 1738 }
-  , { filingStatus: Single, socSec: 43839, ordinaryIncome: 15230, qualifiedIncome: 29438, federalTaxDue: 7210 }
-  , { filingStatus: Single, socSec: 20596, ordinaryIncome: 50000, qualifiedIncome: 39453, federalTaxDue: 13460 }
-  , { filingStatus: HeadOfHousehold, socSec: 4870, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 11944, ordinaryIncome: 44861, qualifiedIncome: 31312, federalTaxDue: 9490 }
-  , { filingStatus: Single, socSec: 34352, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 5372 }
-  , { filingStatus: Single, socSec: 28440, ordinaryIncome: 30550, qualifiedIncome: 0, federalTaxDue: 3438 }
-  , { filingStatus: HeadOfHousehold, socSec: 22648, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 89, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 19238, ordinaryIncome: 48622, qualifiedIncome: 0, federalTaxDue: 5095 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 37902, qualifiedIncome: 27370, federalTaxDue: 4327 }
-  , { filingStatus: HeadOfHousehold, socSec: 17312, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 5064 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 36555, qualifiedIncome: 1, federalTaxDue: 1685 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 50000, federalTaxDue: 20541 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 40470, qualifiedIncome: 0, federalTaxDue: 2155 }
-  , { filingStatus: HeadOfHousehold, socSec: 10390, ordinaryIncome: 50000, qualifiedIncome: 46893, federalTaxDue: 9079 }
-  , { filingStatus: HeadOfHousehold, socSec: 44889, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 3699 }
-  , { filingStatus: Single, socSec: 29037, ordinaryIncome: 13121, qualifiedIncome: 33450, federalTaxDue: 5212 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 9475, qualifiedIncome: 660, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 3667, ordinaryIncome: 44673, qualifiedIncome: 32389, federalTaxDue: 3922 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 33459, qualifiedIncome: 25777, federalTaxDue: 1331 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 43206, federalTaxDue: 5534 }
-  , { filingStatus: HeadOfHousehold, socSec: 5322, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 3897, ordinaryIncome: 47748, qualifiedIncome: 44917, federalTaxDue: 10512 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 4269, qualifiedIncome: 50000, federalTaxDue: 6288 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 7715, qualifiedIncome: 8357, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 17899, qualifiedIncome: 0, federalTaxDue: 400 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 42394, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 1440 }
-  , { filingStatus: Single, socSec: 47247, ordinaryIncome: 1038, qualifiedIncome: 16017, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 44803, ordinaryIncome: 44115, qualifiedIncome: 1099, federalTaxDue: 9837 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 36330, qualifiedIncome: 10769, federalTaxDue: 7544 }
-  , { filingStatus: Single, socSec: 1875, ordinaryIncome: 0, qualifiedIncome: 27062, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 24545, ordinaryIncome: 0, qualifiedIncome: 32052, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 28855, ordinaryIncome: 14827, qualifiedIncome: 50000, federalTaxDue: 8114 }
-  , { filingStatus: HeadOfHousehold, socSec: 45245, ordinaryIncome: 12319, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 38202, ordinaryIncome: 37635, qualifiedIncome: 0, federalTaxDue: 6212 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 17833, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 4133 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 21574, qualifiedIncome: 0, federalTaxDue: 767 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 3298 }
-  , { filingStatus: HeadOfHousehold, socSec: 1446, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 3445 }
-  , { filingStatus: Single, socSec: 8629, ordinaryIncome: 1, qualifiedIncome: 41735, federalTaxDue: 200 }
-  , { filingStatus: Single, socSec: 11458, ordinaryIncome: 1, qualifiedIncome: 44208, federalTaxDue: 571 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 3242, ordinaryIncome: 21771, qualifiedIncome: 0, federalTaxDue: 787 }
-  , { filingStatus: Single, socSec: 29088, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 4164 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 1330, qualifiedIncome: 11074, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 739, ordinaryIncome: 1, qualifiedIncome: 16748, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 125, ordinaryIncome: 11447, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 17671, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 35315, qualifiedIncome: 1, federalTaxDue: 6371 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 25166, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 34436, qualifiedIncome: 35997, federalTaxDue: 12188 }
-  , { filingStatus: HeadOfHousehold, socSec: 9718, ordinaryIncome: 50000, qualifiedIncome: 38529, federalTaxDue: 7670 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 15860, qualifiedIncome: 0, federalTaxDue: 1276 }
-  , { filingStatus: Single, socSec: 570, ordinaryIncome: 1, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 14765, ordinaryIncome: 29176, qualifiedIncome: 1, federalTaxDue: 1600 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 1996, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 46862, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 12054 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 10979, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 4356, federalTaxDue: 4141 }
-  , { filingStatus: HeadOfHousehold, socSec: 2002, ordinaryIncome: 18980, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 10314, ordinaryIncome: 172, qualifiedIncome: 29952, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 23136, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 21708, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 30220, ordinaryIncome: 2254, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 916, ordinaryIncome: 23038, qualifiedIncome: 15577, federalTaxDue: 367 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 8700, qualifiedIncome: 48247, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 41030, qualifiedIncome: 1, federalTaxDue: 2222 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 5221, qualifiedIncome: 40567, federalTaxDue: 25 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 36659, qualifiedIncome: 1, federalTaxDue: 5058 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 46131, qualifiedIncome: 0, federalTaxDue: 10773 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 22828, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 10544, ordinaryIncome: 0, qualifiedIncome: 21284, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 40142, qualifiedIncome: 6472, federalTaxDue: 2950 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 4796, qualifiedIncome: 29225, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 29941, federalTaxDue: 7979 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 1, federalTaxDue: 12348 }
-  , { filingStatus: Single, socSec: 5445, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 6566, ordinaryIncome: 5688, qualifiedIncome: 45960, federalTaxDue: 834 }
-  , { filingStatus: Single, socSec: 35552, ordinaryIncome: 39828, qualifiedIncome: 0, federalTaxDue: 6857 }
-  , { filingStatus: Single, socSec: 41524, ordinaryIncome: 45718, qualifiedIncome: 0, federalTaxDue: 9812 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 1, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 30159, ordinaryIncome: 39034, qualifiedIncome: 44569, federalTaxDue: 10307 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 32498, federalTaxDue: 432 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 26898, federalTaxDue: 3695 }
-  , { filingStatus: Single, socSec: 33759, ordinaryIncome: 0, qualifiedIncome: 7110, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 47452, ordinaryIncome: 33976, qualifiedIncome: 20704, federalTaxDue: 9321 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 26005, qualifiedIncome: 0, federalTaxDue: 586 }
-  , { filingStatus: Single, socSec: 37357, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 6061 }
-  , { filingStatus: Single, socSec: 29498, ordinaryIncome: 49659, qualifiedIncome: 0, federalTaxDue: 9132 }
-  , { filingStatus: Single, socSec: 34798, ordinaryIncome: 32581, qualifiedIncome: 1015, federalTaxDue: 4316 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 38519, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 24909, ordinaryIncome: 46837, qualifiedIncome: 0, federalTaxDue: 5459 }
-  , { filingStatus: HeadOfHousehold, socSec: 12302, ordinaryIncome: 1, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 20292, ordinaryIncome: 17908, qualifiedIncome: 0, federalTaxDue: 554 }
-  , { filingStatus: HeadOfHousehold, socSec: 6881, ordinaryIncome: 1, qualifiedIncome: 3674, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 3298 }
-  , { filingStatus: Single, socSec: 17874, ordinaryIncome: 10249, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 2584, ordinaryIncome: 0, qualifiedIncome: 10515, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 15216, qualifiedIncome: 0, federalTaxDue: 485 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 21555, qualifiedIncome: 1, federalTaxDue: 141 }
-  , { filingStatus: HeadOfHousehold, socSec: 46632, ordinaryIncome: 33035, qualifiedIncome: 50000, federalTaxDue: 13282 }
-  , { filingStatus: HeadOfHousehold, socSec: 1115, ordinaryIncome: 35317, qualifiedIncome: 25222, federalTaxDue: 1650 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 6227, qualifiedIncome: 28683, federalTaxDue: 1260 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 8938, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 14878, ordinaryIncome: 9570, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 42644, qualifiedIncome: 50000, federalTaxDue: 9002 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 49548, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 6453, ordinaryIncome: 9757, qualifiedIncome: 36997, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 33084, qualifiedIncome: 50000, federalTaxDue: 2619 }
-  , { filingStatus: Single, socSec: 6788, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 4960 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 49755, qualifiedIncome: 50000, federalTaxDue: 7094 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 9116, qualifiedIncome: 31526, federalTaxDue: 5655 }
-  , { filingStatus: Single, socSec: 34422, ordinaryIncome: 50000, qualifiedIncome: 11034, federalTaxDue: 11783 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 50000, qualifiedIncome: 1, federalTaxDue: 3298 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 39761, qualifiedIncome: 23704, federalTaxDue: 4279 }
-  , { filingStatus: HeadOfHousehold, socSec: 23480, ordinaryIncome: 39800, qualifiedIncome: 17482, federalTaxDue: 4917 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 38637, qualifiedIncome: 50000, federalTaxDue: 7920 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 41198, federalTaxDue: 19220 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 39091, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 48117, federalTaxDue: 3571 }
-  , { filingStatus: Single, socSec: 32560, ordinaryIncome: 8713, qualifiedIncome: 19821, federalTaxDue: 850 }
-  , { filingStatus: HeadOfHousehold, socSec: 2183, ordinaryIncome: 49796, qualifiedIncome: 0, federalTaxDue: 3496 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 44833, ordinaryIncome: 16228, qualifiedIncome: 50000, federalTaxDue: 12153 }
-  , { filingStatus: Single, socSec: 21930, ordinaryIncome: 32819, qualifiedIncome: 0, federalTaxDue: 3609 }
-  , { filingStatus: Single, socSec: 11865, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 8216, ordinaryIncome: 5835, qualifiedIncome: 10237, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 31846, federalTaxDue: 1223 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 43653, federalTaxDue: 6208 }
-  , { filingStatus: Single, socSec: 11047, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 5756 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 26211, federalTaxDue: 523 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 21824, qualifiedIncome: 50000, federalTaxDue: 3421 }
-  , { filingStatus: HeadOfHousehold, socSec: 38989, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 8560, federalTaxDue: 11497 }
-  , { filingStatus: HeadOfHousehold, socSec: 44683, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 3675 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 4133 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 37245, qualifiedIncome: 0, federalTaxDue: 5188 }
-  , { filingStatus: HeadOfHousehold, socSec: 4909, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 11665, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 7162, qualifiedIncome: 47045, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 43490, federalTaxDue: 464 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 1, qualifiedIncome: 13839, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 16453, qualifiedIncome: 0, federalTaxDue: 255 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 13024, qualifiedIncome: 0, federalTaxDue: 79 }
-  , { filingStatus: HeadOfHousehold, socSec: 16702, ordinaryIncome: 24046, qualifiedIncome: 1, federalTaxDue: 760 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 4133 }
-  , { filingStatus: HeadOfHousehold, socSec: 14379, ordinaryIncome: 22331, qualifiedIncome: 0, federalTaxDue: 444 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 31877, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 41665, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 24182, qualifiedIncome: 1, federalTaxDue: 1035 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 20689, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 50000, federalTaxDue: 7161 }
-  , { filingStatus: Single, socSec: 13596, ordinaryIncome: 5402, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 20275, qualifiedIncome: 0, federalTaxDue: 638 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 31909, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 28304, ordinaryIncome: 27750, qualifiedIncome: 19895, federalTaxDue: 3515 }
-  , { filingStatus: HeadOfHousehold, socSec: 2998, ordinaryIncome: 43121, qualifiedIncome: 1, federalTaxDue: 2778 }
-  , { filingStatus: HeadOfHousehold, socSec: 32181, ordinaryIncome: 34804, qualifiedIncome: 23834, federalTaxDue: 6518 }
-  , { filingStatus: HeadOfHousehold, socSec: 8787, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 27313, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 47769, ordinaryIncome: 9227, qualifiedIncome: 50000, federalTaxDue: 7115 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 27250, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 3860, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 23319, ordinaryIncome: 14781, qualifiedIncome: 0, federalTaxDue: 160 }
-  , { filingStatus: Single, socSec: 41747, ordinaryIncome: 18004, qualifiedIncome: 50000, federalTaxDue: 11930 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 48854, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 37715, ordinaryIncome: 23745, qualifiedIncome: 50000, federalTaxDue: 12467 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 7766, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 36098, ordinaryIncome: 39007, qualifiedIncome: 3064, federalTaxDue: 5183 }
-  , { filingStatus: Single, socSec: 25335, ordinaryIncome: 42378, qualifiedIncome: 50000, federalTaxDue: 14251 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 8479, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 1, qualifiedIncome: 11, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 16301, ordinaryIncome: 43799, qualifiedIncome: 27989, federalTaxDue: 9573 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 1440 }
-  , { filingStatus: Single, socSec: 25938, ordinaryIncome: 0, qualifiedIncome: 15912, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 40959, ordinaryIncome: 28116, qualifiedIncome: 48420, federalTaxDue: 10415 }
-  , { filingStatus: HeadOfHousehold, socSec: 5589, ordinaryIncome: 50000, qualifiedIncome: 1, federalTaxDue: 3868 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 26513, ordinaryIncome: 0, qualifiedIncome: 6141, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 39675, ordinaryIncome: 9998, qualifiedIncome: 50000, federalTaxDue: 9293 }
-  , { filingStatus: HeadOfHousehold, socSec: 41577, ordinaryIncome: 19767, qualifiedIncome: 0, federalTaxDue: 969 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 9027, qualifiedIncome: 9689, federalTaxDue: 164 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 3852, qualifiedIncome: 11616, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 29710, ordinaryIncome: 1, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 45724, ordinaryIncome: 0, qualifiedIncome: 28348, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 46493, federalTaxDue: 2955 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 14138, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 11081, ordinaryIncome: 8443, qualifiedIncome: 30472, federalTaxDue: 396 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 4133 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 46458, qualifiedIncome: 35181, federalTaxDue: 7809 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 33481, qualifiedIncome: 0, federalTaxDue: 2151 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1484, ordinaryIncome: 28554, qualifiedIncome: 8416, federalTaxDue: 1711 }
-  , { filingStatus: HeadOfHousehold, socSec: 10006, ordinaryIncome: 18219, qualifiedIncome: 42040, federalTaxDue: 657 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 21342, qualifiedIncome: 45458, federalTaxDue: 119 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 50000, qualifiedIncome: 50000, federalTaxDue: 10988 }
-  , { filingStatus: HeadOfHousehold, socSec: 27633, ordinaryIncome: 50000, qualifiedIncome: 1, federalTaxDue: 6117 }
-  , { filingStatus: Single, socSec: 25116, ordinaryIncome: 5918, qualifiedIncome: 50000, federalTaxDue: 4850 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 16904, qualifiedIncome: 1, federalTaxDue: 1508 }
-  , { filingStatus: HeadOfHousehold, socSec: 12189, ordinaryIncome: 5648, qualifiedIncome: 47323, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 14358, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 14355, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 1440 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 38705, qualifiedIncome: 50000, federalTaxDue: 7939 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 42598, federalTaxDue: 16603 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 27856, qualifiedIncome: 1, federalTaxDue: 771 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 35384, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 27033, ordinaryIncome: 33825, qualifiedIncome: 1, federalTaxDue: 4093 }
-  , { filingStatus: HeadOfHousehold, socSec: 11533, ordinaryIncome: 1, qualifiedIncome: 10141, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 11644, ordinaryIncome: 1, qualifiedIncome: 31614, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 2047, ordinaryIncome: 45626, qualifiedIncome: 50000, federalTaxDue: 6449 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 48945, qualifiedIncome: 50000, federalTaxDue: 10703 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 24960, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 30833, ordinaryIncome: 37826, qualifiedIncome: 16398, federalTaxDue: 9238 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 37542, qualifiedIncome: 45926, federalTaxDue: 3186 }
-  , { filingStatus: Single, socSec: 13004, ordinaryIncome: 1, qualifiedIncome: 2107, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 35600, qualifiedIncome: 1, federalTaxDue: 1570 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 154, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 1, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 28459, qualifiedIncome: 1, federalTaxDue: 831 }
-  , { filingStatus: HeadOfHousehold, socSec: 27707, ordinaryIncome: 48743, qualifiedIncome: 0, federalTaxDue: 5973 }
-  , { filingStatus: Single, socSec: 46423, ordinaryIncome: 45507, qualifiedIncome: 50000, federalTaxDue: 18883 }
-  , { filingStatus: HeadOfHousehold, socSec: 27187, ordinaryIncome: 0, qualifiedIncome: 35026, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 15422, ordinaryIncome: 50000, qualifiedIncome: 11882, federalTaxDue: 8357 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 20523, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 30303, qualifiedIncome: 0, federalTaxDue: 1769 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 50000, federalTaxDue: 10988 }
-  , { filingStatus: HeadOfHousehold, socSec: 47636, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 20291, qualifiedIncome: 13278, federalTaxDue: 639 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 5500, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 10308, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 6769, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 5969, qualifiedIncome: 26822, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 28715, ordinaryIncome: 1, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 6274, federalTaxDue: 13982 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 10237, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 18127, federalTaxDue: 3298 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 35775, qualifiedIncome: 0, federalTaxDue: 6558 }
-  , { filingStatus: Single, socSec: 25776, ordinaryIncome: 42981, qualifiedIncome: 29459, federalTaxDue: 11385 }
-  , { filingStatus: HeadOfHousehold, socSec: 27639, ordinaryIncome: 0, qualifiedIncome: 37798, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 38934, ordinaryIncome: 7418, qualifiedIncome: 21545, federalTaxDue: 403 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 646, qualifiedIncome: 32369, federalTaxDue: 541 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 23247, qualifiedIncome: 0, federalTaxDue: 310 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 47184, qualifiedIncome: 0, federalTaxDue: 2960 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 1, federalTaxDue: 12348 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 47559, qualifiedIncome: 47073, federalTaxDue: 16737 }
-  , { filingStatus: Single, socSec: 35895, ordinaryIncome: 50000, qualifiedIncome: 27170, federalTaxDue: 14478 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 42790, qualifiedIncome: 29810, federalTaxDue: 2433 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 27237, federalTaxDue: 7574 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 28576, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 669, qualifiedIncome: 23471, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 7815, qualifiedIncome: 42798, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 43958, qualifiedIncome: 3512, federalTaxDue: 3408 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 6859, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 17445, qualifiedIncome: 50000, federalTaxDue: 9846 }
-  , { filingStatus: Single, socSec: 13396, ordinaryIncome: 35553, qualifiedIncome: 1868, federalTaxDue: 3766 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 50000, qualifiedIncome: 50000, federalTaxDue: 7161 }
-  , { filingStatus: Single, socSec: 2923, ordinaryIncome: 34139, qualifiedIncome: 1, federalTaxDue: 2528 }
-  , { filingStatus: HeadOfHousehold, socSec: 41515, ordinaryIncome: 27299, qualifiedIncome: 13301, federalTaxDue: 3904 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 25384, qualifiedIncome: 0, federalTaxDue: 523 }
-  , { filingStatus: Single, socSec: 8557, ordinaryIncome: 34747, qualifiedIncome: 35259, federalTaxDue: 6622 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 31721, federalTaxDue: 366 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 17036, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 43362, ordinaryIncome: 50000, qualifiedIncome: 26359, federalTaxDue: 15753 }
-  , { filingStatus: HeadOfHousehold, socSec: 11700, ordinaryIncome: 50000, qualifiedIncome: 21227, federalTaxDue: 5530 }
-  , { filingStatus: HeadOfHousehold, socSec: 27109, ordinaryIncome: 41838, qualifiedIncome: 1, federalTaxDue: 5041 }
-  , { filingStatus: HeadOfHousehold, socSec: 40250, ordinaryIncome: 36004, qualifiedIncome: 50000, federalTaxDue: 12619 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 40998, qualifiedIncome: 26449, federalTaxDue: 12200 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 19272, ordinaryIncome: 1, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 1, qualifiedIncome: 27491, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 49313, ordinaryIncome: 3685, qualifiedIncome: 17704, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 37807, ordinaryIncome: 0, qualifiedIncome: 9650, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 30737, qualifiedIncome: 0, federalTaxDue: 1059 }
-  , { filingStatus: Single, socSec: 49854, ordinaryIncome: 15226, qualifiedIncome: 0, federalTaxDue: 1128 }
-  , { filingStatus: HeadOfHousehold, socSec: 9434, ordinaryIncome: 50000, qualifiedIncome: 10592, federalTaxDue: 4260 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 22845, qualifiedIncome: 0, federalTaxDue: 1992 }
-  , { filingStatus: Single, socSec: 22071, ordinaryIncome: 15728, qualifiedIncome: 0, federalTaxDue: 271 }
-  , { filingStatus: Single, socSec: 2419, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 34628, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1337, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 26886, qualifiedIncome: 40035, federalTaxDue: 3252 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 50000, federalTaxDue: 1440 }
-  , { filingStatus: Single, socSec: 32610, ordinaryIncome: 5905, qualifiedIncome: 19234, federalTaxDue: 283 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 38483, qualifiedIncome: 11123, federalTaxDue: 1916 }
-  , { filingStatus: Single, socSec: 41446, ordinaryIncome: 30411, qualifiedIncome: 50000, federalTaxDue: 14631 }
-  , { filingStatus: HeadOfHousehold, socSec: 49688, ordinaryIncome: 0, qualifiedIncome: 6165, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 30799, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 6622 }
-  , { filingStatus: Single, socSec: 20110, ordinaryIncome: 35402, qualifiedIncome: 41178, federalTaxDue: 10338 }
-  , { filingStatus: HeadOfHousehold, socSec: 15982, ordinaryIncome: 39495, qualifiedIncome: 0, federalTaxDue: 3668 }
-  , { filingStatus: Single, socSec: 28973, ordinaryIncome: 0, qualifiedIncome: 11348, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1586, ordinaryIncome: 11456, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 4133 }
-  , { filingStatus: HeadOfHousehold, socSec: 8470, ordinaryIncome: 49258, qualifiedIncome: 1, federalTaxDue: 4073 }
-  , { filingStatus: HeadOfHousehold, socSec: 29927, ordinaryIncome: 32011, qualifiedIncome: 1, federalTaxDue: 3003 }
-  , { filingStatus: HeadOfHousehold, socSec: 11327, ordinaryIncome: 10813, qualifiedIncome: 23301, federalTaxDue: 7 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 33707, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 6900, ordinaryIncome: 50000, qualifiedIncome: 43716, federalTaxDue: 7801 }
-  , { filingStatus: HeadOfHousehold, socSec: 4076, ordinaryIncome: 50000, qualifiedIncome: 35348, federalTaxDue: 5898 }
-  , { filingStatus: HeadOfHousehold, socSec: 28144, ordinaryIncome: 0, qualifiedIncome: 31250, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 26345, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 224 }
-  , { filingStatus: Single, socSec: 7585, ordinaryIncome: 8983, qualifiedIncome: 6293, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 31052, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 5249, ordinaryIncome: 4772, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 19816, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 9887, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 45833, qualifiedIncome: 19131, federalTaxDue: 2798 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 41431, qualifiedIncome: 8630, federalTaxDue: 3105 }
-  , { filingStatus: HeadOfHousehold, socSec: 11051, ordinaryIncome: 27806, qualifiedIncome: 44608, federalTaxDue: 2896 }
-  , { filingStatus: HeadOfHousehold, socSec: 27343, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 24057, ordinaryIncome: 1, qualifiedIncome: 4985, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 4031, ordinaryIncome: 0, qualifiedIncome: 44019, federalTaxDue: 543 }
-  , { filingStatus: Single, socSec: 29252, ordinaryIncome: 0, qualifiedIncome: 7175, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 23513, ordinaryIncome: 46675, qualifiedIncome: 50000, federalTaxDue: 11659 }
-  , { filingStatus: HeadOfHousehold, socSec: 35042, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 35194, qualifiedIncome: 1, federalTaxDue: 1521 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 1, federalTaxDue: 3298 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 1, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 45223, qualifiedIncome: 16801, federalTaxDue: 2725 }
-  , { filingStatus: HeadOfHousehold, socSec: 2580, ordinaryIncome: 1, qualifiedIncome: 38066, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 50000, federalTaxDue: 8113 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 20455, ordinaryIncome: 43737, qualifiedIncome: 25990, federalTaxDue: 10036 }
-  , { filingStatus: HeadOfHousehold, socSec: 3613, ordinaryIncome: 34681, qualifiedIncome: 48244, federalTaxDue: 3590 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 47492, qualifiedIncome: 0, federalTaxDue: 11327 }
-  , { filingStatus: Single, socSec: 43423, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 11733 }
-  , { filingStatus: HeadOfHousehold, socSec: 31615, ordinaryIncome: 48226, qualifiedIncome: 45387, federalTaxDue: 13193 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 25977, qualifiedIncome: 31527, federalTaxDue: 1731 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 42818, qualifiedIncome: 1, federalTaxDue: 3271 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 27944, qualifiedIncome: 19519, federalTaxDue: 6675 }
-  , { filingStatus: HeadOfHousehold, socSec: 12879, ordinaryIncome: 1, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 9050, ordinaryIncome: 50000, qualifiedIncome: 27379, federalTaxDue: 5844 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 27662, federalTaxDue: 7637 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 31876, qualifiedIncome: 0, federalTaxDue: 1958 }
-  , { filingStatus: Single, socSec: 1189, ordinaryIncome: 3162, qualifiedIncome: 50000, federalTaxDue: 1440 }
-  , { filingStatus: HeadOfHousehold, socSec: 42727, ordinaryIncome: 0, qualifiedIncome: 10975, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 12877, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 6563, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 3064, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 16216, qualifiedIncome: 30904, federalTaxDue: 232 }
-  , { filingStatus: Single, socSec: 10767, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 32032, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 6853 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 42139, qualifiedIncome: 50000, federalTaxDue: 5038 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 48566, qualifiedIncome: 16291, federalTaxDue: 3126 }
-  , { filingStatus: Single, socSec: 42445, ordinaryIncome: 13770, qualifiedIncome: 50000, federalTaxDue: 10947 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 3298 }
-  , { filingStatus: HeadOfHousehold, socSec: 11480, ordinaryIncome: 27145, qualifiedIncome: 0, federalTaxDue: 1094 }
-  , { filingStatus: Single, socSec: 48390, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 20452, ordinaryIncome: 1, qualifiedIncome: 20797, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 3160, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 9985, ordinaryIncome: 1, qualifiedIncome: 29693, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 43639, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 43268, qualifiedIncome: 0, federalTaxDue: 2490 }
-  , { filingStatus: HeadOfHousehold, socSec: 32670, ordinaryIncome: 8543, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 33335, federalTaxDue: 8488 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 44518, qualifiedIncome: 50000, federalTaxDue: 5680 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 4858, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 32694, ordinaryIncome: 50000, qualifiedIncome: 1, federalTaxDue: 9804 }
-  , { filingStatus: Single, socSec: 14995, ordinaryIncome: 50000, qualifiedIncome: 4388, federalTaxDue: 7153 }
-  , { filingStatus: HeadOfHousehold, socSec: 28724, ordinaryIncome: 22599, qualifiedIncome: 3911, federalTaxDue: 1279 }
-  , { filingStatus: Single, socSec: 10732, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 33618, ordinaryIncome: 0, qualifiedIncome: 23819, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 7154, ordinaryIncome: 45564, qualifiedIncome: 9983, federalTaxDue: 5430 }
-  , { filingStatus: Single, socSec: 38098, ordinaryIncome: 34092, qualifiedIncome: 38635, federalTaxDue: 13110 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 38, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 28104, ordinaryIncome: 1, qualifiedIncome: 33625, federalTaxDue: 223 }
-  , { filingStatus: HeadOfHousehold, socSec: 48794, ordinaryIncome: 6643, qualifiedIncome: 29964, federalTaxDue: 1395 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 34220, federalTaxDue: 2124 }
-  , { filingStatus: Single, socSec: 39247, ordinaryIncome: 1, qualifiedIncome: 12626, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 46943, qualifiedIncome: 25177, federalTaxDue: 6439 }
-  , { filingStatus: HeadOfHousehold, socSec: 12889, ordinaryIncome: 46195, qualifiedIncome: 1553, federalTaxDue: 4156 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 42911, qualifiedIncome: 50000, federalTaxDue: 9074 }
-  , { filingStatus: Single, socSec: 14273, ordinaryIncome: 15687, qualifiedIncome: 34096, federalTaxDue: 2614 }
-  , { filingStatus: HeadOfHousehold, socSec: 12184, ordinaryIncome: 1, qualifiedIncome: 1359, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 17535, ordinaryIncome: 0, qualifiedIncome: 25147, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 17793, ordinaryIncome: 6819, qualifiedIncome: 25758, federalTaxDue: 377 }
-  , { filingStatus: HeadOfHousehold, socSec: 31536, ordinaryIncome: 50000, qualifiedIncome: 36184, federalTaxDue: 12188 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 17618, qualifiedIncome: 27654, federalTaxDue: 4605 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 7927, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 786, qualifiedIncome: 10079, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 9115, ordinaryIncome: 50000, qualifiedIncome: 31217, federalTaxDue: 6435 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 44202, qualifiedIncome: 1, federalTaxDue: 7161 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 41949, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 25373, ordinaryIncome: 31698, qualifiedIncome: 47840, federalTaxDue: 7718 }
-  , { filingStatus: Single, socSec: 38474, ordinaryIncome: 9503, qualifiedIncome: 3769, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 5490, qualifiedIncome: 50000, federalTaxDue: 10445 }
-  , { filingStatus: HeadOfHousehold, socSec: 31098, ordinaryIncome: 22072, qualifiedIncome: 8488, federalTaxDue: 1722 }
-  , { filingStatus: Single, socSec: 13774, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 1, federalTaxDue: 9520 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 35159, federalTaxDue: 659 }
-  , { filingStatus: HeadOfHousehold, socSec: 1771, ordinaryIncome: 1453, qualifiedIncome: 39741, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 47166, ordinaryIncome: 0, qualifiedIncome: 19153, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 18592, ordinaryIncome: 7497, qualifiedIncome: 12569, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 39621, ordinaryIncome: 1, qualifiedIncome: 32319, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 14030, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 39577, qualifiedIncome: 1, federalTaxDue: 8106 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 37376, qualifiedIncome: 50000, federalTaxDue: 7580 }
-  , { filingStatus: HeadOfHousehold, socSec: 6940, ordinaryIncome: 0, qualifiedIncome: 33517, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 42572, qualifiedIncome: 45990, federalTaxDue: 4553 }
-  , { filingStatus: HeadOfHousehold, socSec: 6252, ordinaryIncome: 21618, qualifiedIncome: 1, federalTaxDue: 147 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 40314, qualifiedIncome: 0, federalTaxDue: 2136 }
-  , { filingStatus: Single, socSec: 26133, ordinaryIncome: 44967, qualifiedIncome: 5980, federalTaxDue: 8367 }
-  , { filingStatus: Single, socSec: 34121, ordinaryIncome: 30500, qualifiedIncome: 28911, federalTaxDue: 10118 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 50000, qualifiedIncome: 50000, federalTaxDue: 7161 }
-  , { filingStatus: HeadOfHousehold, socSec: 20961, ordinaryIncome: 33541, qualifiedIncome: 0, federalTaxDue: 2885 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 16822, qualifiedIncome: 1, federalTaxDue: 292 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 6702, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 25805, qualifiedIncome: 1, federalTaxDue: 2649 }
-  , { filingStatus: HeadOfHousehold, socSec: 24179, ordinaryIncome: 0, qualifiedIncome: 37986, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 36019, qualifiedIncome: 23322, federalTaxDue: 3211 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 29198, qualifiedIncome: 1, federalTaxDue: 905 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 5097, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 14126, ordinaryIncome: 7043, qualifiedIncome: 4212, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 25196, ordinaryIncome: 4114, qualifiedIncome: 21751, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 32258, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 1, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 16180, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 7166, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 19039, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 32289, ordinaryIncome: 0, qualifiedIncome: 46795, federalTaxDue: 730 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 21333, qualifiedIncome: 8982, federalTaxDue: 118 }
-  , { filingStatus: HeadOfHousehold, socSec: 34046, ordinaryIncome: 1692, qualifiedIncome: 706, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 35734, federalTaxDue: 15573 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 35794, ordinaryIncome: 0, qualifiedIncome: 32233, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 21890, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 44982, qualifiedIncome: 26039, federalTaxDue: 13015 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1591, ordinaryIncome: 49054, qualifiedIncome: 29809, federalTaxDue: 4242 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 18213, federalTaxDue: 15772 }
-  , { filingStatus: Single, socSec: 27306, ordinaryIncome: 50000, qualifiedIncome: 1, federalTaxDue: 8797 }
-  , { filingStatus: HeadOfHousehold, socSec: 41077, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 27595, ordinaryIncome: 46731, qualifiedIncome: 50000, federalTaxDue: 15632 }
-  , { filingStatus: HeadOfHousehold, socSec: 5923, ordinaryIncome: 35271, qualifiedIncome: 0, federalTaxDue: 2135 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 12195, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 3298 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 1352, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 43832, ordinaryIncome: 50000, qualifiedIncome: 47272, federalTaxDue: 18978 }
-  , { filingStatus: HeadOfHousehold, socSec: 44101, ordinaryIncome: 16033, qualifiedIncome: 0, federalTaxDue: 385 }
-  , { filingStatus: Single, socSec: 30598, ordinaryIncome: 42795, qualifiedIncome: 15838, federalTaxDue: 10203 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 37271, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 46524, ordinaryIncome: 0, qualifiedIncome: 48943, federalTaxDue: 3485 }
-  , { filingStatus: Single, socSec: 27608, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 8853 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 4285 }
-  , { filingStatus: Single, socSec: 46853, ordinaryIncome: 25188, qualifiedIncome: 1, federalTaxDue: 3186 }
-  , { filingStatus: Single, socSec: 23844, ordinaryIncome: 40488, qualifiedIncome: 31472, federalTaxDue: 10777 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 25635, qualifiedIncome: 50000, federalTaxDue: 756 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 4285 }
-  , { filingStatus: HeadOfHousehold, socSec: 28358, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 6191 }
-  , { filingStatus: Single, socSec: 20396, ordinaryIncome: 47486, qualifiedIncome: 1, federalTaxDue: 6952 }
-  , { filingStatus: HeadOfHousehold, socSec: 15564, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 23641, ordinaryIncome: 33607, qualifiedIncome: 1, federalTaxDue: 3037 }
-  , { filingStatus: Single, socSec: 38882, ordinaryIncome: 6197, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 18058, qualifiedIncome: 49020, federalTaxDue: 2333 }
-  , { filingStatus: HeadOfHousehold, socSec: 31180, ordinaryIncome: 1, qualifiedIncome: 21683, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 9448, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 39082, ordinaryIncome: 15830, qualifiedIncome: 1, federalTaxDue: 135 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 12897, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 30564, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 842 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 3313, qualifiedIncome: 47602, federalTaxDue: 1080 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 13449, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 42466, ordinaryIncome: 50000, qualifiedIncome: 35231, federalTaxDue: 16916 }
-  , { filingStatus: HeadOfHousehold, socSec: 26542, ordinaryIncome: 1, qualifiedIncome: 38255, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 37293, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 9365, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 4133 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 41580, qualifiedIncome: 41795, federalTaxDue: 7484 }
-  , { filingStatus: Single, socSec: 22069, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 3298 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 50000, federalTaxDue: 1440 }
-  , { filingStatus: HeadOfHousehold, socSec: 15452, ordinaryIncome: 5979, qualifiedIncome: 41868, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 44286, qualifiedIncome: 25857, federalTaxDue: 2612 }
-  , { filingStatus: Single, socSec: 6166, ordinaryIncome: 8266, qualifiedIncome: 21436, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 29960, qualifiedIncome: 47797, federalTaxDue: 5247 }
-  , { filingStatus: HeadOfHousehold, socSec: 9002, ordinaryIncome: 21252, qualifiedIncome: 41448, federalTaxDue: 875 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 35025, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 41845, ordinaryIncome: 50000, qualifiedIncome: 47555, federalTaxDue: 18649 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 1520, qualifiedIncome: 6797, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 43078, qualifiedIncome: 50000, federalTaxDue: 16190 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 18514, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 29011, ordinaryIncome: 287, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 47394, qualifiedIncome: 18729, federalTaxDue: 5594 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 43587, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 16004, qualifiedIncome: 0, federalTaxDue: 1308 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 12796, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 42851, qualifiedIncome: 50000, federalTaxDue: 9058 }
-  , { filingStatus: Single, socSec: 33338, ordinaryIncome: 1, qualifiedIncome: 42051, federalTaxDue: 3184 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 1, qualifiedIncome: 36555, federalTaxDue: 3011 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 41819, qualifiedIncome: 0, federalTaxDue: 9018 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 30017, qualifiedIncome: 0, federalTaxDue: 1735 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 2314, qualifiedIncome: 21052, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 26458, qualifiedIncome: 22720, federalTaxDue: 631 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 41167, qualifiedIncome: 30585, federalTaxDue: 15685 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 41843, qualifiedIncome: 25813, federalTaxDue: 5158 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 14799, ordinaryIncome: 44084, qualifiedIncome: 0, federalTaxDue: 4098 }
-  , { filingStatus: Single, socSec: 17780, ordinaryIncome: 42720, qualifiedIncome: 50000, federalTaxDue: 12914 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 47874, qualifiedIncome: 37247, federalTaxDue: 8501 }
-  , { filingStatus: HeadOfHousehold, socSec: 22961, ordinaryIncome: 50000, qualifiedIncome: 48033, federalTaxDue: 12135 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 31829, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 4889, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 35827, qualifiedIncome: 1, federalTaxDue: 2432 }
-  , { filingStatus: Single, socSec: 25243, ordinaryIncome: 3969, qualifiedIncome: 50000, federalTaxDue: 4353 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 0, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncome: 50000, qualifiedIncome: 0, federalTaxDue: 9520 }
-  , { filingStatus: HeadOfHousehold, socSec: 21090, ordinaryIncome: 14795, qualifiedIncome: 18815, federalTaxDue: 778 }
-  , { filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncome: 1, qualifiedIncome: 50000, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 43924, qualifiedIncome: 16263, federalTaxDue: 4287 }
-  , { filingStatus: HeadOfHousehold, socSec: 16855, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 6767, qualifiedIncome: 43526, federalTaxDue: 9036 }
-  , { filingStatus: HeadOfHousehold, socSec: 19363, ordinaryIncome: 50000, qualifiedIncome: 45674, federalTaxDue: 10955 }
-  , { filingStatus: Single, socSec: 11042, ordinaryIncome: 0, qualifiedIncome: 1, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1711, ordinaryIncome: 1, qualifiedIncome: 23669, federalTaxDue: 0 }
-  , { filingStatus: HeadOfHousehold, socSec: 14399, ordinaryIncome: 50000, qualifiedIncome: 18045, federalTaxDue: 5672 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 15999, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 1, ordinaryIncome: 1, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 50000, ordinaryIncome: 6597, qualifiedIncome: 0, federalTaxDue: 0 }
-  , { filingStatus: Single, socSec: 0, ordinaryIncome: 50000, qualifiedIncome: 1, federalTaxDue: 4133 }
-  , { filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncome: 0, qualifiedIncome: 10407, federalTaxDue: 0 }
+  [ { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 23340, federalTaxDue: 0, stateTaxDue: 792 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 19638, federalTaxDue: 13159, stateTaxDue: 3107 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 17036, qualifiedIncome: 1, federalTaxDue: 822, stateTaxDue: 427 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 49300, federalTaxDue: 1335, stateTaxDue: 2210 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 35847, qualifiedIncome: 1903, federalTaxDue: 1600, stateTaxDue: 1463 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 23064, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 41386, ordinaryIncomeNonSS: 26355, qualifiedIncome: 0, federalTaxDue: 2331, stateTaxDue: 893 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 18959, ordinaryIncomeNonSS: 41368, qualifiedIncome: 37087, federalTaxDue: 7244, stateTaxDue: 3548 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 22339, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 49301, federalTaxDue: 10883, stateTaxDue: 4710 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 45815, ordinaryIncomeNonSS: 8349, qualifiedIncome: 25866, federalTaxDue: 2644, stateTaxDue: 1406 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 1, federalTaxDue: 12348, stateTaxDue: 2245 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 23745, ordinaryIncomeNonSS: 26503, qualifiedIncome: 1, federalTaxDue: 2300, stateTaxDue: 1070 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 2590, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 10555, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 223 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 8810, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 186 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 14719, ordinaryIncomeNonSS: 43426, qualifiedIncome: 0, federalTaxDue: 4010, stateTaxDue: 1796 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 19598, ordinaryIncomeNonSS: 9139, qualifiedIncome: 12651, federalTaxDue: 0, stateTaxDue: 785 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 28623, ordinaryIncomeNonSS: 50000, qualifiedIncome: 1, federalTaxDue: 6218, stateTaxDue: 2125 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 14700, qualifiedIncome: 15638, federalTaxDue: 0, stateTaxDue: 1142 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 12894, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 7996, ordinaryIncomeNonSS: 22265, qualifiedIncome: 50000, federalTaxDue: 5335, stateTaxDue: 3308 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 1, qualifiedIncome: 13909, federalTaxDue: 0, stateTaxDue: 321 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 10799, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 165 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 45940, qualifiedIncome: 22885, federalTaxDue: 12753, stateTaxDue: 3066 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 37540, ordinaryIncomeNonSS: 26121, qualifiedIncome: 46942, federalTaxDue: 8870, stateTaxDue: 3228 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 34835, qualifiedIncome: 41838, federalTaxDue: 5669, stateTaxDue: 3529 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 45837, qualifiedIncome: 39525, federalTaxDue: 8293, stateTaxDue: 4013 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 20480, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 13188, federalTaxDue: 0, stateTaxDue: 284 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 23488, qualifiedIncome: 0, federalTaxDue: 2134, stateTaxDue: 799 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 42293, ordinaryIncomeNonSS: 11850, qualifiedIncome: 50000, federalTaxDue: 10394, stateTaxDue: 2838 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 30589, qualifiedIncome: 0, federalTaxDue: 1804, stateTaxDue: 1224 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 33691, ordinaryIncomeNonSS: 487, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 9975, ordinaryIncomeNonSS: 43713, qualifiedIncome: 48431, federalTaxDue: 11344, stateTaxDue: 4302 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 6977, ordinaryIncomeNonSS: 50000, qualifiedIncome: 9921, federalTaxDue: 6483, stateTaxDue: 2691 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 36742, ordinaryIncomeNonSS: 0, qualifiedIncome: 36129, federalTaxDue: 178, stateTaxDue: 1431 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 39053, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 10993, stateTaxDue: 2195 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 12149, ordinaryIncomeNonSS: 7693, qualifiedIncome: 26589, federalTaxDue: 370, stateTaxDue: 1459 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 36887, ordinaryIncomeNonSS: 8237, qualifiedIncome: 22709, federalTaxDue: 1231, stateTaxDue: 1242 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 46694, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 26368, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 48905, ordinaryIncomeNonSS: 0, qualifiedIncome: 32267, federalTaxDue: 1258, stateTaxDue: 1308 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 38767, qualifiedIncome: 0, federalTaxDue: 1950, stateTaxDue: 1513 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 1440, stateTaxDue: 2195 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 23022, ordinaryIncomeNonSS: 49392, qualifiedIncome: 19775, federalTaxDue: 10828, stateTaxDue: 3153 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 4563, ordinaryIncomeNonSS: 7984, qualifiedIncome: 34883, federalTaxDue: 0, stateTaxDue: 1718 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 48806, ordinaryIncomeNonSS: 18695, qualifiedIncome: 10026, federalTaxDue: 2032, stateTaxDue: 1061 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 9930, qualifiedIncome: 0, federalTaxDue: 132, stateTaxDue: 242 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 48485, ordinaryIncomeNonSS: 33063, qualifiedIncome: 40579, federalTaxDue: 15118, stateTaxDue: 3427 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 26135, ordinaryIncomeNonSS: 0, qualifiedIncome: 24454, federalTaxDue: 0, stateTaxDue: 798 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 34502, ordinaryIncomeNonSS: 1, qualifiedIncome: 37724, federalTaxDue: 1706, stateTaxDue: 1581 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 39924, federalTaxDue: 0, stateTaxDue: 1741 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 20282, ordinaryIncomeNonSS: 47344, qualifiedIncome: 28094, federalTaxDue: 11113, stateTaxDue: 3467 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 31172, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 1, qualifiedIncome: 50000, federalTaxDue: 4285, stateTaxDue: 2075 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 42152, ordinaryIncomeNonSS: 31320, qualifiedIncome: 0, federalTaxDue: 3473, stateTaxDue: 1141 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 6784, ordinaryIncomeNonSS: 0, qualifiedIncome: 18041, federalTaxDue: 0, stateTaxDue: 477 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 18424, federalTaxDue: 0, stateTaxDue: 546 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 39108, qualifiedIncome: 50000, federalTaxDue: 8047, stateTaxDue: 4200 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 8791, qualifiedIncome: 21192, federalTaxDue: 0, stateTaxDue: 1244 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 34805, federalTaxDue: 0, stateTaxDue: 1485 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 38657, ordinaryIncomeNonSS: 23365, qualifiedIncome: 7021, federalTaxDue: 2245, stateTaxDue: 1144 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 45964, ordinaryIncomeNonSS: 5971, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2125 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 12282, qualifiedIncome: 50000, federalTaxDue: 1440, stateTaxDue: 2809 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 22806, qualifiedIncome: 0, federalTaxDue: 1983, stateTaxDue: 715 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 5574, qualifiedIncome: 10566, federalTaxDue: 0, stateTaxDue: 382 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 26168, ordinaryIncomeNonSS: 26220, qualifiedIncome: 11218, federalTaxDue: 2670, stateTaxDue: 1447 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 22058, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 19154, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 18460, federalTaxDue: 0, stateTaxDue: 548 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 17225, qualifiedIncome: 18830, federalTaxDue: 4887, stateTaxDue: 1498 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 8652, federalTaxDue: 3298, stateTaxDue: 2508 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 47115, ordinaryIncomeNonSS: 10681, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 159 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 44873, ordinaryIncomeNonSS: 0, qualifiedIncome: 22462, federalTaxDue: 0, stateTaxDue: 698 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 25740, ordinaryIncomeNonSS: 0, qualifiedIncome: 34582, federalTaxDue: 203, stateTaxDue: 1424 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 25500, qualifiedIncome: 0, federalTaxDue: 1193, stateTaxDue: 970 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 48519, ordinaryIncomeNonSS: 31923, qualifiedIncome: 9252, federalTaxDue: 4875, stateTaxDue: 1634 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 46474, qualifiedIncome: 0, federalTaxDue: 2875, stateTaxDue: 1949 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 22160, qualifiedIncome: 0, federalTaxDue: 2675, stateTaxDue: 803 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 4133, stateTaxDue: 2245 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 130, qualifiedIncome: 41088, federalTaxDue: 103, stateTaxDue: 1756 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 50000, qualifiedIncome: 1, federalTaxDue: 4133, stateTaxDue: 2195 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 46022, federalTaxDue: 843, stateTaxDue: 1996 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 50000, qualifiedIncome: 13584, federalTaxDue: 5526, stateTaxDue: 2874 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 21967, qualifiedIncome: 10107, federalTaxDue: 182, stateTaxDue: 1179 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 49147, qualifiedIncome: 1, federalTaxDue: 9173, stateTaxDue: 2032 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 22119, ordinaryIncomeNonSS: 1, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2075 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 1, qualifiedIncome: 39219, federalTaxDue: 1004, stateTaxDue: 1586 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1966, ordinaryIncomeNonSS: 8578, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2554 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 41161, qualifiedIncome: 1, federalTaxDue: 6058, stateTaxDue: 1683 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 3260, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 27406, ordinaryIncomeNonSS: 33219, qualifiedIncome: 16967, federalTaxDue: 4080, stateTaxDue: 2134 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 11451, federalTaxDue: 0, stateTaxDue: 198 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 31866, ordinaryIncomeNonSS: 34519, qualifiedIncome: 47735, federalTaxDue: 13404, stateTaxDue: 3858 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 31740, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 1440, stateTaxDue: 2195 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 30565, ordinaryIncomeNonSS: 39115, qualifiedIncome: 0, federalTaxDue: 6100, stateTaxDue: 1651 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 4133, stateTaxDue: 2245 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 1, qualifiedIncome: 45656, federalTaxDue: 0, stateTaxDue: 1858 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 39616, qualifiedIncome: 1, federalTaxDue: 8122, stateTaxDue: 1676 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 4133, stateTaxDue: 2195 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 19996, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 6415, qualifiedIncome: 45370, federalTaxDue: 5732, stateTaxDue: 2164 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 7474, ordinaryIncomeNonSS: 36019, qualifiedIncome: 23889, federalTaxDue: 2383, stateTaxDue: 2570 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 8603, ordinaryIncomeNonSS: 47050, qualifiedIncome: 15661, federalTaxDue: 7006, stateTaxDue: 2881 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 8528, ordinaryIncomeNonSS: 2283, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 23917, ordinaryIncomeNonSS: 49238, qualifiedIncome: 0, federalTaxDue: 5646, stateTaxDue: 2087 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 8427, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 1440, stateTaxDue: 2245 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 28813, qualifiedIncome: 5214, federalTaxDue: 3848, stateTaxDue: 1276 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 15406, ordinaryIncomeNonSS: 34527, qualifiedIncome: 44475, federalTaxDue: 5690, stateTaxDue: 3525 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 40066, ordinaryIncomeNonSS: 16739, qualifiedIncome: 9659, federalTaxDue: 1950, stateTaxDue: 1015 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 43959, ordinaryIncomeNonSS: 30816, qualifiedIncome: 19515, federalTaxDue: 10551, stateTaxDue: 2262 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 34928, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 10222, stateTaxDue: 2245 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 9078, qualifiedIncome: 29535, federalTaxDue: 0, stateTaxDue: 1556 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 47453, qualifiedIncome: 0, federalTaxDue: 8483, stateTaxDue: 1998 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 4133, stateTaxDue: 2245 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 49321, qualifiedIncome: 46887, federalTaxDue: 17097, stateTaxDue: 4385 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 8080, ordinaryIncomeNonSS: 872, qualifiedIncome: 42757, federalTaxDue: 0, stateTaxDue: 1756 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 13914, qualifiedIncome: 1657, federalTaxDue: 385, stateTaxDue: 404 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 48060, ordinaryIncomeNonSS: 13756, qualifiedIncome: 42761, federalTaxDue: 11118, stateTaxDue: 2571 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 31317, ordinaryIncomeNonSS: 1, qualifiedIncome: 15933, federalTaxDue: 0, stateTaxDue: 542 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 29956, ordinaryIncomeNonSS: 0, qualifiedIncome: 31394, federalTaxDue: 0, stateTaxDue: 1195 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2075 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 10841, ordinaryIncomeNonSS: 3252, qualifiedIncome: 50000, federalTaxDue: 1440, stateTaxDue: 2358 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 46144, ordinaryIncomeNonSS: 13092, qualifiedIncome: 50000, federalTaxDue: 11613, stateTaxDue: 2900 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 10185, federalTaxDue: 0, stateTaxDue: 84 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 41587, qualifiedIncome: 1, federalTaxDue: 2288, stateTaxDue: 1704 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 50000, federalTaxDue: 10988, stateTaxDue: 4695 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 38301, ordinaryIncomeNonSS: 0, qualifiedIncome: 36503, federalTaxDue: 276, stateTaxDue: 1450 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 35904, ordinaryIncomeNonSS: 21651, qualifiedIncome: 49110, federalTaxDue: 11440, stateTaxDue: 3233 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 16939, ordinaryIncomeNonSS: 50000, qualifiedIncome: 1, federalTaxDue: 6858, stateTaxDue: 2195 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2125 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 40256, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 28309, ordinaryIncomeNonSS: 35878, qualifiedIncome: 0, federalTaxDue: 3779, stateTaxDue: 1419 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 47716, federalTaxDue: 0, stateTaxDue: 1961 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 6236, qualifiedIncome: 29267, federalTaxDue: 0, stateTaxDue: 1350 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 14580, ordinaryIncomeNonSS: 48157, qualifiedIncome: 0, federalTaxDue: 4564, stateTaxDue: 2033 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 43447, ordinaryIncomeNonSS: 50000, qualifiedIncome: 1848, federalTaxDue: 9265, stateTaxDue: 2167 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 40591, federalTaxDue: 5749, stateTaxDue: 4105 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 33421, qualifiedIncome: 0, federalTaxDue: 1327, stateTaxDue: 1246 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 5341, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 27179, ordinaryIncomeNonSS: 0, qualifiedIncome: 39592, federalTaxDue: 1605, stateTaxDue: 1725 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 2615, ordinaryIncomeNonSS: 36931, qualifiedIncome: 16378, federalTaxDue: 3016, stateTaxDue: 2410 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 6838, qualifiedIncome: 44815, federalTaxDue: 0, stateTaxDue: 2208 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 47513, ordinaryIncomeNonSS: 50000, qualifiedIncome: 50000, federalTaxDue: 20075, stateTaxDue: 4695 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 5442, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 45007, ordinaryIncomeNonSS: 0, qualifiedIncome: 9290, federalTaxDue: 0, stateTaxDue: 40 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 15608, ordinaryIncomeNonSS: 48663, qualifiedIncome: 50000, federalTaxDue: 13815, stateTaxDue: 4628 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 23922, ordinaryIncomeNonSS: 1, qualifiedIncome: 3367, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 36606, qualifiedIncome: 0, federalTaxDue: 1691, stateTaxDue: 1455 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 1, qualifiedIncome: 15561, federalTaxDue: 0, stateTaxDue: 403 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 34633, ordinaryIncomeNonSS: 13590, qualifiedIncome: 29178, federalTaxDue: 5235, stateTaxDue: 1833 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 25136, qualifiedIncome: 3041, federalTaxDue: 3645, stateTaxDue: 1154 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 35136, qualifiedIncome: 12096, federalTaxDue: 10374, stateTaxDue: 2057 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 809, qualifiedIncome: 29327, federalTaxDue: 0, stateTaxDue: 1082 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 44205, ordinaryIncomeNonSS: 27259, qualifiedIncome: 31368, federalTaxDue: 8371, stateTaxDue: 2556 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 21145, qualifiedIncome: 10839, federalTaxDue: 3813, stateTaxDue: 1294 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 9823, ordinaryIncomeNonSS: 39951, qualifiedIncome: 50000, federalTaxDue: 6702, stateTaxDue: 4073 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 45320, federalTaxDue: 738, stateTaxDue: 1961 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 47616, qualifiedIncome: 8630, federalTaxDue: 4139, stateTaxDue: 2557 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 1440, stateTaxDue: 2245 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 13687, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 7871, ordinaryIncomeNonSS: 0, qualifiedIncome: 4226, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 30239, ordinaryIncomeNonSS: 26976, qualifiedIncome: 1, federalTaxDue: 1901, stateTaxDue: 974 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 13999, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 546, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2152 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 38871, qualifiedIncome: 0, federalTaxDue: 2798, stateTaxDue: 1689 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 1, qualifiedIncome: 26469, federalTaxDue: 0, stateTaxDue: 1069 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 196, ordinaryIncomeNonSS: 0, qualifiedIncome: 42761, federalTaxDue: 354, stateTaxDue: 1833 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 5632, ordinaryIncomeNonSS: 16359, qualifiedIncome: 11598, federalTaxDue: 528, stateTaxDue: 1093 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 22885, qualifiedIncome: 35834, federalTaxDue: 274, stateTaxDue: 2511 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 41410, qualifiedIncome: 3778, federalTaxDue: 3102, stateTaxDue: 2004 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 3227, ordinaryIncomeNonSS: 47109, qualifiedIncome: 50000, federalTaxDue: 7121, stateTaxDue: 4480 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 29197, qualifiedIncome: 5765, federalTaxDue: 905, stateTaxDue: 1323 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 3298, stateTaxDue: 2125 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 20412, ordinaryIncomeNonSS: 28129, qualifiedIncome: 17746, federalTaxDue: 2756, stateTaxDue: 1869 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 6907, qualifiedIncome: 40264, federalTaxDue: 0, stateTaxDue: 1934 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 15086, qualifiedIncome: 0, federalTaxDue: 461, stateTaxDue: 329 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 4133, stateTaxDue: 2195 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 24063, qualifiedIncome: 17557, federalTaxDue: 1021, stateTaxDue: 1776 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 48428, ordinaryIncomeNonSS: 37928, qualifiedIncome: 10616, federalTaxDue: 10865, stateTaxDue: 2172 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 6917, federalTaxDue: 0, stateTaxDue: 91 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 19406, ordinaryIncomeNonSS: 31965, qualifiedIncome: 1, federalTaxDue: 2456, stateTaxDue: 1173 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 140, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 5093, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 28632, federalTaxDue: 0, stateTaxDue: 1007 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 32254, federalTaxDue: 0, stateTaxDue: 1358 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 1, federalTaxDue: 12348, stateTaxDue: 2195 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 47037, qualifiedIncome: 50000, federalTaxDue: 10188, stateTaxDue: 4547 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 24214, qualifiedIncome: 2651, federalTaxDue: 3401, stateTaxDue: 1038 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 44686, ordinaryIncomeNonSS: 3004, qualifiedIncome: 32204, federalTaxDue: 737, stateTaxDue: 1335 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 7540, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 22549, ordinaryIncomeNonSS: 32779, qualifiedIncome: 20699, federalTaxDue: 3531, stateTaxDue: 2299 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 577, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 29677, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 4299, stateTaxDue: 2245 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 48800, ordinaryIncomeNonSS: 9198, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 205 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 33320, federalTaxDue: 8486, stateTaxDue: 3911 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 40067, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 11183, stateTaxDue: 2195 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 41850, qualifiedIncome: 1, federalTaxDue: 2320, stateTaxDue: 1668 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 50000, qualifiedIncome: 20188, federalTaxDue: 6516, stateTaxDue: 3204 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 40747, qualifiedIncome: 46790, federalTaxDue: 15196, stateTaxDue: 4002 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 42065, ordinaryIncomeNonSS: 0, qualifiedIncome: 27960, federalTaxDue: 0, stateTaxDue: 1023 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 4518, ordinaryIncomeNonSS: 29035, qualifiedIncome: 6045, federalTaxDue: 2078, stateTaxDue: 1449 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 32497, ordinaryIncomeNonSS: 50000, qualifiedIncome: 29255, federalTaxDue: 11328, stateTaxDue: 3538 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 17122, qualifiedIncome: 29492, federalTaxDue: 322, stateTaxDue: 2026 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 27792, ordinaryIncomeNonSS: 0, qualifiedIncome: 29735, federalTaxDue: 0, stateTaxDue: 1112 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 12429, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 246 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 9520, stateTaxDue: 2125 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 39354, ordinaryIncomeNonSS: 21137, qualifiedIncome: 50000, federalTaxDue: 12200, stateTaxDue: 3252 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 19774, ordinaryIncomeNonSS: 50000, qualifiedIncome: 34837, federalTaxDue: 12614, stateTaxDue: 3937 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 739, ordinaryIncomeNonSS: 50000, qualifiedIncome: 45438, federalTaxDue: 6646, stateTaxDue: 4397 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 23652, qualifiedIncome: 0, federalTaxDue: 2171, stateTaxDue: 808 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 4919, qualifiedIncome: 34559, federalTaxDue: 0, stateTaxDue: 1719 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 22421, ordinaryIncomeNonSS: 1, qualifiedIncome: 8140, federalTaxDue: 0, stateTaxDue: 102 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 4133, stateTaxDue: 2245 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 47861, qualifiedIncome: 0, federalTaxDue: 3041, stateTaxDue: 2018 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 1764, qualifiedIncome: 19032, federalTaxDue: 0, stateTaxDue: 665 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 46134, federalTaxDue: 860, stateTaxDue: 2002 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 1498, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 28654, qualifiedIncome: 1, federalTaxDue: 1571, stateTaxDue: 1178 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 41674, ordinaryIncomeNonSS: 0, qualifiedIncome: 48363, federalTaxDue: 6536, stateTaxDue: 2113 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 23775, ordinaryIncomeNonSS: 50000, qualifiedIncome: 45523, federalTaxDue: 14965, stateTaxDue: 4471 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 31735, qualifiedIncome: 43505, federalTaxDue: 5082, stateTaxDue: 3457 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 40299, ordinaryIncomeNonSS: 0, qualifiedIncome: 29286, federalTaxDue: 0, stateTaxDue: 1039 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 15328, ordinaryIncomeNonSS: 4562, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2303 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 35467, qualifiedIncome: 16215, federalTaxDue: 1554, stateTaxDue: 2209 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 10135, federalTaxDue: 0, stateTaxDue: 82 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 16725, federalTaxDue: 0, stateTaxDue: 531 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 47808, ordinaryIncomeNonSS: 20001, qualifiedIncome: 0, federalTaxDue: 2083, stateTaxDue: 695 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 16049, ordinaryIncomeNonSS: 20229, qualifiedIncome: 50000, federalTaxDue: 2815, stateTaxDue: 3136 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 47294, qualifiedIncome: 14848, federalTaxDue: 4985, stateTaxDue: 2802 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 1440, stateTaxDue: 2245 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 42683, ordinaryIncomeNonSS: 23631, qualifiedIncome: 28292, federalTaxDue: 6580, stateTaxDue: 2221 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 37498, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 28957, qualifiedIncome: 50000, federalTaxDue: 5306, stateTaxDue: 3643 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 11281, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 10982, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 174 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 12317, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 22323, ordinaryIncomeNonSS: 7066, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 48 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 49657, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 10732, ordinaryIncomeNonSS: 31348, qualifiedIncome: 29061, federalTaxDue: 5274, stateTaxDue: 2715 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 35274, qualifiedIncome: 617, federalTaxDue: 1531, stateTaxDue: 1370 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 25373, qualifiedIncome: 45453, federalTaxDue: 3657, stateTaxDue: 3286 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 27499, ordinaryIncomeNonSS: 47873, qualifiedIncome: 19213, federalTaxDue: 8279, stateTaxDue: 2929 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 45430, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 11920, stateTaxDue: 2195 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 12601, ordinaryIncomeNonSS: 30666, qualifiedIncome: 0, federalTaxDue: 2656, stateTaxDue: 1228 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 1, federalTaxDue: 4133, stateTaxDue: 2245 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 42113, ordinaryIncomeNonSS: 1, qualifiedIncome: 27567, federalTaxDue: 303, stateTaxDue: 1073 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 36826, federalTaxDue: 0, stateTaxDue: 1536 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 45085, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 2152, qualifiedIncome: 40088, federalTaxDue: 0, stateTaxDue: 1857 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 20198, federalTaxDue: 0, stateTaxDue: 755 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 24333, qualifiedIncome: 9834, federalTaxDue: 3325, stateTaxDue: 1283 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 1, qualifiedIncome: 17452, federalTaxDue: 0, stateTaxDue: 618 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 43831, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 8943, stateTaxDue: 2125 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 33873, qualifiedIncome: 0, federalTaxDue: 1372, stateTaxDue: 1319 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 21572, ordinaryIncomeNonSS: 40800, qualifiedIncome: 38125, federalTaxDue: 7846, stateTaxDue: 3571 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 4637, ordinaryIncomeNonSS: 28439, qualifiedIncome: 21345, federalTaxDue: 2019, stateTaxDue: 2184 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 14719, ordinaryIncomeNonSS: 1, qualifiedIncome: 28965, federalTaxDue: 0, stateTaxDue: 1193 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 21560, ordinaryIncomeNonSS: 50000, qualifiedIncome: 41003, federalTaxDue: 13873, stateTaxDue: 4245 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 50000, qualifiedIncome: 1, federalTaxDue: 4133, stateTaxDue: 2195 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 34063, qualifiedIncome: 4376, federalTaxDue: 2221, stateTaxDue: 1667 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 27257, federalTaxDue: 0, stateTaxDue: 938 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 3904, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 1440, stateTaxDue: 2245 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 6185, ordinaryIncomeNonSS: 50000, qualifiedIncome: 33809, federalTaxDue: 6151, stateTaxDue: 3815 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 43926, qualifiedIncome: 9707, federalTaxDue: 10319, stateTaxDue: 2257 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 50000, federalTaxDue: 1440, stateTaxDue: 2195 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 36950, ordinaryIncomeNonSS: 28868, qualifiedIncome: 3121, federalTaxDue: 2981, stateTaxDue: 1174 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 29759, ordinaryIncomeNonSS: 11500, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 200 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 2033, ordinaryIncomeNonSS: 0, qualifiedIncome: 28016, federalTaxDue: 0, stateTaxDue: 1026 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 39836, ordinaryIncomeNonSS: 27723, qualifiedIncome: 1, federalTaxDue: 2556, stateTaxDue: 961 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 38259, ordinaryIncomeNonSS: 0, qualifiedIncome: 26784, federalTaxDue: 0, stateTaxDue: 914 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 25673, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 29998, ordinaryIncomeNonSS: 0, qualifiedIncome: 16072, federalTaxDue: 0, stateTaxDue: 429 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 146, ordinaryIncomeNonSS: 32505, qualifiedIncome: 17691, federalTaxDue: 1248, stateTaxDue: 2135 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 33486, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 48374, ordinaryIncomeNonSS: 11436, qualifiedIncome: 0, federalTaxDue: 342, stateTaxDue: 267 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 25044, ordinaryIncomeNonSS: 0, qualifiedIncome: 24236, federalTaxDue: 0, stateTaxDue: 907 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 4285, stateTaxDue: 2125 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 37225, ordinaryIncomeNonSS: 0, qualifiedIncome: 49584, federalTaxDue: 2195, stateTaxDue: 2104 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 21192, federalTaxDue: 0, stateTaxDue: 635 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 13912, ordinaryIncomeNonSS: 1, qualifiedIncome: 17183, federalTaxDue: 0, stateTaxDue: 484 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 8312, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 4146, stateTaxDue: 2125 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 42991, qualifiedIncome: 26645, federalTaxDue: 5592, stateTaxDue: 3177 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 10530, ordinaryIncomeNonSS: 0, qualifiedIncome: 15239, federalTaxDue: 0, stateTaxDue: 507 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 8772, ordinaryIncomeNonSS: 50000, qualifiedIncome: 50000, federalTaxDue: 9174, stateTaxDue: 4575 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 34645, federalTaxDue: 18237, stateTaxDue: 3927 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 19302, federalTaxDue: 0, stateTaxDue: 590 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 40464, ordinaryIncomeNonSS: 8996, qualifiedIncome: 5924, federalTaxDue: 58, stateTaxDue: 491 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 35614, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 17150, ordinaryIncomeNonSS: 10377, qualifiedIncome: 15377, federalTaxDue: 0, stateTaxDue: 913 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 27110, ordinaryIncomeNonSS: 0, qualifiedIncome: 16179, federalTaxDue: 0, stateTaxDue: 384 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 17739, qualifiedIncome: 0, federalTaxDue: 1693, stateTaxDue: 582 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 23762, qualifiedIncome: 42019, federalTaxDue: 361, stateTaxDue: 2914 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 8227, qualifiedIncome: 35251, federalTaxDue: 0, stateTaxDue: 1869 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 43768, ordinaryIncomeNonSS: 11974, qualifiedIncome: 9963, federalTaxDue: 1112, stateTaxDue: 842 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 12576, ordinaryIncomeNonSS: 46380, qualifiedIncome: 3489, federalTaxDue: 4146, stateTaxDue: 2118 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 44637, qualifiedIncome: 1, federalTaxDue: 3489, stateTaxDue: 1977 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 20519, qualifiedIncome: 50000, federalTaxDue: 37, stateTaxDue: 3151 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 34471, ordinaryIncomeNonSS: 39777, qualifiedIncome: 0, federalTaxDue: 6735, stateTaxDue: 1734 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2075 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 8869, ordinaryIncomeNonSS: 0, qualifiedIncome: 11340, federalTaxDue: 0, stateTaxDue: 142 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 50000, qualifiedIncome: 44501, federalTaxDue: 6336, stateTaxDue: 4300 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 3972, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 17558, ordinaryIncomeNonSS: 46241, qualifiedIncome: 11230, federalTaxDue: 7831, stateTaxDue: 2569 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 3003, ordinaryIncomeNonSS: 1, qualifiedIncome: 12202, federalTaxDue: 0, stateTaxDue: 355 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 50000, federalTaxDue: 7161, stateTaxDue: 4575 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 4286, qualifiedIncome: 50000, federalTaxDue: 1440, stateTaxDue: 2409 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 906, qualifiedIncome: 12763, federalTaxDue: 0, stateTaxDue: 378 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 1547, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 43725, federalTaxDue: 0, stateTaxDue: 1761 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 26946, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 34197, ordinaryIncomeNonSS: 30585, qualifiedIncome: 1, federalTaxDue: 2904, stateTaxDue: 1154 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 43081, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 7319, stateTaxDue: 2245 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 39397, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 33104, federalTaxDue: 4626, stateTaxDue: 3730 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 23537, ordinaryIncomeNonSS: 45443, qualifiedIncome: 50000, federalTaxDue: 11332, stateTaxDue: 4397 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 14093, ordinaryIncomeNonSS: 8457, qualifiedIncome: 4830, federalTaxDue: 0, stateTaxDue: 409 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 6380, qualifiedIncome: 50000, federalTaxDue: 1440, stateTaxDue: 2564 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 14700, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 310 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 13702, ordinaryIncomeNonSS: 41897, qualifiedIncome: 47278, federalTaxDue: 7709, stateTaxDue: 4034 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2125 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 44041, ordinaryIncomeNonSS: 6939, qualifiedIncome: 43416, federalTaxDue: 4569, stateTaxDue: 2093 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 8132, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 3, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 232, ordinaryIncomeNonSS: 50000, qualifiedIncome: 37826, federalTaxDue: 9215, stateTaxDue: 4086 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 26850, qualifiedIncome: 0, federalTaxDue: 2881, stateTaxDue: 968 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 882, ordinaryIncomeNonSS: 40928, qualifiedIncome: 50000, federalTaxDue: 8741, stateTaxDue: 4291 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 29190, ordinaryIncomeNonSS: 0, qualifiedIncome: 11922, federalTaxDue: 0, stateTaxDue: 291 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 22692, ordinaryIncomeNonSS: 1, qualifiedIncome: 50000, federalTaxDue: 2787, stateTaxDue: 2245 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 26348, ordinaryIncomeNonSS: 26389, qualifiedIncome: 43563, federalTaxDue: 5867, stateTaxDue: 3073 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 26404, ordinaryIncomeNonSS: 35348, qualifiedIncome: 28018, federalTaxDue: 5967, stateTaxDue: 2793 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 44005, ordinaryIncomeNonSS: 27688, qualifiedIncome: 0, federalTaxDue: 3596, stateTaxDue: 1129 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 4133, stateTaxDue: 2195 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 10687, ordinaryIncomeNonSS: 33016, qualifiedIncome: 1, federalTaxDue: 2245, stateTaxDue: 1226 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 24574, ordinaryIncomeNonSS: 45863, qualifiedIncome: 45652, federalTaxDue: 11031, stateTaxDue: 4151 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 35972, ordinaryIncomeNonSS: 1, qualifiedIncome: 50000, federalTaxDue: 1992, stateTaxDue: 2125 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 3298, stateTaxDue: 2125 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 22229, federalTaxDue: 0, stateTaxDue: 736 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 10441, ordinaryIncomeNonSS: 46879, qualifiedIncome: 29623, federalTaxDue: 9400, stateTaxDue: 3520 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 20092, qualifiedIncome: 38792, federalTaxDue: 1307, stateTaxDue: 2639 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 13335, ordinaryIncomeNonSS: 9083, qualifiedIncome: 27588, federalTaxDue: 652, stateTaxDue: 1579 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 37015, qualifiedIncome: 18831, federalTaxDue: 2807, stateTaxDue: 2537 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 16723, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 43764, qualifiedIncome: 1, federalTaxDue: 3385, stateTaxDue: 1933 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 50000, qualifiedIncome: 3681, federalTaxDue: 3298, stateTaxDue: 2259 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 43023, qualifiedIncome: 28527, federalTaxDue: 2461, stateTaxDue: 3203 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 47116, ordinaryIncomeNonSS: 48470, qualifiedIncome: 1, federalTaxDue: 11455, stateTaxDue: 2119 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 38086, ordinaryIncomeNonSS: 0, qualifiedIncome: 42473, federalTaxDue: 774, stateTaxDue: 1699 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 24097, federalTaxDue: 343, stateTaxDue: 900 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 14981, ordinaryIncomeNonSS: 50000, qualifiedIncome: 40239, federalTaxDue: 9134, stateTaxDue: 4137 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 5935, ordinaryIncomeNonSS: 21649, qualifiedIncome: 0, federalTaxDue: 150, stateTaxDue: 707 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 34828, qualifiedIncome: 0, federalTaxDue: 1477, stateTaxDue: 1366 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1770, ordinaryIncomeNonSS: 27256, qualifiedIncome: 49662, federalTaxDue: 1487, stateTaxDue: 3471 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 24380, qualifiedIncome: 1, federalTaxDue: 1059, stateTaxDue: 914 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 24430, ordinaryIncomeNonSS: 36902, qualifiedIncome: 50000, federalTaxDue: 12877, stateTaxDue: 4040 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 20797, ordinaryIncomeNonSS: 36549, qualifiedIncome: 24865, federalTaxDue: 4531, stateTaxDue: 2696 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 38226, qualifiedIncome: 43367, federalTaxDue: 6814, stateTaxDue: 3775 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 28789, qualifiedIncome: 46584, federalTaxDue: 1032, stateTaxDue: 3344 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 280, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 20285, ordinaryIncomeNonSS: 42916, qualifiedIncome: 39538, federalTaxDue: 8334, stateTaxDue: 3698 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 43363, ordinaryIncomeNonSS: 3008, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 40883, qualifiedIncome: 1804, federalTaxDue: 9245, stateTaxDue: 1829 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 18202, ordinaryIncomeNonSS: 27900, qualifiedIncome: 0, federalTaxDue: 2327, stateTaxDue: 1140 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 24369, qualifiedIncome: 6870, federalTaxDue: 1057, stateTaxDue: 1257 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 8122, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 33307, ordinaryIncomeNonSS: 38408, qualifiedIncome: 0, federalTaxDue: 6069, stateTaxDue: 1615 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 49417, ordinaryIncomeNonSS: 47921, qualifiedIncome: 47887, federalTaxDue: 19657, stateTaxDue: 4535 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 20511, ordinaryIncomeNonSS: 50000, qualifiedIncome: 45873, federalTaxDue: 14407, stateTaxDue: 4489 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 2013, ordinaryIncomeNonSS: 0, qualifiedIncome: 13818, federalTaxDue: 0, stateTaxDue: 386 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 50000, qualifiedIncome: 21809, federalTaxDue: 3298, stateTaxDue: 3165 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 26781, qualifiedIncome: 17930, federalTaxDue: 1347, stateTaxDue: 1981 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 16302, ordinaryIncomeNonSS: 0, qualifiedIncome: 2506, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 29013, qualifiedIncome: 0, federalTaxDue: 1615, stateTaxDue: 1196 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 32933, ordinaryIncomeNonSS: 0, qualifiedIncome: 48995, federalTaxDue: 1195, stateTaxDue: 2025 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 40132, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 2876, stateTaxDue: 2075 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 14057, qualifiedIncome: 47494, federalTaxDue: 1104, stateTaxDue: 2823 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 28878, qualifiedIncome: 1782, federalTaxDue: 1598, stateTaxDue: 1278 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 14218, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 6349, stateTaxDue: 2195 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 48077, ordinaryIncomeNonSS: 1, qualifiedIncome: 8936, federalTaxDue: 0, stateTaxDue: 142 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 33834, ordinaryIncomeNonSS: 50000, qualifiedIncome: 23052, federalTaxDue: 13475, stateTaxDue: 3348 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 25612, ordinaryIncomeNonSS: 50000, qualifiedIncome: 13051, federalTaxDue: 7496, stateTaxDue: 2778 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 17937, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 3022 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 43278, ordinaryIncomeNonSS: 9060, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 28 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 50000, qualifiedIncome: 41047, federalTaxDue: 9645, stateTaxDue: 4297 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 14761, federalTaxDue: 0, stateTaxDue: 363 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 46037, ordinaryIncomeNonSS: 50000, qualifiedIncome: 46653, federalTaxDue: 19297, stateTaxDue: 4528 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 34907, qualifiedIncome: 0, federalTaxDue: 2322, stateTaxDue: 1490 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 4133, stateTaxDue: 2195 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2075 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 30557, qualifiedIncome: 0, federalTaxDue: 1800, stateTaxDue: 1223 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 21473, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 30724, ordinaryIncomeNonSS: 48097, qualifiedIncome: 50000, federalTaxDue: 16517, stateTaxDue: 4600 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 7461, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 13425, federalTaxDue: 0, stateTaxDue: 296 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 9520, stateTaxDue: 2075 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 33289, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 34670, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 12061, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 1440, stateTaxDue: 2245 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 5153, ordinaryIncomeNonSS: 5917, qualifiedIncome: 7262, federalTaxDue: 0, stateTaxDue: 404 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 25583, ordinaryIncomeNonSS: 0, qualifiedIncome: 38105, federalTaxDue: 0, stateTaxDue: 1480 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 36180, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 33282, qualifiedIncome: 37640, federalTaxDue: 4620, stateTaxDue: 3291 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 45537, ordinaryIncomeNonSS: 50000, qualifiedIncome: 49656, federalTaxDue: 19654, stateTaxDue: 4728 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 15736, ordinaryIncomeNonSS: 0, qualifiedIncome: 7366, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 1026, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 28149, ordinaryIncomeNonSS: 15214, qualifiedIncome: 37906, federalTaxDue: 2414, stateTaxDue: 2231 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 22053, federalTaxDue: 170, stateTaxDue: 798 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 49291, qualifiedIncome: 0, federalTaxDue: 12059, stateTaxDue: 2160 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 49358, ordinaryIncomeNonSS: 26043, qualifiedIncome: 15746, federalTaxDue: 4275, stateTaxDue: 1664 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 37542, ordinaryIncomeNonSS: 8583, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 54 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 35494, federalTaxDue: 0, stateTaxDue: 1520 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 9245, ordinaryIncomeNonSS: 24439, qualifiedIncome: 9144, federalTaxDue: 2009, stateTaxDue: 1424 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 5332, ordinaryIncomeNonSS: 17650, qualifiedIncome: 33179, federalTaxDue: 203, stateTaxDue: 2166 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 50000, qualifiedIncome: 50000, federalTaxDue: 10988, stateTaxDue: 4695 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 30466, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 822, stateTaxDue: 2075 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 27700, qualifiedIncome: 0, federalTaxDue: 755, stateTaxDue: 1010 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 1903, qualifiedIncome: 42426, federalTaxDue: 304, stateTaxDue: 1961 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 14568, ordinaryIncomeNonSS: 20660, qualifiedIncome: 38509, federalTaxDue: 4686, stateTaxDue: 2703 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 7021, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 1440, stateTaxDue: 2245 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 21682, ordinaryIncomeNonSS: 8250, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 5987, ordinaryIncomeNonSS: 45467, qualifiedIncome: 0, federalTaxDue: 4200, stateTaxDue: 1968 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 23431, ordinaryIncomeNonSS: 34847, qualifiedIncome: 33084, federalTaxDue: 5909, stateTaxDue: 3022 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 4207, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 36416, ordinaryIncomeNonSS: 50000, qualifiedIncome: 26361, federalTaxDue: 11627, stateTaxDue: 3443 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 13320, ordinaryIncomeNonSS: 33613, qualifiedIncome: 14494, federalTaxDue: 2690, stateTaxDue: 2030 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 26105, federalTaxDue: 0, stateTaxDue: 880 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 13464, ordinaryIncomeNonSS: 23595, qualifiedIncome: 46582, federalTaxDue: 2608, stateTaxDue: 3084 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 7939, qualifiedIncome: 22360, federalTaxDue: 0, stateTaxDue: 1090 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 24930, ordinaryIncomeNonSS: 38010, qualifiedIncome: 700, federalTaxDue: 4151, stateTaxDue: 1511 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 30354, ordinaryIncomeNonSS: 31474, qualifiedIncome: 50000, federalTaxDue: 12791, stateTaxDue: 3819 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 34568, ordinaryIncomeNonSS: 0, qualifiedIncome: 33621, federalTaxDue: 497, stateTaxDue: 1426 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 27037, ordinaryIncomeNonSS: 4938, qualifiedIncome: 5278, federalTaxDue: 0, stateTaxDue: 136 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 17132, ordinaryIncomeNonSS: 50000, qualifiedIncome: 1, federalTaxDue: 5045, stateTaxDue: 2075 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 27214, ordinaryIncomeNonSS: 0, qualifiedIncome: 46728, federalTaxDue: 3257, stateTaxDue: 2031 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 10549, ordinaryIncomeNonSS: 50000, qualifiedIncome: 29601, federalTaxDue: 10103, stateTaxDue: 3675 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 29266, ordinaryIncomeNonSS: 38103, qualifiedIncome: 17982, federalTaxDue: 9243, stateTaxDue: 2499 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 36749, ordinaryIncomeNonSS: 0, qualifiedIncome: 38570, federalTaxDue: 385, stateTaxDue: 1554 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 8001, ordinaryIncomeNonSS: 1443, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 35524, ordinaryIncomeNonSS: 43917, qualifiedIncome: 50000, federalTaxDue: 13671, stateTaxDue: 4321 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 47341, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 22634, ordinaryIncomeNonSS: 30983, qualifiedIncome: 50000, federalTaxDue: 7220, stateTaxDue: 3624 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 31883, ordinaryIncomeNonSS: 5497, qualifiedIncome: 50000, federalTaxDue: 6289, stateTaxDue: 2520 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 36542, federalTaxDue: 0, stateTaxDue: 1572 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 21587, qualifiedIncome: 44240, federalTaxDue: 144, stateTaxDue: 2916 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 50000, qualifiedIncome: 50000, federalTaxDue: 7161, stateTaxDue: 4625 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 42325, ordinaryIncomeNonSS: 36456, qualifiedIncome: 1, federalTaxDue: 4622, stateTaxDue: 1398 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 43282, ordinaryIncomeNonSS: 0, qualifiedIncome: 30183, federalTaxDue: 0, stateTaxDue: 1084 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 32346, qualifiedIncome: 31342, federalTaxDue: 3423, stateTaxDue: 2929 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 24507, ordinaryIncomeNonSS: 1, qualifiedIncome: 837, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 45550, federalTaxDue: 773, stateTaxDue: 1973 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 23774, qualifiedIncome: 0, federalTaxDue: 3033, stateTaxDue: 934 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 1, qualifiedIncome: 50000, federalTaxDue: 1440, stateTaxDue: 2195 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 4133, stateTaxDue: 2195 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 32932, qualifiedIncome: 10978, federalTaxDue: 1278, stateTaxDue: 1821 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 1, qualifiedIncome: 50000, federalTaxDue: 8113, stateTaxDue: 2195 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 1829, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 46739, ordinaryIncomeNonSS: 42961, qualifiedIncome: 22492, federalTaxDue: 14256, stateTaxDue: 2968 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 10008, ordinaryIncomeNonSS: 32447, qualifiedIncome: 0, federalTaxDue: 2919, stateTaxDue: 1367 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 4412, ordinaryIncomeNonSS: 18332, qualifiedIncome: 21398, federalTaxDue: 818, stateTaxDue: 1682 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 49367, ordinaryIncomeNonSS: 13612, qualifiedIncome: 50000, federalTaxDue: 8665, stateTaxDue: 2806 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 13932, ordinaryIncomeNonSS: 50000, qualifiedIncome: 1, federalTaxDue: 6296, stateTaxDue: 2195 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 1, federalTaxDue: 3298, stateTaxDue: 2125 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 31946, qualifiedIncome: 0, federalTaxDue: 5000, stateTaxDue: 1292 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1790, ordinaryIncomeNonSS: 46754, qualifiedIncome: 0, federalTaxDue: 3091, stateTaxDue: 1963 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 35770, ordinaryIncomeNonSS: 0, qualifiedIncome: 34285, federalTaxDue: 0, stateTaxDue: 1339 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 25486, ordinaryIncomeNonSS: 50000, qualifiedIncome: 26497, federalTaxDue: 9484, stateTaxDue: 3450 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 24857, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 98, stateTaxDue: 2075 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 48235, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 13825, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 24698, federalTaxDue: 0, stateTaxDue: 980 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 37173, qualifiedIncome: 18607, federalTaxDue: 2816, stateTaxDue: 2534 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 32232, ordinaryIncomeNonSS: 0, qualifiedIncome: 25041, federalTaxDue: 0, stateTaxDue: 997 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 28626, ordinaryIncomeNonSS: 40647, qualifiedIncome: 26437, federalTaxDue: 7670, stateTaxDue: 2929 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 5716, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 35122, qualifiedIncome: 50000, federalTaxDue: 3143, stateTaxDue: 3831 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 13262, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 25414, ordinaryIncomeNonSS: 37068, qualifiedIncome: 0, federalTaxDue: 3895, stateTaxDue: 1428 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 15521, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 44636, qualifiedIncome: 32415, federalTaxDue: 3075, stateTaxDue: 3428 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 43700, federalTaxDue: 6216, stateTaxDue: 4310 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 73, ordinaryIncomeNonSS: 6081, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1006, ordinaryIncomeNonSS: 0, qualifiedIncome: 47288, federalTaxDue: 0, stateTaxDue: 1939 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 13212, ordinaryIncomeNonSS: 29677, qualifiedIncome: 4917, federalTaxDue: 2134, stateTaxDue: 1355 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 31321, ordinaryIncomeNonSS: 40544, qualifiedIncome: 50000, federalTaxDue: 11796, stateTaxDue: 4102 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 25037, ordinaryIncomeNonSS: 35476, qualifiedIncome: 0, federalTaxDue: 3523, stateTaxDue: 1349 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 11776, ordinaryIncomeNonSS: 1, qualifiedIncome: 4350, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 10754, ordinaryIncomeNonSS: 1, qualifiedIncome: 32099, federalTaxDue: 0, stateTaxDue: 1230 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 50000, federalTaxDue: 10988, stateTaxDue: 4745 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 45458, ordinaryIncomeNonSS: 14043, qualifiedIncome: 50000, federalTaxDue: 11712, stateTaxDue: 2947 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 36347, ordinaryIncomeNonSS: 0, qualifiedIncome: 16555, federalTaxDue: 0, stateTaxDue: 453 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 47957, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 43903, ordinaryIncomeNonSS: 33970, qualifiedIncome: 50000, federalTaxDue: 12908, stateTaxDue: 3824 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 45667, ordinaryIncomeNonSS: 8146, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 102 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 7096, qualifiedIncome: 21418, federalTaxDue: 0, stateTaxDue: 1171 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 16828, qualifiedIncome: 35236, federalTaxDue: 293, stateTaxDue: 2348 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 38010, ordinaryIncomeNonSS: 9905, qualifiedIncome: 43636, federalTaxDue: 7931, stateTaxDue: 2372 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 20461, ordinaryIncomeNonSS: 23016, qualifiedIncome: 28318, federalTaxDue: 5146, stateTaxDue: 2262 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 9332, federalTaxDue: 0, stateTaxDue: 212 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 21264, ordinaryIncomeNonSS: 28262, qualifiedIncome: 1, federalTaxDue: 1729, stateTaxDue: 1038 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 31510, ordinaryIncomeNonSS: 1, qualifiedIncome: 11092, federalTaxDue: 0, stateTaxDue: 300 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 3537, qualifiedIncome: 26586, federalTaxDue: 0, stateTaxDue: 1081 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 6311, qualifiedIncome: 24310, federalTaxDue: 0, stateTaxDue: 1276 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 37324, ordinaryIncomeNonSS: 4532, qualifiedIncome: 1974, federalTaxDue: 0, stateTaxDue: 70 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 31324, ordinaryIncomeNonSS: 38679, qualifiedIncome: 20940, federalTaxDue: 10198, stateTaxDue: 2726 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 23443, qualifiedIncome: 1, federalTaxDue: 329, stateTaxDue: 747 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 45999, ordinaryIncomeNonSS: 1, qualifiedIncome: 17820, federalTaxDue: 0, stateTaxDue: 466 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 49482, ordinaryIncomeNonSS: 18568, qualifiedIncome: 50000, federalTaxDue: 13529, stateTaxDue: 3173 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 13552, ordinaryIncomeNonSS: 31806, qualifiedIncome: 48798, federalTaxDue: 5178, stateTaxDue: 3605 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 26716, qualifiedIncome: 16549, federalTaxDue: 1339, stateTaxDue: 1908 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 26107, federalTaxDue: 0, stateTaxDue: 930 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 46041, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 22882, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 1, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2075 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 47607, qualifiedIncome: 31177, federalTaxDue: 14363, stateTaxDue: 3514 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 36113, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 2022, stateTaxDue: 2125 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 48851, ordinaryIncomeNonSS: 0, qualifiedIncome: 38960, federalTaxDue: 933, stateTaxDue: 1523 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 27484, qualifiedIncome: 28732, federalTaxDue: 1718, stateTaxDue: 2506 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 17314, qualifiedIncome: 6446, federalTaxDue: 341, stateTaxDue: 883 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 31488, qualifiedIncome: 37170, federalTaxDue: 14543, stateTaxDue: 3128 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 13775, ordinaryIncomeNonSS: 43729, qualifiedIncome: 26221, federalTaxDue: 5062, stateTaxDue: 3123 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 32604, ordinaryIncomeNonSS: 50000, qualifiedIncome: 1, federalTaxDue: 9788, stateTaxDue: 2245 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 30621, federalTaxDue: 273, stateTaxDue: 1156 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 21172, federalTaxDue: 0, stateTaxDue: 684 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 44577, ordinaryIncomeNonSS: 50000, qualifiedIncome: 16824, federalTaxDue: 11722, stateTaxDue: 2966 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 21255, qualifiedIncome: 13327, federalTaxDue: 736, stateTaxDue: 1474 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 1, federalTaxDue: 3298, stateTaxDue: 2075 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 35021, qualifiedIncome: 1, federalTaxDue: 1501, stateTaxDue: 1376 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 42416, qualifiedIncome: 0, federalTaxDue: 3223, stateTaxDue: 1866 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 4766, ordinaryIncomeNonSS: 29275, qualifiedIncome: 50000, federalTaxDue: 2679, stateTaxDue: 3539 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 41118, ordinaryIncomeNonSS: 24300, qualifiedIncome: 0, federalTaxDue: 1862, stateTaxDue: 840 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 36024, federalTaxDue: 5064, stateTaxDue: 3876 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 29944, ordinaryIncomeNonSS: 1, qualifiedIncome: 23349, federalTaxDue: 0, stateTaxDue: 793 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 35879, ordinaryIncomeNonSS: 18994, qualifiedIncome: 1, federalTaxDue: 584, stateTaxDue: 525 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 14884, qualifiedIncome: 50000, federalTaxDue: 1686, stateTaxDue: 2989 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 23321, ordinaryIncomeNonSS: 22000, qualifiedIncome: 0, federalTaxDue: 1293, stateTaxDue: 795 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2125 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 4156, ordinaryIncomeNonSS: 50000, qualifiedIncome: 35299, federalTaxDue: 5909, stateTaxDue: 3840 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 20535, qualifiedIncome: 13051, federalTaxDue: 4348, stateTaxDue: 1424 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 49450, ordinaryIncomeNonSS: 33627, qualifiedIncome: 50000, federalTaxDue: 16836, stateTaxDue: 3876 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 30627, federalTaxDue: 0, stateTaxDue: 1226 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 3494, ordinaryIncomeNonSS: 36147, qualifiedIncome: 0, federalTaxDue: 1992, stateTaxDue: 1432 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 20530, federalTaxDue: 0, stateTaxDue: 772 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 12477, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 10334, ordinaryIncomeNonSS: 2841, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2267 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 23918, ordinaryIncomeNonSS: 0, qualifiedIncome: 35291, federalTaxDue: 0, stateTaxDue: 1340 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 6898, ordinaryIncomeNonSS: 2493, qualifiedIncome: 41400, federalTaxDue: 150, stateTaxDue: 1940 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 2361, ordinaryIncomeNonSS: 50000, qualifiedIncome: 1, federalTaxDue: 4374, stateTaxDue: 2195 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 32369, qualifiedIncome: 24729, federalTaxDue: 1222, stateTaxDue: 2480 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 29964, federalTaxDue: 0, stateTaxDue: 1193 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 36228, ordinaryIncomeNonSS: 8113, qualifiedIncome: 48187, federalTaxDue: 3893, stateTaxDue: 2440 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 38691, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 6368, stateTaxDue: 2195 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 18148, ordinaryIncomeNonSS: 19292, qualifiedIncome: 0, federalTaxDue: 708, stateTaxDue: 660 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 45847, qualifiedIncome: 1, federalTaxDue: 3635, stateTaxDue: 1987 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 39245, qualifiedIncome: 18053, federalTaxDue: 13382, stateTaxDue: 2610 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 14004, qualifiedIncome: 46350, federalTaxDue: 0, stateTaxDue: 2593 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 3162, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2075 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 277, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 3326, stateTaxDue: 2125 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 29241, qualifiedIncome: 0, federalTaxDue: 909, stateTaxDue: 1087 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 8581, qualifiedIncome: 50000, federalTaxDue: 7452, stateTaxDue: 2504 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 38072, qualifiedIncome: 0, federalTaxDue: 7493, stateTaxDue: 1599 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 26344, qualifiedIncome: 0, federalTaxDue: 2768, stateTaxDue: 892 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 554, ordinaryIncomeNonSS: 28114, qualifiedIncome: 0, federalTaxDue: 1540, stateTaxDue: 1101 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 2582, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 4576, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 1440, stateTaxDue: 2245 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 30458, qualifiedIncome: 45393, federalTaxDue: 15550, stateTaxDue: 3538 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 22583, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 31923, ordinaryIncomeNonSS: 0, qualifiedIncome: 9267, federalTaxDue: 0, stateTaxDue: 208 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 5988, qualifiedIncome: 21285, federalTaxDue: 0, stateTaxDue: 1109 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 441, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 44781, qualifiedIncome: 50000, federalTaxDue: 5751, stateTaxDue: 4364 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 38008, federalTaxDue: 0, stateTaxDue: 1475 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 23121, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 5656, stateTaxDue: 2125 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 9520, stateTaxDue: 2075 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 35273, ordinaryIncomeNonSS: 16253, qualifiedIncome: 0, federalTaxDue: 55, stateTaxDue: 388 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 20708, ordinaryIncomeNonSS: 50000, qualifiedIncome: 15064, federalTaxDue: 6673, stateTaxDue: 2878 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 22891, ordinaryIncomeNonSS: 1, qualifiedIncome: 45869, federalTaxDue: 0, stateTaxDue: 1919 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 43360, qualifiedIncome: 13750, federalTaxDue: 3758, stateTaxDue: 2601 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 9520, stateTaxDue: 2075 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 27376, ordinaryIncomeNonSS: 50000, qualifiedIncome: 46138, federalTaxDue: 15731, stateTaxDue: 4502 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 30647, federalTaxDue: 0, stateTaxDue: 1277 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 34643, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 10169, stateTaxDue: 2245 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 8223, qualifiedIncome: 50000, federalTaxDue: 1440, stateTaxDue: 2606 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 3494, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 2113, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 7334, ordinaryIncomeNonSS: 50000, qualifiedIncome: 1, federalTaxDue: 4046, stateTaxDue: 2075 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 45584, ordinaryIncomeNonSS: 22160, qualifiedIncome: 0, federalTaxDue: 2449, stateTaxDue: 853 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 27060, qualifiedIncome: 0, federalTaxDue: 3762, stateTaxDue: 1098 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 19012, ordinaryIncomeNonSS: 21027, qualifiedIncome: 0, federalTaxDue: 364, stateTaxDue: 676 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 16452, ordinaryIncomeNonSS: 24503, qualifiedIncome: 50000, federalTaxDue: 7880, stateTaxDue: 3470 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 28305, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 35220, qualifiedIncome: 1, federalTaxDue: 2360, stateTaxDue: 1506 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 36009, ordinaryIncomeNonSS: 40427, qualifiedIncome: 19651, federalTaxDue: 8288, stateTaxDue: 2629 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 6771, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 903, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 4880, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 27700, ordinaryIncomeNonSS: 33204, qualifiedIncome: 26380, federalTaxDue: 5440, stateTaxDue: 2604 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 28020, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 6156, stateTaxDue: 2075 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 32290, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 41762, qualifiedIncome: 0, federalTaxDue: 3144, stateTaxDue: 1833 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 9904, federalTaxDue: 0, stateTaxDue: 120 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 32032, qualifiedIncome: 1, federalTaxDue: 1188, stateTaxDue: 1227 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 35147, qualifiedIncome: 1, federalTaxDue: 4723, stateTaxDue: 1382 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 17938, ordinaryIncomeNonSS: 0, qualifiedIncome: 29962, federalTaxDue: 0, stateTaxDue: 1123 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 4133, stateTaxDue: 2195 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 34578, ordinaryIncomeNonSS: 21775, qualifiedIncome: 27118, federalTaxDue: 7871, stateTaxDue: 2140 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 36880, ordinaryIncomeNonSS: 1, qualifiedIncome: 43843, federalTaxDue: 839, stateTaxDue: 1767 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 3650, qualifiedIncome: 1112, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 38409, ordinaryIncomeNonSS: 11218, qualifiedIncome: 15204, federalTaxDue: 1205, stateTaxDue: 1066 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 34360, ordinaryIncomeNonSS: 45348, qualifiedIncome: 0, federalTaxDue: 8992, stateTaxDue: 2012 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 50000, qualifiedIncome: 17555, federalTaxDue: 6121, stateTaxDue: 3073 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 48922, ordinaryIncomeNonSS: 4478, qualifiedIncome: 20226, federalTaxDue: 172, stateTaxDue: 860 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 41292, ordinaryIncomeNonSS: 1381, qualifiedIncome: 28592, federalTaxDue: 611, stateTaxDue: 1194 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 43450, qualifiedIncome: 50000, federalTaxDue: 9220, stateTaxDue: 4418 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1367, ordinaryIncomeNonSS: 1, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2125 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 50000, federalTaxDue: 20541, stateTaxDue: 4695 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2075 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 23694, qualifiedIncome: 50000, federalTaxDue: 354, stateTaxDue: 3310 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 1, qualifiedIncome: 13440, federalTaxDue: 0, stateTaxDue: 367 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 28036, qualifiedIncome: 36811, federalTaxDue: 10727, stateTaxDue: 2867 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 24002, ordinaryIncomeNonSS: 0, qualifiedIncome: 35191, federalTaxDue: 0, stateTaxDue: 1335 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 29481, federalTaxDue: 0, stateTaxDue: 1049 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 4285, stateTaxDue: 2075 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 8742, ordinaryIncomeNonSS: 0, qualifiedIncome: 4531, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 17870, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 24048, ordinaryIncomeNonSS: 38472, qualifiedIncome: 1, federalTaxDue: 5229, stateTaxDue: 1619 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 49171, federalTaxDue: 7036, stateTaxDue: 4584 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 20640, ordinaryIncomeNonSS: 13548, qualifiedIncome: 26432, federalTaxDue: 2348, stateTaxDue: 1744 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 29409, ordinaryIncomeNonSS: 37186, qualifiedIncome: 0, federalTaxDue: 5207, stateTaxDue: 1604 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 19056, ordinaryIncomeNonSS: 0, qualifiedIncome: 8088, federalTaxDue: 0, stateTaxDue: 99 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 6717, ordinaryIncomeNonSS: 1, qualifiedIncome: 37356, federalTaxDue: 0, stateTaxDue: 1493 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 44968, ordinaryIncomeNonSS: 43096, qualifiedIncome: 0, federalTaxDue: 6240, stateTaxDue: 1730 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 45346, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 17874, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 16881, ordinaryIncomeNonSS: 31589, qualifiedIncome: 37164, federalTaxDue: 7966, stateTaxDue: 3133 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 49613, ordinaryIncomeNonSS: 16392, qualifiedIncome: 0, federalTaxDue: 686, stateTaxDue: 395 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 12443, ordinaryIncomeNonSS: 0, qualifiedIncome: 25364, federalTaxDue: 0, stateTaxDue: 893 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 17891, federalTaxDue: 15724, stateTaxDue: 3140 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 36885, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 4659, qualifiedIncome: 35960, federalTaxDue: 5111, stateTaxDue: 1726 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 15269, ordinaryIncomeNonSS: 50000, qualifiedIncome: 34553, federalTaxDue: 8348, stateTaxDue: 3853 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 43947, federalTaxDue: 0, stateTaxDue: 1772 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 8808, ordinaryIncomeNonSS: 6486, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2399 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 5468, ordinaryIncomeNonSS: 50000, qualifiedIncome: 21534, federalTaxDue: 4146, stateTaxDue: 3152 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 36026, ordinaryIncomeNonSS: 0, qualifiedIncome: 35763, federalTaxDue: 116, stateTaxDue: 1363 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 30832, ordinaryIncomeNonSS: 334, qualifiedIncome: 7851, federalTaxDue: 0, stateTaxDue: 154 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 46649, qualifiedIncome: 0, federalTaxDue: 3731, stateTaxDue: 2077 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 46362, federalTaxDue: 6732, stateTaxDue: 2013 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 41905, ordinaryIncomeNonSS: 0, qualifiedIncome: 8532, federalTaxDue: 0, stateTaxDue: 52 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 20046, ordinaryIncomeNonSS: 12814, qualifiedIncome: 4895, federalTaxDue: 0, stateTaxDue: 460 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 48329, federalTaxDue: 6910, stateTaxDue: 4541 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 30189, ordinaryIncomeNonSS: 35991, qualifiedIncome: 0, federalTaxDue: 3900, stateTaxDue: 1375 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 27886, qualifiedIncome: 0, federalTaxDue: 774, stateTaxDue: 969 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 49608, federalTaxDue: 0, stateTaxDue: 2055 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 12601, ordinaryIncomeNonSS: 0, qualifiedIncome: 8396, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 46179, qualifiedIncome: 35076, federalTaxDue: 3890, stateTaxDue: 3688 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 6809, ordinaryIncomeNonSS: 9528, qualifiedIncome: 36119, federalTaxDue: 142, stateTaxDue: 1977 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 43236, ordinaryIncomeNonSS: 1, qualifiedIncome: 1538, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 29049, qualifiedIncome: 0, federalTaxDue: 890, stateTaxDue: 1027 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 12259, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 8978, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 194 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 30652, ordinaryIncomeNonSS: 50000, qualifiedIncome: 26102, federalTaxDue: 13338, stateTaxDue: 3550 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 50000, qualifiedIncome: 48624, federalTaxDue: 10782, stateTaxDue: 4676 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 35779, federalTaxDue: 711, stateTaxDue: 1364 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 40764, qualifiedIncome: 1, federalTaxDue: 5970, stateTaxDue: 1613 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 31650, ordinaryIncomeNonSS: 0, qualifiedIncome: 39683, federalTaxDue: 263, stateTaxDue: 1559 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 12052, ordinaryIncomeNonSS: 2299, qualifiedIncome: 50000, federalTaxDue: 1440, stateTaxDue: 2360 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 45638, ordinaryIncomeNonSS: 50000, qualifiedIncome: 3667, federalTaxDue: 9947, stateTaxDue: 2308 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 41279, federalTaxDue: 0, stateTaxDue: 1689 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1995, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 45469, qualifiedIncome: 0, federalTaxDue: 2754, stateTaxDue: 1898 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 36387, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 2848, ordinaryIncomeNonSS: 16853, qualifiedIncome: 1, federalTaxDue: 295, stateTaxDue: 588 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 48081, ordinaryIncomeNonSS: 50000, qualifiedIncome: 9423, federalTaxDue: 11268, stateTaxDue: 2596 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 23703, federalTaxDue: 0, stateTaxDue: 760 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 13587, ordinaryIncomeNonSS: 4307, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 4600, ordinaryIncomeNonSS: 1, qualifiedIncome: 6040, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 14706, ordinaryIncomeNonSS: 0, qualifiedIncome: 45322, federalTaxDue: 0, stateTaxDue: 1841 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 26519, ordinaryIncomeNonSS: 6508, qualifiedIncome: 2078, federalTaxDue: 0, stateTaxDue: 4 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 20185, ordinaryIncomeNonSS: 42217, qualifiedIncome: 19530, federalTaxDue: 5121, stateTaxDue: 2662 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 49898, qualifiedIncome: 24921, federalTaxDue: 3371, stateTaxDue: 3316 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 35123, ordinaryIncomeNonSS: 0, qualifiedIncome: 19950, federalTaxDue: 0, stateTaxDue: 573 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 20869, ordinaryIncomeNonSS: 1, qualifiedIncome: 49218, federalTaxDue: 0, stateTaxDue: 2036 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 21439, qualifiedIncome: 0, federalTaxDue: 129, stateTaxDue: 647 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 35483, ordinaryIncomeNonSS: 1, qualifiedIncome: 50000, federalTaxDue: 1888, stateTaxDue: 2075 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 29792, ordinaryIncomeNonSS: 0, qualifiedIncome: 25516, federalTaxDue: 0, stateTaxDue: 1021 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 3780, ordinaryIncomeNonSS: 20859, qualifiedIncome: 28214, federalTaxDue: 392, stateTaxDue: 2029 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 21450, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 2523, stateTaxDue: 2245 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 16491, federalTaxDue: 0, stateTaxDue: 570 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 14441, qualifiedIncome: 50000, federalTaxDue: 12718, stateTaxDue: 2917 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 6219, ordinaryIncomeNonSS: 43200, qualifiedIncome: 0, federalTaxDue: 3951, stateTaxDue: 1855 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 17165, ordinaryIncomeNonSS: 37615, qualifiedIncome: 0, federalTaxDue: 4398, stateTaxDue: 1626 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 12062, qualifiedIncome: 1, federalTaxDue: 527, stateTaxDue: 348 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 26885, federalTaxDue: 0, stateTaxDue: 969 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 34341, federalTaxDue: 0, stateTaxDue: 1462 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 27876, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 354, stateTaxDue: 2125 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 17537, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 1692, stateTaxDue: 2195 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 20781, federalTaxDue: 0, stateTaxDue: 784 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 39744, ordinaryIncomeNonSS: 46905, qualifiedIncome: 47414, federalTaxDue: 17554, stateTaxDue: 4411 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 45186, ordinaryIncomeNonSS: 28886, qualifiedIncome: 8935, federalTaxDue: 3999, stateTaxDue: 1516 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 32445, ordinaryIncomeNonSS: 0, qualifiedIncome: 34812, federalTaxDue: 508, stateTaxDue: 1486 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 37940, qualifiedIncome: 41673, federalTaxDue: 2655, stateTaxDue: 3606 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1474, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 19811, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2125 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 861, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 37582, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 6699, ordinaryIncomeNonSS: 18043, qualifiedIncome: 1305, federalTaxDue: 414, stateTaxDue: 662 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 3225, ordinaryIncomeNonSS: 6622, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 26 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 9202, ordinaryIncomeNonSS: 9741, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 232 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 5336, ordinaryIncomeNonSS: 48508, qualifiedIncome: 0, federalTaxDue: 4498, stateTaxDue: 2170 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 1, qualifiedIncome: 33363, federalTaxDue: 1799, stateTaxDue: 1413 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 12773, ordinaryIncomeNonSS: 31164, qualifiedIncome: 0, federalTaxDue: 2775, stateTaxDue: 1303 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2125 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 36810, qualifiedIncome: 0, federalTaxDue: 1715, stateTaxDue: 1466 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 8483, ordinaryIncomeNonSS: 25571, qualifiedIncome: 50000, federalTaxDue: 6339, stateTaxDue: 3474 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 22445, ordinaryIncomeNonSS: 10355, qualifiedIncome: 50000, federalTaxDue: 5435, stateTaxDue: 2763 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 18635, qualifiedIncome: 33077, federalTaxDue: 10729, stateTaxDue: 2331 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 43814, qualifiedIncome: 0, federalTaxDue: 2556, stateTaxDue: 1766 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 36725, ordinaryIncomeNonSS: 22572, qualifiedIncome: 35585, federalTaxDue: 9849, stateTaxDue: 2653 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 41812, ordinaryIncomeNonSS: 34395, qualifiedIncome: 17056, federalTaxDue: 10635, stateTaxDue: 2318 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 46181, ordinaryIncomeNonSS: 12716, qualifiedIncome: 34720, federalTaxDue: 4400, stateTaxDue: 1997 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 23926, qualifiedIncome: 15940, federalTaxDue: 3857, stateTaxDue: 1618 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 10441, ordinaryIncomeNonSS: 29608, qualifiedIncome: 1, federalTaxDue: 2311, stateTaxDue: 1175 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 46118, qualifiedIncome: 0, federalTaxDue: 3667, stateTaxDue: 2051 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 40463, federalTaxDue: 4493, stateTaxDue: 1768 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 34666, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 14791, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 11804, ordinaryIncomeNonSS: 25360, qualifiedIncome: 7091, federalTaxDue: 2160, stateTaxDue: 1368 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 25059, qualifiedIncome: 11429, federalTaxDue: 3649, stateTaxDue: 1399 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 1, qualifiedIncome: 49317, federalTaxDue: 7854, stateTaxDue: 2161 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 13904, ordinaryIncomeNonSS: 0, qualifiedIncome: 31493, federalTaxDue: 0, stateTaxDue: 1150 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 6869, ordinaryIncomeNonSS: 5277, qualifiedIncome: 50000, federalTaxDue: 1440, stateTaxDue: 2509 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 21398, federalTaxDue: 114, stateTaxDue: 765 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 48641, qualifiedIncome: 0, federalTaxDue: 3135, stateTaxDue: 2057 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 45070, qualifiedIncome: 6766, federalTaxDue: 12621, stateTaxDue: 2287 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 19075, ordinaryIncomeNonSS: 49797, qualifiedIncome: 43890, federalTaxDue: 10567, stateTaxDue: 4259 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 40272, ordinaryIncomeNonSS: 28927, qualifiedIncome: 44712, federalTaxDue: 9920, stateTaxDue: 3307 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 36502, federalTaxDue: 0, stateTaxDue: 1450 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 611, qualifiedIncome: 49538, federalTaxDue: 0, stateTaxDue: 2132 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 1, federalTaxDue: 4133, stateTaxDue: 2195 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 24169, ordinaryIncomeNonSS: 1, qualifiedIncome: 36162, federalTaxDue: 271, stateTaxDue: 1553 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 27974, ordinaryIncomeNonSS: 48962, qualifiedIncome: 0, federalTaxDue: 6027, stateTaxDue: 2023 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 25109, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2125 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 1, qualifiedIncome: 44802, federalTaxDue: 6140, stateTaxDue: 1985 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 37645, ordinaryIncomeNonSS: 6803, qualifiedIncome: 50000, federalTaxDue: 4137, stateTaxDue: 2415 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 8350, ordinaryIncomeNonSS: 1, qualifiedIncome: 50000, federalTaxDue: 1440, stateTaxDue: 2195 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 4133, stateTaxDue: 2245 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 13501, ordinaryIncomeNonSS: 2895, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 6430, ordinaryIncomeNonSS: 0, qualifiedIncome: 27637, federalTaxDue: 0, stateTaxDue: 1127 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 9014, ordinaryIncomeNonSS: 47384, qualifiedIncome: 0, federalTaxDue: 3904, stateTaxDue: 1944 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 4960, ordinaryIncomeNonSS: 26475, qualifiedIncome: 50000, federalTaxDue: 2020, stateTaxDue: 3399 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 36859, qualifiedIncome: 0, federalTaxDue: 2556, stateTaxDue: 1588 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 11692, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 4491, stateTaxDue: 2075 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 21998, qualifiedIncome: 47715, federalTaxDue: 3122, stateTaxDue: 3231 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 42328, ordinaryIncomeNonSS: 37731, qualifiedIncome: 46067, federalTaxDue: 12972, stateTaxDue: 3815 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 5308, ordinaryIncomeNonSS: 50000, qualifiedIncome: 35867, federalTaxDue: 10063, stateTaxDue: 4038 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 15772, qualifiedIncome: 1, federalTaxDue: 1256, stateTaxDue: 534 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 11640, ordinaryIncomeNonSS: 36419, qualifiedIncome: 1088, federalTaxDue: 2856, stateTaxDue: 1450 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2075 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 48742, ordinaryIncomeNonSS: 41336, qualifiedIncome: 41518, federalTaxDue: 14299, stateTaxDue: 3768 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 31799, ordinaryIncomeNonSS: 27798, qualifiedIncome: 31388, federalTaxDue: 9461, stateTaxDue: 2704 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 19697, ordinaryIncomeNonSS: 4059, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 32747, ordinaryIncomeNonSS: 2528, qualifiedIncome: 31242, federalTaxDue: 685, stateTaxDue: 1434 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 20826, ordinaryIncomeNonSS: 4671, qualifiedIncome: 50000, federalTaxDue: 222, stateTaxDue: 2359 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 46224, ordinaryIncomeNonSS: 50000, qualifiedIncome: 12851, federalTaxDue: 11435, stateTaxDue: 2768 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 8472, ordinaryIncomeNonSS: 49131, qualifiedIncome: 14532, federalTaxDue: 7263, stateTaxDue: 2878 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1737, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 16582, qualifiedIncome: 39727, federalTaxDue: 0, stateTaxDue: 2390 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 35459, ordinaryIncomeNonSS: 1, qualifiedIncome: 50000, federalTaxDue: 1883, stateTaxDue: 2125 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 11658, qualifiedIncome: 45415, federalTaxDue: 752, stateTaxDue: 2549 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 8412, ordinaryIncomeNonSS: 0, qualifiedIncome: 12486, federalTaxDue: 0, stateTaxDue: 249 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 44438, ordinaryIncomeNonSS: 49972, qualifiedIncome: 0, federalTaxDue: 11816, stateTaxDue: 2244 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 26070, ordinaryIncomeNonSS: 39160, qualifiedIncome: 0, federalTaxDue: 4393, stateTaxDue: 1533 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 10850, qualifiedIncome: 25785, federalTaxDue: 0, stateTaxDue: 1407 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 2675, ordinaryIncomeNonSS: 7194, qualifiedIncome: 26427, federalTaxDue: 0, stateTaxDue: 1306 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 28610, qualifiedIncome: 1, federalTaxDue: 4107, stateTaxDue: 1176 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 38588, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 2547, stateTaxDue: 2125 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 10436, ordinaryIncomeNonSS: 35754, qualifiedIncome: 1, federalTaxDue: 3488, stateTaxDue: 1483 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 24506, qualifiedIncome: 50000, federalTaxDue: 4105, stateTaxDue: 3470 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 11463, ordinaryIncomeNonSS: 49955, qualifiedIncome: 50000, federalTaxDue: 9779, stateTaxDue: 4623 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 12830, ordinaryIncomeNonSS: 0, qualifiedIncome: 42123, federalTaxDue: 258, stateTaxDue: 1801 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 18045, ordinaryIncomeNonSS: 50000, qualifiedIncome: 12244, federalTaxDue: 5638, stateTaxDue: 2737 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 49709, qualifiedIncome: 29145, federalTaxDue: 3954, stateTaxDue: 3518 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 47787, ordinaryIncomeNonSS: 0, qualifiedIncome: 15980, federalTaxDue: 0, stateTaxDue: 424 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 30263, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 778, stateTaxDue: 2075 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 34689, federalTaxDue: 0, stateTaxDue: 1359 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 28152, ordinaryIncomeNonSS: 1, qualifiedIncome: 3812, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 42376, qualifiedIncome: 26562, federalTaxDue: 2383, stateTaxDue: 3072 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 24314, qualifiedIncome: 0, federalTaxDue: 1051, stateTaxDue: 961 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 4101, qualifiedIncome: 2053, federalTaxDue: 0, stateTaxDue: 53 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 44892, qualifiedIncome: 0, federalTaxDue: 10269, stateTaxDue: 1990 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 34788, ordinaryIncomeNonSS: 25630, qualifiedIncome: 0, federalTaxDue: 2669, stateTaxDue: 1027 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 46450, qualifiedIncome: 39636, federalTaxDue: 18205, stateTaxDue: 4049 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 16721, ordinaryIncomeNonSS: 0, qualifiedIncome: 6083, federalTaxDue: 0, stateTaxDue: 49 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 30157, ordinaryIncomeNonSS: 22198, qualifiedIncome: 15493, federalTaxDue: 3828, stateTaxDue: 1580 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 19577, qualifiedIncome: 48338, federalTaxDue: 2610, stateTaxDue: 3141 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 12765, federalTaxDue: 12128, stateTaxDue: 2713 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 27098, qualifiedIncome: 0, federalTaxDue: 1385, stateTaxDue: 1050 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 12184, ordinaryIncomeNonSS: 15275, qualifiedIncome: 1, federalTaxDue: 138, stateTaxDue: 459 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 14675, ordinaryIncomeNonSS: 0, qualifiedIncome: 4582, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 2197, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2185 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 43682, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 39896, ordinaryIncomeNonSS: 50000, qualifiedIncome: 39579, federalTaxDue: 17088, stateTaxDue: 4224 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 39256, qualifiedIncome: 0, federalTaxDue: 2844, stateTaxDue: 1658 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 9918, ordinaryIncomeNonSS: 11918, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 291 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 46071, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 3834, stateTaxDue: 2075 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 41212, ordinaryIncomeNonSS: 1, qualifiedIncome: 22340, federalTaxDue: 0, stateTaxDue: 862 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 20371, ordinaryIncomeNonSS: 0, qualifiedIncome: 905, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 25491, ordinaryIncomeNonSS: 28934, qualifiedIncome: 1, federalTaxDue: 2928, stateTaxDue: 1142 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 44055, ordinaryIncomeNonSS: 39613, qualifiedIncome: 1, federalTaxDue: 7564, stateTaxDue: 1726 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 33923, qualifiedIncome: 5464, federalTaxDue: 7646, stateTaxDue: 1714 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 13469, ordinaryIncomeNonSS: 1, qualifiedIncome: 50000, federalTaxDue: 1440, stateTaxDue: 2245 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 28230, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 8636, ordinaryIncomeNonSS: 19647, qualifiedIncome: 50000, federalTaxDue: 4775, stateTaxDue: 3227 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 18966, federalTaxDue: 0, stateTaxDue: 523 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1676, ordinaryIncomeNonSS: 6250, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 8 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 46765, federalTaxDue: 6675, stateTaxDue: 4463 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 40880, qualifiedIncome: 0, federalTaxDue: 3039, stateTaxDue: 1789 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 23322, federalTaxDue: 0, stateTaxDue: 741 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 28889, ordinaryIncomeNonSS: 748, qualifiedIncome: 29938, federalTaxDue: 81, stateTaxDue: 1229 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 31391, ordinaryIncomeNonSS: 60, qualifiedIncome: 23260, federalTaxDue: 0, stateTaxDue: 791 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 10653, qualifiedIncome: 18816, federalTaxDue: 0, stateTaxDue: 1168 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 19342, ordinaryIncomeNonSS: 0, qualifiedIncome: 16194, federalTaxDue: 0, stateTaxDue: 505 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 22272, federalTaxDue: 0, stateTaxDue: 809 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 10635, ordinaryIncomeNonSS: 0, qualifiedIncome: 22562, federalTaxDue: 0, stateTaxDue: 823 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 21473, ordinaryIncomeNonSS: 1, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2125 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 9239, ordinaryIncomeNonSS: 973, qualifiedIncome: 47864, federalTaxDue: 0, stateTaxDue: 2017 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 46984, qualifiedIncome: 0, federalTaxDue: 8292, stateTaxDue: 1924 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 5356, ordinaryIncomeNonSS: 16018, qualifiedIncome: 19261, federalTaxDue: 42, stateTaxDue: 1339 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 26204, qualifiedIncome: 11542, federalTaxDue: 3915, stateTaxDue: 1512 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 47927, qualifiedIncome: 0, federalTaxDue: 8676, stateTaxDue: 1971 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 37284, qualifiedIncome: 19184, federalTaxDue: 2932, stateTaxDue: 2518 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 25823, qualifiedIncome: 18760, federalTaxDue: 8830, stateTaxDue: 1924 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 24733, ordinaryIncomeNonSS: 0, qualifiedIncome: 44264, federalTaxDue: 2360, stateTaxDue: 1958 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 38607, ordinaryIncomeNonSS: 34509, qualifiedIncome: 13410, federalTaxDue: 9497, stateTaxDue: 2141 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 11769, qualifiedIncome: 8184, federalTaxDue: 0, stateTaxDue: 623 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 35947, ordinaryIncomeNonSS: 50000, qualifiedIncome: 48926, federalTaxDue: 14924, stateTaxDue: 4571 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 15234, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1687, ordinaryIncomeNonSS: 9783, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2564 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 15347, ordinaryIncomeNonSS: 33333, qualifiedIncome: 50000, federalTaxDue: 10010, stateTaxDue: 3862 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 35627, federalTaxDue: 5005, stateTaxDue: 3856 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 293, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 3328, stateTaxDue: 2075 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 1521, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2151 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 3465, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 34913, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 4404, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 21071, qualifiedIncome: 21843, federalTaxDue: 92, stateTaxDue: 1721 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 17717, qualifiedIncome: 5330, federalTaxDue: 1401, stateTaxDue: 727 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 44337, qualifiedIncome: 38322, federalTaxDue: 3880, stateTaxDue: 3708 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 47061, ordinaryIncomeNonSS: 28261, qualifiedIncome: 1, federalTaxDue: 3879, stateTaxDue: 1158 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 28488, ordinaryIncomeNonSS: 33861, qualifiedIncome: 23882, federalTaxDue: 9049, stateTaxDue: 2582 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 48469, ordinaryIncomeNonSS: 1, qualifiedIncome: 24920, federalTaxDue: 0, stateTaxDue: 821 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 12780, ordinaryIncomeNonSS: 24082, qualifiedIncome: 50000, federalTaxDue: 6923, stateTaxDue: 3399 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 40751, ordinaryIncomeNonSS: 0, qualifiedIncome: 17290, federalTaxDue: 0, stateTaxDue: 440 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 11301, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 11802, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2125 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 31181, ordinaryIncomeNonSS: 35649, qualifiedIncome: 50000, federalTaxDue: 10442, stateTaxDue: 3907 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 41433, qualifiedIncome: 47774, federalTaxDue: 8341, stateTaxDue: 4205 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 3298, stateTaxDue: 2075 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 45440, qualifiedIncome: 1, federalTaxDue: 7664, stateTaxDue: 1847 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 47111, ordinaryIncomeNonSS: 0, qualifiedIncome: 30986, federalTaxDue: 181, stateTaxDue: 1174 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 14697, qualifiedIncome: 50000, federalTaxDue: 1639, stateTaxDue: 2980 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1878, ordinaryIncomeNonSS: 5096, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2380 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 3298, stateTaxDue: 2075 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 30817, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1480, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 3298, stateTaxDue: 2125 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 28866, ordinaryIncomeNonSS: 16068, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 428 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 3227, ordinaryIncomeNonSS: 0, qualifiedIncome: 7292, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 39843, ordinaryIncomeNonSS: 0, qualifiedIncome: 34823, federalTaxDue: 1222, stateTaxDue: 1486 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 15504, ordinaryIncomeNonSS: 13502, qualifiedIncome: 39285, federalTaxDue: 3084, stateTaxDue: 2334 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 30001, qualifiedIncome: 35405, federalTaxDue: 13951, stateTaxDue: 3015 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 15638, qualifiedIncome: 12735, federalTaxDue: 0, stateTaxDue: 1044 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 20409, qualifiedIncome: 0, federalTaxDue: 26, stateTaxDue: 595 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 571, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 1895, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 25031, ordinaryIncomeNonSS: 5469, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 3289, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 17784, qualifiedIncome: 14322, federalTaxDue: 2329, stateTaxDue: 1180 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 17616, ordinaryIncomeNonSS: 0, qualifiedIncome: 37038, federalTaxDue: 0, stateTaxDue: 1477 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 36490, qualifiedIncome: 20405, federalTaxDue: 2901, stateTaxDue: 2590 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 4716, ordinaryIncomeNonSS: 36048, qualifiedIncome: 0, federalTaxDue: 2105, stateTaxDue: 1427 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 48112, ordinaryIncomeNonSS: 16055, qualifiedIncome: 0, federalTaxDue: 560, stateTaxDue: 428 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 2228, ordinaryIncomeNonSS: 0, qualifiedIncome: 9614, federalTaxDue: 0, stateTaxDue: 226 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 31121, qualifiedIncome: 42258, federalTaxDue: 4730, stateTaxDue: 3414 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 29006, ordinaryIncomeNonSS: 1962, qualifiedIncome: 32176, federalTaxDue: 0, stateTaxDue: 1332 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 22042, qualifiedIncome: 16944, federalTaxDue: 189, stateTaxDue: 1574 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 40841, ordinaryIncomeNonSS: 32945, qualifiedIncome: 1, federalTaxDue: 4602, stateTaxDue: 1342 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 16279, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 45318, ordinaryIncomeNonSS: 1, qualifiedIncome: 8356, federalTaxDue: 0, stateTaxDue: 43 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 6205, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 23173, qualifiedIncome: 27773, federalTaxDue: 302, stateTaxDue: 2172 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 33522, ordinaryIncomeNonSS: 6517, qualifiedIncome: 16003, federalTaxDue: 161, stateTaxDue: 871 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 44374, ordinaryIncomeNonSS: 34374, qualifiedIncome: 8512, federalTaxDue: 5132, stateTaxDue: 1769 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 5010, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 20000, federalTaxDue: 0, stateTaxDue: 695 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 49870, qualifiedIncome: 11840, federalTaxDue: 5229, stateTaxDue: 2831 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 43044, ordinaryIncomeNonSS: 50000, qualifiedIncome: 15496, federalTaxDue: 11237, stateTaxDue: 2850 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 39802, ordinaryIncomeNonSS: 50000, qualifiedIncome: 1, federalTaxDue: 8306, stateTaxDue: 2075 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 32121, ordinaryIncomeNonSS: 0, qualifiedIncome: 45316, federalTaxDue: 4157, stateTaxDue: 2011 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 22222, ordinaryIncomeNonSS: 50000, qualifiedIncome: 18722, federalTaxDue: 10654, stateTaxDue: 3181 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 28932, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 7764, qualifiedIncome: 50000, federalTaxDue: 11059, stateTaxDue: 2633 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 1, federalTaxDue: 9520, stateTaxDue: 2075 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 21808, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 34297, ordinaryIncomeNonSS: 50000, qualifiedIncome: 50000, federalTaxDue: 17604, stateTaxDue: 4695 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 13360, federalTaxDue: 0, stateTaxDue: 363 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 35214, ordinaryIncomeNonSS: 3203, qualifiedIncome: 46032, federalTaxDue: 5839, stateTaxDue: 2207 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 46793, ordinaryIncomeNonSS: 1, qualifiedIncome: 655, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 48661, ordinaryIncomeNonSS: 33806, qualifiedIncome: 0, federalTaxDue: 5631, stateTaxDue: 1385 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 48111, ordinaryIncomeNonSS: 0, qualifiedIncome: 1463, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 40956, ordinaryIncomeNonSS: 50000, qualifiedIncome: 23975, federalTaxDue: 14946, stateTaxDue: 3394 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 29490, ordinaryIncomeNonSS: 26924, qualifiedIncome: 42319, federalTaxDue: 6546, stateTaxDue: 3037 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 29874, qualifiedIncome: 50000, federalTaxDue: 1816, stateTaxDue: 3569 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 45392, federalTaxDue: 0, stateTaxDue: 1845 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 12348, stateTaxDue: 2245 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 6571, ordinaryIncomeNonSS: 1, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2075 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 30653, ordinaryIncomeNonSS: 0, qualifiedIncome: 12145, federalTaxDue: 0, stateTaxDue: 232 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 34090, ordinaryIncomeNonSS: 5186, qualifiedIncome: 1163, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 32320, ordinaryIncomeNonSS: 21014, qualifiedIncome: 48942, federalTaxDue: 10421, stateTaxDue: 3243 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 4133, stateTaxDue: 2245 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 30549, ordinaryIncomeNonSS: 23979, qualifiedIncome: 37199, federalTaxDue: 9053, stateTaxDue: 2804 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 50000, qualifiedIncome: 35666, federalTaxDue: 5011, stateTaxDue: 3858 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 32890, qualifiedIncome: 42531, federalTaxDue: 15656, stateTaxDue: 3516 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 31273, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 11646, ordinaryIncomeNonSS: 22599, qualifiedIncome: 1, federalTaxDue: 1050, stateTaxDue: 825 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 43098, federalTaxDue: 405, stateTaxDue: 1850 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 35188, qualifiedIncome: 1, federalTaxDue: 2356, stateTaxDue: 1454 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 18629, ordinaryIncomeNonSS: 43908, qualifiedIncome: 1, federalTaxDue: 5834, stateTaxDue: 1890 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 43508, qualifiedIncome: 1, federalTaxDue: 6878, stateTaxDue: 1800 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 4285, stateTaxDue: 2125 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 44016, ordinaryIncomeNonSS: 0, qualifiedIncome: 1280, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 37348, ordinaryIncomeNonSS: 44887, qualifiedIncome: 0, federalTaxDue: 6256, stateTaxDue: 1819 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 45365, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 11914, stateTaxDue: 2195 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 34285, federalTaxDue: 0, stateTaxDue: 1339 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 31043, qualifiedIncome: 36046, federalTaxDue: 1089, stateTaxDue: 2979 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 31482, qualifiedIncome: 0, federalTaxDue: 1911, stateTaxDue: 1319 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 20525, qualifiedIncome: 48331, federalTaxDue: 38, stateTaxDue: 3018 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 47030, qualifiedIncome: 34353, federalTaxDue: 4012, stateTaxDue: 3694 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 31914, ordinaryIncomeNonSS: 0, qualifiedIncome: 15322, federalTaxDue: 0, stateTaxDue: 341 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 19916, ordinaryIncomeNonSS: 43509, qualifiedIncome: 1, federalTaxDue: 4551, stateTaxDue: 1801 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 44426, qualifiedIncome: 0, federalTaxDue: 10079, stateTaxDue: 1966 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 26764, ordinaryIncomeNonSS: 50000, qualifiedIncome: 50000, federalTaxDue: 13303, stateTaxDue: 4625 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 17717, ordinaryIncomeNonSS: 47444, qualifiedIncome: 13189, federalTaxDue: 5015, stateTaxDue: 2657 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 22685, ordinaryIncomeNonSS: 39660, qualifiedIncome: 10182, federalTaxDue: 4371, stateTaxDue: 2117 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 30008, federalTaxDue: 0, stateTaxDue: 1075 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 22324, ordinaryIncomeNonSS: 23652, qualifiedIncome: 13793, federalTaxDue: 3010, stateTaxDue: 1617 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 46711, federalTaxDue: 0, stateTaxDue: 1961 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 49172, ordinaryIncomeNonSS: 33329, qualifiedIncome: 0, federalTaxDue: 4277, stateTaxDue: 1241 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 25342, ordinaryIncomeNonSS: 1, qualifiedIncome: 36899, federalTaxDue: 0, stateTaxDue: 1470 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 21808, qualifiedIncome: 43604, federalTaxDue: 10064, stateTaxDue: 2896 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 32614, ordinaryIncomeNonSS: 0, qualifiedIncome: 9139, federalTaxDue: 0, stateTaxDue: 32 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 13278, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 409 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 34118, qualifiedIncome: 1, federalTaxDue: 1397, stateTaxDue: 1331 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 12644, ordinaryIncomeNonSS: 18995, qualifiedIncome: 42077, federalTaxDue: 959, stateTaxDue: 2679 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 4133, stateTaxDue: 2195 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 22301, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 2704, stateTaxDue: 2195 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 23275, qualifiedIncome: 1, federalTaxDue: 2087, stateTaxDue: 789 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 26996, ordinaryIncomeNonSS: 15072, qualifiedIncome: 2669, federalTaxDue: 429, stateTaxDue: 582 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 5467, qualifiedIncome: 50000, federalTaxDue: 1440, stateTaxDue: 2468 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 47534, ordinaryIncomeNonSS: 0, qualifiedIncome: 30469, federalTaxDue: 780, stateTaxDue: 1218 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 49108, qualifiedIncome: 0, federalTaxDue: 9157, stateTaxDue: 2030 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 12287, ordinaryIncomeNonSS: 0, qualifiedIncome: 43123, federalTaxDue: 408, stateTaxDue: 1901 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 33717, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 5226, stateTaxDue: 2245 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 47132, qualifiedIncome: 5587, federalTaxDue: 10236, stateTaxDue: 2211 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 14181, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 6342, stateTaxDue: 2245 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 24874, qualifiedIncome: 1, federalTaxDue: 472, stateTaxDue: 869 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 23498, qualifiedIncome: 0, federalTaxDue: 335, stateTaxDue: 800 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 40797, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 41078, ordinaryIncomeNonSS: 14446, qualifiedIncome: 16255, federalTaxDue: 1345, stateTaxDue: 1160 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 21874, ordinaryIncomeNonSS: 13156, qualifiedIncome: 1617, federalTaxDue: 0, stateTaxDue: 314 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 39823, qualifiedIncome: 0, federalTaxDue: 2077, stateTaxDue: 1616 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 32752, ordinaryIncomeNonSS: 23972, qualifiedIncome: 50000, federalTaxDue: 7650, stateTaxDue: 3324 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 4470, ordinaryIncomeNonSS: 10909, qualifiedIncome: 27026, federalTaxDue: 0, stateTaxDue: 1522 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 9299, ordinaryIncomeNonSS: 48, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 30076, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 35139, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 14487, ordinaryIncomeNonSS: 39590, qualifiedIncome: 30149, federalTaxDue: 4697, stateTaxDue: 3112 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 45476, ordinaryIncomeNonSS: 1, qualifiedIncome: 8774, federalTaxDue: 0, stateTaxDue: 134 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 33606, ordinaryIncomeNonSS: 21063, qualifiedIncome: 1, federalTaxDue: 870, stateTaxDue: 628 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 27850, qualifiedIncome: 27042, federalTaxDue: 12224, stateTaxDue: 2490 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 2909, ordinaryIncomeNonSS: 5913, qualifiedIncome: 50000, federalTaxDue: 1440, stateTaxDue: 2541 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 29542, qualifiedIncome: 0, federalTaxDue: 939, stateTaxDue: 1052 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2075 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 43598, qualifiedIncome: 1, federalTaxDue: 2530, stateTaxDue: 1755 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 13917, federalTaxDue: 0, stateTaxDue: 271 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 28067, ordinaryIncomeNonSS: 27149, qualifiedIncome: 23538, federalTaxDue: 3463, stateTaxDue: 2109 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 3298, stateTaxDue: 2125 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 2072, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 36832, ordinaryIncomeNonSS: 14327, qualifiedIncome: 17725, federalTaxDue: 1267, stateTaxDue: 1228 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 17064, ordinaryIncomeNonSS: 34492, qualifiedIncome: 50000, federalTaxDue: 10717, stateTaxDue: 3970 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2125 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 44920, ordinaryIncomeNonSS: 5952, qualifiedIncome: 29767, federalTaxDue: 1085, stateTaxDue: 1361 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 47403, ordinaryIncomeNonSS: 21694, qualifiedIncome: 50000, federalTaxDue: 13828, stateTaxDue: 3330 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 42579, qualifiedIncome: 5019, federalTaxDue: 2408, stateTaxDue: 1955 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 3298, stateTaxDue: 2075 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 16314, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 47051, federalTaxDue: 6993, stateTaxDue: 2098 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 22971, ordinaryIncomeNonSS: 18147, qualifiedIncome: 0, federalTaxDue: 31, stateTaxDue: 482 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 6805, qualifiedIncome: 44841, federalTaxDue: 0, stateTaxDue: 2207 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 43139, qualifiedIncome: 1, federalTaxDue: 3310, stateTaxDue: 1902 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 27357, qualifiedIncome: 0, federalTaxDue: 2993, stateTaxDue: 943 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 34511, qualifiedIncome: 14098, federalTaxDue: 2274, stateTaxDue: 2175 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 3298, stateTaxDue: 2075 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 19106, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 37752, ordinaryIncomeNonSS: 1, qualifiedIncome: 11626, federalTaxDue: 0, stateTaxDue: 326 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 31640, qualifiedIncome: 1, federalTaxDue: 1930, stateTaxDue: 1277 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 34752, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 1732, stateTaxDue: 2125 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 1, qualifiedIncome: 39966, federalTaxDue: 0, stateTaxDue: 1743 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 1, qualifiedIncome: 37517, federalTaxDue: 0, stateTaxDue: 1501 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 44276, federalTaxDue: 2113, stateTaxDue: 1839 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 1, federalTaxDue: 9520, stateTaxDue: 2075 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 34590, ordinaryIncomeNonSS: 33032, qualifiedIncome: 6533, federalTaxDue: 6202, stateTaxDue: 1673 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 9014, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 146 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 4536, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 4028, qualifiedIncome: 11848, federalTaxDue: 0, stateTaxDue: 489 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 47696, qualifiedIncome: 40757, federalTaxDue: 8979, stateTaxDue: 4168 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 3384, qualifiedIncome: 50000, federalTaxDue: 1440, stateTaxDue: 2364 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 6364, ordinaryIncomeNonSS: 50000, qualifiedIncome: 34291, federalTaxDue: 6265, stateTaxDue: 3840 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 36900, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 10591, stateTaxDue: 2195 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 24930, ordinaryIncomeNonSS: 0, qualifiedIncome: 40217, federalTaxDue: 23, stateTaxDue: 1586 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 17381, federalTaxDue: 0, stateTaxDue: 444 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 3597, ordinaryIncomeNonSS: 50000, qualifiedIncome: 38709, federalTaxDue: 6292, stateTaxDue: 4010 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 35415, federalTaxDue: 0, stateTaxDue: 1466 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 6185, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 1440, stateTaxDue: 2245 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 23064, federalTaxDue: 255, stateTaxDue: 848 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2075 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 26223, ordinaryIncomeNonSS: 37842, qualifiedIncome: 36822, federalTaxDue: 11443, stateTaxDue: 3428 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 46663, qualifiedIncome: 50000, federalTaxDue: 10087, stateTaxDue: 4578 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 20711, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 33973, qualifiedIncome: 0, federalTaxDue: 2210, stateTaxDue: 1394 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 10980, ordinaryIncomeNonSS: 33231, qualifiedIncome: 50000, federalTaxDue: 5153, stateTaxDue: 3787 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 4133, stateTaxDue: 2245 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 9034, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2527 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 15989, ordinaryIncomeNonSS: 50000, qualifiedIncome: 2750, federalTaxDue: 7093, stateTaxDue: 2383 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 12151, ordinaryIncomeNonSS: 50000, qualifiedIncome: 50000, federalTaxDue: 13463, stateTaxDue: 4745 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 28754, qualifiedIncome: 0, federalTaxDue: 1583, stateTaxDue: 1133 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 22930, ordinaryIncomeNonSS: 1, qualifiedIncome: 9097, federalTaxDue: 0, stateTaxDue: 150 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 12909, ordinaryIncomeNonSS: 31541, qualifiedIncome: 28242, federalTaxDue: 2400, stateTaxDue: 2614 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 42112, ordinaryIncomeNonSS: 37371, qualifiedIncome: 50000, federalTaxDue: 13415, stateTaxDue: 3944 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 14118, ordinaryIncomeNonSS: 0, qualifiedIncome: 33692, federalTaxDue: 0, stateTaxDue: 1310 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 28603, ordinaryIncomeNonSS: 44134, qualifiedIncome: 31390, federalTaxDue: 12457, stateTaxDue: 3521 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 5057, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 30281, qualifiedIncome: 28034, federalTaxDue: 10016, stateTaxDue: 2491 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 47838, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 7864, stateTaxDue: 2195 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 1, federalTaxDue: 12348, stateTaxDue: 2245 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 15882, ordinaryIncomeNonSS: 0, qualifiedIncome: 13792, federalTaxDue: 0, stateTaxDue: 315 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 50000, qualifiedIncome: 17483, federalTaxDue: 6111, stateTaxDue: 3119 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 9883, ordinaryIncomeNonSS: 49427, qualifiedIncome: 0, federalTaxDue: 4237, stateTaxDue: 2096 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 4285, stateTaxDue: 2125 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 28335, federalTaxDue: 17291, stateTaxDue: 3662 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 1106, qualifiedIncome: 9817, federalTaxDue: 0, stateTaxDue: 241 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 35786, ordinaryIncomeNonSS: 27246, qualifiedIncome: 11528, federalTaxDue: 3420, stateTaxDue: 1564 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 17454, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2948 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 1591, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 1, qualifiedIncome: 37265, federalTaxDue: 0, stateTaxDue: 1558 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 3990, ordinaryIncomeNonSS: 0, qualifiedIncome: 20377, federalTaxDue: 0, stateTaxDue: 714 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 17999, ordinaryIncomeNonSS: 27733, qualifiedIncome: 50000, federalTaxDue: 5279, stateTaxDue: 3462 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 22805, qualifiedIncome: 0, federalTaxDue: 2818, stateTaxDue: 885 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 37107, ordinaryIncomeNonSS: 18248, qualifiedIncome: 16733, federalTaxDue: 3123, stateTaxDue: 1444 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 27041, ordinaryIncomeNonSS: 18449, qualifiedIncome: 19399, federalTaxDue: 3080, stateTaxDue: 1637 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 29906, federalTaxDue: 7974, stateTaxDue: 3740 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 45431, ordinaryIncomeNonSS: 44597, qualifiedIncome: 20439, federalTaxDue: 11236, stateTaxDue: 2827 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 33833, ordinaryIncomeNonSS: 1, qualifiedIncome: 45867, federalTaxDue: 4633, stateTaxDue: 1988 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 28347, ordinaryIncomeNonSS: 50000, qualifiedIncome: 41159, federalTaxDue: 12340, stateTaxDue: 4133 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 28277, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 389, stateTaxDue: 2075 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 10527, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 101 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 3070, federalTaxDue: 13382, stateTaxDue: 2349 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 37968, qualifiedIncome: 50000, federalTaxDue: 3912, stateTaxDue: 3973 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 38665, qualifiedIncome: 13743, federalTaxDue: 2773, stateTaxDue: 2365 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 38335, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 48687, ordinaryIncomeNonSS: 40659, qualifiedIncome: 42385, federalTaxDue: 17098, stateTaxDue: 3897 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 1440, stateTaxDue: 2245 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 6865, ordinaryIncomeNonSS: 4397, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2345 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 16117, qualifiedIncome: 0, federalTaxDue: 222, stateTaxDue: 501 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 38076, qualifiedIncome: 45613, federalTaxDue: 3283, stateTaxDue: 3759 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 33771, qualifiedIncome: 3890, federalTaxDue: 4814, stateTaxDue: 1458 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 32963, ordinaryIncomeNonSS: 25895, qualifiedIncome: 0, federalTaxDue: 1800, stateTaxDue: 870 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 38888, qualifiedIncome: 33095, federalTaxDue: 5452, stateTaxDue: 3344 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 20371, qualifiedIncome: 0, federalTaxDue: 22, stateTaxDue: 594 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 4133, stateTaxDue: 2245 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 25482, ordinaryIncomeNonSS: 26509, qualifiedIncome: 1, federalTaxDue: 2390, stateTaxDue: 1021 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 39600, ordinaryIncomeNonSS: 43882, qualifiedIncome: 41508, federalTaxDue: 15976, stateTaxDue: 4015 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 32829, ordinaryIncomeNonSS: 50000, qualifiedIncome: 16422, federalTaxDue: 12293, stateTaxDue: 3066 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 8253, qualifiedIncome: 13983, federalTaxDue: 1013, stateTaxDue: 857 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 49664, federalTaxDue: 7985, stateTaxDue: 2228 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 7965, ordinaryIncomeNonSS: 1, qualifiedIncome: 46177, federalTaxDue: 0, stateTaxDue: 1934 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 14643, qualifiedIncome: 3316, federalTaxDue: 0, stateTaxDue: 523 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 1, qualifiedIncome: 5379, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 17217, qualifiedIncome: 33905, federalTaxDue: 10431, stateTaxDue: 2301 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 7662, ordinaryIncomeNonSS: 1, qualifiedIncome: 18397, federalTaxDue: 0, stateTaxDue: 665 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 4162, ordinaryIncomeNonSS: 12295, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 360 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 14363, ordinaryIncomeNonSS: 28577, qualifiedIncome: 0, federalTaxDue: 1447, stateTaxDue: 1004 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 34065, ordinaryIncomeNonSS: 5419, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 4736, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2312 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 28420, federalTaxDue: 0, stateTaxDue: 996 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 10727, ordinaryIncomeNonSS: 22662, qualifiedIncome: 37092, federalTaxDue: 4132, stateTaxDue: 2733 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 1385, qualifiedIncome: 17008, federalTaxDue: 0, stateTaxDue: 665 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 19909, ordinaryIncomeNonSS: 1, qualifiedIncome: 11570, federalTaxDue: 0, stateTaxDue: 274 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2075 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 44838, ordinaryIncomeNonSS: 12362, qualifiedIncome: 0, federalTaxDue: 363, stateTaxDue: 363 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 45997, qualifiedIncome: 41397, federalTaxDue: 15542, stateTaxDue: 3945 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 48860, ordinaryIncomeNonSS: 38204, qualifiedIncome: 36160, federalTaxDue: 15656, stateTaxDue: 3463 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 10881, ordinaryIncomeNonSS: 0, qualifiedIncome: 37442, federalTaxDue: 0, stateTaxDue: 1497 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 1935, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 21986, federalTaxDue: 13511, stateTaxDue: 3174 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 19786, ordinaryIncomeNonSS: 1, qualifiedIncome: 46275, federalTaxDue: 1611, stateTaxDue: 2009 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 16801, qualifiedIncome: 42061, federalTaxDue: 975, stateTaxDue: 2688 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 7375, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 18060, ordinaryIncomeNonSS: 50000, qualifiedIncome: 19311, federalTaxDue: 9964, stateTaxDue: 3211 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 46816, ordinaryIncomeNonSS: 38729, qualifiedIncome: 21445, federalTaxDue: 10355, stateTaxDue: 2584 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 22052, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 47271, ordinaryIncomeNonSS: 40076, qualifiedIncome: 14873, federalTaxDue: 9750, stateTaxDue: 2322 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 29420, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 36774, ordinaryIncomeNonSS: 50000, qualifiedIncome: 36113, federalTaxDue: 15984, stateTaxDue: 4051 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 27012, federalTaxDue: 0, stateTaxDue: 926 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 35776, ordinaryIncomeNonSS: 43640, qualifiedIncome: 0, federalTaxDue: 5883, stateTaxDue: 1757 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 23489, federalTaxDue: 0, stateTaxDue: 869 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 19819, federalTaxDue: 0, stateTaxDue: 616 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 20782, ordinaryIncomeNonSS: 0, qualifiedIncome: 36962, federalTaxDue: 195, stateTaxDue: 1593 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 29761, ordinaryIncomeNonSS: 16457, qualifiedIncome: 40510, federalTaxDue: 3511, stateTaxDue: 2473 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 24316, qualifiedIncome: 50000, federalTaxDue: 14890, stateTaxDue: 3461 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 27750, ordinaryIncomeNonSS: 45116, qualifiedIncome: 0, federalTaxDue: 5542, stateTaxDue: 1831 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 22807, ordinaryIncomeNonSS: 1, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2075 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 47612, ordinaryIncomeNonSS: 26817, qualifiedIncome: 42616, federalTaxDue: 13886, stateTaxDue: 3167 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 29788, federalTaxDue: 7956, stateTaxDue: 3684 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 20118, qualifiedIncome: 149, federalTaxDue: 0, stateTaxDue: 588 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 39411, ordinaryIncomeNonSS: 16810, qualifiedIncome: 24122, federalTaxDue: 2572, stateTaxDue: 1622 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 1, qualifiedIncome: 37611, federalTaxDue: 0, stateTaxDue: 1456 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 19886, qualifiedIncome: 0, federalTaxDue: 1349, stateTaxDue: 569 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 1, qualifiedIncome: 46302, federalTaxDue: 0, stateTaxDue: 1890 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 42443, ordinaryIncomeNonSS: 1, qualifiedIncome: 50000, federalTaxDue: 3401, stateTaxDue: 2075 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 8012, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 146 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 38505, qualifiedIncome: 41209, federalTaxDue: 6566, stateTaxDue: 3731 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 20247, ordinaryIncomeNonSS: 11498, qualifiedIncome: 11493, federalTaxDue: 0, stateTaxDue: 775 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 32871, ordinaryIncomeNonSS: 35276, qualifiedIncome: 8624, federalTaxDue: 7660, stateTaxDue: 1890 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 45000, ordinaryIncomeNonSS: 18681, qualifiedIncome: 13894, federalTaxDue: 3168, stateTaxDue: 1324 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 21315, qualifiedIncome: 50000, federalTaxDue: 14230, stateTaxDue: 3311 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 37679, qualifiedIncome: 50000, federalTaxDue: 15002, stateTaxDue: 4009 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 2240, ordinaryIncomeNonSS: 1, qualifiedIncome: 33913, federalTaxDue: 0, stateTaxDue: 1321 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 45761, ordinaryIncomeNonSS: 1, qualifiedIncome: 37607, federalTaxDue: 687, stateTaxDue: 1505 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 28354, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 1559, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 26321, qualifiedIncome: 24069, federalTaxDue: 617, stateTaxDue: 2145 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 11513, qualifiedIncome: 31754, federalTaxDue: 0, stateTaxDue: 1908 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 14534, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2075 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 30935, ordinaryIncomeNonSS: 34871, qualifiedIncome: 26259, federalTaxDue: 6614, stateTaxDue: 2632 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 37304, qualifiedIncome: 1, federalTaxDue: 2609, stateTaxDue: 1610 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 21026, ordinaryIncomeNonSS: 28750, qualifiedIncome: 19429, federalTaxDue: 2893, stateTaxDue: 1984 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 3310, qualifiedIncome: 604, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 26164, qualifiedIncome: 0, federalTaxDue: 601, stateTaxDue: 883 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 48330, qualifiedIncome: 8774, federalTaxDue: 3098, stateTaxDue: 2480 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 38715, federalTaxDue: 0, stateTaxDue: 1681 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 45318, qualifiedIncome: 0, federalTaxDue: 2736, stateTaxDue: 1841 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 28046, ordinaryIncomeNonSS: 13060, qualifiedIncome: 41154, federalTaxDue: 6124, stateTaxDue: 2406 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 16254, ordinaryIncomeNonSS: 32422, qualifiedIncome: 0, federalTaxDue: 3232, stateTaxDue: 1366 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 24482, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 24662, ordinaryIncomeNonSS: 50000, qualifiedIncome: 12045, federalTaxDue: 7127, stateTaxDue: 2727 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 24674, ordinaryIncomeNonSS: 28502, qualifiedIncome: 0, federalTaxDue: 2791, stateTaxDue: 1120 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 38737, ordinaryIncomeNonSS: 40157, qualifiedIncome: 0, federalTaxDue: 5260, stateTaxDue: 1583 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 9620, ordinaryIncomeNonSS: 29887, qualifiedIncome: 38805, federalTaxDue: 6086, stateTaxDue: 3180 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 42371, ordinaryIncomeNonSS: 46340, qualifiedIncome: 402, federalTaxDue: 10280, stateTaxDue: 2082 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 45795, ordinaryIncomeNonSS: 0, qualifiedIncome: 24490, federalTaxDue: 0, stateTaxDue: 800 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 7906, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 13418, ordinaryIncomeNonSS: 10615, qualifiedIncome: 19982, federalTaxDue: 403, stateTaxDue: 1225 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 3231, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 26252, ordinaryIncomeNonSS: 39818, qualifiedIncome: 31770, federalTaxDue: 11125, stateTaxDue: 3324 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 4825, ordinaryIncomeNonSS: 0, qualifiedIncome: 42567, federalTaxDue: 0, stateTaxDue: 1703 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 50000, qualifiedIncome: 44787, federalTaxDue: 6379, stateTaxDue: 4364 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 15543, ordinaryIncomeNonSS: 50000, qualifiedIncome: 39301, federalTaxDue: 12492, stateTaxDue: 4160 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 24749, qualifiedIncome: 9047, federalTaxDue: 4933, stateTaxDue: 1435 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1633, ordinaryIncomeNonSS: 0, qualifiedIncome: 36681, federalTaxDue: 0, stateTaxDue: 1409 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 11436, ordinaryIncomeNonSS: 33212, qualifiedIncome: 0, federalTaxDue: 3161, stateTaxDue: 1356 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 46779, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 42255, federalTaxDue: 0, stateTaxDue: 1738 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 31923, ordinaryIncomeNonSS: 35710, qualifiedIncome: 28938, federalTaxDue: 10857, stateTaxDue: 2927 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 33499, ordinaryIncomeNonSS: 35073, qualifiedIncome: 0, federalTaxDue: 3865, stateTaxDue: 1379 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 28149, qualifiedIncome: 11657, federalTaxDue: 1511, stateTaxDue: 1685 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 47852, ordinaryIncomeNonSS: 50000, qualifiedIncome: 11287, federalTaxDue: 11504, stateTaxDue: 2689 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 18306, qualifiedIncome: 39993, federalTaxDue: 1040, stateTaxDue: 2660 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 48481, ordinaryIncomeNonSS: 1, qualifiedIncome: 36672, federalTaxDue: 723, stateTaxDue: 1459 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2075 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 41629, ordinaryIncomeNonSS: 10904, qualifiedIncome: 0, federalTaxDue: 36, stateTaxDue: 240 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 21683, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 1, qualifiedIncome: 12105, federalTaxDue: 0, stateTaxDue: 350 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 44216, qualifiedIncome: 16658, federalTaxDue: 11439, stateTaxDue: 2669 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 13292, ordinaryIncomeNonSS: 38950, qualifiedIncome: 8142, federalTaxDue: 4776, stateTaxDue: 2100 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 40780, qualifiedIncome: 16226, federalTaxDue: 2192, stateTaxDue: 2475 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 3817, ordinaryIncomeNonSS: 22677, qualifiedIncome: 40280, federalTaxDue: 577, stateTaxDue: 2773 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 5051, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 34459, ordinaryIncomeNonSS: 2571, qualifiedIncome: 17956, federalTaxDue: 0, stateTaxDue: 651 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 36852, ordinaryIncomeNonSS: 0, qualifiedIncome: 13483, federalTaxDue: 0, stateTaxDue: 299 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 29673, qualifiedIncome: 33812, federalTaxDue: 3072, stateTaxDue: 2869 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 3330, ordinaryIncomeNonSS: 50000, qualifiedIncome: 8649, federalTaxDue: 5550, stateTaxDue: 2627 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 18452, qualifiedIncome: 0, federalTaxDue: 455, stateTaxDue: 668 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 3769, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 16139, federalTaxDue: 0, stateTaxDue: 382 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 4133, stateTaxDue: 2245 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 37759, ordinaryIncomeNonSS: 1, qualifiedIncome: 15015, federalTaxDue: 0, stateTaxDue: 376 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 9840, federalTaxDue: 3298, stateTaxDue: 2617 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 3040, ordinaryIncomeNonSS: 0, qualifiedIncome: 7324, federalTaxDue: 0, stateTaxDue: 61 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 24025, qualifiedIncome: 1, federalTaxDue: 1016, stateTaxDue: 946 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 15552, ordinaryIncomeNonSS: 48656, qualifiedIncome: 50000, federalTaxDue: 10367, stateTaxDue: 4508 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 27305, qualifiedIncome: 29664, federalTaxDue: 1810, stateTaxDue: 2543 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 30273, qualifiedIncome: 1, federalTaxDue: 1766, stateTaxDue: 1259 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 14164, ordinaryIncomeNonSS: 24888, qualifiedIncome: 37713, federalTaxDue: 5615, stateTaxDue: 2825 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 38949, qualifiedIncome: 0, federalTaxDue: 7850, stateTaxDue: 1642 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 21204, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 45173, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 21463, ordinaryIncomeNonSS: 43347, qualifiedIncome: 50000, federalTaxDue: 13740, stateTaxDue: 4362 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 1705, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 42700, federalTaxDue: 0, stateTaxDue: 1760 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 20743, qualifiedIncome: 47749, federalTaxDue: 2813, stateTaxDue: 3120 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 47010, ordinaryIncomeNonSS: 37690, qualifiedIncome: 21626, federalTaxDue: 13017, stateTaxDue: 2661 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 5615, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 11890, ordinaryIncomeNonSS: 30678, qualifiedIncome: 25194, federalTaxDue: 4779, stateTaxDue: 2489 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 4543, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 17814, ordinaryIncomeNonSS: 28665, qualifiedIncome: 35579, federalTaxDue: 3325, stateTaxDue: 2837 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 31574, ordinaryIncomeNonSS: 14856, qualifiedIncome: 40277, federalTaxDue: 3459, stateTaxDue: 2382 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 34296, ordinaryIncomeNonSS: 0, qualifiedIncome: 18449, federalTaxDue: 0, stateTaxDue: 497 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 25627, qualifiedIncome: 14443, federalTaxDue: 548, stateTaxDue: 1579 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 8099, qualifiedIncome: 33706, federalTaxDue: 0, stateTaxDue: 1835 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 34536, qualifiedIncome: 1, federalTaxDue: 1442, stateTaxDue: 1302 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 33268, qualifiedIncome: 15680, federalTaxDue: 2125, stateTaxDue: 2192 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 27833, ordinaryIncomeNonSS: 0, qualifiedIncome: 25240, federalTaxDue: 0, stateTaxDue: 887 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 40843, ordinaryIncomeNonSS: 37043, qualifiedIncome: 0, federalTaxDue: 6218, stateTaxDue: 1597 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 39770, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 2799, stateTaxDue: 2125 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 31770, ordinaryIncomeNonSS: 25121, qualifiedIncome: 40840, federalTaxDue: 6360, stateTaxDue: 2873 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 23711, ordinaryIncomeNonSS: 196, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 4133, stateTaxDue: 2245 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 19496, qualifiedIncome: 25065, federalTaxDue: 0, stateTaxDue: 1803 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 5561, ordinaryIncomeNonSS: 1, qualifiedIncome: 5215, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 22699, ordinaryIncomeNonSS: 1, qualifiedIncome: 2815, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 47972, ordinaryIncomeNonSS: 0, qualifiedIncome: 23148, federalTaxDue: 0, stateTaxDue: 732 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 30780, qualifiedIncome: 1, federalTaxDue: 1063, stateTaxDue: 1164 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 40572, qualifiedIncome: 11462, federalTaxDue: 2167, stateTaxDue: 2177 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 2604, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 20811, ordinaryIncomeNonSS: 32727, qualifiedIncome: 1316, federalTaxDue: 3666, stateTaxDue: 1447 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 11076, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 44748, federalTaxDue: 652, stateTaxDue: 1982 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 36550, ordinaryIncomeNonSS: 50000, qualifiedIncome: 4055, federalTaxDue: 8306, stateTaxDue: 2278 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 2936, qualifiedIncome: 42589, federalTaxDue: 0, stateTaxDue: 1851 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 9520, stateTaxDue: 2075 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 4766, ordinaryIncomeNonSS: 13962, qualifiedIncome: 45468, federalTaxDue: 0, stateTaxDue: 2547 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 28087, qualifiedIncome: 0, federalTaxDue: 1503, stateTaxDue: 1149 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 38796, federalTaxDue: 0, stateTaxDue: 1685 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 48032, ordinaryIncomeNonSS: 41619, qualifiedIncome: 0, federalTaxDue: 6059, stateTaxDue: 1656 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 30623, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 33114, ordinaryIncomeNonSS: 40440, qualifiedIncome: 0, federalTaxDue: 6878, stateTaxDue: 1717 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 20434, ordinaryIncomeNonSS: 27126, qualifiedIncome: 0, federalTaxDue: 2269, stateTaxDue: 1051 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 13364, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 243 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 16712, ordinaryIncomeNonSS: 12821, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 266 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 10214, qualifiedIncome: 10740, federalTaxDue: 0, stateTaxDue: 793 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 16321, federalTaxDue: 0, stateTaxDue: 441 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 15095, qualifiedIncome: 42485, federalTaxDue: 11734, stateTaxDue: 2624 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 36608, ordinaryIncomeNonSS: 1, qualifiedIncome: 42345, federalTaxDue: 700, stateTaxDue: 1692 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 49129, federalTaxDue: 0, stateTaxDue: 2031 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 40089, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1617, ordinaryIncomeNonSS: 0, qualifiedIncome: 1485, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 50000, qualifiedIncome: 1, federalTaxDue: 4133, stateTaxDue: 2245 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 14687, qualifiedIncome: 2179, federalTaxDue: 79, stateTaxDue: 538 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 9482, federalTaxDue: 11635, stateTaxDue: 2599 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 4721, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 9529, qualifiedIncome: 32763, federalTaxDue: 0, stateTaxDue: 1740 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 4133, stateTaxDue: 2245 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 42220, ordinaryIncomeNonSS: 0, qualifiedIncome: 18405, federalTaxDue: 0, stateTaxDue: 615 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 41137, qualifiedIncome: 50000, federalTaxDue: 15763, stateTaxDue: 4132 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 15664, ordinaryIncomeNonSS: 40840, qualifiedIncome: 0, federalTaxDue: 4632, stateTaxDue: 1787 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 42322, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1217, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 7315, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2075 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 12348, stateTaxDue: 2245 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 30095, ordinaryIncomeNonSS: 31371, qualifiedIncome: 0, federalTaxDue: 2869, stateTaxDue: 1144 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 20491, ordinaryIncomeNonSS: 3504, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 30504, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 20087, qualifiedIncome: 41728, federalTaxDue: 12719, stateTaxDue: 2836 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 3968, ordinaryIncomeNonSS: 46674, qualifiedIncome: 0, federalTaxDue: 4139, stateTaxDue: 2029 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 20244, qualifiedIncome: 0, federalTaxDue: 1415, stateTaxDue: 637 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 27327, qualifiedIncome: 0, federalTaxDue: 2987, stateTaxDue: 991 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 38743, qualifiedIncome: 50000, federalTaxDue: 15236, stateTaxDue: 4062 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 5568, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 1, qualifiedIncome: 29082, federalTaxDue: 0, stateTaxDue: 1149 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 7302, ordinaryIncomeNonSS: 16877, qualifiedIncome: 50000, federalTaxDue: 293, stateTaxDue: 2969 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 16776, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 414 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 7253, ordinaryIncomeNonSS: 7857, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 138 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 21362, qualifiedIncome: 50000, federalTaxDue: 121, stateTaxDue: 3143 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 14687, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 5428, ordinaryIncomeNonSS: 0, qualifiedIncome: 10490, federalTaxDue: 0, stateTaxDue: 150 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 17048, ordinaryIncomeNonSS: 40813, qualifiedIncome: 35675, federalTaxDue: 6444, stateTaxDue: 3399 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 26985, ordinaryIncomeNonSS: 50000, qualifiedIncome: 13429, federalTaxDue: 7868, stateTaxDue: 2746 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 10413, ordinaryIncomeNonSS: 18558, qualifiedIncome: 0, federalTaxDue: 466, stateTaxDue: 623 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 23943, ordinaryIncomeNonSS: 26582, qualifiedIncome: 0, federalTaxDue: 2327, stateTaxDue: 1024 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 21074, ordinaryIncomeNonSS: 8600, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 125 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 31917, ordinaryIncomeNonSS: 11170, qualifiedIncome: 14393, federalTaxDue: 191, stateTaxDue: 903 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 8563, federalTaxDue: 11497, stateTaxDue: 2503 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 5584, ordinaryIncomeNonSS: 45330, qualifiedIncome: 4260, federalTaxDue: 3307, stateTaxDue: 2105 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 5360, ordinaryIncomeNonSS: 50000, qualifiedIncome: 50000, federalTaxDue: 12193, stateTaxDue: 4745 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 22912, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 5635, stateTaxDue: 2125 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 18157, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 8556, ordinaryIncomeNonSS: 27000, qualifiedIncome: 0, federalTaxDue: 999, stateTaxDue: 975 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 4160, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 33014, ordinaryIncomeNonSS: 23942, qualifiedIncome: 0, federalTaxDue: 2204, stateTaxDue: 942 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 4084, ordinaryIncomeNonSS: 46436, qualifiedIncome: 3864, federalTaxDue: 3287, stateTaxDue: 2090 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 41795, ordinaryIncomeNonSS: 14646, qualifiedIncome: 0, federalTaxDue: 656, stateTaxDue: 477 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 39835, ordinaryIncomeNonSS: 39821, qualifiedIncome: 0, federalTaxDue: 5242, stateTaxDue: 1566 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 13528, ordinaryIncomeNonSS: 36549, qualifiedIncome: 0, federalTaxDue: 3899, stateTaxDue: 1572 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 24049, federalTaxDue: 0, stateTaxDue: 898 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 16488, ordinaryIncomeNonSS: 0, qualifiedIncome: 5694, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 45056, qualifiedIncome: 34962, federalTaxDue: 3570, stateTaxDue: 3626 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 50000, federalTaxDue: 1440, stateTaxDue: 2245 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 41903, qualifiedIncome: 41645, federalTaxDue: 3721, stateTaxDue: 3752 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 4974, qualifiedIncome: 50000, federalTaxDue: 1440, stateTaxDue: 2494 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 24496, ordinaryIncomeNonSS: 1509, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 14491, qualifiedIncome: 23616, federalTaxDue: 0, stateTaxDue: 1530 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 11901, qualifiedIncome: 41486, federalTaxDue: 0, stateTaxDue: 2294 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 28775, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 46984, qualifiedIncome: 18457, federalTaxDue: 2936, stateTaxDue: 2897 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 41002, ordinaryIncomeNonSS: 36473, qualifiedIncome: 50000, federalTaxDue: 15882, stateTaxDue: 4019 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 1, federalTaxDue: 3298, stateTaxDue: 2125 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 37168, qualifiedIncome: 0, federalTaxDue: 5171, stateTaxDue: 1483 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 43493, ordinaryIncomeNonSS: 50000, qualifiedIncome: 1, federalTaxDue: 11739, stateTaxDue: 2245 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1322, ordinaryIncomeNonSS: 50000, qualifiedIncome: 39196, federalTaxDue: 5843, stateTaxDue: 4085 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 7645, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 1440, stateTaxDue: 2245 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 1440, stateTaxDue: 2245 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 20612, qualifiedIncome: 0, federalTaxDue: 671, stateTaxDue: 726 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 41169, ordinaryIncomeNonSS: 5743, qualifiedIncome: 29181, federalTaxDue: 838, stateTaxDue: 1371 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 6869, ordinaryIncomeNonSS: 0, qualifiedIncome: 3789, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 1, qualifiedIncome: 19580, federalTaxDue: 0, stateTaxDue: 604 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 7652, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 128 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 4133, stateTaxDue: 2245 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 44929, ordinaryIncomeNonSS: 0, qualifiedIncome: 31346, federalTaxDue: 744, stateTaxDue: 1312 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 35331, ordinaryIncomeNonSS: 28523, qualifiedIncome: 1, federalTaxDue: 2504, stateTaxDue: 1001 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 44816, ordinaryIncomeNonSS: 41768, qualifiedIncome: 0, federalTaxDue: 5928, stateTaxDue: 1713 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 49535, ordinaryIncomeNonSS: 45317, qualifiedIncome: 0, federalTaxDue: 10398, stateTaxDue: 2011 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 4817, ordinaryIncomeNonSS: 0, qualifiedIncome: 46428, federalTaxDue: 0, stateTaxDue: 1896 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 25811, qualifiedIncome: 1, federalTaxDue: 1230, stateTaxDue: 1036 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 17895, qualifiedIncome: 1, federalTaxDue: 1728, stateTaxDue: 590 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 39694, federalTaxDue: 0, stateTaxDue: 1680 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 3108, ordinaryIncomeNonSS: 0, qualifiedIncome: 38493, federalTaxDue: 0, stateTaxDue: 1550 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 19687, ordinaryIncomeNonSS: 0, qualifiedIncome: 20413, federalTaxDue: 0, stateTaxDue: 646 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 3387, ordinaryIncomeNonSS: 11931, qualifiedIncome: 18403, federalTaxDue: 0, stateTaxDue: 1092 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 3029, ordinaryIncomeNonSS: 15939, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 422 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 42106, federalTaxDue: 0, stateTaxDue: 1730 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 13047, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 4915, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 3799, stateTaxDue: 2075 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 30013, qualifiedIncome: 0, federalTaxDue: 986, stateTaxDue: 1076 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 32871, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 3608, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 13730, qualifiedIncome: 31760, federalTaxDue: 0, stateTaxDue: 1850 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 21266, federalTaxDue: 0, stateTaxDue: 688 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 6721, ordinaryIncomeNonSS: 50000, qualifiedIncome: 33472, federalTaxDue: 9968, stateTaxDue: 3919 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 7660, qualifiedIncome: 31232, federalTaxDue: 0, stateTaxDue: 1640 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 48137, ordinaryIncomeNonSS: 0, qualifiedIncome: 26375, federalTaxDue: 458, stateTaxDue: 1014 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 9197, ordinaryIncomeNonSS: 12276, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 189 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 6713, ordinaryIncomeNonSS: 50000, qualifiedIncome: 1, federalTaxDue: 4946, stateTaxDue: 2245 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 5826, qualifiedIncome: 22472, federalTaxDue: 1341, stateTaxDue: 1110 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2125 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 19857, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 45539, ordinaryIncomeNonSS: 0, qualifiedIncome: 24453, federalTaxDue: 0, stateTaxDue: 848 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 5652, ordinaryIncomeNonSS: 29748, qualifiedIncome: 39502, federalTaxDue: 1444, stateTaxDue: 3088 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 35020, ordinaryIncomeNonSS: 49875, qualifiedIncome: 2416, federalTaxDue: 10574, stateTaxDue: 2310 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 50000, federalTaxDue: 7161, stateTaxDue: 4625 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 23867, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 23634, qualifiedIncome: 9888, federalTaxDue: 4695, stateTaxDue: 1371 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 33050, federalTaxDue: 4618, stateTaxDue: 3778 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 1, qualifiedIncome: 7431, federalTaxDue: 0, stateTaxDue: 117 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 9890, ordinaryIncomeNonSS: 18731, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 512 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 48581, qualifiedIncome: 18442, federalTaxDue: 3128, stateTaxDue: 2926 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 25875, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 37766, ordinaryIncomeNonSS: 50000, qualifiedIncome: 50000, federalTaxDue: 15425, stateTaxDue: 4575 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 28457, ordinaryIncomeNonSS: 32201, qualifiedIncome: 1, federalTaxDue: 3805, stateTaxDue: 1305 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 30219, qualifiedIncome: 23917, federalTaxDue: 1007, stateTaxDue: 2332 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 48509, ordinaryIncomeNonSS: 0, qualifiedIncome: 48238, federalTaxDue: 3445, stateTaxDue: 1987 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 49778, qualifiedIncome: 0, federalTaxDue: 4106, stateTaxDue: 2234 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2075 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 14565, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 40890, qualifiedIncome: 0, federalTaxDue: 2205, stateTaxDue: 1670 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 28058, ordinaryIncomeNonSS: 13241, qualifiedIncome: 47339, federalTaxDue: 3276, stateTaxDue: 2654 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 48620, federalTaxDue: 3761, stateTaxDue: 2006 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 49678, ordinaryIncomeNonSS: 29746, qualifiedIncome: 0, federalTaxDue: 4342, stateTaxDue: 1182 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 34141, qualifiedIncome: 29005, federalTaxDue: 13902, stateTaxDue: 2852 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 15813, ordinaryIncomeNonSS: 0, qualifiedIncome: 377, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 8365, ordinaryIncomeNonSS: 24395, qualifiedIncome: 50000, federalTaxDue: 2224, stateTaxDue: 3295 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 48998, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 9520, stateTaxDue: 2075 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 15762, ordinaryIncomeNonSS: 0, qualifiedIncome: 6039, federalTaxDue: 0, stateTaxDue: 47 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 22614, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 25432, federalTaxDue: 0, stateTaxDue: 967 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 47790, federalTaxDue: 17382, stateTaxDue: 4515 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 9670, federalTaxDue: 0, stateTaxDue: 179 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 6315, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 11 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 1227, qualifiedIncome: 50000, federalTaxDue: 8725, stateTaxDue: 2256 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 27154, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 17878, ordinaryIncomeNonSS: 612, qualifiedIncome: 7497, federalTaxDue: 0, stateTaxDue: 100 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 41234, ordinaryIncomeNonSS: 13752, qualifiedIncome: 20885, federalTaxDue: 2927, stateTaxDue: 1427 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 1, federalTaxDue: 4133, stateTaxDue: 2195 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 8438, ordinaryIncomeNonSS: 39149, qualifiedIncome: 1, federalTaxDue: 2857, stateTaxDue: 1583 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 6408, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2075 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 46643, ordinaryIncomeNonSS: 1, qualifiedIncome: 17946, federalTaxDue: 0, stateTaxDue: 522 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 16416, ordinaryIncomeNonSS: 23498, qualifiedIncome: 0, federalTaxDue: 670, stateTaxDue: 750 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 11647, ordinaryIncomeNonSS: 893, qualifiedIncome: 1913, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 29770, ordinaryIncomeNonSS: 1, qualifiedIncome: 16396, federalTaxDue: 0, stateTaxDue: 565 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 1, qualifiedIncome: 39193, federalTaxDue: 4012, stateTaxDue: 1705 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 45541, federalTaxDue: 19872, stateTaxDue: 4522 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 47132, ordinaryIncomeNonSS: 1, qualifiedIncome: 50000, federalTaxDue: 7784, stateTaxDue: 2195 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 47186, qualifiedIncome: 38069, federalTaxDue: 4611, stateTaxDue: 3838 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 25711, federalTaxDue: 0, stateTaxDue: 861 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 41813, qualifiedIncome: 42047, federalTaxDue: 7585, stateTaxDue: 3888 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 37317, qualifiedIncome: 35810, federalTaxDue: 15622, stateTaxDue: 3351 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 37314, ordinaryIncomeNonSS: 1, qualifiedIncome: 22334, federalTaxDue: 0, stateTaxDue: 862 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 25136, federalTaxDue: 13983, stateTaxDue: 3382 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 109, federalTaxDue: 4133, stateTaxDue: 2200 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 39597, qualifiedIncome: 11313, federalTaxDue: 2050, stateTaxDue: 2121 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 14138, ordinaryIncomeNonSS: 11066, qualifiedIncome: 50000, federalTaxDue: 3736, stateTaxDue: 2748 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 27811, ordinaryIncomeNonSS: 1, qualifiedIncome: 21290, federalTaxDue: 0, stateTaxDue: 810 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 19690, ordinaryIncomeNonSS: 6536, qualifiedIncome: 577, federalTaxDue: 0, stateTaxDue: 101 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 46366, qualifiedIncome: 0, federalTaxDue: 2862, stateTaxDue: 1943 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 29750, ordinaryIncomeNonSS: 0, qualifiedIncome: 5740, federalTaxDue: 0, stateTaxDue: 32 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 1, federalTaxDue: 12348, stateTaxDue: 2195 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 23255, ordinaryIncomeNonSS: 0, qualifiedIncome: 37516, federalTaxDue: 435, stateTaxDue: 1621 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 11246, ordinaryIncomeNonSS: 22482, qualifiedIncome: 17540, federalTaxDue: 1189, stateTaxDue: 1626 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 49553, ordinaryIncomeNonSS: 50000, qualifiedIncome: 1, federalTaxDue: 12306, stateTaxDue: 2245 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 37278, ordinaryIncomeNonSS: 22953, qualifiedIncome: 1, federalTaxDue: 1376, stateTaxDue: 773 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 50000, qualifiedIncome: 44059, federalTaxDue: 6270, stateTaxDue: 4328 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 21606, federalTaxDue: 16281, stateTaxDue: 3325 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 41063, federalTaxDue: 99, stateTaxDue: 1748 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 16225, ordinaryIncomeNonSS: 1, qualifiedIncome: 14553, federalTaxDue: 0, stateTaxDue: 353 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 19794, ordinaryIncomeNonSS: 31539, qualifiedIncome: 27654, federalTaxDue: 7194, stateTaxDue: 2705 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 45396, ordinaryIncomeNonSS: 0, qualifiedIncome: 5518, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 44112, ordinaryIncomeNonSS: 26520, qualifiedIncome: 7110, federalTaxDue: 4407, stateTaxDue: 1377 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 49054, ordinaryIncomeNonSS: 9617, qualifiedIncome: 44405, federalTaxDue: 10503, stateTaxDue: 2396 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 3298, stateTaxDue: 2075 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 33226, ordinaryIncomeNonSS: 11181, qualifiedIncome: 18086, federalTaxDue: 563, stateTaxDue: 1038 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 23079, qualifiedIncome: 50000, federalTaxDue: 293, stateTaxDue: 3229 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 10579, ordinaryIncomeNonSS: 0, qualifiedIncome: 25982, federalTaxDue: 0, stateTaxDue: 1044 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 21480, ordinaryIncomeNonSS: 15520, qualifiedIncome: 14501, federalTaxDue: 1225, stateTaxDue: 1196 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 38657, qualifiedIncome: 0, federalTaxDue: 2772, stateTaxDue: 1628 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 31772, qualifiedIncome: 0, federalTaxDue: 1946, stateTaxDue: 1334 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 9898, ordinaryIncomeNonSS: 33261, qualifiedIncome: 0, federalTaxDue: 3094, stateTaxDue: 1358 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 14086, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 4735, stateTaxDue: 2125 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 24195, qualifiedIncome: 0, federalTaxDue: 1036, stateTaxDue: 955 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 47214, federalTaxDue: 0, stateTaxDue: 1936 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 9947, federalTaxDue: 0, stateTaxDue: 242 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 37424, ordinaryIncomeNonSS: 50000, qualifiedIncome: 1, federalTaxDue: 10689, stateTaxDue: 2245 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 47454, qualifiedIncome: 0, federalTaxDue: 2992, stateTaxDue: 1948 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 12040, ordinaryIncomeNonSS: 12894, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 220 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 46977, qualifiedIncome: 50000, federalTaxDue: 6344, stateTaxDue: 4474 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 48969, qualifiedIncome: 50000, federalTaxDue: 6882, stateTaxDue: 4523 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 36059, ordinaryIncomeNonSS: 34985, qualifiedIncome: 18897, federalTaxDue: 9965, stateTaxDue: 2389 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2125 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 25185, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 23802, qualifiedIncome: 0, federalTaxDue: 990, stateTaxDue: 935 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 39335, ordinaryIncomeNonSS: 3190, qualifiedIncome: 1594, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 25565, ordinaryIncomeNonSS: 30240, qualifiedIncome: 50000, federalTaxDue: 7692, stateTaxDue: 3637 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 1165, qualifiedIncome: 50000, federalTaxDue: 1440, stateTaxDue: 2253 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 36159, ordinaryIncomeNonSS: 49868, qualifiedIncome: 44987, federalTaxDue: 17171, stateTaxDue: 4438 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 29262, ordinaryIncomeNonSS: 50000, qualifiedIncome: 31557, federalTaxDue: 13896, stateTaxDue: 3823 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 8017, ordinaryIncomeNonSS: 42090, qualifiedIncome: 7563, federalTaxDue: 3167, stateTaxDue: 2058 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 31094, ordinaryIncomeNonSS: 45581, qualifiedIncome: 541, federalTaxDue: 8614, stateTaxDue: 2001 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 39410, ordinaryIncomeNonSS: 32831, qualifiedIncome: 0, federalTaxDue: 3668, stateTaxDue: 1217 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 13229, federalTaxDue: 0, stateTaxDue: 356 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 21232, qualifiedIncome: 0, federalTaxDue: 1634, stateTaxDue: 637 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 4341, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 12593, ordinaryIncomeNonSS: 5660, qualifiedIncome: 1457, federalTaxDue: 0, stateTaxDue: 101 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 35026, ordinaryIncomeNonSS: 23628, qualifiedIncome: 0, federalTaxDue: 2237, stateTaxDue: 876 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 44985, ordinaryIncomeNonSS: 38656, qualifiedIncome: 1, federalTaxDue: 7262, stateTaxDue: 1628 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 3298, stateTaxDue: 2075 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 23812, ordinaryIncomeNonSS: 0, qualifiedIncome: 42237, federalTaxDue: 9, stateTaxDue: 1687 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 15259, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 20733, qualifiedIncome: 16605, federalTaxDue: 683, stateTaxDue: 1562 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 38319, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 2490, stateTaxDue: 2125 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 25778, ordinaryIncomeNonSS: 1, qualifiedIncome: 648, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 20255, ordinaryIncomeNonSS: 0, qualifiedIncome: 5215, federalTaxDue: 0, stateTaxDue: 6 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 26000, qualifiedIncome: 50000, federalTaxDue: 4508, stateTaxDue: 3545 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 6980, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 49222, ordinaryIncomeNonSS: 1, qualifiedIncome: 5879, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 10497, ordinaryIncomeNonSS: 0, qualifiedIncome: 7647, federalTaxDue: 0, stateTaxDue: 77 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 37634, ordinaryIncomeNonSS: 39036, qualifiedIncome: 11638, federalTaxDue: 10062, stateTaxDue: 2229 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 46371, federalTaxDue: 2908, stateTaxDue: 1944 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 13557, ordinaryIncomeNonSS: 31019, qualifiedIncome: 50000, federalTaxDue: 8974, stateTaxDue: 3796 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 6577, federalTaxDue: 4475, stateTaxDue: 2574 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 45502, ordinaryIncomeNonSS: 36032, qualifiedIncome: 46891, federalTaxDue: 13333, stateTaxDue: 3721 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 38512, qualifiedIncome: 0, federalTaxDue: 2755, stateTaxDue: 1671 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 47026, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 12069, stateTaxDue: 2245 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 41485, qualifiedIncome: 10997, federalTaxDue: 12588, stateTaxDue: 2369 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 48747, ordinaryIncomeNonSS: 0, qualifiedIncome: 29970, federalTaxDue: 164, stateTaxDue: 1124 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 45128, qualifiedIncome: 40939, federalTaxDue: 8313, stateTaxDue: 3998 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 11610, ordinaryIncomeNonSS: 46406, qualifiedIncome: 50000, federalTaxDue: 8855, stateTaxDue: 4445 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 49016, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 2010, ordinaryIncomeNonSS: 14432, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 297 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 3728, ordinaryIncomeNonSS: 0, qualifiedIncome: 38579, federalTaxDue: 0, stateTaxDue: 1674 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 40855, ordinaryIncomeNonSS: 25196, qualifiedIncome: 0, federalTaxDue: 2047, stateTaxDue: 885 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 47489, federalTaxDue: 7160, stateTaxDue: 2119 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 33919, ordinaryIncomeNonSS: 0, qualifiedIncome: 43456, federalTaxDue: 3784, stateTaxDue: 1868 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 31295, ordinaryIncomeNonSS: 17830, qualifiedIncome: 0, federalTaxDue: 817, stateTaxDue: 637 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 44069, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 8965, stateTaxDue: 2075 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 1, qualifiedIncome: 24277, federalTaxDue: 0, stateTaxDue: 789 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 37692, ordinaryIncomeNonSS: 13310, qualifiedIncome: 0, federalTaxDue: 299, stateTaxDue: 411 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 37692, federalTaxDue: 0, stateTaxDue: 1580 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 48788, ordinaryIncomeNonSS: 37104, qualifiedIncome: 0, federalTaxDue: 6986, stateTaxDue: 1600 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 24045, federalTaxDue: 16647, stateTaxDue: 3397 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 15209, ordinaryIncomeNonSS: 1, qualifiedIncome: 21629, federalTaxDue: 0, stateTaxDue: 657 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 39748, ordinaryIncomeNonSS: 37967, qualifiedIncome: 50000, federalTaxDue: 13034, stateTaxDue: 3973 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 15750, ordinaryIncomeNonSS: 44890, qualifiedIncome: 1613, federalTaxDue: 4291, stateTaxDue: 1950 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 14009, qualifiedIncome: 44097, federalTaxDue: 0, stateTaxDue: 2480 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 12101, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 180 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 22650, ordinaryIncomeNonSS: 1, qualifiedIncome: 233, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 35226, ordinaryIncomeNonSS: 30501, qualifiedIncome: 0, federalTaxDue: 3773, stateTaxDue: 1270 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 7868, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 37359, ordinaryIncomeNonSS: 0, qualifiedIncome: 14254, federalTaxDue: 0, stateTaxDue: 288 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 43538, ordinaryIncomeNonSS: 37321, qualifiedIncome: 42913, federalTaxDue: 15480, stateTaxDue: 3707 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 13442, ordinaryIncomeNonSS: 23211, qualifiedIncome: 50000, federalTaxDue: 6840, stateTaxDue: 3406 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 3298, stateTaxDue: 2075 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 18226, ordinaryIncomeNonSS: 27796, qualifiedIncome: 50000, federalTaxDue: 5348, stateTaxDue: 3515 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 5264, ordinaryIncomeNonSS: 25543, qualifiedIncome: 18170, federalTaxDue: 987, stateTaxDue: 1761 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 3841, ordinaryIncomeNonSS: 39070, qualifiedIncome: 5586, federalTaxDue: 2378, stateTaxDue: 1858 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1358, ordinaryIncomeNonSS: 0, qualifiedIncome: 38588, federalTaxDue: 0, stateTaxDue: 1554 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 47215, ordinaryIncomeNonSS: 0, qualifiedIncome: 17246, federalTaxDue: 0, stateTaxDue: 557 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 22423, ordinaryIncomeNonSS: 0, qualifiedIncome: 25021, federalTaxDue: 0, stateTaxDue: 826 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 37418, ordinaryIncomeNonSS: 3864, qualifiedIncome: 39383, federalTaxDue: 1198, stateTaxDue: 1787 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 47350, ordinaryIncomeNonSS: 4334, qualifiedIncome: 43225, federalTaxDue: 7402, stateTaxDue: 2073 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 25732, ordinaryIncomeNonSS: 13084, qualifiedIncome: 14866, federalTaxDue: 948, stateTaxDue: 1093 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 40221, federalTaxDue: 0, stateTaxDue: 1706 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 10171, ordinaryIncomeNonSS: 0, qualifiedIncome: 15083, federalTaxDue: 0, stateTaxDue: 499 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 16148, federalTaxDue: 0, stateTaxDue: 432 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 45565, ordinaryIncomeNonSS: 50000, qualifiedIncome: 38888, federalTaxDue: 18044, stateTaxDue: 4139 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 42866, ordinaryIncomeNonSS: 0, qualifiedIncome: 38830, federalTaxDue: 667, stateTaxDue: 1517 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 13228, qualifiedIncome: 1, federalTaxDue: 117, stateTaxDue: 236 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 1, qualifiedIncome: 46282, federalTaxDue: 882, stateTaxDue: 2009 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 48764, qualifiedIncome: 1, federalTaxDue: 9017, stateTaxDue: 2063 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 49364, ordinaryIncomeNonSS: 0, qualifiedIncome: 12271, federalTaxDue: 0, stateTaxDue: 189 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 29087, qualifiedIncome: 4755, federalTaxDue: 1623, stateTaxDue: 1387 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 6471, federalTaxDue: 11184, stateTaxDue: 2449 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 44421, qualifiedIncome: 6504, federalTaxDue: 2629, stateTaxDue: 2121 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 25329, ordinaryIncomeNonSS: 2972, qualifiedIncome: 25722, federalTaxDue: 0, stateTaxDue: 1010 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 38618, qualifiedIncome: 0, federalTaxDue: 2767, stateTaxDue: 1676 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 1863, qualifiedIncome: 10965, federalTaxDue: 0, stateTaxDue: 266 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 33294, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 35500, ordinaryIncomeNonSS: 11855, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 168 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 27973, federalTaxDue: 0, stateTaxDue: 1144 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 42858, federalTaxDue: 6089, stateTaxDue: 4268 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 47303, qualifiedIncome: 10065, federalTaxDue: 13957, stateTaxDue: 2613 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 35961, ordinaryIncomeNonSS: 45157, qualifiedIncome: 0, federalTaxDue: 6236, stateTaxDue: 1833 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 15023, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 22842, qualifiedIncome: 50000, federalTaxDue: 269, stateTaxDue: 3217 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 50000, federalTaxDue: 17713, stateTaxDue: 4575 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 32408, qualifiedIncome: 1, federalTaxDue: 1226, stateTaxDue: 1245 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 15011, ordinaryIncomeNonSS: 8906, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 190 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 11853, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 36263, ordinaryIncomeNonSS: 25599, qualifiedIncome: 18262, federalTaxDue: 7278, stateTaxDue: 1888 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 5816, ordinaryIncomeNonSS: 1, qualifiedIncome: 50000, federalTaxDue: 1440, stateTaxDue: 2195 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 44172, ordinaryIncomeNonSS: 0, qualifiedIncome: 29953, federalTaxDue: 0, stateTaxDue: 1123 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 3298, stateTaxDue: 2125 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 41895, qualifiedIncome: 17887, federalTaxDue: 3983, stateTaxDue: 2734 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 35084, ordinaryIncomeNonSS: 50000, qualifiedIncome: 1, federalTaxDue: 10251, stateTaxDue: 2245 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 32805, ordinaryIncomeNonSS: 5877, qualifiedIncome: 20097, federalTaxDue: 0, stateTaxDue: 874 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 16837, ordinaryIncomeNonSS: 0, qualifiedIncome: 8097, federalTaxDue: 0, stateTaxDue: 100 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 18702, qualifiedIncome: 43495, federalTaxDue: 1665, stateTaxDue: 2805 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 20784, ordinaryIncomeNonSS: 35284, qualifiedIncome: 1, federalTaxDue: 4098, stateTaxDue: 1459 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 15186, ordinaryIncomeNonSS: 0, qualifiedIncome: 31958, federalTaxDue: 0, stateTaxDue: 1173 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 42602, qualifiedIncome: 1, federalTaxDue: 3245, stateTaxDue: 1825 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 34052, ordinaryIncomeNonSS: 30559, qualifiedIncome: 1, federalTaxDue: 2891, stateTaxDue: 1103 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 28184, qualifiedIncome: 0, federalTaxDue: 4012, stateTaxDue: 1154 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 10591, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 5671, stateTaxDue: 2245 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 16164, ordinaryIncomeNonSS: 16896, qualifiedIncome: 23907, federalTaxDue: 1846, stateTaxDue: 1785 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 15480, ordinaryIncomeNonSS: 0, qualifiedIncome: 48474, federalTaxDue: 1211, stateTaxDue: 2169 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 16873, ordinaryIncomeNonSS: 1, qualifiedIncome: 6981, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 34512, federalTaxDue: 8665, stateTaxDue: 3921 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 26195, qualifiedIncome: 1, federalTaxDue: 605, stateTaxDue: 935 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 46176, ordinaryIncomeNonSS: 21666, qualifiedIncome: 49557, federalTaxDue: 13525, stateTaxDue: 3306 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 22920, ordinaryIncomeNonSS: 0, qualifiedIncome: 45183, federalTaxDue: 2113, stateTaxDue: 1954 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 30919, qualifiedIncome: 12918, federalTaxDue: 1843, stateTaxDue: 1937 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 35737, federalTaxDue: 0, stateTaxDue: 1362 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 31963, ordinaryIncomeNonSS: 6122, qualifiedIncome: 50000, federalTaxDue: 2670, stateTaxDue: 2381 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 5261, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 8 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 24217, ordinaryIncomeNonSS: 18526, qualifiedIncome: 35447, federalTaxDue: 2037, stateTaxDue: 2274 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 49497, federalTaxDue: 1365, stateTaxDue: 2220 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 31640, qualifiedIncome: 0, federalTaxDue: 1149, stateTaxDue: 1157 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 16815, ordinaryIncomeNonSS: 0, qualifiedIncome: 46224, federalTaxDue: 0, stateTaxDue: 1936 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 5318, federalTaxDue: 13838, stateTaxDue: 2461 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 5889, ordinaryIncomeNonSS: 4997, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 7173, ordinaryIncomeNonSS: 22116, qualifiedIncome: 34096, federalTaxDue: 2720, stateTaxDue: 2506 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 12429, federalTaxDue: 14905, stateTaxDue: 2866 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 40664, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 10600, ordinaryIncomeNonSS: 36464, qualifiedIncome: 0, federalTaxDue: 3590, stateTaxDue: 1518 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 38365, ordinaryIncomeNonSS: 20602, qualifiedIncome: 35296, federalTaxDue: 5822, stateTaxDue: 2370 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 30463, ordinaryIncomeNonSS: 0, qualifiedIncome: 38891, federalTaxDue: 1700, stateTaxDue: 1690 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 18182, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 7091, stateTaxDue: 2245 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 32002, ordinaryIncomeNonSS: 9874, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 239 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 39231, federalTaxDue: 18925, stateTaxDue: 4157 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 36352, federalTaxDue: 0, stateTaxDue: 1393 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 41175, ordinaryIncomeNonSS: 521, qualifiedIncome: 50000, federalTaxDue: 7078, stateTaxDue: 2271 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 30692, ordinaryIncomeNonSS: 0, qualifiedIncome: 29606, federalTaxDue: 0, stateTaxDue: 1055 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 19945, federalTaxDue: 6480, stateTaxDue: 3242 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 9520, stateTaxDue: 2075 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 2301, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 13262, qualifiedIncome: 0, federalTaxDue: 748, stateTaxDue: 358 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 24907, ordinaryIncomeNonSS: 41606, qualifiedIncome: 49213, federalTaxDue: 10492, stateTaxDue: 4116 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 48173, qualifiedIncome: 0, federalTaxDue: 11604, stateTaxDue: 2104 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 30448, qualifiedIncome: 1879, federalTaxDue: 1030, stateTaxDue: 1191 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 6499, ordinaryIncomeNonSS: 0, qualifiedIncome: 14007, federalTaxDue: 0, stateTaxDue: 395 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 35852, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 10395, stateTaxDue: 2245 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 28605, ordinaryIncomeNonSS: 1, qualifiedIncome: 28440, federalTaxDue: 0, stateTaxDue: 1117 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 17112, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2125 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 17110, ordinaryIncomeNonSS: 5796, qualifiedIncome: 7777, federalTaxDue: 0, stateTaxDue: 304 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 18650, ordinaryIncomeNonSS: 2823, qualifiedIncome: 46747, federalTaxDue: 0, stateTaxDue: 2054 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 4293, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 13976, federalTaxDue: 0, stateTaxDue: 394 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 4640, qualifiedIncome: 547, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 44184, ordinaryIncomeNonSS: 1, qualifiedIncome: 46675, federalTaxDue: 6184, stateTaxDue: 2029 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 12630, federalTaxDue: 0, stateTaxDue: 207 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 1359, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 10253, ordinaryIncomeNonSS: 27310, qualifiedIncome: 47387, federalTaxDue: 2995, stateTaxDue: 3360 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 11361, federalTaxDue: 0, stateTaxDue: 263 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 1661, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 37701, ordinaryIncomeNonSS: 45028, qualifiedIncome: 5280, federalTaxDue: 10439, stateTaxDue: 2210 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 35490, ordinaryIncomeNonSS: 6100, qualifiedIncome: 648, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 41263, qualifiedIncome: 40444, federalTaxDue: 14357, stateTaxDue: 3710 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 3101, ordinaryIncomeNonSS: 16054, qualifiedIncome: 49128, federalTaxDue: 2507, stateTaxDue: 2954 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 3908, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 1, qualifiedIncome: 23232, federalTaxDue: 0, stateTaxDue: 737 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 31474, qualifiedIncome: 1, federalTaxDue: 1910, stateTaxDue: 1319 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 12094, ordinaryIncomeNonSS: 50000, qualifiedIncome: 13777, federalTaxDue: 8019, stateTaxDue: 2934 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 44505, ordinaryIncomeNonSS: 1, qualifiedIncome: 15533, federalTaxDue: 0, stateTaxDue: 352 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 30278, ordinaryIncomeNonSS: 1, qualifiedIncome: 13783, federalTaxDue: 0, stateTaxDue: 384 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 35949, ordinaryIncomeNonSS: 34980, qualifiedIncome: 1, federalTaxDue: 3969, stateTaxDue: 1324 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 23419, federalTaxDue: 13726, stateTaxDue: 3296 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 6054, qualifiedIncome: 20395, federalTaxDue: 0, stateTaxDue: 947 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 22500, ordinaryIncomeNonSS: 5759, qualifiedIncome: 33477, federalTaxDue: 1563, stateTaxDue: 1657 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 20255, qualifiedIncome: 47868, federalTaxDue: 13677, stateTaxDue: 3151 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 36177, qualifiedIncome: 32421, federalTaxDue: 1639, stateTaxDue: 3005 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 38787, qualifiedIncome: 28233, federalTaxDue: 4695, stateTaxDue: 3046 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 748, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 9307, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 43374, ordinaryIncomeNonSS: 0, qualifiedIncome: 13697, federalTaxDue: 0, stateTaxDue: 430 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 29906, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 5055, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 48397, ordinaryIncomeNonSS: 848, qualifiedIncome: 27211, federalTaxDue: 72, stateTaxDue: 1028 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 8041, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 2344, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 31317, ordinaryIncomeNonSS: 45174, qualifiedIncome: 39558, federalTaxDue: 14419, stateTaxDue: 3982 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 43128, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 38314, ordinaryIncomeNonSS: 16154, qualifiedIncome: 18306, federalTaxDue: 2813, stateTaxDue: 1418 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 8549, ordinaryIncomeNonSS: 50000, qualifiedIncome: 1412, federalTaxDue: 5501, stateTaxDue: 2316 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 26940, ordinaryIncomeNonSS: 30668, qualifiedIncome: 50000, federalTaxDue: 11951, stateTaxDue: 3728 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 20054, ordinaryIncomeNonSS: 26037, qualifiedIncome: 1, federalTaxDue: 1214, stateTaxDue: 927 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 40381, ordinaryIncomeNonSS: 50000, qualifiedIncome: 40302, federalTaxDue: 17287, stateTaxDue: 4210 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 40760, qualifiedIncome: 32490, federalTaxDue: 5867, stateTaxDue: 3358 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 32657, ordinaryIncomeNonSS: 27531, qualifiedIncome: 35141, federalTaxDue: 6360, stateTaxDue: 2759 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 28183, ordinaryIncomeNonSS: 0, qualifiedIncome: 46384, federalTaxDue: 3414, stateTaxDue: 2064 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 12952, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 223 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 44083, ordinaryIncomeNonSS: 9793, qualifiedIncome: 14808, federalTaxDue: 489, stateTaxDue: 855 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 40122, qualifiedIncome: 24105, federalTaxDue: 4437, stateTaxDue: 2956 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 50000, federalTaxDue: 10988, stateTaxDue: 4695 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 8674, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 27691, ordinaryIncomeNonSS: 0, qualifiedIncome: 38537, federalTaxDue: 1277, stateTaxDue: 1672 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 2070, ordinaryIncomeNonSS: 14506, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 350 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 22088, qualifiedIncome: 1, federalTaxDue: 2659, stateTaxDue: 849 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 27434, qualifiedIncome: 29104, federalTaxDue: 1761, stateTaxDue: 2522 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 37433, ordinaryIncomeNonSS: 15736, qualifiedIncome: 4250, federalTaxDue: 408, stateTaxDue: 624 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 11249, ordinaryIncomeNonSS: 50000, qualifiedIncome: 20713, federalTaxDue: 5349, stateTaxDue: 3111 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 6119, ordinaryIncomeNonSS: 0, qualifiedIncome: 41456, federalTaxDue: 0, stateTaxDue: 1648 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 44571, federalTaxDue: 626, stateTaxDue: 1974 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 34501, qualifiedIncome: 50000, federalTaxDue: 6803, stateTaxDue: 3920 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 40648, ordinaryIncomeNonSS: 50000, qualifiedIncome: 5717, federalTaxDue: 9322, stateTaxDue: 2411 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 39598, federalTaxDue: 0, stateTaxDue: 1725 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 31611, ordinaryIncomeNonSS: 0, qualifiedIncome: 36311, federalTaxDue: 886, stateTaxDue: 1511 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 47193, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 21129, ordinaryIncomeNonSS: 0, qualifiedIncome: 14084, federalTaxDue: 0, stateTaxDue: 449 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 3876, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 850, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 22073, ordinaryIncomeNonSS: 0, qualifiedIncome: 28776, federalTaxDue: 0, stateTaxDue: 1184 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 42303, ordinaryIncomeNonSS: 0, qualifiedIncome: 40554, federalTaxDue: 3645, stateTaxDue: 1773 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 12656, ordinaryIncomeNonSS: 32446, qualifiedIncome: 50000, federalTaxDue: 5325, stateTaxDue: 3747 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 20264, ordinaryIncomeNonSS: 29543, qualifiedIncome: 0, federalTaxDue: 1962, stateTaxDue: 1052 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 14455, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 16917, ordinaryIncomeNonSS: 1, qualifiedIncome: 27959, federalTaxDue: 0, stateTaxDue: 1023 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 33288, qualifiedIncome: 17530, federalTaxDue: 1314, stateTaxDue: 2166 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 16852, ordinaryIncomeNonSS: 50000, qualifiedIncome: 43197, federalTaxDue: 13321, stateTaxDue: 4355 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 43788, ordinaryIncomeNonSS: 0, qualifiedIncome: 34903, federalTaxDue: 373, stateTaxDue: 1320 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 23955, qualifiedIncome: 0, federalTaxDue: 1008, stateTaxDue: 893 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 3298, stateTaxDue: 2075 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2125 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 32486, ordinaryIncomeNonSS: 50000, qualifiedIncome: 1, federalTaxDue: 6938, stateTaxDue: 2075 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 40087, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 47892, qualifiedIncome: 37730, federalTaxDue: 8579, stateTaxDue: 4026 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 33470, qualifiedIncome: 50000, federalTaxDue: 2715, stateTaxDue: 3749 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 17725, ordinaryIncomeNonSS: 0, qualifiedIncome: 21170, federalTaxDue: 0, stateTaxDue: 634 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 18157, ordinaryIncomeNonSS: 10117, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 131 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 11026, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 12445, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 247 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 43254, qualifiedIncome: 0, federalTaxDue: 3323, stateTaxDue: 1858 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 38281, ordinaryIncomeNonSS: 26886, qualifiedIncome: 21128, federalTaxDue: 8933, stateTaxDue: 2096 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 44414, ordinaryIncomeNonSS: 50000, qualifiedIncome: 23429, federalTaxDue: 15510, stateTaxDue: 3416 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 50000, federalTaxDue: 10988, stateTaxDue: 4745 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 33112, ordinaryIncomeNonSS: 43145, qualifiedIncome: 0, federalTaxDue: 5637, stateTaxDue: 1782 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 8113, stateTaxDue: 2195 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 31751, ordinaryIncomeNonSS: 28961, qualifiedIncome: 42769, federalTaxDue: 11415, stateTaxDue: 3332 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 46186, ordinaryIncomeNonSS: 16316, qualifiedIncome: 27291, federalTaxDue: 3379, stateTaxDue: 1805 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 27780, qualifiedIncome: 36484, federalTaxDue: 763, stateTaxDue: 2838 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 4623, qualifiedIncome: 32381, federalTaxDue: 0, stateTaxDue: 1425 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 23092, ordinaryIncomeNonSS: 41545, qualifiedIncome: 7390, federalTaxDue: 4639, stateTaxDue: 2022 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 1440, stateTaxDue: 2195 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 38262, ordinaryIncomeNonSS: 8471, qualifiedIncome: 2220, federalTaxDue: 0, stateTaxDue: 110 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 27268, federalTaxDue: 613, stateTaxDue: 1108 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 15730, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 412 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 18550, federalTaxDue: 0, stateTaxDue: 623 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 22674, ordinaryIncomeNonSS: 17704, qualifiedIncome: 27959, federalTaxDue: 4166, stateTaxDue: 2028 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 36135, ordinaryIncomeNonSS: 10193, qualifiedIncome: 13456, federalTaxDue: 735, stateTaxDue: 877 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 11329, qualifiedIncome: 7562, federalTaxDue: 0, stateTaxDue: 640 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 37450, qualifiedIncome: 50000, federalTaxDue: 7600, stateTaxDue: 4068 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 2332, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2192 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 6079, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 39175, qualifiedIncome: 0, federalTaxDue: 1999, stateTaxDue: 1584 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 50000, qualifiedIncome: 1, federalTaxDue: 3298, stateTaxDue: 2075 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 40063, ordinaryIncomeNonSS: 0, qualifiedIncome: 43516, federalTaxDue: 4512, stateTaxDue: 1871 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 26742, ordinaryIncomeNonSS: 1, qualifiedIncome: 50000, federalTaxDue: 258, stateTaxDue: 2125 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 10759, qualifiedIncome: 50000, federalTaxDue: 1440, stateTaxDue: 2783 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 28161, ordinaryIncomeNonSS: 1, qualifiedIncome: 28007, federalTaxDue: 0, stateTaxDue: 1095 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 6423, ordinaryIncomeNonSS: 47318, qualifiedIncome: 21470, federalTaxDue: 7458, stateTaxDue: 3184 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 32638, federalTaxDue: 4556, stateTaxDue: 3707 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 230, ordinaryIncomeNonSS: 30772, qualifiedIncome: 32611, federalTaxDue: 1082, stateTaxDue: 2744 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 23044, qualifiedIncome: 46235, federalTaxDue: 3161, stateTaxDue: 3209 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 6778, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 38455, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 8054, stateTaxDue: 2075 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 24032, ordinaryIncomeNonSS: 31798, qualifiedIncome: 1, federalTaxDue: 3490, stateTaxDue: 1335 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 949, qualifiedIncome: 18050, federalTaxDue: 0, stateTaxDue: 525 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 21259, ordinaryIncomeNonSS: 0, qualifiedIncome: 45462, federalTaxDue: 0, stateTaxDue: 1898 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 31129, ordinaryIncomeNonSS: 1, qualifiedIncome: 23041, federalTaxDue: 0, stateTaxDue: 847 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 4510, ordinaryIncomeNonSS: 43693, qualifiedIncome: 0, federalTaxDue: 3001, stateTaxDue: 1810 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 3985, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 49612, federalTaxDue: 20482, stateTaxDue: 4726 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 23897, qualifiedIncome: 40413, federalTaxDue: 2502, stateTaxDue: 2961 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 37411, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 7859, stateTaxDue: 2075 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 20692, ordinaryIncomeNonSS: 45103, qualifiedIncome: 38082, federalTaxDue: 8799, stateTaxDue: 3784 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 44538, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 7486, stateTaxDue: 2245 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 48782, qualifiedIncome: 0, federalTaxDue: 3987, stateTaxDue: 2134 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 43314, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 8895, stateTaxDue: 2075 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 50000, qualifiedIncome: 1, federalTaxDue: 3298, stateTaxDue: 2075 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 4631, ordinaryIncomeNonSS: 40727, qualifiedIncome: 0, federalTaxDue: 3493, stateTaxDue: 1731 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2125 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 24362, ordinaryIncomeNonSS: 700, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 32007, qualifiedIncome: 0, federalTaxDue: 1974, stateTaxDue: 1295 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 24393, ordinaryIncomeNonSS: 50000, qualifiedIncome: 50000, federalTaxDue: 12759, stateTaxDue: 4625 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 47809, qualifiedIncome: 50000, federalTaxDue: 20058, stateTaxDue: 4635 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 6403, ordinaryIncomeNonSS: 24267, qualifiedIncome: 1, federalTaxDue: 1193, stateTaxDue: 908 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 45489, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 7595, stateTaxDue: 2245 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 192, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 47108, ordinaryIncomeNonSS: 50000, qualifiedIncome: 50000, federalTaxDue: 20000, stateTaxDue: 4745 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 32, ordinaryIncomeNonSS: 20851, qualifiedIncome: 24968, federalTaxDue: 73, stateTaxDue: 1866 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 14025, ordinaryIncomeNonSS: 16726, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 411 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 13438, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 4669, stateTaxDue: 2125 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 18016, ordinaryIncomeNonSS: 0, qualifiedIncome: 1166, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 9217, federalTaxDue: 0, stateTaxDue: 156 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 39734, ordinaryIncomeNonSS: 1, qualifiedIncome: 26449, federalTaxDue: 0, stateTaxDue: 948 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 11246, qualifiedIncome: 50000, federalTaxDue: 1440, stateTaxDue: 2807 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 22785, qualifiedIncome: 30486, federalTaxDue: 264, stateTaxDue: 2289 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 39169, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 43936, federalTaxDue: 530, stateTaxDue: 1892 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 45854, qualifiedIncome: 50000, federalTaxDue: 6041, stateTaxDue: 4368 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 15664, ordinaryIncomeNonSS: 29382, qualifiedIncome: 23163, federalTaxDue: 2422, stateTaxDue: 2202 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 48861, federalTaxDue: 10817, stateTaxDue: 4638 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 13689, federalTaxDue: 0, stateTaxDue: 429 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 30230, ordinaryIncomeNonSS: 47014, qualifiedIncome: 0, federalTaxDue: 8687, stateTaxDue: 2046 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 43822, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 1, qualifiedIncome: 41476, federalTaxDue: 0, stateTaxDue: 1699 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 38840, ordinaryIncomeNonSS: 0, qualifiedIncome: 10319, federalTaxDue: 0, stateTaxDue: 261 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 25181, ordinaryIncomeNonSS: 27912, qualifiedIncome: 50000, federalTaxDue: 10803, stateTaxDue: 3591 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 10258, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 4344, stateTaxDue: 2075 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 41891, qualifiedIncome: 1, federalTaxDue: 6220, stateTaxDue: 1720 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 4133, stateTaxDue: 2245 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 11797, ordinaryIncomeNonSS: 28401, qualifiedIncome: 33769, federalTaxDue: 5429, stateTaxDue: 2804 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 3455, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 37965, ordinaryIncomeNonSS: 10141, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 252 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 28376, ordinaryIncomeNonSS: 38263, qualifiedIncome: 24669, federalTaxDue: 6704, stateTaxDue: 2772 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 19408, ordinaryIncomeNonSS: 50000, qualifiedIncome: 35556, federalTaxDue: 9448, stateTaxDue: 3853 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 14585, ordinaryIncomeNonSS: 1, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2075 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 29927, ordinaryIncomeNonSS: 0, qualifiedIncome: 42049, federalTaxDue: 391, stateTaxDue: 1727 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 49305, qualifiedIncome: 50000, federalTaxDue: 10800, stateTaxDue: 4660 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 22757, qualifiedIncome: 1, federalTaxDue: 886, stateTaxDue: 833 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 8113, stateTaxDue: 2195 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 5022, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 6896, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 90 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 50000, qualifiedIncome: 45064, federalTaxDue: 6420, stateTaxDue: 4378 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 26044, ordinaryIncomeNonSS: 1, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 15050, ordinaryIncomeNonSS: 0, qualifiedIncome: 33937, federalTaxDue: 0, stateTaxDue: 1392 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 17276, qualifiedIncome: 24650, federalTaxDue: 338, stateTaxDue: 1841 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 39510, ordinaryIncomeNonSS: 11109, qualifiedIncome: 50000, federalTaxDue: 9555, stateTaxDue: 2750 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 15339, qualifiedIncome: 0, federalTaxDue: 144, stateTaxDue: 512 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 50000, qualifiedIncome: 41798, federalTaxDue: 5930, stateTaxDue: 4215 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 215, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 5359, ordinaryIncomeNonSS: 0, qualifiedIncome: 29893, federalTaxDue: 0, stateTaxDue: 1240 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 4133, stateTaxDue: 2195 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 14523, ordinaryIncomeNonSS: 16922, qualifiedIncome: 43514, federalTaxDue: 4417, stateTaxDue: 2767 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 45594, ordinaryIncomeNonSS: 23574, qualifiedIncome: 36348, federalTaxDue: 8442, stateTaxDue: 2571 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 14624, qualifiedIncome: 49901, federalTaxDue: 0, stateTaxDue: 2801 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 21277, ordinaryIncomeNonSS: 2239, qualifiedIncome: 46676, federalTaxDue: 17, stateTaxDue: 2071 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 17838, ordinaryIncomeNonSS: 1, qualifiedIncome: 33293, federalTaxDue: 0, stateTaxDue: 1410 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 863, ordinaryIncomeNonSS: 50000, qualifiedIncome: 38331, federalTaxDue: 9436, stateTaxDue: 4162 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 8766, qualifiedIncome: 34233, federalTaxDue: 0, stateTaxDue: 1895 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 14428, ordinaryIncomeNonSS: 50000, qualifiedIncome: 41899, federalTaxDue: 12673, stateTaxDue: 4340 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 17462, qualifiedIncome: 30587, federalTaxDue: 0, stateTaxDue: 1977 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 7230, ordinaryIncomeNonSS: 43315, qualifiedIncome: 50000, federalTaxDue: 10842, stateTaxDue: 4411 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 41412, ordinaryIncomeNonSS: 50000, qualifiedIncome: 15099, federalTaxDue: 10872, stateTaxDue: 2830 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 27433, ordinaryIncomeNonSS: 1, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 480, qualifiedIncome: 50000, federalTaxDue: 4525, stateTaxDue: 2149 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 23336, ordinaryIncomeNonSS: 50000, qualifiedIncome: 0, federalTaxDue: 5678, stateTaxDue: 2075 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 33602, qualifiedIncome: 4571, federalTaxDue: 1345, stateTaxDue: 1484 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 3698, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 1414, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 39415, federalTaxDue: 4095, stateTaxDue: 1716 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 33902, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 5269, stateTaxDue: 2195 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 916, ordinaryIncomeNonSS: 1, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2125 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 1355, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 6538, federalTaxDue: 4469, stateTaxDue: 2572 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 2792, ordinaryIncomeNonSS: 13478, qualifiedIncome: 44155, federalTaxDue: 1051, stateTaxDue: 2577 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 1, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2125 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 8015, qualifiedIncome: 49207, federalTaxDue: 0, stateTaxDue: 2486 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 3806, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 1, qualifiedIncome: 19577, federalTaxDue: 0, stateTaxDue: 724 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 42795, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 3458, stateTaxDue: 2075 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 3373, ordinaryIncomeNonSS: 49226, qualifiedIncome: 7500, federalTaxDue: 5178, stateTaxDue: 2531 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 42707, ordinaryIncomeNonSS: 41893, qualifiedIncome: 1, federalTaxDue: 8366, stateTaxDue: 1790 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 12616, qualifiedIncome: 4362, federalTaxDue: 0, stateTaxDue: 544 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 25992, ordinaryIncomeNonSS: 0, qualifiedIncome: 50000, federalTaxDue: 3488, stateTaxDue: 2195 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 12922, qualifiedIncome: 50000, federalTaxDue: 8624, stateTaxDue: 2721 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 10495, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2650 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 50000, qualifiedIncome: 22959, federalTaxDue: 6932, stateTaxDue: 3393 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 3637, ordinaryIncomeNonSS: 0, qualifiedIncome: 34776, federalTaxDue: 0, stateTaxDue: 1364 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 44922, ordinaryIncomeNonSS: 50000, qualifiedIncome: 49584, federalTaxDue: 16701, stateTaxDue: 4554 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 0, qualifiedIncome: 8476, federalTaxDue: 0, stateTaxDue: 119 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 17853, ordinaryIncomeNonSS: 965, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 2117, ordinaryIncomeNonSS: 3110, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 2281 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 705, qualifiedIncome: 28375, federalTaxDue: 0, stateTaxDue: 1079 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 48214, qualifiedIncome: 41491, federalTaxDue: 16044, stateTaxDue: 4110 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 18944, qualifiedIncome: 50000, federalTaxDue: 0, stateTaxDue: 3072 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 0, qualifiedIncome: 22243, federalTaxDue: 186, stateTaxDue: 807 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 29310, ordinaryIncomeNonSS: 0, qualifiedIncome: 2752, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 22436, ordinaryIncomeNonSS: 50000, qualifiedIncome: 50000, federalTaxDue: 12310, stateTaxDue: 4575 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 41219, qualifiedIncome: 50000, federalTaxDue: 4790, stateTaxDue: 4186 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 16525, qualifiedIncome: 21624, federalTaxDue: 2794, stateTaxDue: 1532 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 49424, ordinaryIncomeNonSS: 50000, qualifiedIncome: 50000, federalTaxDue: 20433, stateTaxDue: 4745 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 30204, qualifiedIncome: 15452, federalTaxDue: 1757, stateTaxDue: 1978 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 50000, qualifiedIncome: 14866, federalTaxDue: 5718, stateTaxDue: 2988 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 4944, ordinaryIncomeNonSS: 1, qualifiedIncome: 29553, federalTaxDue: 0, stateTaxDue: 1223 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 37265, qualifiedIncome: 48590, federalTaxDue: 3511, stateTaxDue: 3918 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 10020, ordinaryIncomeNonSS: 25114, qualifiedIncome: 1, federalTaxDue: 1454, stateTaxDue: 1001 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 0, ordinaryIncomeNonSS: 29379, qualifiedIncome: 50000, federalTaxDue: 5420, stateTaxDue: 3664 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 1, ordinaryIncomeNonSS: 0, qualifiedIncome: 1, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 20875, ordinaryIncomeNonSS: 50000, qualifiedIncome: 14805, federalTaxDue: 6672, stateTaxDue: 2865 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 42624, ordinaryIncomeNonSS: 10011, qualifiedIncome: 42752, federalTaxDue: 8886, stateTaxDue: 2333 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 33799, ordinaryIncomeNonSS: 43855, qualifiedIncome: 33265, federalTaxDue: 10748, stateTaxDue: 3481 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 47042, ordinaryIncomeNonSS: 47259, qualifiedIncome: 0, federalTaxDue: 10955, stateTaxDue: 2058 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 28843, ordinaryIncomeNonSS: 38152, qualifiedIncome: 0, federalTaxDue: 4311, stateTaxDue: 1533 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 24744, qualifiedIncome: 3104, federalTaxDue: 2730, stateTaxDue: 1017 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 0, ordinaryIncomeNonSS: 20656, qualifiedIncome: 24235, federalTaxDue: 51, stateTaxDue: 1870 }
+  , { age: 66, dependents: 1, filingStatus: HeadOfHousehold, socSec: 48350, ordinaryIncomeNonSS: 1, qualifiedIncome: 6023, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 50000, ordinaryIncomeNonSS: 50000, qualifiedIncome: 1, federalTaxDue: 9520, stateTaxDue: 2125 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 6760, ordinaryIncomeNonSS: 20644, qualifiedIncome: 0, federalTaxDue: 674, stateTaxDue: 727 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 24239, ordinaryIncomeNonSS: 50000, qualifiedIncome: 12149, federalTaxDue: 10046, stateTaxDue: 2852 }
+  , { age: 66, dependents: 0, filingStatus: Single, socSec: 50000, ordinaryIncomeNonSS: 47188, qualifiedIncome: 27221, federalTaxDue: 16505, stateTaxDue: 3465 }
+  , { age: 66, dependents: 1, filingStatus: Single, socSec: 13039, ordinaryIncomeNonSS: 0, qualifiedIncome: 0, federalTaxDue: 0, stateTaxDue: 0 }
+  , { age: 66, dependents: 0, filingStatus: HeadOfHousehold, socSec: 1, ordinaryIncomeNonSS: 1, qualifiedIncome: 44093, federalTaxDue: 0, stateTaxDue: 1830 }
   ]

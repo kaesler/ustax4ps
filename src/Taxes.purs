@@ -17,6 +17,7 @@ module Taxes
   , federalTaxDueDebug
   , federalTaxResults
   , incomeToEndOfOrdinaryBracket
+  , maStateTaxDue
   , nonNeg
   , ordinaryBracketStarts
   , ordinaryRateAsFraction
@@ -160,16 +161,14 @@ roundHalfUp = toNumber <<< round
 maStateTaxRate :: Number
 maStateTaxRate = 0.05
 
-maStateTaxDue :: Year -> FilingStatus -> MassachusettsGrossIncome -> Number
-maStateTaxDue year filingStatus maGrossIncome =
+maStateTaxDue :: Year -> Int -> FilingStatus -> MassachusettsGrossIncome -> Number
+maStateTaxDue year dependents filingStatus maGrossIncome =
   let
     personalExemption = if filingStatus == HeadOfHousehold then 6800.0 else 4400.0
 
     ageExemption = 700.0
 
-    dependents = if filingStatus == HeadOfHousehold then 1.0 else 0.0
-
-    dependentsExemption = 1000.0 * dependents
+    dependentsExemption = 1000.0 * (toNumber dependents)
   in
     maStateTaxRate * nonNeg (maGrossIncome - personalExemption - ageExemption - dependentsExemption)
 

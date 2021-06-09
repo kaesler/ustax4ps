@@ -10,7 +10,7 @@ import Effect.Aff (Aff, launchAff_)
 import Effect.Class (liftEffect)
 import Effect.Console (log)
 import PropertyTests (runPropertyTests)
-import Taxes (FilingStatus(..), OrdinaryRate, StandardDeduction(..), applyOrdinaryIncomeBrackets, federalTaxDue, incomeToEndOfOrdinaryBracket, nonNeg, ordinaryRatesExceptTop, roundHalfUp, standardDeduction, taxToEndOfOrdinaryBracket)
+import Taxes (FilingStatus(..), OrdinaryRate, StandardDeduction(..), applyOrdinaryIncomeBrackets, federalTaxDue, incomeToEndOfOrdinaryBracket, maStateTaxDue, nonNeg, ordinaryRatesExceptTop, roundHalfUp, standardDeduction, taxToEndOfOrdinaryBracket)
 import Test.Spec (Spec, it, describe)
 import Test.Spec.Assertions (shouldEqual)
 import Test.Spec.Reporter.Console (consoleReporter)
@@ -67,7 +67,7 @@ assertCorrectTaxDueAtBracketBoundaries filingStatus =
 
     StandardDeduction deduction = standardDeduction filingStatus
 
-    expectations = Array.zipWith (curry taxDueIsAsExpected) incomes expectedTaxes
+    federalExpectations = Array.zipWith (curry taxDueIsAsExpected) incomes expectedTaxes
       where
       taxDueIsAsExpected :: (Tuple Number Number) -> Expectation
       taxDueIsAsExpected (Tuple income expectedTax) =
@@ -79,7 +79,7 @@ assertCorrectTaxDueAtBracketBoundaries filingStatus =
           do
             computedTax `shouldEqual` roundHalfUp expectedTax
   in
-    (sequence expectations) *> (pure unit)
+    (sequence federalExpectations) *> (pure unit)
 
 testsAgainstScala :: Spec Unit
 testsAgainstScala =
@@ -87,20 +87,28 @@ testsAgainstScala =
     year :: Int
     year = 2021
 
-    makeExpectation :: TestCase -> Expectation
-    makeExpectation tc =
+    makeFederalExpectation :: TestCase -> Expectation
+    makeFederalExpectation tc =
       let
-        calculated = roundHalfUp $ federalTaxDue year tc.filingStatus (toNumber tc.socSec) (toNumber tc.ordinaryIncome) (toNumber tc.qualifiedIncome)
+        calculated = roundHalfUp $ federalTaxDue year tc.filingStatus (toNumber tc.socSec) (toNumber tc.ordinaryIncomeNonSS) (toNumber tc.qualifiedIncome)
       in
         do
-          calculated `shouldEqual` calculated
+          calculated `shouldEqual` (toNumber tc.federalTaxDue)
 
-    expectations :: Array Expectation
-    expectations = map makeExpectation cases
+    makeStateExpectation :: TestCase -> Expectation
+    makeStateExpectation tc =
+      let
+        calculated = roundHalfUp $ maStateTaxDue year tc.dependents tc.filingStatus (toNumber (tc.ordinaryIncomeNonSS + tc.qualifiedIncome))
+      in
+        do
+          calculated `shouldEqual` (toNumber tc.stateTaxDue)
 
-    combinedExpectations :: Expectation
-    combinedExpectations = (sequence expectations) *> (pure unit)
+    federalExpectations :: Array Expectation
+    federalExpectations = map makeFederalExpectation cases
+
+    combinedFederalExpectations :: Expectation
+    combinedFederalExpectations = (sequence federalExpectations) *> (pure unit)
   in
     describe "Taxes.federalTaxDue" do
       it "matches outputs sampled from Scala implementation" do
-        combinedExpectations
+        combinedFederalExpectations
