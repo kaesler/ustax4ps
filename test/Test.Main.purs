@@ -90,7 +90,7 @@ testsAgainstScala =
     makeExpectation :: TestCase -> Expectation
     makeExpectation tc =
       let
-        calculated = roundHalfUp $ federalTaxDue year tc.filingStatus tc.socSec tc.ordinaryIncome tc.qualifiedIncome
+        calculated = roundHalfUp $ federalTaxDue year tc.filingStatus (toNumber tc.socSec) (toNumber tc.ordinaryIncome) (toNumber tc.qualifiedIncome)
       in
         do
           calculated `shouldEqual` calculated
