@@ -10,7 +10,7 @@ import Effect.Aff (Aff, launchAff_)
 import Effect.Class (liftEffect)
 import Effect.Console (log)
 import PropertyTests (runPropertyTests)
-import Taxes (FilingStatus(..), OrdinaryRate, StandardDeduction(..), applyOrdinaryIncomeBrackets, federalTaxDue, incomeToEndOfOrdinaryBracket, maStateTaxDue, nonNeg, ordinaryRatesExceptTop, roundHalfUp, standardDeduction, taxToEndOfOrdinaryBracket)
+import Taxes (FilingStatus(..), OrdinaryRate, StandardDeduction(..), applyOrdinaryIncomeBrackets, federalTaxDue, incomeToEndOfOrdinaryBracket, maStateTaxDue, nonNeg, ordinaryRatesExceptTop, roundHalfUp, standardDeduction, taxToEndOfOrdinaryIncomeBracket)
 import Test.Spec (Spec, it, describe)
 import Test.Spec.Assertions (shouldEqual)
 import Test.Spec.Reporter.Console (consoleReporter)
@@ -49,7 +49,7 @@ assertCorrectTaxDueAtBracketBoundary filingStatus bracketRate =
 
     taxableIncome = nonNeg $ income - toNumber deduction
 
-    expectedTax = roundHalfUp $ taxToEndOfOrdinaryBracket filingStatus bracketRate
+    expectedTax = roundHalfUp $ taxToEndOfOrdinaryIncomeBracket filingStatus bracketRate
 
     computedTax = roundHalfUp $ applyOrdinaryIncomeBrackets filingStatus taxableIncome
   in
@@ -63,7 +63,7 @@ assertCorrectTaxDueAtBracketBoundaries filingStatus =
 
     incomes = map (incomeToEndOfOrdinaryBracket filingStatus) brackets
 
-    expectedTaxes = map (taxToEndOfOrdinaryBracket filingStatus) brackets
+    expectedTaxes = map (taxToEndOfOrdinaryIncomeBracket filingStatus) brackets
 
     StandardDeduction deduction = standardDeduction filingStatus
 

@@ -7,30 +7,31 @@ module Taxes
   , OrdinaryRate(..)
   , QualifiedIncome
   , QualifiedRate
-  , SocSec
   , SSRelevantOtherIncome
+  , SocSec
   , StandardDeduction(..)
   , Year
   , applyOrdinaryIncomeBrackets
-  , applyQualifiedBrackets
-  , bracketWidth
+  , applyQualifiedIncomeBrackets
   , federalTaxDue
   , federalTaxDueDebug
   , federalTaxResults
   , incomeToEndOfOrdinaryBracket
   , maStateTaxDue
   , nonNeg
-  , ordinaryBracketStarts
+  , ordinaryIncomeBracketStart
+  , ordinaryIncomeBracketStarts
+  , ordinaryIncomeBracketWidth
   , ordinaryRateAsFraction
   , ordinaryRatesExceptTop
   , rmdFractionForAge
   , roundHalfUp
   , standardDeduction
   , startOfNonZeroQualifiedRateBracket
+  , taxToEndOfOrdinaryIncomeBracket
+  , taxableSocialSecurity
   , taxableSocialSecurityAdjusted
   , topRateOnOrdinaryIncome
-  , taxToEndOfOrdinaryBracket
-  , unsafeBracketWidth
   ) where
 
 import Prelude
@@ -43,106 +44,64 @@ import Data.Map (Map, keys)
 import Data.Map as Map
 import Data.Maybe (Maybe(..), fromJust)
 import Data.Set as Set
-import Data.Traversable (sequenceDefault)
 import Data.Tuple (Tuple(..), fst, snd)
 import Effect (Effect)
 import Effect.Console (log)
 import Partial.Unsafe (unsafePartial)
 
-type Year
-  = Int
+type CombinedIncome = Number
+type DistributionPeriod = Number
+type MassachusettsGrossIncome = Number
+type OrdinaryIncome = Number
+type QualifiedIncome = Number
+type SSRelevantOtherIncome = Number
+type SocSec = Number
+type Year = Int
 
-newtype Age
-  = Age Int
-
+newtype Age = Age Int
 derive instance eqAge :: Eq Age
-
 derive instance ordAge :: Ord Age
 
-data FilingStatus
-  = HeadOfHousehold
-  | Single
-
+data FilingStatus = HeadOfHousehold | Single
 derive instance eqFilingStatus :: Eq FilingStatus
-
 derive instance ordFilingStatus :: Ord FilingStatus
-
 instance showFilingStatus :: Show FilingStatus where
   show HeadOfHousehold = "HeadOfHousehold"
   show Single = "Single"
 
-newtype OrdinaryRate
-  = OrdinaryRate Int
-
+newtype OrdinaryRate = OrdinaryRate Int
 derive instance eqOrdinaryRate :: Eq OrdinaryRate
-
 derive instance ordOrdinaryRate :: Ord OrdinaryRate
-
 instance showOrdinaryRate :: Show OrdinaryRate where
   show (OrdinaryRate r) = show r
 
 ordinaryRateAsFraction :: OrdinaryRate -> Number
 ordinaryRateAsFraction (OrdinaryRate r) = toNumber r / 100.0
 
-newtype QualifiedRate
-  = QualifiedRate Int
-
+newtype QualifiedRate = QualifiedRate Int
 derive instance eqQualifiedRate :: Eq QualifiedRate
-
 derive instance ordQualifiedRate :: Ord QualifiedRate
 
 qualifiedRateAsFraction :: QualifiedRate -> Number
 qualifiedRateAsFraction (QualifiedRate r) = toNumber r / 100.0
 
-newtype BracketStart
-  = BracketStart Int
-
+newtype BracketStart = BracketStart Int
 derive instance eqBracketStart :: Eq BracketStart
-
 derive instance ordBracketStart :: Ord BracketStart
-
 instance showBracketStart :: Show BracketStart where
   show (BracketStart s) = show s
 
-newtype StandardDeduction
-  = StandardDeduction Int
-
+newtype StandardDeduction = StandardDeduction Int
 derive instance eqStandardDeduction :: Eq StandardDeduction
-
 derive instance ordStandardDeduction :: Ord StandardDeduction
-
 instance showStandardDeduction :: Show StandardDeduction where
   show (StandardDeduction sd) = show sd 
-type SocSec
-  = Number
 
-type SSRelevantOtherIncome
-  = Number
+type OrdinaryBracketStarts = Map OrdinaryRate BracketStart
 
-type CombinedIncome
-  = Number
+type QualifiedBracketStarts = Map QualifiedRate BracketStart
 
-type OrdinaryBracketStarts
-  = Map OrdinaryRate BracketStart
-
-type QualifiedBracketStarts
-  = Map QualifiedRate BracketStart
-
-type OrdinaryIncome
-  = Number
-
-type QualifiedIncome
-  = Number
-
-type MassachusettsGrossIncome
-  = Number
-
-type DistributionPeriod
-  = Number
-
-data Triple a
-  = Triple a a a
-
+data Triple a = Triple a a a
 third :: forall a. Triple a -> a
 third (Triple _ _ a) = a
 
@@ -154,7 +113,6 @@ newtype FederalTaxResults
     , taxOnOrdinaryIncome :: Number
     , taxOnQualifiedIncome :: Number
     } 
-
 instance showFederalTaxResults :: Show FederalTaxResults where
   show (FederalTaxResults r) = (show r)
 
@@ -193,7 +151,7 @@ federalTaxResults year filingStatus socSec ordinaryIncome qualifiedIncome =
 
     taxOnOrdinaryIncome = applyOrdinaryIncomeBrackets filingStatus taxableOrdinaryIncome
 
-    taxOnQualifiedIncome = applyQualifiedBrackets filingStatus taxableOrdinaryIncome qualifiedIncome
+    taxOnQualifiedIncome = applyQualifiedIncomeBrackets filingStatus taxableOrdinaryIncome qualifiedIncome
   in
     FederalTaxResults { ssRelevantOtherIncome: ssRelevantOtherIncome
     , taxableSocSec: taxableSocSec
@@ -234,8 +192,8 @@ federalTaxDueDebug year filingStatus socSec taxableOrdinaryIncome qualifiedIncom
 topRateOnOrdinaryIncome :: OrdinaryRate
 topRateOnOrdinaryIncome = OrdinaryRate 37
 
-ordinaryBracketStarts :: FilingStatus -> Map OrdinaryRate BracketStart
-ordinaryBracketStarts Single =
+ordinaryIncomeBracketStarts :: FilingStatus -> Map OrdinaryRate BracketStart
+ordinaryIncomeBracketStarts Single =
   Map.fromFoldable
     [ Tuple (OrdinaryRate 10) (BracketStart 0)
     , Tuple (OrdinaryRate 12) (BracketStart 9950)
@@ -246,7 +204,7 @@ ordinaryBracketStarts Single =
     , Tuple topRateOnOrdinaryIncome (BracketStart 523600)
     ]
 
-ordinaryBracketStarts HeadOfHousehold =
+ordinaryIncomeBracketStarts HeadOfHousehold =
   Map.fromFoldable
     [ Tuple (OrdinaryRate 10) (BracketStart 0)
     , Tuple (OrdinaryRate 12) (BracketStart 14200)
@@ -257,10 +215,17 @@ ordinaryBracketStarts HeadOfHousehold =
     , Tuple topRateOnOrdinaryIncome (BracketStart 523600)
     ]
 
+ordinaryIncomeBracketStart :: FilingStatus -> OrdinaryRate -> BracketStart
+ordinaryIncomeBracketStart filingStatus ordinaryRate = 
+  let
+    brackets = ordinaryIncomeBracketStarts filingStatus
+  in
+    unsafePartial $ fromJust $ Map.lookup ordinaryRate brackets
+
 ordinaryRateSuccessor :: FilingStatus -> OrdinaryRate -> Maybe OrdinaryRate
 ordinaryRateSuccessor fs rate =
   let
-    brackets = ordinaryBracketStarts fs
+    brackets = ordinaryIncomeBracketStarts fs
 
     rates = Array.fromFoldable $ keys brackets
 
@@ -275,7 +240,7 @@ ordinaryRateSuccessor fs rate =
 ordinaryRatesExceptTop :: FilingStatus -> (Array OrdinaryRate)
 ordinaryRatesExceptTop fs =
   let
-    brackets = ordinaryBracketStarts fs
+    brackets = ordinaryIncomeBracketStarts fs
 
     rates = Array.fromFoldable $ keys brackets
   in
@@ -284,7 +249,7 @@ ordinaryRatesExceptTop fs =
 incomeToEndOfOrdinaryBracket :: FilingStatus -> OrdinaryRate -> Number
 incomeToEndOfOrdinaryBracket filingStatus bracketRate =
   let
-    bracketStarts = ordinaryBracketStarts filingStatus
+    bracketStarts = ordinaryIncomeBracketStarts filingStatus
 
     successorRate = unsafePartial $ fromJust (ordinaryRateSuccessor filingStatus bracketRate)
 
@@ -294,12 +259,12 @@ incomeToEndOfOrdinaryBracket filingStatus bracketRate =
   in
     toNumber (startOfSuccessor + deduction)
 
-taxToEndOfOrdinaryBracket :: FilingStatus -> OrdinaryRate -> Number
-taxToEndOfOrdinaryBracket filingStatus bracketRate =
+taxToEndOfOrdinaryIncomeBracket :: FilingStatus -> OrdinaryRate -> Number
+taxToEndOfOrdinaryIncomeBracket filingStatus bracketRate =
   let
     relevantRates = Array.takeWhile (_ <= bracketRate) (ordinaryRatesExceptTop filingStatus)
 
-    bracketWidths = map (unsafeBracketWidth filingStatus) relevantRates
+    bracketWidths = map (ordinaryIncomeBracketWidth filingStatus) relevantRates
 
     pairs = relevantRates `Array.zip` bracketWidths
 
@@ -313,7 +278,7 @@ taxToEndOfOrdinaryBracket filingStatus bracketRate =
 bottomRateOnOrdinaryIncome :: FilingStatus -> OrdinaryRate
 bottomRateOnOrdinaryIncome fs =
   let
-    brackets = ordinaryBracketStarts fs
+    brackets = ordinaryIncomeBracketStarts fs
 
     keys = Map.keys brackets
   in
@@ -397,10 +362,10 @@ standardDeduction HeadOfHousehold = StandardDeduction (18800 + over65Increment)
 
 standardDeduction Single = StandardDeduction (12550 + over65Increment)
 
-bracketWidth :: FilingStatus -> OrdinaryRate -> Maybe Int
-bracketWidth fs rate = do
+safeOrdinaryIncomeBracketWidth :: FilingStatus -> OrdinaryRate -> Maybe Int
+safeOrdinaryIncomeBracketWidth fs rate = do
   let
-    brackets = (ordinaryBracketStarts fs)
+    brackets = (ordinaryIncomeBracketStarts fs)
 
     rates = Set.toUnfoldable (Map.keys brackets) :: List OrdinaryRate
   ratesTail <- (tail rates)
@@ -413,8 +378,8 @@ bracketWidth fs rate = do
   BracketStart successorStart <- Map.lookup successor brackets
   Just (successorStart - rateStart)
 
-unsafeBracketWidth :: FilingStatus -> OrdinaryRate -> Int
-unsafeBracketWidth fs or = unsafePartial $ fromJust $ bracketWidth fs or
+ordinaryIncomeBracketWidth :: FilingStatus -> OrdinaryRate -> Int
+ordinaryIncomeBracketWidth fs or = unsafePartial $ fromJust $ safeOrdinaryIncomeBracketWidth fs or
 
 startOfNonZeroQualifiedRateBracket :: FilingStatus -> Int
 startOfNonZeroQualifiedRateBracket fs =
@@ -472,7 +437,7 @@ applyOrdinaryIncomeBrackets :: FilingStatus -> OrdinaryIncome -> Number
 applyOrdinaryIncomeBrackets fs ordinaryincome =
   let
     -- Note: is this how one uses toUnfoldable?
-    brackets = Map.toUnfoldable (ordinaryBracketStarts fs) :: List (Tuple OrdinaryRate BracketStart)
+    brackets = Map.toUnfoldable (ordinaryIncomeBracketStarts fs) :: List (Tuple OrdinaryRate BracketStart)
 
     bracketsDescending = reverse brackets
   in
@@ -489,8 +454,8 @@ applyOrdinaryIncomeBrackets fs ordinaryincome =
           (taxSoFar + taxInThisBracket)
       )
 
-applyQualifiedBrackets :: FilingStatus -> OrdinaryIncome -> QualifiedIncome -> Number
-applyQualifiedBrackets fs taxableOrdinaryIncome qualifiedIncome =
+applyQualifiedIncomeBrackets :: FilingStatus -> OrdinaryIncome -> QualifiedIncome -> Number
+applyQualifiedIncomeBrackets fs taxableOrdinaryIncome qualifiedIncome =
   let
     brackets = Map.toUnfoldable (qualifiedBracketStarts fs) :: List (Tuple QualifiedRate BracketStart)
 
