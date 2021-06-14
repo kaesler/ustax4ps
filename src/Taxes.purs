@@ -1,5 +1,5 @@
 module Taxes
-  ( Age
+  ( Age(..)
   , BracketStart
   , FederalTaxResults(..)
   , FilingStatus(..)
@@ -24,6 +24,7 @@ module Taxes
   , ordinaryIncomeBracketWidth
   , ordinaryRateAsFraction
   , ordinaryRatesExceptTop
+  , ordinaryRateSuccessor
   , rmdFractionForAge
   , roundHalfUp
   , standardDeduction

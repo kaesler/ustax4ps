@@ -18,7 +18,6 @@ You can edit this file as you like.
   , "psci-support"
   , "quickcheck"
   , "spec"
-  , "transformers"
   , "tuples"
   ]
 , packages = ./packages.dhall
