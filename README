@@ -1,2 +1,3 @@
 Build: spago build 
 Test: spago Test
+Bundle: spago bundle-app

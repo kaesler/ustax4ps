@@ -17,6 +17,7 @@ You can edit this file as you like.
   , "prelude"
   , "psci-support"
   , "quickcheck"
+  , "read"
   , "spec"
   , "tuples"
   ]

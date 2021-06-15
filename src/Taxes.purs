@@ -33,6 +33,7 @@ module Taxes
   , taxableSocialSecurity
   , taxableSocialSecurityAdjusted
   , topRateOnOrdinaryIncome
+  , unsafeReadFilingStatus
   ) where
 
 import Prelude
@@ -45,6 +46,7 @@ import Data.Map (Map, keys)
 import Data.Map as Map
 import Data.Maybe (Maybe(..), fromJust)
 import Data.Set as Set
+import Data.String.Read
 import Data.Tuple (Tuple(..), fst, snd)
 import Effect (Effect)
 import Effect.Console (log)
@@ -69,6 +71,14 @@ derive instance ordFilingStatus :: Ord FilingStatus
 instance showFilingStatus :: Show FilingStatus where
   show HeadOfHousehold = "HeadOfHousehold"
   show Single = "Single"
+instance readFilingStatus :: Read FilingStatus where
+  read s = 
+    case s of 
+      "HeadOfHousehold" -> Just HeadOfHousehold
+      "Single" -> Just Single
+      otherwise -> Nothing
+unsafeReadFilingStatus :: String -> FilingStatus
+unsafeReadFilingStatus s = unsafePartial $ fromJust (read s) :: FilingStatus
 
 newtype OrdinaryRate = OrdinaryRate Int
 derive instance eqOrdinaryRate :: Eq OrdinaryRate
@@ -404,7 +414,7 @@ taxableSocialSecurityAdjusted year filingStatus ssBenefits relevantIncome =
 taxableSocialSecurity :: FilingStatus -> SocSec -> SSRelevantOtherIncome -> Number
 taxableSocialSecurity filingStatus ssBenefits relevantIncome =
   let
-    lowBase = case filingStatus of
+    lowBase =  case filingStatus of
       Single -> 25000.0
       HeadOfHousehold -> 25000.0
 
