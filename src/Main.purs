@@ -3,7 +3,24 @@ module Main where
 import Prelude
 import Effect (Effect)
 import Effect.Console (log)
-import Taxes (Age(..), FilingStatus(..), OrdinaryRate(..), applyOrdinaryIncomeBrackets, federalTaxDue, maStateTaxDue, ordinaryIncomeBracketStart, ordinaryIncomeBracketWidth, ordinaryRateSuccessor, rmdFractionForAge, standardDeduction, startOfNonZeroQualifiedRateBracket, taxableSocialSecurity, taxableSocialSecurityAdjusted)
+import Taxes (
+  Age(..)
+  ,FilingStatus(..)
+  , OrdinaryRate(..)
+  , applyOrdinaryIncomeBrackets
+  , federalTaxDue
+  , maStateTaxDue
+  , ordinaryIncomeBracketStart
+  , ordinaryIncomeBracketWidth
+  , ordinaryRateSuccessor
+  , rmdFractionForAge
+  , standardDeduction
+  , startOfNonZeroQualifiedRateBracket
+  , taxableSocialSecurity
+  , taxableSocialSecurityAdjusted
+  , unsafeReadFilingStatus
+  )
+
 
 print :: forall x. Show x => x -> Effect Unit
 print x = log $ show x
@@ -21,3 +38,4 @@ main = do
   print $ standardDeduction Single
   print $ taxableSocialSecurity HeadOfHousehold 40000.0 40000.0
   print $ taxableSocialSecurityAdjusted 2040 Single 50000.0 40000.0
+  print $ unsafeReadFilingStatus "Single"

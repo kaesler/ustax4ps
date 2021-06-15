@@ -9,3 +9,4 @@ output
 /.psc*
 /.purs*
 /.psa*
+src/dist/GSheetShim.dev.js
