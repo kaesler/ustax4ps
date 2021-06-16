@@ -33,20 +33,23 @@ module Taxes
   , taxableSocialSecurity
   , taxableSocialSecurityAdjusted
   , topRateOnOrdinaryIncome
+  , unsafeOrdinaryRateFromNumber
+  , unsafeOrdinaryRateSuccessor
   , unsafeReadFilingStatus
+  , unsafeRmdFractionForAge
   ) where
 
 import Prelude
 
 import Data.Array as Array
 import Data.Foldable as Data
-import Data.Int (round, toNumber)
+import Data.Int (fromNumber, round, toNumber)
 import Data.List (List, (!!), find, foldl, reverse, tail, zip)
 import Data.Map (Map, keys)
 import Data.Map as Map
 import Data.Maybe (Maybe(..), fromJust)
 import Data.Set as Set
-import Data.String.Read
+import Data.String.Read (class Read, read)
 import Data.Tuple (Tuple(..), fst, snd)
 import Effect (Effect)
 import Effect.Console (log)
@@ -64,6 +67,8 @@ type Year = Int
 newtype Age = Age Int
 derive instance eqAge :: Eq Age
 derive instance ordAge :: Ord Age
+instance showAge :: Show Age where
+  show (Age i) = show i
 
 data FilingStatus = HeadOfHousehold | Single
 derive instance eqFilingStatus :: Eq FilingStatus
@@ -85,8 +90,12 @@ derive instance eqOrdinaryRate :: Eq OrdinaryRate
 derive instance ordOrdinaryRate :: Ord OrdinaryRate
 instance showOrdinaryRate :: Show OrdinaryRate where
   show (OrdinaryRate r) = show r
+unsafeOrdinaryRateFromNumber :: Number -> OrdinaryRate
+unsafeOrdinaryRateFromNumber n =
+  unsafePartial $ fromJust $ map (\i -> OrdinaryRate i) (fromNumber n)
 
 ordinaryRateAsFraction :: OrdinaryRate -> Number
+
 ordinaryRateAsFraction (OrdinaryRate r) = toNumber r / 100.0
 
 newtype QualifiedRate = QualifiedRate Int
@@ -101,6 +110,8 @@ derive instance eqBracketStart :: Eq BracketStart
 derive instance ordBracketStart :: Ord BracketStart
 instance showBracketStart :: Show BracketStart where
   show (BracketStart s) = show s
+bracketStartAsNumber :: BracketStart -> Number
+bracketStartAsNumber (BracketStart i) = toNumber i
 
 newtype StandardDeduction = StandardDeduction Int
 derive instance eqStandardDeduction :: Eq StandardDeduction
@@ -248,6 +259,13 @@ ordinaryRateSuccessor fs rate =
   in
     map snd pair
 
+unsafeOrdinaryRateSuccessor :: FilingStatus -> OrdinaryRate -> Int
+unsafeOrdinaryRateSuccessor fs rate = 
+  let 
+    (OrdinaryRate r) = unsafePartial $ fromJust $ ordinaryRateSuccessor fs rate
+   in
+     r
+
 ordinaryRatesExceptTop :: FilingStatus -> (Array OrdinaryRate)
 ordinaryRatesExceptTop fs =
   let
@@ -365,6 +383,11 @@ rmdFractionForAge age = do
   distributionPeriod <- Map.lookup age distributionPeriods
   Just (1.0 / distributionPeriod)
 
+unsafeRmdFractionForAge :: Int -> Number
+unsafeRmdFractionForAge age = 
+  unsafePartial $ fromJust $ rmdFractionForAge (Age age)
+  --(unsafePartial <<< fromJust <<< rmdFractionForAge)
+
 over65Increment :: Int
 over65Increment = 1350
 
@@ -390,7 +413,7 @@ safeOrdinaryIncomeBracketWidth fs rate = do
   Just (successorStart - rateStart)
 
 ordinaryIncomeBracketWidth :: FilingStatus -> OrdinaryRate -> Int
-ordinaryIncomeBracketWidth fs or = unsafePartial $ fromJust $ safeOrdinaryIncomeBracketWidth fs or
+ordinaryIncomeBracketWidth fs rate = unsafePartial $ fromJust $ safeOrdinaryIncomeBracketWidth fs rate
 
 startOfNonZeroQualifiedRateBracket :: FilingStatus -> Int
 startOfNonZeroQualifiedRateBracket fs =

@@ -516,6 +516,15 @@ var PS = {};
 (function(exports) {
   "use strict";
 
+  exports.fromNumberImpl = function (just) {
+    return function (nothing) {
+      return function (n) {
+        /* jshint bitwise: false */
+        return (n | 0) === n ? just(n) : nothing;
+      };
+    };
+  };
+
   exports.toNumber = function (n) {
     return n;
   };
@@ -526,6 +535,9 @@ var PS = {};
   $PS["Data.Int"] = $PS["Data.Int"] || {};
   var exports = $PS["Data.Int"];
   var $foreign = $PS["Data.Int"];
+  var Data_Maybe = $PS["Data.Maybe"];
+  var fromNumber = $foreign.fromNumberImpl(Data_Maybe.Just.create)(Data_Maybe.Nothing.value);
+  exports["fromNumber"] = fromNumber;
   exports["toNumber"] = $foreign.toNumber;
 })(PS);
 (function($PS) {
@@ -1688,6 +1700,11 @@ var PS = {};
       Single.value = new Single();
       return Single;
   })();
+  var unsafeOrdinaryRateFromNumber = function (n) {
+      return Data_Maybe.fromJust()(Data_Functor.map(Data_Maybe.functorMaybe)(function (i) {
+          return i;
+      })(Data_Int.fromNumber(n)));
+  };
   var topRateOnOrdinaryIncome = 37;
   var third = function (v) {
       return v.value2;
@@ -1708,7 +1725,7 @@ var PS = {};
                           var maxSocSecTaxable = ssBenefits * 0.85;
                           return Data_Ord.min(Data_Ord.ordNumber)(4500.0 + (combinedIncome - v.value1) * 0.85)(maxSocSecTaxable);
                       };
-                      throw new Error("Failed pattern match at Taxes (line 429, column 3 - line 429, column 71): " + [ combinedIncome.constructor.name, v.constructor.name ]);
+                      throw new Error("Failed pattern match at Taxes (line 452, column 3 - line 452, column 71): " + [ combinedIncome.constructor.name, v.constructor.name ]);
                   };
               };
               var lowBase = (function () {
@@ -1718,7 +1735,7 @@ var PS = {};
                   if (filingStatus instanceof HeadOfHousehold) {
                       return 25000.0;
                   };
-                  throw new Error("Failed pattern match at Taxes (line 417, column 16 - line 419, column 33): " + [ filingStatus.constructor.name ]);
+                  throw new Error("Failed pattern match at Taxes (line 440, column 16 - line 442, column 33): " + [ filingStatus.constructor.name ]);
               })();
               var highBase = (function () {
                   if (filingStatus instanceof Single) {
@@ -1727,7 +1744,7 @@ var PS = {};
                   if (filingStatus instanceof HeadOfHousehold) {
                       return 34000.0;
                   };
-                  throw new Error("Failed pattern match at Taxes (line 421, column 16 - line 423, column 33): " + [ filingStatus.constructor.name ]);
+                  throw new Error("Failed pattern match at Taxes (line 444, column 16 - line 446, column 33): " + [ filingStatus.constructor.name ]);
               })();
               var combinedIncome = relevantIncome + ssBenefits / 2.0;
               return f(combinedIncome)(new Data_Tuple.Tuple(lowBase, highBase));
@@ -1759,7 +1776,7 @@ var PS = {};
       if (v instanceof Single) {
           return "Single";
       };
-      throw new Error("Failed pattern match at Taxes (line 71, column 1 - line 73, column 25): " + [ v.constructor.name ]);
+      throw new Error("Failed pattern match at Taxes (line 76, column 1 - line 78, column 25): " + [ v.constructor.name ]);
   });
   var showBracketStart = new Data_Show.Show(function (v) {
       return Data_Show.show(Data_Show.showInt)(v);
@@ -1779,6 +1796,8 @@ var PS = {};
   var qualifiedRateAsFraction = function (v) {
       return Data_Int.toNumber(v) / 100.0;
   };
+
+  //(unsafePartial <<< fromJust <<< rmdFractionForAge)
   var over65Increment = 1350;
   var standardDeduction = function (v) {
       if (v instanceof HeadOfHousehold) {
@@ -1787,7 +1806,7 @@ var PS = {};
       if (v instanceof Single) {
           return 12550 + over65Increment | 0;
       };
-      throw new Error("Failed pattern match at Taxes (line 371, column 1 - line 371, column 55): " + [ v.constructor.name ]);
+      throw new Error("Failed pattern match at Taxes (line 394, column 1 - line 394, column 55): " + [ v.constructor.name ]);
   };
   var ordinaryRateAsFraction = function (v) {
       return Data_Int.toNumber(v) / 100.0;
@@ -1818,7 +1837,7 @@ var PS = {};
       if (v instanceof HeadOfHousehold) {
           return Data_Map_Internal.fromFoldable(ordQualifiedRate)(Data_Foldable.foldableArray)([ new Data_Tuple.Tuple(0, 0), new Data_Tuple.Tuple(15, 54100), new Data_Tuple.Tuple(20, 473850) ]);
       };
-      throw new Error("Failed pattern match at Taxes (line 298, column 1 - line 298, column 73): " + [ v.constructor.name ]);
+      throw new Error("Failed pattern match at Taxes (line 316, column 1 - line 316, column 73): " + [ v.constructor.name ]);
   };
   var startOfNonZeroQualifiedRateBracket = function (fs) {
       var v = Data_Maybe.fromJust()(Data_List.index(Data_Map_Internal.values(qualifiedBracketStarts(fs)))(1));
@@ -1843,7 +1862,7 @@ var PS = {};
       if (v instanceof HeadOfHousehold) {
           return Data_Map_Internal.fromFoldable(ordOrdinaryRate)(Data_Foldable.foldableArray)([ new Data_Tuple.Tuple(10, 0), new Data_Tuple.Tuple(12, 14200), new Data_Tuple.Tuple(22, 54200), new Data_Tuple.Tuple(24, 86350), new Data_Tuple.Tuple(32, 164900), new Data_Tuple.Tuple(35, 209400), new Data_Tuple.Tuple(topRateOnOrdinaryIncome, 523600) ]);
       };
-      throw new Error("Failed pattern match at Taxes (line 206, column 1 - line 206, column 77): " + [ v.constructor.name ]);
+      throw new Error("Failed pattern match at Taxes (line 217, column 1 - line 217, column 77): " + [ v.constructor.name ]);
   };
   var ordinaryIncomeBracketStart = function (filingStatus) {
       return function (ordinaryRate) {
@@ -1861,6 +1880,12 @@ var PS = {};
               return Data_Eq.eq(eqOrdinaryRate)(Data_Tuple.fst(p))(rate);
           })(pairs);
           return Data_Functor.map(Data_Maybe.functorMaybe)(Data_Tuple.snd)(pair);
+      };
+  };
+  var unsafeOrdinaryRateSuccessor = function (fs) {
+      return function (rate) {
+          var v = Data_Maybe.fromJust()(ordinaryRateSuccessor(fs)(rate));
+          return v;
       };
   };
   var safeOrdinaryIncomeBracketWidth = function (fs) {
@@ -1883,8 +1908,8 @@ var PS = {};
       };
   };
   var ordinaryIncomeBracketWidth = function (fs) {
-      return function (or) {
-          return Data_Maybe.fromJust()(safeOrdinaryIncomeBracketWidth(fs)(or));
+      return function (rate) {
+          return Data_Maybe.fromJust()(safeOrdinaryIncomeBracketWidth(fs)(rate));
       };
   };
   var eqFilingStatus = new Data_Eq.Eq(function (x) {
@@ -1903,8 +1928,8 @@ var PS = {};
           return function (filingStatus) {
               return function (maGrossIncome) {
                   var personalExemption = (function () {
-                      var $121 = Data_Eq.eq(eqFilingStatus)(filingStatus)(HeadOfHousehold.value);
-                      if ($121) {
+                      var $129 = Data_Eq.eq(eqFilingStatus)(filingStatus)(HeadOfHousehold.value);
+                      if ($129) {
                           return 6800.0;
                       };
                       return 4400.0;
@@ -1932,6 +1957,9 @@ var PS = {};
       return Control_Bind.bind(Data_Maybe.bindMaybe)(Data_Map_Internal.lookup(ordAge)(age)(distributionPeriods))(function (distributionPeriod) {
           return new Data_Maybe.Just(1.0 / distributionPeriod);
       });
+  };
+  var unsafeRmdFractionForAge = function (age) {
+      return Data_Maybe.fromJust()(rmdFractionForAge(age));
   };
   var applyQualifiedIncomeBrackets = function (fs) {
       return function (taxableOrdinaryIncome) {
@@ -2019,7 +2047,10 @@ var PS = {};
   exports["startOfNonZeroQualifiedRateBracket"] = startOfNonZeroQualifiedRateBracket;
   exports["taxableSocialSecurity"] = taxableSocialSecurity;
   exports["taxableSocialSecurityAdjusted"] = taxableSocialSecurityAdjusted;
+  exports["unsafeOrdinaryRateFromNumber"] = unsafeOrdinaryRateFromNumber;
+  exports["unsafeOrdinaryRateSuccessor"] = unsafeOrdinaryRateSuccessor;
   exports["unsafeReadFilingStatus"] = unsafeReadFilingStatus;
+  exports["unsafeRmdFractionForAge"] = unsafeRmdFractionForAge;
   exports["showFilingStatus"] = showFilingStatus;
   exports["showOrdinaryRate"] = showOrdinaryRate;
   exports["showBracketStart"] = showBracketStart;
@@ -2050,7 +2081,10 @@ var PS = {};
       print(Taxes.showStandardDeduction)(Taxes.standardDeduction(Taxes.Single.value))();
       print(Data_Show.showNumber)(Taxes.taxableSocialSecurity(Taxes.HeadOfHousehold.value)(40000.0)(40000.0))();
       print(Data_Show.showNumber)(Taxes.taxableSocialSecurityAdjusted(2040)(Taxes.Single.value)(50000.0)(40000.0))();
-      return print(Taxes.showFilingStatus)(Taxes.unsafeReadFilingStatus("Single"))();
+      print(Taxes.showOrdinaryRate)(Taxes.unsafeOrdinaryRateFromNumber(22.0))();
+      print(Data_Show.showInt)(Taxes.unsafeOrdinaryRateSuccessor(Taxes.Single.value)(22))();
+      print(Taxes.showFilingStatus)(Taxes.unsafeReadFilingStatus("Single"))();
+      return print(Data_Show.showNumber)(Taxes.unsafeRmdFractionForAge(76))();
   };
   exports["print"] = print;
   exports["main"] = main;

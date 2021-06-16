@@ -1,25 +1,10 @@
 module Main where
 
 import Prelude
+
 import Effect (Effect)
 import Effect.Console (log)
-import Taxes (
-  Age(..)
-  ,FilingStatus(..)
-  , OrdinaryRate(..)
-  , applyOrdinaryIncomeBrackets
-  , federalTaxDue
-  , maStateTaxDue
-  , ordinaryIncomeBracketStart
-  , ordinaryIncomeBracketWidth
-  , ordinaryRateSuccessor
-  , rmdFractionForAge
-  , standardDeduction
-  , startOfNonZeroQualifiedRateBracket
-  , taxableSocialSecurity
-  , taxableSocialSecurityAdjusted
-  , unsafeReadFilingStatus
-  )
+import Taxes (Age(..), FilingStatus(..), OrdinaryRate(..), applyOrdinaryIncomeBrackets, federalTaxDue, maStateTaxDue, ordinaryIncomeBracketStart, ordinaryIncomeBracketWidth, ordinaryRateSuccessor, rmdFractionForAge, standardDeduction, startOfNonZeroQualifiedRateBracket, taxableSocialSecurity, taxableSocialSecurityAdjusted, unsafeOrdinaryRateFromNumber, unsafeOrdinaryRateSuccessor, unsafeReadFilingStatus, unsafeRmdFractionForAge)
 
 
 print :: forall x. Show x => x -> Effect Unit
@@ -38,4 +23,7 @@ main = do
   print $ standardDeduction Single
   print $ taxableSocialSecurity HeadOfHousehold 40000.0 40000.0
   print $ taxableSocialSecurityAdjusted 2040 Single 50000.0 40000.0
+  print $ unsafeOrdinaryRateFromNumber 22.0
+  print $ unsafeOrdinaryRateSuccessor Single (OrdinaryRate 22)
   print $ unsafeReadFilingStatus "Single"
+  print $ unsafeRmdFractionForAge 76
