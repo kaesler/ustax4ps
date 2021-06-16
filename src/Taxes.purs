@@ -18,6 +18,7 @@ module Taxes
   , federalTaxResults
   , incomeToEndOfOrdinaryBracket
   , maStateTaxDue
+  , maStateTaxRate
   , nonNeg
   , ordinaryIncomeBracketStart
   , ordinaryIncomeBracketStarts

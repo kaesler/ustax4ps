@@ -57,7 +57,13 @@ function MA_STATE_TAX_DUE(age, dependents, filingStatus, massacchusettsGrossInco
 
 function TAX_SLOPE(year, filingStatus, socSec, ordinaryIncomeNonSS, qualifiedIncome) {
   const T = PS.Taxes;
-  throw new Error("Not yet impmenented");
+  const fs = T.unsafeReadFilingStatus(filingStatus);
+  const deltaX = 1000.0
+  const federalTaxAtStart = T.federalTaxDue(year)(fs)(socSec)(ordinaryIncomeNonSS)(qualifiedIncome);
+  const federalTaxAtEnd = T.federalTaxDue(year)(fs)(socSec)(ordinaryIncomeNonSS + deltaX)(qualifiedIncome);
+  const deltaY = (federalTaxAtEnd - federalTaxAtStart) + (deltaX * T.maStateTaxRate);
+
+  return deltaY/deltaX;
 }
 
 function TAXABLE_SS(filingStatus, ssRelevantOtherIncome, socSec) {
