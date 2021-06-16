@@ -43,12 +43,16 @@ function RMD_FRACTION_FOR_AGE(age) {
 
 function FEDERAL_TAX_DUE(year, filingStatus, socSec, ordinaryIncomeNonSS, qualifiedIncome) {
   const T = PS.Taxes;
-  throw new Error("Not yet impmenented");
-}
+  const fs = T.unsafeReadFilingStatus(filingStatus);
+
+  return T.federalTaxDue(year)(fs)(socSec)(ordinaryIncomeNonSS)(qualifiedIncome);
+  }
 
 function MA_STATE_TAX_DUE(age, dependents, filingStatus, massacchusettsGrossIncome) {
   const T = PS.Taxes;
-  throw new Error("Not yet impmenented");
+  const fs = T.unsafeReadFilingStatus(filingStatus);
+
+  return T.maStateTaxDue(age)(dependents)(fs)(massacchusettsGrossIncome);
 }
 
 function TAX_SLOPE(year, filingStatus, socSec, ordinaryIncomeNonSS, qualifiedIncome) {
@@ -58,10 +62,14 @@ function TAX_SLOPE(year, filingStatus, socSec, ordinaryIncomeNonSS, qualifiedInc
 
 function TAXABLE_SS(filingStatus, ssRelevantOtherIncome, socSec) {
   const T = PS.Taxes;
-  throw new Error("Not yet impmenented");
+  const fs = T.unsafeReadFilingStatus(filingStatus);
+
+  return T.taxableSocialSecurity(fs)(ssRelevantOtherIncome)(socSec);
 }
 
 function TAXABLE_SS_ADJUSTED(year, filingStatus, ssRelevantOtherIncome, socSec) {
   const T = PS.Taxes;
-  throw new Error("Not yet impmenented");
+  const fs = T.unsafeReadFilingStatus(filingStatus);
+
+  return T.taxableSocialSecurityAdjusted(year)(fs)(ssRelevantOtherIncome)(socSec);
 }
