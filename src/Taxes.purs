@@ -80,6 +80,7 @@ instance showFilingStatus :: Show FilingStatus where
 instance readFilingStatus :: Read FilingStatus where
   read s = 
     case s of 
+      "HOH" -> Just HeadOfHousehold
       "HeadOfHousehold" -> Just HeadOfHousehold
       "Single" -> Just Single
       otherwise -> Nothing
