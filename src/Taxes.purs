@@ -66,14 +66,14 @@ type SocSec = Number
 type Year = Int
 
 newtype Age = Age Int
-derive instance eqAge :: Eq Age
-derive instance ordAge :: Ord Age
+derive instance Eq Age
+derive instance Ord Age
 instance showAge :: Show Age where
   show (Age i) = show i
 
 data FilingStatus = HeadOfHousehold | Single
-derive instance eqFilingStatus :: Eq FilingStatus
-derive instance ordFilingStatus :: Ord FilingStatus
+derive instance Eq FilingStatus
+derive instance Ord FilingStatus
 instance showFilingStatus :: Show FilingStatus where
   show HeadOfHousehold = "HeadOfHousehold"
   show Single = "Single"
@@ -88,8 +88,8 @@ unsafeReadFilingStatus :: String -> FilingStatus
 unsafeReadFilingStatus s = unsafePartial $ fromJust (read s) :: FilingStatus
 
 newtype OrdinaryRate = OrdinaryRate Int
-derive instance eqOrdinaryRate :: Eq OrdinaryRate
-derive instance ordOrdinaryRate :: Ord OrdinaryRate
+derive instance Eq OrdinaryRate
+derive instance Ord OrdinaryRate
 instance showOrdinaryRate :: Show OrdinaryRate where
   show (OrdinaryRate r) = show r
 unsafeOrdinaryRateFromNumber :: Number -> OrdinaryRate
@@ -101,23 +101,23 @@ ordinaryRateAsFraction :: OrdinaryRate -> Number
 ordinaryRateAsFraction (OrdinaryRate r) = toNumber r / 100.0
 
 newtype QualifiedRate = QualifiedRate Int
-derive instance eqQualifiedRate :: Eq QualifiedRate
-derive instance ordQualifiedRate :: Ord QualifiedRate
+derive instance Eq QualifiedRate
+derive instance Ord QualifiedRate
 
 qualifiedRateAsFraction :: QualifiedRate -> Number
 qualifiedRateAsFraction (QualifiedRate r) = toNumber r / 100.0
 
 newtype BracketStart = BracketStart Int
-derive instance eqBracketStart :: Eq BracketStart
-derive instance ordBracketStart :: Ord BracketStart
+derive instance Eq BracketStart
+derive instance Ord BracketStart
 instance showBracketStart :: Show BracketStart where
   show (BracketStart s) = show s
 bracketStartAsNumber :: BracketStart -> Number
 bracketStartAsNumber (BracketStart i) = toNumber i
 
 newtype StandardDeduction = StandardDeduction Int
-derive instance eqStandardDeduction :: Eq StandardDeduction
-derive instance ordStandardDeduction :: Ord StandardDeduction
+derive instance Eq StandardDeduction
+derive instance Ord StandardDeduction
 instance showStandardDeduction :: Show StandardDeduction where
   show (StandardDeduction sd) = show sd 
 

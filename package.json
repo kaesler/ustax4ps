@@ -1,5 +1,5 @@
 {
-  "name": "RetirementModelPureScript",
+  "name": "retirement-model-purescript",
   "dependencies": {
     "purty": "^6.3.1"
   }

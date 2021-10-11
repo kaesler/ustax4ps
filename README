@@ -1,3 +1,8 @@
 Build: spago build 
 Test: spago Test
 Bundle: spago bundle-app
+Upgrade psc 10 0.14.4
+ I upgraded psc globally with: npm install -g purescript@0.14.4
+ Then I spago upgrade-set to get the new psc version into packages.dhall
+ Then I deleted output/*
+ Then I spago build; spago test
