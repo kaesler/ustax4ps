@@ -6,7 +6,22 @@ import Effect (Effect)
 import Effect.Console (log)
 
 import CommonTypes(Age(..), FilingStatus(..), unsafeReadFilingStatus)
-import Taxes ( OrdinaryRate(..), applyOrdinaryIncomeBrackets, federalTaxDue, maStateTaxDue, maStateTaxRate, ordinaryIncomeBracketStart, ordinaryIncomeBracketWidth, ordinaryRateSuccessor, rmdFractionForAge, standardDeduction, startOfNonZeroQualifiedRateBracket, unsafeOrdinaryRateFromNumber, unsafeOrdinaryRateSuccessor, unsafeRmdFractionForAge)
+import Taxes ( 
+  OrdinaryRate(..), 
+  applyOrdinaryIncomeBrackets, 
+  federalTaxDue, 
+  maStateTaxDue, 
+  maStateTaxRate, 
+  ordinaryIncomeBracketStart, 
+  ordinaryIncomeBracketWidth, 
+  ordinaryRateSuccessor, 
+  standardDeduction, 
+  startOfNonZeroQualifiedRateBracket, 
+  unsafeOrdinaryRateFromNumber, 
+  unsafeOrdinaryRateSuccessor, 
+  unsafeRmdFractionForAge
+)
+import Federal.RMDs(rmdFractionForAge)
 import Federal.TaxableSocialSecurity(taxableSocialSecurity, taxableSocialSecurityAdjusted)
 print :: forall x. Show x => x -> Effect Unit
 print x = log $ show x
