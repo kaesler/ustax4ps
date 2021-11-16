@@ -11,7 +11,18 @@ import Effect.Class (liftEffect)
 import Effect.Console (log)
 import PropertyTests (runPropertyTests)
 import CommonTypes(FilingStatus(..))
-import Taxes (OrdinaryRate, StandardDeduction(..), applyOrdinaryIncomeBrackets, federalTaxDue, incomeToEndOfOrdinaryBracket, maStateTaxDue, nonNeg, ordinaryRatesExceptTop, roundHalfUp, standardDeduction, taxToEndOfOrdinaryIncomeBracket)
+import TaxMath(nonNeg, roundHalfUp)
+import Taxes (
+  OrdinaryRate, 
+  StandardDeduction(..), 
+  applyOrdinaryIncomeBrackets, 
+  federalTaxDue, 
+  incomeToEndOfOrdinaryBracket, 
+  maStateTaxDue, 
+  ordinaryRatesExceptTop, 
+  standardDeduction, 
+  taxToEndOfOrdinaryIncomeBracket
+  )
 import Test.Spec (Spec, it, describe)
 import Test.Spec.Assertions (shouldEqual)
 import Test.Spec.Reporter.Console (consoleReporter)

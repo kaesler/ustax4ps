@@ -12,14 +12,12 @@ module Taxes
   , incomeToEndOfOrdinaryBracket
   , maStateTaxDue
   , maStateTaxRate
-  , nonNeg
   , ordinaryIncomeBracketStart
   , ordinaryIncomeBracketStarts
   , ordinaryIncomeBracketWidth
   , ordinaryRateAsFraction
   , ordinaryRatesExceptTop
   , ordinaryRateSuccessor
-  , roundHalfUp
   , standardDeduction
   , startOfNonZeroQualifiedRateBracket
   , taxToEndOfOrdinaryIncomeBracket
@@ -45,6 +43,7 @@ import Effect.Console (log)
 import Partial.Unsafe (unsafePartial)
 
 import CommonTypes (Age(..), CombinedIncome, DistributionPeriod, FilingStatus(..), MassachusettsGrossIncome, OrdinaryIncome, QualifiedIncome, SSRelevantOtherIncome, SocSec, Year)
+import TaxMath( nonNeg, roundHalfUp)
 import Federal.TaxableSocialSecurity
 import Federal.RMDs
 
@@ -101,13 +100,6 @@ newtype FederalTaxResults
 instance showFederalTaxResults :: Show FederalTaxResults where
   show (FederalTaxResults r) = (show r)
 
-nonNeg :: Number -> Number
-nonNeg x
-  | x < 0.0 = 0.0
-  | true = x
-
-roundHalfUp :: Number -> Number
-roundHalfUp = toNumber <<< round
 
 maStateTaxRate :: Number
 maStateTaxRate = 0.05
