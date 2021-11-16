@@ -4,8 +4,9 @@ import Prelude
 
 import Effect (Effect)
 import Effect.Console (log)
-import Taxes (Age(..), FilingStatus(..), OrdinaryRate(..), applyOrdinaryIncomeBrackets, federalTaxDue, maStateTaxDue, maStateTaxRate, ordinaryIncomeBracketStart, ordinaryIncomeBracketWidth, ordinaryRateSuccessor, rmdFractionForAge, standardDeduction, startOfNonZeroQualifiedRateBracket, taxableSocialSecurity, taxableSocialSecurityAdjusted, unsafeOrdinaryRateFromNumber, unsafeOrdinaryRateSuccessor, unsafeReadFilingStatus, unsafeRmdFractionForAge)
 
+import CommonTypes(Age(..), FilingStatus(..), unsafeReadFilingStatus)
+import Taxes ( OrdinaryRate(..), applyOrdinaryIncomeBrackets, federalTaxDue, maStateTaxDue, maStateTaxRate, ordinaryIncomeBracketStart, ordinaryIncomeBracketWidth, ordinaryRateSuccessor, rmdFractionForAge, standardDeduction, startOfNonZeroQualifiedRateBracket, taxableSocialSecurity, taxableSocialSecurityAdjusted, unsafeOrdinaryRateFromNumber, unsafeOrdinaryRateSuccessor, unsafeRmdFractionForAge)
 
 print :: forall x. Show x => x -> Effect Unit
 print x = log $ show x

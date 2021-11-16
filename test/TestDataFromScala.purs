@@ -4,7 +4,7 @@ module TestDataFromScala
   ) where
 
 import Prelude
-import Taxes (FilingStatus(..))
+import CommonTypes(FilingStatus(..))
 
 newtype TestCase
   = TestCase
