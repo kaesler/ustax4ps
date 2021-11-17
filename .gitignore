@@ -10,3 +10,4 @@ output
 /.purs*
 /.psa*
 src/dist/GSheetShim.dev.js
+*~
