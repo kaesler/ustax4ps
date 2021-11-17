@@ -35,7 +35,7 @@ newtype FederalTaxResults
   , taxOnQualifiedIncome :: Number
   }
 
-instance showFederalTaxResults :: Show FederalTaxResults where
+instance Show FederalTaxResults where
   show (FederalTaxResults r) = (show r)
 
 maStateTaxRate :: Number

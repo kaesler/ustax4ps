@@ -35,7 +35,7 @@ import TaxMath
 newtype OrdinaryRate = OrdinaryRate Int
 derive instance Eq OrdinaryRate
 derive instance Ord OrdinaryRate
-instance showOrdinaryRate :: Show OrdinaryRate where
+instance Show OrdinaryRate where
   show (OrdinaryRate r) = show r
 unsafeOrdinaryRateFromNumber :: Number -> OrdinaryRate
 unsafeOrdinaryRateFromNumber n =

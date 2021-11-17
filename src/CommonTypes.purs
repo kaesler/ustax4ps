@@ -36,10 +36,10 @@ instance showAge :: Show Age where
 data FilingStatus = HeadOfHousehold | Single
 derive instance Eq FilingStatus
 derive instance Ord FilingStatus
-instance showFilingStatus :: Show FilingStatus where
+instance Show FilingStatus where
   show HeadOfHousehold = "HeadOfHousehold"
   show Single = "Single"
-instance readFilingStatus :: Read FilingStatus where
+instance Read FilingStatus where
   read s = 
     case s of 
       "HOH" -> Just HeadOfHousehold
