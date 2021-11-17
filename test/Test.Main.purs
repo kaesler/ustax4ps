@@ -13,16 +13,20 @@ import PropertyTests (runPropertyTests)
 import CommonTypes(FilingStatus(..))
 import TaxMath(nonNeg, roundHalfUp)
 import Taxes (
-  OrdinaryRate, 
-  StandardDeduction(..), 
-  applyOrdinaryIncomeBrackets, 
   federalTaxDue, 
+  maStateTaxDue
+)
+import Federal.Types(
+  StandardDeduction(..), 
+  standardDeduction
+)
+import Federal.OrdinaryIncome(
+  OrdinaryRate, 
+  applyOrdinaryIncomeBrackets, 
   incomeToEndOfOrdinaryBracket, 
-  maStateTaxDue, 
   ordinaryRatesExceptTop, 
-  standardDeduction, 
   taxToEndOfOrdinaryIncomeBracket
-  )
+)
 import Test.Spec (Spec, it, describe)
 import Test.Spec.Assertions (shouldEqual)
 import Test.Spec.Reporter.Console (consoleReporter)

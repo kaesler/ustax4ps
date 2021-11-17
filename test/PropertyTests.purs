@@ -7,7 +7,7 @@ import Data.Array.NonEmpty.Internal (NonEmptyArray(..))
 import Effect (Effect)
 import Effect.Console (log)
 import CommonTypes(FilingStatus(..), OrdinaryIncome, SSRelevantOtherIncome, SocSec)
-import Taxes ( applyOrdinaryIncomeBrackets, ordinaryRateAsFraction, topRateOnOrdinaryIncome)
+import Federal.OrdinaryIncome ( applyOrdinaryIncomeBrackets, ordinaryRateAsFraction, topRateOnOrdinaryIncome)
 import Test.QuickCheck (class Arbitrary, quickCheck)
 import Test.QuickCheck.Gen (choose, elements)
 
