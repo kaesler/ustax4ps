@@ -6,8 +6,8 @@ import Prelude
 import Data.Array.NonEmpty.Internal (NonEmptyArray(..))
 import Effect (Effect)
 import Effect.Console (log)
-import CommonTypes(FilingStatus(..), OrdinaryIncome, SSRelevantOtherIncome, SocSec)
-import Federal.OrdinaryIncome ( applyOrdinaryIncomeBrackets, ordinaryRateAsFraction, topRateOnOrdinaryIncome)
+import CommonTypes (FilingStatus(..), OrdinaryIncome, SSRelevantOtherIncome, SocSec)
+import Federal.OrdinaryIncome (applyOrdinaryIncomeBrackets, ordinaryRateAsFraction, topRateOnOrdinaryIncome)
 import Test.QuickCheck (class Arbitrary, quickCheck)
 import Test.QuickCheck.Gen (choose, elements)
 

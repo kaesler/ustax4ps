@@ -1,14 +1,14 @@
 module Federal.OrdinaryIncome(
-  OrdinaryRate(..),
   applyOrdinaryIncomeBrackets,
-  ordinaryRateAsFraction,
-  topRateOnOrdinaryIncome,
   incomeToEndOfOrdinaryBracket, 
-  ordinaryRatesExceptTop, 
   ordinaryIncomeBracketStart, 
-  taxToEndOfOrdinaryIncomeBracket,
   ordinaryIncomeBracketWidth,
+  OrdinaryRate(..),
+  ordinaryRateAsFraction,
+  ordinaryRatesExceptTop, 
   ordinaryRateSuccessor,
+  taxToEndOfOrdinaryIncomeBracket,
+  topRateOnOrdinaryIncome,
   unsafeOrdinaryRateFromNumber,
   unsafeOrdinaryRateSuccessor
 )
@@ -28,8 +28,8 @@ import Data.Array as Array
 import Data.Foldable as Data
 import Data.Set as Set
 
-import CommonTypes
-import Federal.Types
+import CommonTypes (FilingStatus(..), OrdinaryIncome)
+import Federal.Types (BracketStart(..), StandardDeduction(..), standardDeduction)
 import TaxMath
 
 newtype OrdinaryRate = OrdinaryRate Int

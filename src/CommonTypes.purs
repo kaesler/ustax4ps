@@ -45,7 +45,7 @@ instance readFilingStatus :: Read FilingStatus where
       "HOH" -> Just HeadOfHousehold
       "HeadOfHousehold" -> Just HeadOfHousehold
       "Single" -> Just Single
-      otherwise -> Nothing
+      _ -> Nothing
 
 unsafeReadFilingStatus :: String -> FilingStatus
 unsafeReadFilingStatus s = unsafePartial $ fromJust (read s) :: FilingStatus

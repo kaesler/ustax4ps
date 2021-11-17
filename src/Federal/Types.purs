@@ -16,7 +16,7 @@ import CommonTypes
 newtype BracketStart = BracketStart Int
 derive instance Eq BracketStart
 derive instance Ord BracketStart
-instance showBracketStart :: Show BracketStart where
+instance Show BracketStart where
   show (BracketStart s) = show s
 bracketStartAsNumber :: BracketStart -> Number
 bracketStartAsNumber (BracketStart i) = toNumber i
@@ -24,7 +24,7 @@ bracketStartAsNumber (BracketStart i) = toNumber i
 newtype StandardDeduction = StandardDeduction Int
 derive instance Eq StandardDeduction
 derive instance Ord StandardDeduction
-instance showStandardDeduction :: Show StandardDeduction where
+instance Show StandardDeduction where
   show (StandardDeduction sd) = show sd 
 
 over65Increment :: Int

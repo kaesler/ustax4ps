@@ -1,34 +1,35 @@
 module Main where
 
 import Prelude
-
 import Effect (Effect)
 import Effect.Console (log)
+import CommonTypes (Age(..), FilingStatus(..), unsafeReadFilingStatus)
+import Taxes
+  ( federalTaxDue
+  , maStateTaxDue
+  , maStateTaxRate
+  )
+import Federal.Types
+  ( standardDeduction
+  )
+import Federal.OrdinaryIncome
+  ( OrdinaryRate(..)
+  , applyOrdinaryIncomeBrackets
+  , ordinaryIncomeBracketStart
+  , ordinaryIncomeBracketWidth
+  , ordinaryRateSuccessor
+  , unsafeOrdinaryRateFromNumber
+  , unsafeOrdinaryRateSuccessor
+  )
+import Federal.QualifiedIncome
+  ( startOfNonZeroQualifiedRateBracket
+  )
+import Federal.RMDs
+  ( rmdFractionForAge
+  , unsafeRmdFractionForAge
+  )
+import Federal.TaxableSocialSecurity (taxableSocialSecurity, taxableSocialSecurityAdjusted)
 
-import CommonTypes(Age(..), FilingStatus(..), unsafeReadFilingStatus)
-import Taxes ( 
-  federalTaxDue, 
-  maStateTaxDue, 
-  maStateTaxRate, 
-  startOfNonZeroQualifiedRateBracket 
-)
-import Federal.Types(
-  standardDeduction 
-)
-import Federal.OrdinaryIncome(
-  OrdinaryRate(..), 
-  applyOrdinaryIncomeBrackets, 
-  ordinaryIncomeBracketStart, 
-  ordinaryIncomeBracketWidth, 
-  ordinaryRateSuccessor, 
-  unsafeOrdinaryRateFromNumber, 
-  unsafeOrdinaryRateSuccessor
-)
-import Federal.RMDs(
-  rmdFractionForAge,   
-  unsafeRmdFractionForAge
-)
-import Federal.TaxableSocialSecurity(taxableSocialSecurity, taxableSocialSecurityAdjusted)
 print :: forall x. Show x => x -> Effect Unit
 print x = log $ show x
 

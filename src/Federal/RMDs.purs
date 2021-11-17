@@ -1,24 +1,17 @@
-module Federal.RMDs(
-  rmdFractionForAge,
-  unsafeRmdFractionForAge
-)
+module Federal.RMDs
+  ( rmdFractionForAge
+  , unsafeRmdFractionForAge
+  ) where
 
-where
-  
 import Prelude
-
 import Data.Map as Map
 import Data.Tuple (Tuple(..))
 import Partial.Unsafe (unsafePartial)
 import Data.Maybe (Maybe(..), fromJust)
-
-
 import CommonTypes (Age(..), DistributionPeriod)
 
 unsafeRmdFractionForAge :: Int -> Number
-unsafeRmdFractionForAge age = 
-  unsafePartial $ fromJust $ rmdFractionForAge (Age age)
-  --(unsafePartial <<< fromJust <<< rmdFractionForAge)
+unsafeRmdFractionForAge age = unsafePartial $ fromJust $ rmdFractionForAge (Age age)
 
 rmdFractionForAge :: Age -> Maybe Number
 rmdFractionForAge age = do
