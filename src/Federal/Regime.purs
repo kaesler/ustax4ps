@@ -26,8 +26,12 @@ requireRegimeValidInYear :: Regime -> Year -> Unit
 requireRegimeValidInYear r y =
   if regimeValidInYear r y
     then unit
-    else unsafeThrow $ i "Regime " (show r) " not valid in year " y
+    else invalidRegime r y
 
 regimeValidInYear :: Regime -> Year -> Boolean
 regimeValidInYear Trump y = y >= 2018
 regimeValidInYear NonTrump y = y < 2018 || y > 2025
+
+invalidRegime :: Regime -> Year -> Unit
+invalidRegime regime year = 
+  unsafeThrow $ i "Regime " (show regime) " not valid in year " year
