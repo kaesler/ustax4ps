@@ -1,32 +1,24 @@
 module Test.Main where
 
 import Prelude
+import CommonTypes (FilingStatus(..))
 import Data.Array as Array
+import Data.Date (Year)
+import Data.Enum (toEnum)
 import Data.Int (toNumber)
+import Data.Maybe (fromJust)
 import Data.Traversable (sequence)
 import Data.Tuple (Tuple(..), curry)
 import Effect (Effect)
 import Effect.Aff (Aff, launchAff_)
 import Effect.Class (liftEffect)
 import Effect.Console (log)
+import Federal.OrdinaryIncome (OrdinaryRate, applyOrdinaryIncomeBrackets, incomeToEndOfOrdinaryBracket, ordinaryRatesExceptTop, taxToEndOfOrdinaryIncomeBracket)
+import Federal.Types (StandardDeduction(..), standardDeduction)
+import Partial.Unsafe (unsafePartial)
 import PropertyTests (runPropertyTests)
-import CommonTypes(FilingStatus(..))
-import TaxMath(nonNeg, roundHalfUp)
-import Taxes (
-  federalTaxDue, 
-  maStateTaxDue
-)
-import Federal.Types(
-  StandardDeduction(..), 
-  standardDeduction
-)
-import Federal.OrdinaryIncome(
-  OrdinaryRate, 
-  applyOrdinaryIncomeBrackets, 
-  incomeToEndOfOrdinaryBracket, 
-  ordinaryRatesExceptTop, 
-  taxToEndOfOrdinaryIncomeBracket
-)
+import TaxMath (nonNeg, roundHalfUp)
+import Taxes (federalTaxDue, maStateTaxDue)
 import Test.Spec (Spec, it, describe)
 import Test.Spec.Assertions (shouldEqual)
 import Test.Spec.Reporter.Console (consoleReporter)
@@ -100,8 +92,8 @@ assertCorrectTaxDueAtBracketBoundaries filingStatus =
 testsAgainstScala :: Spec Unit
 testsAgainstScala =
   let
-    year :: Int
-    year = 2021
+    year :: Year
+    year = unsafePartial fromJust $ toEnum 2021
 
     makeFederalExpectation :: TestCase -> Expectation
     makeFederalExpectation (TestCase tc) =

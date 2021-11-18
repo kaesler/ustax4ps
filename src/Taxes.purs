@@ -9,6 +9,7 @@ module Taxes
 
 import Prelude
 import Data.Int (toNumber)
+import Data.Date (Year)
 import Effect (Effect)
 import Effect.Console (log)
 import CommonTypes
@@ -17,7 +18,6 @@ import CommonTypes
   , OrdinaryIncome
   , QualifiedIncome
   , SocSec
-  , Year
   )
 import TaxMath (nonNeg)
 import Federal.TaxableSocialSecurity (taxableSocialSecurity)

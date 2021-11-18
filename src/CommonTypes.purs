@@ -1,5 +1,6 @@
 module CommonTypes(
   Age(..),
+  BirthDate(..),
   CombinedIncome,
   DistributionPeriod,
   FilingStatus(..),
@@ -8,16 +9,17 @@ module CommonTypes(
   QualifiedIncome,
   SSRelevantOtherIncome,
   SocSec,
-  Year,
   unsafeReadFilingStatus
 )
 where
 
 import Prelude
+import Data.Date(Date)
 import Data.String.Read (class Read, read)
 import Data.Maybe (Maybe(..), fromJust)
 import Partial.Unsafe (unsafePartial)
 
+type BirthDate = Date
 type CombinedIncome = Number
 type DistributionPeriod = Number
 type MassachusettsGrossIncome = Number
@@ -25,7 +27,6 @@ type OrdinaryIncome = Number
 type QualifiedIncome = Number
 type SSRelevantOtherIncome = Number
 type SocSec = Number
-type Year = Int
 
 newtype Age = Age Int
 derive instance Eq Age

@@ -7,6 +7,8 @@ You can edit this file as you like.
   [ "aff"
   , "arrays"
   , "console"
+  , "datetime"
+  , "enums"
   , "effect"
   , "exceptions"
   , "foldable-traversable"

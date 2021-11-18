@@ -1,22 +1,21 @@
-module Federal.TaxableSocialSecurity(
-  taxableSocialSecurityAdjusted,
-  taxableSocialSecurity
-)
-where
+module Federal.TaxableSocialSecurity
+  ( taxableSocialSecurityAdjusted
+  , taxableSocialSecurity
+  ) where
 
 import Prelude
-
+import Data.Enum (fromEnum)
 import Data.Tuple (Tuple(..))
 import Data.Int (toNumber)
-
-import CommonTypes (CombinedIncome, FilingStatus(..), SSRelevantOtherIncome, SocSec, Year)
+import Data.Date (Year)
+import CommonTypes (CombinedIncome, FilingStatus(..), SSRelevantOtherIncome, SocSec)
 
 taxableSocialSecurityAdjusted :: Year -> FilingStatus -> SocSec -> SSRelevantOtherIncome -> Number
 taxableSocialSecurityAdjusted year filingStatus ssBenefits relevantIncome =
   let
     unadjusted = taxableSocialSecurity filingStatus ssBenefits relevantIncome
 
-    adjustmentFactor = 1.0 + (0.03 * toNumber (year - 2021))
+    adjustmentFactor = 1.0 + (0.03 * toNumber (fromEnum year - 2021))
 
     adjusted = unadjusted * adjustmentFactor
   in
@@ -25,7 +24,7 @@ taxableSocialSecurityAdjusted year filingStatus ssBenefits relevantIncome =
 taxableSocialSecurity :: FilingStatus -> SocSec -> SSRelevantOtherIncome -> Number
 taxableSocialSecurity filingStatus ssBenefits relevantIncome =
   let
-    lowBase =  case filingStatus of
+    lowBase = case filingStatus of
       Single -> 25000.0
       HeadOfHousehold -> 25000.0
 
