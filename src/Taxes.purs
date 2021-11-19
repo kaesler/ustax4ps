@@ -17,7 +17,7 @@ import Data.Map as Map
 import Data.Tuple (Tuple(..))
 import Effect (Effect)
 import Effect.Console (log)
-import Federal.OrdinaryIncome (OrdinaryIncomeBrackets, applyOrdinaryIncomeBrackets, ordinaryRate)
+import Federal.OrdinaryIncome (OrdinaryIncomeBrackets, applyOrdinaryIncomeBrackets, fromPairs, ordinaryRate)
 import Federal.QualifiedIncome (applyQualifiedIncomeBrackets)
 import Federal.TaxableSocialSecurity (taxableSocialSecurity)
 import Federal.Types (BracketStart(..), StandardDeduction(..), standardDeduction)
@@ -106,26 +106,25 @@ federalTaxDueDebug year filingStatus socSec taxableOrdinaryIncome qualifiedIncom
 -- TODO: will go elsewhere
 ordinaryIncomeBrackets :: FilingStatus -> OrdinaryIncomeBrackets
 ordinaryIncomeBrackets Single =
-  Map.fromFoldable
-    [ Tuple (ordinaryRate 10) (BracketStart 0)
-    , Tuple (ordinaryRate 12) (BracketStart 9950)
-    , Tuple (ordinaryRate 22) (BracketStart 40525)
-    , Tuple (ordinaryRate 24) (BracketStart 86375)
-    , Tuple (ordinaryRate 32) (BracketStart 164925)
-    , Tuple (ordinaryRate 35) (BracketStart 209425)
-    , Tuple (ordinaryRate 37) (BracketStart 523600)
+  fromPairs
+    [ Tuple 10.0 0
+    , Tuple 12.0 9950
+    , Tuple 22.0 40525
+    , Tuple 24.0 86375
+    , Tuple 32.0 164925
+    , Tuple 35.0 209425
+    , Tuple 37.0 523600
     ]
 
 -- TODO: will go
--- TODO: use fromPairs
 ordinaryIncomeBrackets HeadOfHousehold =
-  Map.fromFoldable
-    [ Tuple (ordinaryRate 10) (BracketStart 0)
-    , Tuple (ordinaryRate 12) (BracketStart 14200)
-    , Tuple (ordinaryRate 22) (BracketStart 54200)
-    , Tuple (ordinaryRate 24) (BracketStart 86350)
-    , Tuple (ordinaryRate 32) (BracketStart 164900)
-    , Tuple (ordinaryRate 35) (BracketStart 209400)
-    , Tuple (ordinaryRate 37) (BracketStart 523600)
+  fromPairs
+    [ Tuple 10.0 0
+    , Tuple 12.0 14200
+    , Tuple 22.0 54200
+    , Tuple 24.0 86350
+    , Tuple 32.0 164900
+    , Tuple 35.0 209400
+    , Tuple 37.0 523600
     ]
 

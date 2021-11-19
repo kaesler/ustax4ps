@@ -44,17 +44,17 @@ fromPairs pairs =
 
 qualifiedIncomeBrackets :: FilingStatus -> Map QualifiedRate BracketStart
 qualifiedIncomeBrackets Single =
-  Map.fromFoldable
-    [ Tuple (QualifiedRate 0) (BracketStart 0)
-    , Tuple (QualifiedRate 15) (BracketStart 40400)
-    , Tuple (QualifiedRate 20) (BracketStart 445850)
+  fromPairs
+    [ Tuple 0 0
+    , Tuple 15 40400
+    , Tuple 20 445850
     ]
 
 qualifiedIncomeBrackets HeadOfHousehold =
-  Map.fromFoldable
-    [ Tuple (QualifiedRate 0) (BracketStart 0)
-    , Tuple (QualifiedRate 15) (BracketStart 54100)
-    , Tuple (QualifiedRate 20) (BracketStart 473850)
+  fromPairs
+    [ Tuple 0 0
+    , Tuple 15 54100
+    , Tuple 20 473850
     ]
 
 
