@@ -10,6 +10,7 @@ import CommonTypes (FilingStatus(..), OrdinaryIncome, SSRelevantOtherIncome, Soc
 import Federal.OrdinaryIncome (applyOrdinaryIncomeBrackets, ordinaryRateAsFraction, topRateOnOrdinaryIncome)
 import Test.QuickCheck (class Arbitrary, quickCheck)
 import Test.QuickCheck.Gen (choose, elements)
+import Taxes (ordinaryIncomeBrackets)
 
 runPropertyTests :: Effect Unit
 runPropertyTests = do
@@ -46,19 +47,24 @@ instance arbTestSsRelevantOtherIncome :: Arbitrary TestSsRelevantOtherIncome whe
 prop_monotonic :: TestFilingStatus -> TestOrdinaryIncome -> TestOrdinaryIncome -> Boolean
 prop_monotonic = \(TestFilingStatus fs) (TestOrdinaryIncome i1) (TestOrdinaryIncome i2) ->
   (i1 <= i2)
-    == (applyOrdinaryIncomeBrackets fs i1 <= applyOrdinaryIncomeBrackets fs i2)
+    == ( applyOrdinaryIncomeBrackets (ordinaryIncomeBrackets fs) i1
+          <= applyOrdinaryIncomeBrackets (ordinaryIncomeBrackets fs) i2
+      )
 
 prop_singlePaysMoreTax :: TestOrdinaryIncome -> Boolean
 prop_singlePaysMoreTax = \(TestOrdinaryIncome income) ->
-  applyOrdinaryIncomeBrackets Single income >= applyOrdinaryIncomeBrackets HeadOfHousehold income
+  applyOrdinaryIncomeBrackets (ordinaryIncomeBrackets Single) income
+    >= applyOrdinaryIncomeBrackets (ordinaryIncomeBrackets HeadOfHousehold) income
 
 prop_topRateIsNotExceeded :: TestFilingStatus -> TestOrdinaryIncome -> Boolean
 prop_topRateIsNotExceeded = \(TestFilingStatus fs) (TestOrdinaryIncome income) ->
   let
-    effectiveRate = applyOrdinaryIncomeBrackets fs income / income
+    brackets = ordinaryIncomeBrackets fs
+
+    effectiveRate = applyOrdinaryIncomeBrackets brackets income / income
   in
-    effectiveRate <= ordinaryRateAsFraction topRateOnOrdinaryIncome
+    effectiveRate <= (ordinaryRateAsFraction $ topRateOnOrdinaryIncome brackets)
 
 prop_zeroTaxOnlyOnZeroIncome :: TestFilingStatus -> TestOrdinaryIncome -> Boolean
 prop_zeroTaxOnlyOnZeroIncome = \(TestFilingStatus fs) (TestOrdinaryIncome income) ->
-  applyOrdinaryIncomeBrackets fs income /= 0.0 || income == 0.0
+  applyOrdinaryIncomeBrackets (ordinaryIncomeBrackets fs) income /= 0.0 || income == 0.0

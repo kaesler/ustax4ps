@@ -5,6 +5,7 @@ module CommonTypes(
   DistributionPeriod,
   FilingStatus(..),
   MassachusettsGrossIncome,
+  Money,
   OrdinaryIncome,
   QualifiedIncome,
   SSRelevantOtherIncome,
@@ -20,13 +21,14 @@ import Data.Maybe (Maybe(..), fromJust)
 import Partial.Unsafe (unsafePartial)
 
 type BirthDate = Date
-type CombinedIncome = Number
-type DistributionPeriod = Number
-type MassachusettsGrossIncome = Number
-type OrdinaryIncome = Number
-type QualifiedIncome = Number
-type SSRelevantOtherIncome = Number
-type SocSec = Number
+type Money = Number
+type CombinedIncome = Money
+type DistributionPeriod = Money
+type MassachusettsGrossIncome = Money
+type OrdinaryIncome = Money
+type QualifiedIncome = Money
+type SSRelevantOtherIncome = Money
+type SocSec = Money
 
 newtype Age = Age Int
 derive instance Eq Age

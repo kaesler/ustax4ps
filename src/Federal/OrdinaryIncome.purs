@@ -1,90 +1,68 @@
 module Federal.OrdinaryIncome(
+  OrdinaryIncomeBrackets(..),
+  OrdinaryRate(..),
   applyOrdinaryIncomeBrackets,
+  bottomRateOnOrdinaryIncome,
+  fromPairs,
   incomeToEndOfOrdinaryBracket, 
   ordinaryIncomeBracketStart, 
   ordinaryIncomeBracketWidth,
-  OrdinaryRate(..),
+  ordinaryRate,
   ordinaryRateAsFraction,
   ordinaryRatesExceptTop, 
   ordinaryRateSuccessor,
   taxToEndOfOrdinaryIncomeBracket,
   topRateOnOrdinaryIncome,
-  unsafeOrdinaryRateFromNumber,
   unsafeOrdinaryRateSuccessor
 )
 
 where
   
-import Prelude (class Eq, class Ord, class Show, bind, map, show, ($), (*), (+), (-), (/), (<=), (==))
-
-import Data.Int (fromNumber, toNumber)
-import Data.Map (Map, keys)
-import Data.List (List, find, foldl, reverse, tail, zip)
-import Data.Map as Map
-import Data.Maybe (Maybe(..), fromJust)
-import Data.Tuple (Tuple(..), fst, snd)
-import Partial.Unsafe (unsafePartial)
-import Data.Array as Array
-import Data.Foldable as Data
-import Data.Set as Set
-
-import CommonTypes (FilingStatus(..), OrdinaryIncome)
-import Federal.Types (BracketStart(..), StandardDeduction(..), standardDeduction)
 import TaxMath
 
-newtype OrdinaryRate = OrdinaryRate Int
+import CommonTypes (OrdinaryIncome)
+import Data.Array as Array
+import Data.Foldable as Data
+import Data.Int (toNumber)
+import Data.List (List, find, foldl, reverse, tail, zip)
+import Data.Map (Map, keys)
+import Data.Map as Map
+import Data.Maybe (Maybe(..), fromJust)
+import Data.Set as Set
+import Data.Tuple (Tuple(..), fst, snd)
+import Federal.Types (BracketStart(..), StandardDeduction(..))
+import Partial.Unsafe (unsafePartial)
+import Prelude (class Eq, class Ord, class Show, bind, map, show, ($), (*), (+), (-), (/), (<=), (==))
+
+-- TODO: restrict to 0..99?
+newtype OrdinaryRate = OrdinaryRate Number
 derive instance Eq OrdinaryRate
 derive instance Ord OrdinaryRate
 instance Show OrdinaryRate where
   show (OrdinaryRate r) = show r
-unsafeOrdinaryRateFromNumber :: Number -> OrdinaryRate
-unsafeOrdinaryRateFromNumber n =
-  unsafePartial $ fromJust $ map (\i -> OrdinaryRate i) (fromNumber n)
+ordinaryRate :: Int -> OrdinaryRate
+ordinaryRate i = OrdinaryRate (toNumber i)
 
 ordinaryRateAsFraction :: OrdinaryRate -> Number
+ordinaryRateAsFraction (OrdinaryRate r) = r / 100.0
 
-ordinaryRateAsFraction (OrdinaryRate r) = toNumber r / 100.0
+type OrdinaryIncomeBrackets = Map OrdinaryRate BracketStart
 
-type OrdinaryBracketStarts = Map OrdinaryRate BracketStart
+fromPairs :: Array (Tuple Number Int) -> OrdinaryIncomeBrackets
+fromPairs tuples = 
+  Map.fromFoldable $
+    map f tuples
+      where 
+        f :: Tuple Number Int -> Tuple OrdinaryRate BracketStart
+        f (Tuple rate start) = Tuple (OrdinaryRate rate) (BracketStart start)
 
-topRateOnOrdinaryIncome :: OrdinaryRate
-topRateOnOrdinaryIncome = OrdinaryRate 37
+ordinaryIncomeBracketStart :: OrdinaryIncomeBrackets -> OrdinaryRate -> BracketStart
+ordinaryIncomeBracketStart brackets ordinaryRate = 
+  unsafePartial $ fromJust $ Map.lookup ordinaryRate brackets
 
-ordinaryIncomeBracketStarts :: FilingStatus -> Map OrdinaryRate BracketStart
-ordinaryIncomeBracketStarts Single =
-  Map.fromFoldable
-    [ Tuple (OrdinaryRate 10) (BracketStart 0)
-    , Tuple (OrdinaryRate 12) (BracketStart 9950)
-    , Tuple (OrdinaryRate 22) (BracketStart 40525)
-    , Tuple (OrdinaryRate 24) (BracketStart 86375)
-    , Tuple (OrdinaryRate 32) (BracketStart 164925)
-    , Tuple (OrdinaryRate 35) (BracketStart 209425)
-    , Tuple topRateOnOrdinaryIncome (BracketStart 523600)
-    ]
-
-ordinaryIncomeBracketStarts HeadOfHousehold =
-  Map.fromFoldable
-    [ Tuple (OrdinaryRate 10) (BracketStart 0)
-    , Tuple (OrdinaryRate 12) (BracketStart 14200)
-    , Tuple (OrdinaryRate 22) (BracketStart 54200)
-    , Tuple (OrdinaryRate 24) (BracketStart 86350)
-    , Tuple (OrdinaryRate 32) (BracketStart 164900)
-    , Tuple (OrdinaryRate 35) (BracketStart 209400)
-    , Tuple topRateOnOrdinaryIncome (BracketStart 523600)
-    ]
-
-ordinaryIncomeBracketStart :: FilingStatus -> OrdinaryRate -> BracketStart
-ordinaryIncomeBracketStart filingStatus ordinaryRate = 
+ordinaryRateSuccessor :: OrdinaryIncomeBrackets -> OrdinaryRate -> Maybe OrdinaryRate
+ordinaryRateSuccessor brackets rate =
   let
-    brackets = ordinaryIncomeBracketStarts filingStatus
-  in
-    unsafePartial $ fromJust $ Map.lookup ordinaryRate brackets
-
-ordinaryRateSuccessor :: FilingStatus -> OrdinaryRate -> Maybe OrdinaryRate
-ordinaryRateSuccessor fs rate =
-  let
-    brackets = ordinaryIncomeBracketStarts fs
-
     rates = Array.fromFoldable $ keys brackets
 
     ratesTail = Array.drop 1 rates
@@ -95,41 +73,37 @@ ordinaryRateSuccessor fs rate =
   in
     map snd pair
 
-unsafeOrdinaryRateSuccessor :: FilingStatus -> OrdinaryRate -> Int
-unsafeOrdinaryRateSuccessor fs rate = 
+unsafeOrdinaryRateSuccessor :: OrdinaryIncomeBrackets -> OrdinaryRate -> Number
+unsafeOrdinaryRateSuccessor brackets rate = 
   let 
-    (OrdinaryRate r) = unsafePartial $ fromJust $ ordinaryRateSuccessor fs rate
+    (OrdinaryRate r) = unsafePartial $ fromJust $ ordinaryRateSuccessor brackets rate
    in
      r
 
-ordinaryRatesExceptTop :: FilingStatus -> (Array OrdinaryRate)
-ordinaryRatesExceptTop fs =
+ordinaryRatesExceptTop :: OrdinaryIncomeBrackets -> (Array OrdinaryRate)
+ordinaryRatesExceptTop brackets =
   let
-    brackets = ordinaryIncomeBracketStarts fs
-
     rates = Array.fromFoldable $ keys brackets
   in
     Array.dropEnd 1 rates
 
-incomeToEndOfOrdinaryBracket :: FilingStatus -> OrdinaryRate -> Number
-incomeToEndOfOrdinaryBracket filingStatus bracketRate =
+incomeToEndOfOrdinaryBracket :: OrdinaryIncomeBrackets -> StandardDeduction -> OrdinaryRate -> Number
+incomeToEndOfOrdinaryBracket brackets standardDeduction bracketRate =
   let
-    bracketStarts = ordinaryIncomeBracketStarts filingStatus
+    successorRate = unsafePartial $ fromJust (ordinaryRateSuccessor brackets bracketRate)
 
-    successorRate = unsafePartial $ fromJust (ordinaryRateSuccessor filingStatus bracketRate)
+    BracketStart startOfSuccessor = unsafePartial $ fromJust (Map.lookup successorRate brackets)
 
-    BracketStart startOfSuccessor = unsafePartial $ fromJust (Map.lookup successorRate bracketStarts)
-
-    StandardDeduction deduction = standardDeduction filingStatus
+    StandardDeduction deduction = standardDeduction
   in
     toNumber (startOfSuccessor + deduction)
 
-taxToEndOfOrdinaryIncomeBracket :: FilingStatus -> OrdinaryRate -> Number
-taxToEndOfOrdinaryIncomeBracket filingStatus bracketRate =
+taxToEndOfOrdinaryIncomeBracket :: OrdinaryIncomeBrackets -> OrdinaryRate -> Number
+taxToEndOfOrdinaryIncomeBracket brackets bracketRate =
   let
-    relevantRates = Array.takeWhile (_ <= bracketRate) (ordinaryRatesExceptTop filingStatus)
+    relevantRates = Array.takeWhile (_ <= bracketRate) (ordinaryRatesExceptTop brackets)
 
-    bracketWidths = map (ordinaryIncomeBracketWidth filingStatus) relevantRates
+    bracketWidths = map (ordinaryIncomeBracketWidth brackets) relevantRates
 
     pairs = relevantRates `Array.zip` bracketWidths
 
@@ -139,24 +113,27 @@ taxToEndOfOrdinaryIncomeBracket filingStatus bracketRate =
   in
     Data.sum taxesDue
 
--- Note: could be a constant. Keep as example of use of unsafePartial
-bottomRateOnOrdinaryIncome :: FilingStatus -> OrdinaryRate
-bottomRateOnOrdinaryIncome fs =
+topRateOnOrdinaryIncome :: OrdinaryIncomeBrackets -> OrdinaryRate
+topRateOnOrdinaryIncome brackets = 
   let
-    brackets = ordinaryIncomeBracketStarts fs
+    keys = Map.keys brackets
+  in
+    unsafePartial (fromJust (Set.findMax keys))
 
+bottomRateOnOrdinaryIncome :: OrdinaryIncomeBrackets -> OrdinaryRate
+bottomRateOnOrdinaryIncome brackets =
+  let
     keys = Map.keys brackets
   in
     unsafePartial (fromJust (Set.findMin keys))
 
-
-applyOrdinaryIncomeBrackets :: FilingStatus -> OrdinaryIncome -> Number
-applyOrdinaryIncomeBrackets fs ordinaryincome =
+applyOrdinaryIncomeBrackets :: OrdinaryIncomeBrackets -> OrdinaryIncome -> Number
+applyOrdinaryIncomeBrackets brackets ordinaryincome =
   let
     -- Note: is this how one uses toUnfoldable?
-    brackets = Map.toUnfoldable (ordinaryIncomeBracketStarts fs) :: List (Tuple OrdinaryRate BracketStart)
+    tuples = Map.toUnfoldable brackets :: List (Tuple OrdinaryRate BracketStart)
 
-    bracketsDescending = reverse brackets
+    bracketsDescending = reverse tuples
   in
     snd (foldl func (Tuple ordinaryincome 0.0) bracketsDescending)
   where
@@ -171,11 +148,9 @@ applyOrdinaryIncomeBrackets fs ordinaryincome =
           (taxSoFar + taxInThisBracket)
       )
 
-safeOrdinaryIncomeBracketWidth :: FilingStatus -> OrdinaryRate -> Maybe Int
-safeOrdinaryIncomeBracketWidth fs rate = do
+safeOrdinaryIncomeBracketWidth :: OrdinaryIncomeBrackets -> OrdinaryRate -> Maybe Int
+safeOrdinaryIncomeBracketWidth brackets rate = do
   let
-    brackets = (ordinaryIncomeBracketStarts fs)
-
     rates = Set.toUnfoldable (Map.keys brackets) :: List OrdinaryRate
   ratesTail <- (tail rates)
   let
@@ -187,6 +162,6 @@ safeOrdinaryIncomeBracketWidth fs rate = do
   BracketStart successorStart <- Map.lookup successor brackets
   Just (successorStart - rateStart)
 
-ordinaryIncomeBracketWidth :: FilingStatus -> OrdinaryRate -> Int
-ordinaryIncomeBracketWidth fs rate = unsafePartial $ fromJust $ safeOrdinaryIncomeBracketWidth fs rate
-
+ordinaryIncomeBracketWidth :: OrdinaryIncomeBrackets -> OrdinaryRate -> Int
+ordinaryIncomeBracketWidth brackets rate = 
+  unsafePartial $ fromJust $ safeOrdinaryIncomeBracketWidth brackets rate

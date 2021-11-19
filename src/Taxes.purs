@@ -5,25 +5,23 @@ module Taxes
   , federalTaxResults
   , maStateTaxDue
   , maStateTaxRate
+  , ordinaryIncomeBrackets
   ) where
 
 import Prelude
-import Data.Int (toNumber)
+
+import CommonTypes (FilingStatus(..), MassachusettsGrossIncome, OrdinaryIncome, QualifiedIncome, SocSec)
 import Data.Date (Year)
+import Data.Int (toNumber)
+import Data.Map as Map
+import Data.Tuple (Tuple(..))
 import Effect (Effect)
 import Effect.Console (log)
-import CommonTypes
-  ( FilingStatus(..)
-  , MassachusettsGrossIncome
-  , OrdinaryIncome
-  , QualifiedIncome
-  , SocSec
-  )
-import TaxMath (nonNeg)
-import Federal.TaxableSocialSecurity (taxableSocialSecurity)
-import Federal.Types (StandardDeduction(..), standardDeduction)
-import Federal.OrdinaryIncome (applyOrdinaryIncomeBrackets)
+import Federal.OrdinaryIncome (OrdinaryIncomeBrackets, applyOrdinaryIncomeBrackets, ordinaryRate)
 import Federal.QualifiedIncome (applyQualifiedIncomeBrackets)
+import Federal.TaxableSocialSecurity (taxableSocialSecurity)
+import Federal.Types (BracketStart(..), StandardDeduction(..), standardDeduction)
+import TaxMath (nonNeg)
 
 newtype FederalTaxResults
   = FederalTaxResults
@@ -63,7 +61,7 @@ federalTaxResults year filingStatus socSec ordinaryIncome qualifiedIncome =
 
     taxableOrdinaryIncome = nonNeg (taxableSocSec + ordinaryIncome - toNumber sd)
 
-    taxOnOrdinaryIncome = applyOrdinaryIncomeBrackets filingStatus taxableOrdinaryIncome
+    taxOnOrdinaryIncome = applyOrdinaryIncomeBrackets (ordinaryIncomeBrackets filingStatus) taxableOrdinaryIncome
 
     taxOnQualifiedIncome = applyQualifiedIncomeBrackets filingStatus taxableOrdinaryIncome qualifiedIncome
   in
@@ -104,3 +102,30 @@ federalTaxDueDebug year filingStatus socSec taxableOrdinaryIncome qualifiedIncom
       log ("  taxOnOrdinaryIncome: " <> show r.taxOnOrdinaryIncome)
       log ("  taxOnQualifiedIncome: " <> show r.taxOnQualifiedIncome)
       log ("  result: " <> show (r.taxOnOrdinaryIncome + r.taxOnQualifiedIncome))
+
+-- TODO: will go elsewhere
+ordinaryIncomeBrackets :: FilingStatus -> OrdinaryIncomeBrackets
+ordinaryIncomeBrackets Single =
+  Map.fromFoldable
+    [ Tuple (ordinaryRate 10) (BracketStart 0)
+    , Tuple (ordinaryRate 12) (BracketStart 9950)
+    , Tuple (ordinaryRate 22) (BracketStart 40525)
+    , Tuple (ordinaryRate 24) (BracketStart 86375)
+    , Tuple (ordinaryRate 32) (BracketStart 164925)
+    , Tuple (ordinaryRate 35) (BracketStart 209425)
+    , Tuple (ordinaryRate 37) (BracketStart 523600)
+    ]
+
+-- TODO: will go
+-- TODO: use fromPairs
+ordinaryIncomeBrackets HeadOfHousehold =
+  Map.fromFoldable
+    [ Tuple (ordinaryRate 10) (BracketStart 0)
+    , Tuple (ordinaryRate 12) (BracketStart 14200)
+    , Tuple (ordinaryRate 22) (BracketStart 54200)
+    , Tuple (ordinaryRate 24) (BracketStart 86350)
+    , Tuple (ordinaryRate 32) (BracketStart 164900)
+    , Tuple (ordinaryRate 35) (BracketStart 209400)
+    , Tuple (ordinaryRate 37) (BracketStart 523600)
+    ]
+

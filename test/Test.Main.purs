@@ -18,7 +18,7 @@ import Federal.Types (StandardDeduction(..), standardDeduction)
 import Partial.Unsafe (unsafePartial)
 import PropertyTests (runPropertyTests)
 import TaxMath (nonNeg, roundHalfUp)
-import Taxes (federalTaxDue, maStateTaxDue)
+import Taxes (federalTaxDue, maStateTaxDue, ordinaryIncomeBrackets)
 import Test.Spec (Spec, it, describe)
 import Test.Spec.Assertions (shouldEqual)
 import Test.Spec.Reporter.Console (consoleReporter)
@@ -51,15 +51,19 @@ correctAtBracketBoundaries =
 assertCorrectTaxDueAtBracketBoundary :: FilingStatus -> OrdinaryRate -> Expectation
 assertCorrectTaxDueAtBracketBoundary filingStatus bracketRate =
   let
-    StandardDeduction deduction = standardDeduction filingStatus
+    stdDed = standardDeduction filingStatus
 
-    income = incomeToEndOfOrdinaryBracket filingStatus bracketRate
+    StandardDeduction deduction = stdDed
+
+    brackets = ordinaryIncomeBrackets filingStatus
+
+    income = incomeToEndOfOrdinaryBracket brackets stdDed bracketRate
 
     taxableIncome = nonNeg $ income - toNumber deduction
 
-    expectedTax = roundHalfUp $ taxToEndOfOrdinaryIncomeBracket filingStatus bracketRate
+    expectedTax = roundHalfUp $ taxToEndOfOrdinaryIncomeBracket brackets bracketRate
 
-    computedTax = roundHalfUp $ applyOrdinaryIncomeBrackets filingStatus taxableIncome
+    computedTax = roundHalfUp $ applyOrdinaryIncomeBrackets brackets taxableIncome
   in
     do
       computedTax `shouldEqual` expectedTax
@@ -67,11 +71,15 @@ assertCorrectTaxDueAtBracketBoundary filingStatus bracketRate =
 assertCorrectTaxDueAtBracketBoundaries :: FilingStatus -> Expectation
 assertCorrectTaxDueAtBracketBoundaries filingStatus =
   let
-    brackets = ordinaryRatesExceptTop filingStatus
+    stdDed = standardDeduction filingStatus
 
-    incomes = map (incomeToEndOfOrdinaryBracket filingStatus) brackets
+    brackets = ordinaryIncomeBrackets filingStatus
 
-    expectedTaxes = map (taxToEndOfOrdinaryIncomeBracket filingStatus) brackets
+    rates = ordinaryRatesExceptTop brackets
+
+    incomes = map (incomeToEndOfOrdinaryBracket brackets stdDed) rates
+
+    expectedTaxes = map (taxToEndOfOrdinaryIncomeBracket brackets) rates
 
     StandardDeduction deduction = standardDeduction filingStatus
 
@@ -82,7 +90,7 @@ assertCorrectTaxDueAtBracketBoundaries filingStatus =
         let
           taxableIncome = nonNeg $ income - toNumber deduction
 
-          computedTax = roundHalfUp $ applyOrdinaryIncomeBrackets filingStatus taxableIncome
+          computedTax = roundHalfUp $ applyOrdinaryIncomeBrackets brackets taxableIncome
         in
           do
             computedTax `shouldEqual` roundHalfUp expectedTax
