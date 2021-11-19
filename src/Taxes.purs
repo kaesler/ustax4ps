@@ -6,6 +6,7 @@ module Taxes
   , maStateTaxDue
   , maStateTaxRate
   , ordinaryIncomeBrackets
+  , qualifiedIncomeBrackets
   ) where
 
 import Prelude
@@ -13,12 +14,13 @@ import Prelude
 import CommonTypes (FilingStatus(..), MassachusettsGrossIncome, OrdinaryIncome, QualifiedIncome, SocSec)
 import Data.Date (Year)
 import Data.Int (toNumber)
+import Data.Map (Map)
 import Data.Map as Map
 import Data.Tuple (Tuple(..))
 import Effect (Effect)
 import Effect.Console (log)
-import Federal.OrdinaryIncome (OrdinaryIncomeBrackets, applyOrdinaryIncomeBrackets, fromPairs, ordinaryRate)
-import Federal.QualifiedIncome (applyQualifiedIncomeBrackets)
+import Federal.OrdinaryIncome (OrdinaryIncomeBrackets, applyOrdinaryIncomeBrackets, fromPairs, ordinaryRate) as FO
+import Federal.QualifiedIncome (QualifiedIncomeBrackets, applyQualifiedIncomeBrackets, fromPairs) as FQ
 import Federal.TaxableSocialSecurity (taxableSocialSecurity)
 import Federal.Types (BracketStart(..), StandardDeduction(..), standardDeduction)
 import TaxMath (nonNeg)
@@ -61,9 +63,9 @@ federalTaxResults year filingStatus socSec ordinaryIncome qualifiedIncome =
 
     taxableOrdinaryIncome = nonNeg (taxableSocSec + ordinaryIncome - toNumber sd)
 
-    taxOnOrdinaryIncome = applyOrdinaryIncomeBrackets (ordinaryIncomeBrackets filingStatus) taxableOrdinaryIncome
+    taxOnOrdinaryIncome = FO.applyOrdinaryIncomeBrackets (ordinaryIncomeBrackets filingStatus) taxableOrdinaryIncome
 
-    taxOnQualifiedIncome = applyQualifiedIncomeBrackets filingStatus taxableOrdinaryIncome qualifiedIncome
+    taxOnQualifiedIncome = FQ.applyQualifiedIncomeBrackets (qualifiedIncomeBrackets filingStatus) taxableOrdinaryIncome qualifiedIncome
   in
     FederalTaxResults
       { ssRelevantOtherIncome: ssRelevantOtherIncome
@@ -103,10 +105,9 @@ federalTaxDueDebug year filingStatus socSec taxableOrdinaryIncome qualifiedIncom
       log ("  taxOnQualifiedIncome: " <> show r.taxOnQualifiedIncome)
       log ("  result: " <> show (r.taxOnOrdinaryIncome + r.taxOnQualifiedIncome))
 
--- TODO: will go elsewhere
-ordinaryIncomeBrackets :: FilingStatus -> OrdinaryIncomeBrackets
+ordinaryIncomeBrackets :: FilingStatus -> FO.OrdinaryIncomeBrackets
 ordinaryIncomeBrackets Single =
-  fromPairs
+  FO.fromPairs
     [ Tuple 10.0 0
     , Tuple 12.0 9950
     , Tuple 22.0 40525
@@ -116,9 +117,8 @@ ordinaryIncomeBrackets Single =
     , Tuple 37.0 523600
     ]
 
--- TODO: will go
 ordinaryIncomeBrackets HeadOfHousehold =
-  fromPairs
+  FO.fromPairs
     [ Tuple 10.0 0
     , Tuple 12.0 14200
     , Tuple 22.0 54200
@@ -128,3 +128,17 @@ ordinaryIncomeBrackets HeadOfHousehold =
     , Tuple 37.0 523600
     ]
 
+qualifiedIncomeBrackets :: FilingStatus -> FQ.QualifiedIncomeBrackets
+qualifiedIncomeBrackets Single =
+  FQ.fromPairs
+    [ Tuple 0 0
+    , Tuple 15 40400
+    , Tuple 20 445850
+    ]
+
+qualifiedIncomeBrackets HeadOfHousehold =
+  FQ.fromPairs
+    [ Tuple 0 0
+    , Tuple 15 54100
+    , Tuple 20 473850
+    ]

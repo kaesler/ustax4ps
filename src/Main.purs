@@ -1,6 +1,7 @@
 module Main where
 
 import Prelude
+
 import CommonTypes (Age(..), FilingStatus(..), unsafeReadFilingStatus)
 import Data.Date (Year)
 import Data.Enum (toEnum)
@@ -13,7 +14,7 @@ import Federal.RMDs (rmdFractionForAge, unsafeRmdFractionForAge)
 import Federal.TaxableSocialSecurity (taxableSocialSecurity, taxableSocialSecurityAdjusted)
 import Federal.Types (standardDeduction)
 import Partial.Unsafe (unsafePartial)
-import Taxes (federalTaxDue, maStateTaxDue, maStateTaxRate, ordinaryIncomeBrackets)
+import Taxes (federalTaxDue, maStateTaxDue, maStateTaxRate, ordinaryIncomeBrackets, qualifiedIncomeBrackets)
 
 print :: forall x. Show x => x -> Effect Unit
 print x = log $ show x
@@ -33,7 +34,7 @@ main = do
   print $ ordinaryIncomeBracketWidth (ordinaryIncomeBrackets Single) (OrdinaryRate 22.0)
   print $ ordinaryRateSuccessor (ordinaryIncomeBrackets HeadOfHousehold) (OrdinaryRate 22.0)
   print $ rmdFractionForAge (Age 76)
-  print $ startOfNonZeroQualifiedRateBracket Single
+  print $ startOfNonZeroQualifiedRateBracket (qualifiedIncomeBrackets Single)
   print $ standardDeduction Single
   print $ taxableSocialSecurity HeadOfHousehold 40000.0 40000.0
   print $ taxableSocialSecurityAdjusted theYear2040 Single 50000.0 40000.0

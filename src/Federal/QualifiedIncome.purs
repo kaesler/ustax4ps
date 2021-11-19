@@ -10,9 +10,9 @@ where
   
 import Prelude
 
-import CommonTypes (FilingStatus(..), OrdinaryIncome, QualifiedIncome)
+import CommonTypes (OrdinaryIncome, QualifiedIncome)
 import Data.Int (toNumber)
-import Data.List (List, foldl, reverse, (!!))
+import Data.List (foldl, reverse, (!!))
 import Data.Map (Map)
 import Data.Map as Map
 import Data.Maybe (fromJust)
@@ -33,8 +33,7 @@ qualifiedRateAsFraction :: QualifiedRate -> Number
 qualifiedRateAsFraction (QualifiedRate r) = toNumber r / 100.0
 
 type QualifiedIncomeBrackets = Map QualifiedRate BracketStart
-
-fromPairs :: Array (Tuple Int Int) ->  QualifiedIncomeBrackets
+fromPairs :: Array (Tuple Int Int) ->  QualifiedIncomeBrackets 
 fromPairs pairs = 
   Map.fromFoldable $
     map f pairs
@@ -42,39 +41,19 @@ fromPairs pairs =
         f :: Tuple Int Int -> Tuple QualifiedRate BracketStart
         f (Tuple rate start) = Tuple (QualifiedRate rate) (BracketStart start)
 
-qualifiedIncomeBrackets :: FilingStatus -> Map QualifiedRate BracketStart
-qualifiedIncomeBrackets Single =
-  fromPairs
-    [ Tuple 0 0
-    , Tuple 15 40400
-    , Tuple 20 445850
-    ]
 
-qualifiedIncomeBrackets HeadOfHousehold =
-  fromPairs
-    [ Tuple 0 0
-    , Tuple 15 54100
-    , Tuple 20 473850
-    ]
-
-
-
-
-
-startOfNonZeroQualifiedRateBracket :: FilingStatus -> Int
-startOfNonZeroQualifiedRateBracket fs =
+startOfNonZeroQualifiedRateBracket :: QualifiedIncomeBrackets -> Int
+startOfNonZeroQualifiedRateBracket brackets =
   let
     -- Note: Safe by inspection of the data.
-    BracketStart n = unsafePartial (fromJust (Map.values (qualifiedIncomeBrackets fs) !! 1))
+    BracketStart n = unsafePartial (fromJust (Map.values brackets !! 1))
   in
     n
 
-applyQualifiedIncomeBrackets :: FilingStatus -> OrdinaryIncome -> QualifiedIncome -> Number
-applyQualifiedIncomeBrackets fs taxableOrdinaryIncome qualifiedIncome =
+applyQualifiedIncomeBrackets :: QualifiedIncomeBrackets -> OrdinaryIncome -> QualifiedIncome -> Number
+applyQualifiedIncomeBrackets brackets taxableOrdinaryIncome qualifiedIncome =
   let
-    brackets = Map.toUnfoldable (qualifiedIncomeBrackets fs) :: List (Tuple QualifiedRate BracketStart)
-
-    bracketsDescending = reverse brackets
+    bracketsDescending = reverse $ Map.toUnfoldable brackets
   in
     third (foldl func (Triple 0.0 qualifiedIncome 0.0) bracketsDescending)
   where

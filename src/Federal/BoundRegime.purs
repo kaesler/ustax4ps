@@ -3,11 +3,12 @@ module Federal.BoundRegime
   ) where
 
 import Prelude
-import Data.Date (Year)
+
 import CommonTypes (FilingStatus, BirthDate, Money)
-import Federal.Regime (Regime)
+import Data.Date (Year)
 import Federal.OrdinaryIncome (OrdinaryIncomeBrackets, fromPairs) as FO
 import Federal.QualifiedIncome (QualifiedIncomeBrackets, fromPairs) as FQ
+import Federal.Regime (Regime)
 
 data BoundRegime
   = BoundRegime
