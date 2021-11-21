@@ -1,5 +1,6 @@
 module TaxMath
   ( nonNeg
+  , nonNegSub
   , roundHalfUp
   ) 
 where
@@ -11,6 +12,9 @@ nonNeg :: Number -> Number
 nonNeg x
   | x < 0.0 = 0.0
   | true = x
+
+nonNegSub :: Number -> Number -> Number
+nonNegSub x y = nonNeg (x - y)
 
 roundHalfUp :: Number -> Number
 roundHalfUp = toNumber <<< round

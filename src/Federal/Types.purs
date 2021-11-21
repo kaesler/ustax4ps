@@ -4,7 +4,7 @@ module Federal.Types(
   PersonalExemptions,
   StandardDeduction(..),
   bracketStartAsNumber,
-  standardDeduction
+  standardDeductionFor
 )
 
 where
@@ -32,10 +32,12 @@ derive instance Ord StandardDeduction
 instance Show StandardDeduction where
   show (StandardDeduction sd) = show sd 
 
+-- TODO: flush
 over65Increment :: Int
 over65Increment = 1350
 
-standardDeduction :: FilingStatus -> StandardDeduction
-standardDeduction HeadOfHousehold = StandardDeduction (18800 + over65Increment)
-standardDeduction Single = StandardDeduction (12550 + over65Increment)
+-- TODO: flush
+standardDeductionFor :: FilingStatus -> StandardDeduction
+standardDeductionFor HeadOfHousehold = StandardDeduction (18800 + over65Increment)
+standardDeductionFor Single = StandardDeduction (12550 + over65Increment)
 

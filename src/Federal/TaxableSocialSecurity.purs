@@ -1,6 +1,6 @@
 module Federal.TaxableSocialSecurity
-  ( taxableSocialSecurityAdjusted
-  , taxableSocialSecurity
+  ( amountTaxableInflationAdjusted
+  , amountTaxable
   ) where
 
 import Prelude
@@ -10,10 +10,10 @@ import Data.Int (toNumber)
 import Data.Date (Year)
 import CommonTypes (CombinedIncome, FilingStatus(..), SSRelevantOtherIncome, SocSec)
 
-taxableSocialSecurityAdjusted :: Year -> FilingStatus -> SocSec -> SSRelevantOtherIncome -> Number
-taxableSocialSecurityAdjusted year filingStatus ssBenefits relevantIncome =
+amountTaxableInflationAdjusted :: Year -> FilingStatus -> SocSec -> SSRelevantOtherIncome -> Number
+amountTaxableInflationAdjusted year filingStatus ssBenefits relevantIncome =
   let
-    unadjusted = taxableSocialSecurity filingStatus ssBenefits relevantIncome
+    unadjusted = amountTaxable filingStatus ssBenefits relevantIncome
 
     adjustmentFactor = 1.0 + (0.03 * toNumber (fromEnum year - 2021))
 
@@ -21,8 +21,8 @@ taxableSocialSecurityAdjusted year filingStatus ssBenefits relevantIncome =
   in
     min adjusted ssBenefits * 0.85
 
-taxableSocialSecurity :: FilingStatus -> SocSec -> SSRelevantOtherIncome -> Number
-taxableSocialSecurity filingStatus ssBenefits relevantIncome =
+amountTaxable :: FilingStatus -> SocSec -> SSRelevantOtherIncome -> Number
+amountTaxable filingStatus ssBenefits relevantIncome =
   let
     lowBase = case filingStatus of
       Single -> 25000.0

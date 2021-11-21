@@ -21,8 +21,8 @@ import Effect (Effect)
 import Effect.Console (log)
 import Federal.OrdinaryIncome (OrdinaryIncomeBrackets, applyOrdinaryIncomeBrackets, fromPairs, ordinaryRate) as FO
 import Federal.QualifiedIncome (QualifiedIncomeBrackets, applyQualifiedIncomeBrackets, fromPairs) as FQ
-import Federal.TaxableSocialSecurity (taxableSocialSecurity)
-import Federal.Types (BracketStart(..), StandardDeduction(..), standardDeduction)
+import Federal.TaxableSocialSecurity (amountTaxable) as TSS
+import Federal.Types (BracketStart(..), StandardDeduction(..), standardDeductionFor)
 import TaxMath (nonNeg)
 
 newtype FederalTaxResults
@@ -57,9 +57,9 @@ federalTaxResults year filingStatus socSec ordinaryIncome qualifiedIncome =
   let
     ssRelevantOtherIncome = ordinaryIncome + qualifiedIncome
 
-    taxableSocSec = taxableSocialSecurity filingStatus socSec ssRelevantOtherIncome
+    taxableSocSec = TSS.amountTaxable filingStatus socSec ssRelevantOtherIncome
 
-    StandardDeduction sd = standardDeduction filingStatus
+    StandardDeduction sd = standardDeductionFor filingStatus
 
     taxableOrdinaryIncome = nonNeg (taxableSocSec + ordinaryIncome - toNumber sd)
 
@@ -70,7 +70,7 @@ federalTaxResults year filingStatus socSec ordinaryIncome qualifiedIncome =
     FederalTaxResults
       { ssRelevantOtherIncome: ssRelevantOtherIncome
       , taxableSocSec: taxableSocSec
-      , stdDeduction: standardDeduction filingStatus
+      , stdDeduction: standardDeductionFor filingStatus
       , taxableOrdinaryIncome: taxableOrdinaryIncome
       , taxOnOrdinaryIncome: taxOnOrdinaryIncome
       , taxOnQualifiedIncome: taxOnQualifiedIncome

@@ -14,7 +14,7 @@ import Effect.Aff (Aff, launchAff_)
 import Effect.Class (liftEffect)
 import Effect.Console (log)
 import Federal.OrdinaryIncome (OrdinaryRate, applyOrdinaryIncomeBrackets, incomeToEndOfOrdinaryBracket, ordinaryRatesExceptTop, taxToEndOfOrdinaryIncomeBracket)
-import Federal.Types (StandardDeduction(..), standardDeduction)
+import Federal.Types (StandardDeduction(..), standardDeductionFor)
 import Partial.Unsafe (unsafePartial)
 import PropertyTests (runPropertyTests)
 import TaxMath (nonNeg, roundHalfUp)
@@ -51,7 +51,7 @@ correctAtBracketBoundaries =
 assertCorrectTaxDueAtBracketBoundary :: FilingStatus -> OrdinaryRate -> Expectation
 assertCorrectTaxDueAtBracketBoundary filingStatus bracketRate =
   let
-    stdDed = standardDeduction filingStatus
+    stdDed = standardDeductionFor filingStatus
 
     StandardDeduction deduction = stdDed
 
@@ -71,7 +71,7 @@ assertCorrectTaxDueAtBracketBoundary filingStatus bracketRate =
 assertCorrectTaxDueAtBracketBoundaries :: FilingStatus -> Expectation
 assertCorrectTaxDueAtBracketBoundaries filingStatus =
   let
-    stdDed = standardDeduction filingStatus
+    stdDed = standardDeductionFor filingStatus
 
     brackets = ordinaryIncomeBrackets filingStatus
 
@@ -81,7 +81,7 @@ assertCorrectTaxDueAtBracketBoundaries filingStatus =
 
     expectedTaxes = map (taxToEndOfOrdinaryIncomeBracket brackets) rates
 
-    StandardDeduction deduction = standardDeduction filingStatus
+    StandardDeduction deduction = standardDeductionFor filingStatus
 
     federalExpectations = Array.zipWith (curry taxDueIsAsExpected) incomes expectedTaxes
       where
