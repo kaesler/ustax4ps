@@ -11,7 +11,7 @@ import Effect.Console (log)
 import Federal.OrdinaryIncome (OrdinaryRate(..), applyOrdinaryIncomeBrackets, ordinaryIncomeBracketStart, ordinaryIncomeBracketWidth, ordinaryRateSuccessor, unsafeOrdinaryRateSuccessor)
 import Federal.QualifiedIncome (startOfNonZeroQualifiedRateBracket)
 import Federal.RMDs (rmdFractionForAge, unsafeRmdFractionForAge)
-import Federal.TaxableSocialSecurity (amountTaxable, amountTaxableInflationAdjusted)
+import Federal.TaxableSocialSecurity as TSS
 import Federal.Types (standardDeductionFor)
 import Partial.Unsafe (unsafePartial)
 import Taxes (federalTaxDue, maStateTaxDue, maStateTaxRate, ordinaryIncomeBrackets, qualifiedIncomeBrackets)
@@ -36,8 +36,8 @@ main = do
   print $ rmdFractionForAge (Age 76)
   print $ startOfNonZeroQualifiedRateBracket (qualifiedIncomeBrackets Single)
   print $ standardDeductionFor Single
-  print $ amountTaxable HeadOfHousehold 40000.0 40000.0
-  print $ amountTaxableInflationAdjusted theYear2040 Single 50000.0 40000.0
+  print $ TSS.amountTaxable HeadOfHousehold 40000.0 40000.0
+  print $ TSS.amountTaxableInflationAdjusted theYear2040 Single 50000.0 40000.0
   print $ OrdinaryRate 22.0
   print $ unsafeOrdinaryRateSuccessor (ordinaryIncomeBrackets Single) (OrdinaryRate 22.0)
   print $ unsafeReadFilingStatus "Single"
