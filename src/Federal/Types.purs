@@ -1,5 +1,7 @@
 module Federal.Types(
   BracketStart(..),
+  ItemizedDeductions,
+  PersonalExemptions,
   StandardDeduction(..),
   bracketStartAsNumber,
   standardDeduction
@@ -12,6 +14,9 @@ import Prelude (class Eq, class Ord, class Show, show, (+))
 import Data.Int (toNumber)
   
 import CommonTypes
+
+type ItemizedDeductions = Money
+type PersonalExemptions = Int
 
 newtype BracketStart = BracketStart Int
 derive instance Eq BracketStart

@@ -1,17 +1,20 @@
 module Federal.Regime
   ( Regime (..),
+    invalidRegime,
     lastYearKnown,
-    requireRegimeValidInYear
+    requireRegimeValidInYear,
+    unsafeMakeYear
   )
 where
 
-import Prelude (class Eq, class Ord, class Show, Unit, show, unit, ($), (<), (>), (>=), (||))
-import Data.Date( Year)
 import Data.Enum
-import Data.Interpolate(i)
+
+import Data.Date (Year)
+import Data.Interpolate (i)
 import Data.Maybe (fromJust)
-import Effect.Exception.Unsafe(unsafeThrow)
+import Effect.Exception.Unsafe (unsafeThrow)
 import Partial.Unsafe (unsafePartial)
+import Prelude (class Eq, class Ord, class Show, Unit, show, unit, ($), (<), (>), (>=), (||))
 
 data Regime = Trump | NonTrump
 derive instance Eq Regime
@@ -20,9 +23,13 @@ instance Show Regime where
   show Trump = " Trump"
   show NonTrump = "NonTrump"
 
+-- TODO: restrict to be > 2017
+unsafeMakeYear :: Int -> Year
+unsafeMakeYear i = unsafePartial $ fromJust $ toEnum i
+
 lastYearKnown :: Regime -> Year
-lastYearKnown Trump = unsafePartial $ fromJust $ toEnum 2021
-lastYearKnown NonTrump = unsafePartial $ fromJust $ toEnum 2017
+lastYearKnown Trump = unsafeMakeYear 2021
+lastYearKnown NonTrump = unsafeMakeYear 2017
 
 requireRegimeValidInYear :: Regime -> Year -> Unit
 requireRegimeValidInYear r y =
@@ -34,6 +41,6 @@ regimeValidInYear :: Regime -> Year -> Boolean
 regimeValidInYear Trump y = fromEnum y >= 2018
 regimeValidInYear NonTrump y = fromEnum y < 2018 || fromEnum y > 2025
 
-invalidRegime :: Regime -> Year -> Unit
+invalidRegime :: forall a. Regime -> Year -> a
 invalidRegime regime year = 
   unsafeThrow $ i "Regime " (show regime) " not valid in year " (show year)

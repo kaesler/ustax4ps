@@ -10,6 +10,7 @@ module CommonTypes(
   QualifiedIncome,
   SSRelevantOtherIncome,
   SocSec,
+  isUnmarried,
   unsafeReadFilingStatus
 )
 where
@@ -53,3 +54,5 @@ instance Read FilingStatus where
 unsafeReadFilingStatus :: String -> FilingStatus
 unsafeReadFilingStatus s = unsafePartial $ fromJust (read s) :: FilingStatus
 
+isUnmarried :: FilingStatus -> Boolean
+isUnmarried _ = true

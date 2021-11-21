@@ -28,6 +28,8 @@ third (Triple _ _ a) = a
 newtype QualifiedRate = QualifiedRate Int
 derive instance Eq QualifiedRate
 derive instance Ord QualifiedRate
+instance Show QualifiedRate where
+  show (QualifiedRate r) = show r
 
 qualifiedRateAsFraction :: QualifiedRate -> Number
 qualifiedRateAsFraction (QualifiedRate r) = toNumber r / 100.0
