@@ -97,11 +97,6 @@ perPersonExemptionFor :: Regime -> Int -> Money
 perPersonExemptionFor NonTrump _ = 4050.0
 perPersonExemptionFor Trump _ = 0.0
 
-year2017 :: Year
-year2017 = unsafeMakeYear 2017
-year2021 :: Year
-year2021 = unsafeMakeYear 2017
-
 unAdjustedStdDeductionFor :: Regime -> Int -> FilingStatus -> Int
 unAdjustedStdDeductionFor NonTrump 2017 Single = 6350
 unAdjustedStdDeductionFor NonTrump 2017 HeadOfHousehold = 9350
