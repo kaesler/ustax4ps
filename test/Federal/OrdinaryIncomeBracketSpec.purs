@@ -1,5 +1,5 @@
-module PropertyTests
-  ( runPropertyTests
+module Federal.OrdinaryIncomeBracketSpec
+  ( runAllTests
   ) where
 
 import Prelude
@@ -10,14 +10,20 @@ import CommonTypes (FilingStatus(..), OrdinaryIncome, SSRelevantOtherIncome, Soc
 import Federal.OrdinaryIncome (applyOrdinaryIncomeBrackets, ordinaryRateAsFraction, topRateOnOrdinaryIncome)
 import Test.QuickCheck (class Arbitrary, quickCheck)
 import Test.QuickCheck.Gen (choose, elements)
+-- TODO: redirect to new code
 import Taxes (ordinaryIncomeBrackets)
 
-runPropertyTests :: Effect Unit
-runPropertyTests = do
+runAllTests :: Effect Unit
+runAllTests = do
   log "Running prop tests"
   -- TODO: try using quickCheckGen here and do away with the
   -- TestXXX newtypes
+  log "  prop_monotonic"
   quickCheck prop_monotonic
+  log "  prop_singlePaysMoreTax"
+  quickCheck prop_singlePaysMoreTax
+  log "  prop_topRateIsNotExceeded"
+  quickCheck prop_topRateIsNotExceeded
 
 --Avoid orphan type class instances by wrapping the types in newtypes.
 data TestFilingStatus

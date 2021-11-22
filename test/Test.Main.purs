@@ -16,8 +16,9 @@ import Effect.Console (log)
 import Federal.OrdinaryIncome (OrdinaryRate, applyOrdinaryIncomeBrackets, incomeToEndOfOrdinaryBracket, ordinaryRatesExceptTop, taxToEndOfOrdinaryIncomeBracket)
 import Federal.Types (StandardDeduction(..), standardDeductionFor)
 import Partial.Unsafe (unsafePartial)
-import PropertyTests (runPropertyTests)
+import Federal.OrdinaryIncomeBracketSpec as OrdinaryIncomeBracketSpec
 import TaxMath (nonNeg, roundHalfUp)
+-- TODO: redirect to new code
 import Taxes (federalTaxDue, maStateTaxDue, ordinaryIncomeBrackets)
 import Test.Spec (Spec, it, describe)
 import Test.Spec.Assertions (shouldEqual)
@@ -30,7 +31,7 @@ type Expectation
 
 main :: Effect Unit
 main = do
-  runPropertyTests
+  OrdinaryIncomeBracketSpec.runAllTests
   log "Running Spec tests"
   launchAff_
     $ runSpec [ consoleReporter ] do
