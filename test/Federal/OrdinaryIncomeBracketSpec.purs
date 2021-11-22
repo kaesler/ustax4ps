@@ -3,13 +3,24 @@ module Federal.OrdinaryIncomeBracketSpec
   ) where
 
 import Prelude
+import Data.Array as Array
 import Data.Array.NonEmpty.Internal (NonEmptyArray(..))
+import Data.Int (toNumber)
+import Data.Traversable (sequence)
+import Data.Tuple (Tuple(..), curry)
+import Effect.Aff (Aff, launchAff_)
 import Effect (Effect)
 import Effect.Console (log)
 import CommonTypes (FilingStatus(..), OrdinaryIncome, SSRelevantOtherIncome, SocSec)
-import Federal.OrdinaryIncome (applyOrdinaryIncomeBrackets, ordinaryRateAsFraction, topRateOnOrdinaryIncome)
+import Federal.OrdinaryIncome (applyOrdinaryIncomeBrackets, incomeToEndOfOrdinaryBracket, ordinaryRateAsFraction, ordinaryRatesExceptTop, taxToEndOfOrdinaryIncomeBracket, topRateOnOrdinaryIncome)
+import Federal.Types (StandardDeduction(..), standardDeductionFor)
+import TaxMath (nonNeg, roundHalfUp)
 import Test.QuickCheck (class Arbitrary, quickCheck)
 import Test.QuickCheck.Gen (choose, elements)
+import Test.Spec (Spec, it, describe)
+import Test.Spec.Assertions (shouldEqual)
+import Test.Spec.Reporter.Console (consoleReporter)
+import Test.Spec.Runner (runSpec)
 -- TODO: redirect to new code
 import Taxes (ordinaryIncomeBrackets)
 
@@ -24,6 +35,12 @@ runAllTests = do
   quickCheck prop_singlePaysMoreTax
   log "  prop_topRateIsNotExceeded"
   quickCheck prop_topRateIsNotExceeded
+  log "  prop_zeroTaxOnlyOnZeroIncome"
+  quickCheck prop_zeroTaxOnlyOnZeroIncome
+  log "Running Spec tests"
+  launchAff_
+    $ runSpec [ consoleReporter ] do
+        correctAtBracketBoundaries
 
 --Avoid orphan type class instances by wrapping the types in newtypes.
 data TestFilingStatus
@@ -74,3 +91,43 @@ prop_topRateIsNotExceeded = \(TestFilingStatus fs) (TestOrdinaryIncome income) -
 prop_zeroTaxOnlyOnZeroIncome :: TestFilingStatus -> TestOrdinaryIncome -> Boolean
 prop_zeroTaxOnlyOnZeroIncome = \(TestFilingStatus fs) (TestOrdinaryIncome income) ->
   applyOrdinaryIncomeBrackets (ordinaryIncomeBrackets fs) income /= 0.0 || income == 0.0
+
+correctAtBracketBoundaries :: Spec Unit
+correctAtBracketBoundaries =
+  describe "Correct at bracket boundaries" do
+    it "Correct at bracket bundaries for Single" do
+      assertCorrectTaxDueAtBracketBoundaries Single
+    it "Correct at bracket boundaries for HeadOfHousehold" do
+      assertCorrectTaxDueAtBracketBoundaries HeadOfHousehold
+
+type Expectation
+  = Aff Unit
+
+assertCorrectTaxDueAtBracketBoundaries :: FilingStatus -> Expectation
+assertCorrectTaxDueAtBracketBoundaries filingStatus =
+  let
+    stdDed = standardDeductionFor filingStatus
+
+    brackets = ordinaryIncomeBrackets filingStatus
+
+    rates = ordinaryRatesExceptTop brackets
+
+    incomes = map (incomeToEndOfOrdinaryBracket brackets stdDed) rates
+
+    expectedTaxes = map (taxToEndOfOrdinaryIncomeBracket brackets) rates
+
+    StandardDeduction deduction = standardDeductionFor filingStatus
+
+    federalExpectations = Array.zipWith (curry taxDueIsAsExpected) incomes expectedTaxes
+      where
+      taxDueIsAsExpected :: (Tuple Number Number) -> Expectation
+      taxDueIsAsExpected (Tuple income expectedTax) =
+        let
+          taxableIncome = nonNeg $ income - toNumber deduction
+
+          computedTax = roundHalfUp $ applyOrdinaryIncomeBrackets brackets taxableIncome
+        in
+          do
+            computedTax `shouldEqual` roundHalfUp expectedTax
+  in
+    (sequence federalExpectations) *> (pure unit)
