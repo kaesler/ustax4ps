@@ -1,4 +1,4 @@
-module TestDataFromScala
+module GoldenTestCasesFromScala
   ( TestCase(..)
   , cases
   ) where

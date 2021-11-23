@@ -18,7 +18,7 @@ import Test.Spec (Spec, it, describe)
 import Test.Spec.Assertions (shouldEqual)
 import Test.Spec.Reporter.Console (consoleReporter)
 import Test.Spec.Runner (runSpec)
-import TestDataFromScala (TestCase(..), cases)
+import GoldenTestCasesFromScala (TestCase(..), cases)
 
 runAllTests :: Effect Unit
 runAllTests = do

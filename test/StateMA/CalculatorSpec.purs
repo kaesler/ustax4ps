@@ -1,2 +1,0 @@
-module StateMA.CalculatorSpec
-where

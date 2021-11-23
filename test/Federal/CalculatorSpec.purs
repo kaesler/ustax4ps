@@ -1,2 +1,0 @@
-module Federal.CalculatorSpec
-where
