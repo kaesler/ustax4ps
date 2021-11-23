@@ -12,6 +12,7 @@ import Data.Traversable (sequence)
 import Data.Tuple (Tuple(..), curry)
 import Effect (Effect)
 import Effect.Aff (Aff, launchAff_)
+import Effect.Class(liftEffect)
 import Effect.Console (log)
 import Federal.OrdinaryIncome (applyOrdinaryIncomeBrackets, incomeToEndOfOrdinaryBracket, ordinaryRateAsFraction, ordinaryRatesExceptTop, taxToEndOfOrdinaryIncomeBracket, topRateOnOrdinaryIncome)
 import Federal.Types (StandardDeduction(..), standardDeductionFor)
@@ -23,6 +24,10 @@ import Test.Spec (Spec, it, describe)
 import Test.Spec.Assertions (shouldEqual)
 import Test.Spec.Reporter.Console (consoleReporter)
 import Test.Spec.Runner (defaultConfig, runSpec')
+
+-- TODO
+--foo :: Aff Unit
+--foo = liftEffect $ quickCheck prop_monotonic
 
 runAllTests :: Effect Unit
 runAllTests = do

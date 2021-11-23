@@ -1,10 +1,11 @@
 module GoldenTestsAgainstScalaImpl
   ( runAllTests
+  , logInAff
   ) where
 
 import Prelude
 import CommonTypes (Money)
-import Data.Date (Date, Day, Month, Year, canonicalDate)
+import Data.Date (Date, Year, canonicalDate)
 import Data.Enum (toEnum)
 import Data.Int (toNumber)
 import Data.Maybe (fromJust)
@@ -13,12 +14,12 @@ import Effect (Effect)
 import Effect.Aff (Aff, launchAff_)
 import Effect.Class (liftEffect)
 import Effect.Console (log)
-import Federal.Regime (Regime(..))
 import Federal.Calculator (FederalTaxResults(..))
 import Federal.Calculator as FC
+import Federal.Regime (Regime(..))
+import GoldenTestCasesFromScala as GTC
 import Partial.Unsafe (unsafePartial)
 import StateMA.Calculator as MA
-import GoldenTestCasesFromScala as GTC
 import TaxMath (roundHalfUp)
 import Test.Spec (Spec, it, describe)
 import Test.Spec.Assertions (shouldEqual)
@@ -27,6 +28,8 @@ import Test.Spec.Runner (runSpec)
 
 runAllTests :: Effect Unit
 runAllTests = do
+  -- TODO: by default this exits the program at the end.
+  -- Best solution might be to pull the prop tests into Aff using liftEffect
   launchAff_
     $ runSpec [ consoleReporter ] do
         testsAgainstScala
@@ -37,14 +40,17 @@ type Expectation
 year2021 :: Year
 year2021 = unsafePartial fromJust $ toEnum 2021
 
-october :: Month
-october = unsafePartial fromJust $ toEnum 10
-
-second :: Day
-second = unsafePartial fromJust $ toEnum 2
+year1955 :: Year
+year1955 = unsafePartial fromJust $ toEnum 1955
 
 birthDate :: Date
-birthDate = canonicalDate year2021 october second
+birthDate =
+  let
+    october = unsafePartial fromJust $ toEnum 10
+
+    second = unsafePartial fromJust $ toEnum 2
+  in
+    canonicalDate year1955 october second
 
 itemized :: Money
 itemized = 0.0
@@ -73,7 +79,7 @@ testsAgainstScala =
         calculated = roundHalfUp $ results.taxOnOrdinaryIncome + results.taxOnQualifiedIncome
       in
         do
-          logInAff "here we are doing something"
+          --logInAff $ show results 
           calculated `shouldEqual` (toNumber tc.federalTaxDue)
 
     federalExpectations :: Array Expectation
