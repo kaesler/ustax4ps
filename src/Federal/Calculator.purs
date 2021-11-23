@@ -1,6 +1,6 @@
 module Federal.Calculator(
   TaxCalculator,
-  FederalTaxResults,
+  FederalTaxResults(..),
   makeCalculator,
   taxDue,
   taxDueDebug,

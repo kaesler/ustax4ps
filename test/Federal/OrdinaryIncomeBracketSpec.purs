@@ -3,26 +3,26 @@ module Federal.OrdinaryIncomeBracketSpec
   ) where
 
 import Prelude
+
+import CommonTypes (FilingStatus(..), OrdinaryIncome, SSRelevantOtherIncome, SocSec)
 import Data.Array as Array
 import Data.Array.NonEmpty.Internal (NonEmptyArray(..))
 import Data.Int (toNumber)
 import Data.Traversable (sequence)
 import Data.Tuple (Tuple(..), curry)
-import Effect.Aff (Aff, launchAff_)
 import Effect (Effect)
+import Effect.Aff (Aff, launchAff_)
 import Effect.Console (log)
-import CommonTypes (FilingStatus(..), OrdinaryIncome, SSRelevantOtherIncome, SocSec)
 import Federal.OrdinaryIncome (applyOrdinaryIncomeBrackets, incomeToEndOfOrdinaryBracket, ordinaryRateAsFraction, ordinaryRatesExceptTop, taxToEndOfOrdinaryIncomeBracket, topRateOnOrdinaryIncome)
 import Federal.Types (StandardDeduction(..), standardDeductionFor)
 import TaxMath (nonNeg, roundHalfUp)
+import Taxes (ordinaryIncomeBrackets)
 import Test.QuickCheck (class Arbitrary, quickCheck)
 import Test.QuickCheck.Gen (choose, elements)
 import Test.Spec (Spec, it, describe)
 import Test.Spec.Assertions (shouldEqual)
 import Test.Spec.Reporter.Console (consoleReporter)
-import Test.Spec.Runner (runSpec)
--- TODO: redirect to new code
-import Taxes (ordinaryIncomeBrackets)
+import Test.Spec.Runner (defaultConfig, runSpec')
 
 runAllTests :: Effect Unit
 runAllTests = do
@@ -38,9 +38,15 @@ runAllTests = do
   log "  prop_zeroTaxOnlyOnZeroIncome"
   quickCheck prop_zeroTaxOnlyOnZeroIncome
   log "Running Spec tests"
+
   launchAff_
-    $ runSpec [ consoleReporter ] do
+    $ runSpec' config [ consoleReporter ] do
         correctAtBracketBoundaries
+      -- Don't exit the program after the test.
+      where config = defaultConfig { exit = false}
+
+--logInAff :: String -> Aff Unit
+--logInAff msg = liftEffect $ log msg
 
 --Avoid orphan type class instances by wrapping the types in newtypes.
 data TestFilingStatus
