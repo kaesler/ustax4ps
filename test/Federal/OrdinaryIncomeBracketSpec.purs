@@ -39,6 +39,8 @@ runAllTests = do
   quickCheck prop_zeroTaxOnlyOnZeroIncome
   log "Running Spec tests"
 
+  -- TODO: I think because this runs async we don't fail the
+  -- runAllTests if it fails. Fix this somehow.
   launchAff_
     $ runSpec' config [ consoleReporter ] do
         correctAtBracketBoundaries
