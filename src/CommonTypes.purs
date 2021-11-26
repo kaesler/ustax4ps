@@ -34,8 +34,7 @@ type SocSec = Money
 newtype Age = Age Int
 derive instance Eq Age
 derive instance Ord Age
-instance showAge :: Show Age where
-  show (Age i) = show i
+derive newtype instance Show Age
 
 data FilingStatus = HeadOfHousehold | Single
 derive instance Eq FilingStatus

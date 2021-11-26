@@ -57,8 +57,8 @@ fromPairs tuples =
         f (Tuple rate start) = Tuple (OrdinaryRate rate) (BracketStart start)
 
 ordinaryIncomeBracketStart :: OrdinaryIncomeBrackets -> OrdinaryRate -> BracketStart
-ordinaryIncomeBracketStart brackets ordinaryRate = 
-  unsafePartial $ fromJust $ Map.lookup ordinaryRate brackets
+ordinaryIncomeBracketStart brackets rate = 
+  unsafePartial $ fromJust $ Map.lookup rate brackets
 
 ordinaryRateSuccessor :: OrdinaryIncomeBrackets -> OrdinaryRate -> Maybe OrdinaryRate
 ordinaryRateSuccessor brackets rate =
@@ -109,7 +109,7 @@ taxToEndOfOrdinaryIncomeBracket brackets bracketRate =
 
     taxesDue = map taxForBracket pairs
       where
-      taxForBracket (Tuple ordinaryRate width) = (toNumber width) * (ordinaryRateAsFraction ordinaryRate)
+      taxForBracket (Tuple rate width) = (toNumber width) * (ordinaryRateAsFraction rate)
   in
     Data.sum taxesDue
 

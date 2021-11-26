@@ -18,8 +18,7 @@ type PersonalExemptions = Int
 newtype BracketStart = BracketStart Int
 derive instance Eq BracketStart
 derive instance Ord BracketStart
-instance Show BracketStart where
-  show (BracketStart s) = show s
+derive newtype instance Show BracketStart
 bracketStartAsNumber :: BracketStart -> Number
 bracketStartAsNumber (BracketStart i) = toNumber i
 
