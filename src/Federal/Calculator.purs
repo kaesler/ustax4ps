@@ -20,7 +20,7 @@ import Federal.QualifiedIncome (applyQualifiedIncomeBrackets)
 import Federal.BoundRegime (BoundRegime(..), bindRegime, netDeduction, personalExemptionDeduction, standardDeduction)
 import Federal.Regime (Regime)
 import Federal.TaxableSocialSecurity as TSS
-import Federal.Types (ItemizedDeductions, PersonalExemptions, StandardDeduction(..))
+import Federal.Types (ItemizedDeductions, PersonalExemptions, StandardDeduction)
 import TaxMath(nonNegSub)
 
 type TaxCalculator = SocSec -> OrdinaryIncome -> QualifiedIncome -> ItemizedDeductions -> FederalTaxResults
@@ -30,7 +30,6 @@ makeCalculator br socSec ordinaryIncome qualifiedIncome itemized =
   let BoundRegime brRec = br
       ssRelevantOtherIncome = ordinaryIncome + qualifiedIncome
       taxableSocSec = TSS.amountTaxable brRec.filingStatus socSec ssRelevantOtherIncome
-      StandardDeduction sd = standardDeduction br
       taxableOrdinaryIncome = (taxableSocSec + ordinaryIncome) `nonNegSub` (netDeduction br) itemized
       taxOnOrdinaryIncome = applyOrdinaryIncomeBrackets brRec.ordinaryIncomeBrackets taxableOrdinaryIncome
       taxOnQualifiedIncome = applyQualifiedIncomeBrackets brRec.qualifiedIncomeBrackets taxableOrdinaryIncome qualifiedIncome

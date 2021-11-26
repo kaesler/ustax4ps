@@ -4,11 +4,6 @@ module GoldenTestsAgainstScalaImpl
   ) where
 
 import Prelude
-import CommonTypes (Money)
-import Data.Date (Date, Year, canonicalDate)
-import Data.Enum (toEnum)
-import Data.Int (toNumber)
-import Data.Maybe (fromJust)
 import Data.Traversable (sequence)
 import Effect (Effect)
 import Effect.Aff (Aff, launchAff_)
@@ -16,9 +11,7 @@ import Effect.Class (liftEffect)
 import Effect.Console (log)
 import Federal.Calculator (FederalTaxResults(..))
 import Federal.Calculator as FC
-import Federal.Regime (Regime(..))
 import GoldenTestCasesFromScala as GTC
-import Partial.Unsafe (unsafePartial)
 import StateMA.Calculator as MA
 import TaxMath (roundHalfUp)
 import Test.Spec (Spec, it, describe)
@@ -37,24 +30,6 @@ runAllTests = do
 type Expectation
   = Aff Unit
 
-year2021 :: Year
-year2021 = unsafePartial fromJust $ toEnum 2021
-
-year1955 :: Year
-year1955 = unsafePartial fromJust $ toEnum 1955
-
-birthDate :: Date
-birthDate =
-  let
-    october = unsafePartial fromJust $ toEnum 10
-
-    second = unsafePartial fromJust $ toEnum 2
-  in
-    canonicalDate year1955 october second
-
-itemized :: Money
-itemized = 0.0
-
 logInAff :: String -> Aff Unit
 logInAff msg = liftEffect $ log msg
 
@@ -66,21 +41,21 @@ testsAgainstScala =
       let
         FederalTaxResults results =
           FC.taxResults
-            Trump
-            year2021
+            tc.regime
+            tc.year
             tc.filingStatus
-            birthDate
-            (tc.dependents + 1)
-            (toNumber tc.socSec)
-            (toNumber tc.ordinaryIncomeNonSS)
-            (toNumber tc.qualifiedIncome)
-            itemized
+            tc.birthDate
+            tc.personalExemptions
+            tc.socSec
+            tc.ordinaryIncomeNonSS
+            tc.qualifiedIncome
+            tc.itemizedDeductions
 
         calculated = roundHalfUp $ results.taxOnOrdinaryIncome + results.taxOnQualifiedIncome
       in
         do
           --logInAff $ show results 
-          calculated `shouldEqual` (toNumber tc.federalTaxDue)
+          calculated `shouldEqual` tc.federalTaxDue
 
     federalExpectations :: Array Expectation
     federalExpectations = map makeFederalExpectation GTC.cases
@@ -91,10 +66,12 @@ testsAgainstScala =
     makeStateExpectation :: GTC.TestCase -> Expectation
     makeStateExpectation (GTC.TestCase tc) =
       let
-        calculated = roundHalfUp $ MA.taxDue year2021 tc.dependents tc.filingStatus (toNumber (tc.ordinaryIncomeNonSS + tc.qualifiedIncome))
+        dependents = if tc.personalExemptions <= 0 then 0 else tc.personalExemptions - 1
+
+        calculated = roundHalfUp $ MA.taxDue tc.year dependents tc.filingStatus (tc.ordinaryIncomeNonSS + tc.qualifiedIncome)
       in
         do
-          calculated `shouldEqual` (toNumber tc.stateTaxDue)
+          calculated `shouldEqual` tc.stateTaxDue
 
     stateExpectations :: Array Expectation
     stateExpectations = map makeStateExpectation GTC.cases

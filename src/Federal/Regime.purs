@@ -2,8 +2,7 @@ module Federal.Regime
   ( Regime (..),
     invalidRegime,
     lastYearKnown,
-    requireRegimeValidInYear,
-    unsafeMakeYear
+    requireRegimeValidInYear
   )
 where
 
@@ -11,10 +10,9 @@ import Data.Enum
 
 import Data.Date (Year)
 import Data.Interpolate (i)
-import Data.Maybe (fromJust)
 import Effect.Exception.Unsafe (unsafeThrow)
-import Partial.Unsafe (unsafePartial)
 import Prelude (class Eq, class Ord, class Show, Unit, show, unit, ($), (<), (>), (>=), (||))
+import UnsafeDates (unsafeMakeYear)
 
 data Regime = Trump | NonTrump
 derive instance Eq Regime
@@ -22,10 +20,6 @@ derive instance Ord Regime
 instance Show Regime where
   show Trump = " Trump"
   show NonTrump = "NonTrump"
-
--- TODO: restrict to be > 2017
-unsafeMakeYear :: Int -> Year
-unsafeMakeYear i = unsafePartial $ fromJust $ toEnum i
 
 lastYearKnown :: Regime -> Year
 lastYearKnown Trump = unsafeMakeYear 2021

@@ -1,11 +1,12 @@
 module StateMA.Calculator
   ( taxDue
+  , taxRate
   ) where
 
 import Prelude
-import CommonTypes (FilingStatus(HeadOfHousehold), MassachusettsGrossIncome)
 import Data.Date (Year)
 import Data.Int (toNumber)
+import CommonTypes (FilingStatus(HeadOfHousehold), MassachusettsGrossIncome)
 import TaxMath (nonNegSub)
 
 taxRate :: Number

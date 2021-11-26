@@ -3,16 +3,13 @@ module Federal.Types(
   ItemizedDeductions,
   PersonalExemptions,
   StandardDeduction(..),
-  bracketStartAsNumber,
-  standardDeductionFor
+  bracketStartAsNumber
 )
 
 where
 
-import Prelude (class Eq, class Ord, class Show, show, (+))
-
+import Prelude (class Eq, class Ord, class Show, show)
 import Data.Int (toNumber)
-  
 import CommonTypes
 
 type ItemizedDeductions = Money
@@ -32,12 +29,4 @@ derive instance Ord StandardDeduction
 instance Show StandardDeduction where
   show (StandardDeduction sd) = show sd 
 
--- TODO: flush
-over65Increment :: Int
-over65Increment = 1350
-
--- TODO: flush
-standardDeductionFor :: FilingStatus -> StandardDeduction
-standardDeductionFor HeadOfHousehold = StandardDeduction (18800 + over65Increment)
-standardDeductionFor Single = StandardDeduction (12550 + over65Increment)
 

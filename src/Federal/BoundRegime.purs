@@ -1,25 +1,26 @@
 module Federal.BoundRegime
-  ( BoundRegime(..),
-    bindRegime,
-    netDeduction,
-    personalExemptionDeduction,
-    standardDeduction
-  ) where
+  ( BoundRegime(..)
+  , bindRegime
+  , netDeduction
+  , personalExemptionDeduction
+  , standardDeduction
+  )
+  where
 
 import Prelude
-
-import CommonTypes (BirthDate, FilingStatus(..), Money, isUnmarried)
 import Data.Date (Year)
 import Data.Date as Date
 import Data.Enum (fromEnum)
 import Data.Int (toNumber)
 import Data.Tuple (Tuple(..))
+import CommonTypes (BirthDate, FilingStatus(..), Money, isUnmarried)
 import Federal.OrdinaryIncome (OrdinaryIncomeBrackets)
 import Federal.OrdinaryIncome (fromPairs) as FO
 import Federal.QualifiedIncome (QualifiedIncomeBrackets)
 import Federal.QualifiedIncome (fromPairs) as FQ
-import Federal.Regime (Regime(..), invalidRegime, unsafeMakeYear)
+import Federal.Regime (Regime(..), invalidRegime)
 import Federal.Types (ItemizedDeductions, PersonalExemptions, StandardDeduction(..))
+import UnsafeDates (unsafeMakeYear)
 
 newtype BoundRegime
   = BoundRegime
@@ -31,7 +32,7 @@ newtype BoundRegime
       --
       -- The following are inflatable. They may get adjusted to estimate the
       -- the tax regime for a future year, based on estimated inflation.
-    ,  perPersonExemption :: Money
+    , perPersonExemption :: Money
     , unadjustedStandardDeduction :: Int
     , adjustmentWhenOver65 :: Int
     , adjustmentWhenOver65AndSingle :: Int

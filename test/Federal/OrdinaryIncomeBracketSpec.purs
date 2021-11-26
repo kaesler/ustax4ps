@@ -3,21 +3,23 @@ module Federal.OrdinaryIncomeBracketSpec
   ) where
 
 import Prelude
-
-import CommonTypes (FilingStatus(..), OrdinaryIncome, SSRelevantOtherIncome, SocSec)
 import Data.Array as Array
 import Data.Array.NonEmpty.Internal (NonEmptyArray(..))
+import Data.Date (Date, Year)
+import Data.Enum (fromEnum)
 import Data.Int (toNumber)
 import Data.Traversable (sequence)
 import Data.Tuple (Tuple(..), curry)
 import Effect (Effect)
 import Effect.Aff (Aff, launchAff_)
-import Effect.Class(liftEffect)
 import Effect.Console (log)
-import Federal.OrdinaryIncome (applyOrdinaryIncomeBrackets, incomeToEndOfOrdinaryBracket, ordinaryRateAsFraction, ordinaryRatesExceptTop, taxToEndOfOrdinaryIncomeBracket, topRateOnOrdinaryIncome)
-import Federal.Types (StandardDeduction(..), standardDeductionFor)
+import CommonTypes (FilingStatus(..), OrdinaryIncome, SSRelevantOtherIncome, SocSec)
+import Federal.BoundRegime (BoundRegime(..), bindRegime, standardDeduction)
+import Federal.OrdinaryIncome (OrdinaryIncomeBrackets, applyOrdinaryIncomeBrackets, incomeToEndOfOrdinaryBracket, ordinaryRateAsFraction, ordinaryRatesExceptTop, taxToEndOfOrdinaryIncomeBracket, topRateOnOrdinaryIncome)
+import Federal.Regime (Regime(..))
+import Federal.Types (StandardDeduction(..))
 import TaxMath (nonNeg, roundHalfUp)
-import Taxes (ordinaryIncomeBrackets)
+import UnsafeDates (unsafeMakeDate, unsafeMakeYear)
 import Test.QuickCheck (class Arbitrary, quickCheck)
 import Test.QuickCheck.Gen (choose, elements)
 import Test.Spec (Spec, it, describe)
@@ -28,7 +30,6 @@ import Test.Spec.Runner (defaultConfig, runSpec')
 -- TODO
 --foo :: Aff Unit
 --foo = liftEffect $ quickCheck prop_monotonic
-
 runAllTests :: Effect Unit
 runAllTests = do
   log "Running prop tests"
@@ -43,18 +44,17 @@ runAllTests = do
   log "  prop_zeroTaxOnlyOnZeroIncome"
   quickCheck prop_zeroTaxOnlyOnZeroIncome
   log "Running Spec tests"
-
   -- TODO: I think because this runs async we don't fail the
   -- runAllTests if it fails. Fix this somehow.
   launchAff_
     $ runSpec' config [ consoleReporter ] do
         correctAtBracketBoundaries
-      -- Don't exit the program after the test.
-      where config = defaultConfig { exit = false}
+  -- Don't exit the program after the test.
+  where
+  config = defaultConfig { exit = false }
 
 --logInAff :: String -> Aff Unit
 --logInAff msg = liftEffect $ log msg
-
 --Avoid orphan type class instances by wrapping the types in newtypes.
 data TestFilingStatus
   = TestFilingStatus FilingStatus
@@ -80,22 +80,41 @@ data TestSsRelevantOtherIncome
 instance arbTestSsRelevantOtherIncome :: Arbitrary TestSsRelevantOtherIncome where
   arbitrary = map TestSsRelevantOtherIncome $ choose 0.0 100000.0
 
+theYear :: Year
+theYear = unsafeMakeYear 2021
+
+theRegime :: Regime
+theRegime = Trump
+
+theBirthDate :: Date
+theBirthDate = unsafeMakeDate 2021 10 2
+
+boundRegimeFor :: FilingStatus -> BoundRegime
+boundRegimeFor fs = bindRegime theRegime (fromEnum theYear) fs theBirthDate (if fs == Single then 1 else 2)
+
+ordinaryBracketsFor :: FilingStatus -> OrdinaryIncomeBrackets
+ordinaryBracketsFor fs =
+  let
+    BoundRegime rec = boundRegimeFor fs
+  in
+    rec.ordinaryIncomeBrackets
+
 prop_monotonic :: TestFilingStatus -> TestOrdinaryIncome -> TestOrdinaryIncome -> Boolean
 prop_monotonic = \(TestFilingStatus fs) (TestOrdinaryIncome i1) (TestOrdinaryIncome i2) ->
   (i1 <= i2)
-    == ( applyOrdinaryIncomeBrackets (ordinaryIncomeBrackets fs) i1
-          <= applyOrdinaryIncomeBrackets (ordinaryIncomeBrackets fs) i2
+    == ( applyOrdinaryIncomeBrackets (ordinaryBracketsFor fs) i1
+          <= applyOrdinaryIncomeBrackets (ordinaryBracketsFor fs) i2
       )
 
 prop_singlePaysMoreTax :: TestOrdinaryIncome -> Boolean
 prop_singlePaysMoreTax = \(TestOrdinaryIncome income) ->
-  applyOrdinaryIncomeBrackets (ordinaryIncomeBrackets Single) income
-    >= applyOrdinaryIncomeBrackets (ordinaryIncomeBrackets HeadOfHousehold) income
+  applyOrdinaryIncomeBrackets (ordinaryBracketsFor Single) income
+    >= applyOrdinaryIncomeBrackets (ordinaryBracketsFor HeadOfHousehold) income
 
 prop_topRateIsNotExceeded :: TestFilingStatus -> TestOrdinaryIncome -> Boolean
 prop_topRateIsNotExceeded = \(TestFilingStatus fs) (TestOrdinaryIncome income) ->
   let
-    brackets = ordinaryIncomeBrackets fs
+    brackets = ordinaryBracketsFor fs
 
     effectiveRate = applyOrdinaryIncomeBrackets brackets income / income
   in
@@ -103,7 +122,7 @@ prop_topRateIsNotExceeded = \(TestFilingStatus fs) (TestOrdinaryIncome income) -
 
 prop_zeroTaxOnlyOnZeroIncome :: TestFilingStatus -> TestOrdinaryIncome -> Boolean
 prop_zeroTaxOnlyOnZeroIncome = \(TestFilingStatus fs) (TestOrdinaryIncome income) ->
-  applyOrdinaryIncomeBrackets (ordinaryIncomeBrackets fs) income /= 0.0 || income == 0.0
+  applyOrdinaryIncomeBrackets (ordinaryBracketsFor fs) income /= 0.0 || income == 0.0
 
 correctAtBracketBoundaries :: Spec Unit
 correctAtBracketBoundaries =
@@ -119,9 +138,9 @@ type Expectation
 assertCorrectTaxDueAtBracketBoundaries :: FilingStatus -> Expectation
 assertCorrectTaxDueAtBracketBoundaries filingStatus =
   let
-    stdDed = standardDeductionFor filingStatus
+    stdDed = standardDeduction $ boundRegimeFor filingStatus
 
-    brackets = ordinaryIncomeBrackets filingStatus
+    brackets = ordinaryBracketsFor filingStatus
 
     rates = ordinaryRatesExceptTop brackets
 
@@ -129,7 +148,7 @@ assertCorrectTaxDueAtBracketBoundaries filingStatus =
 
     expectedTaxes = map (taxToEndOfOrdinaryIncomeBracket brackets) rates
 
-    StandardDeduction deduction = standardDeductionFor filingStatus
+    StandardDeduction deduction = standardDeduction $ boundRegimeFor filingStatus
 
     federalExpectations = Array.zipWith (curry taxDueIsAsExpected) incomes expectedTaxes
       where
