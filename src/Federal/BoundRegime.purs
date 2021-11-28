@@ -101,16 +101,20 @@ perPersonExemptionFor Trump _ = 0.0
 unAdjustedStdDeductionFor :: Regime -> Int -> FilingStatus -> Int
 unAdjustedStdDeductionFor NonTrump 2017 Single = 6350
 unAdjustedStdDeductionFor NonTrump 2017 HeadOfHousehold = 9350
+unAdjustedStdDeductionFor Trump 2022 Single = 12950
+unAdjustedStdDeductionFor Trump 2022 HeadOfHousehold = 19400
 unAdjustedStdDeductionFor Trump 2021 Single = 12550
 unAdjustedStdDeductionFor Trump 2021 HeadOfHousehold = 18800
 unAdjustedStdDeductionFor r y _ = invalidRegime r (unsafeMakeYear y)
 
 ageAdjustmentFor :: Regime -> Int -> Int
+ageAdjustmentFor Trump 2022 = 1400
 ageAdjustmentFor Trump 2021 = 1350
 ageAdjustmentFor NonTrump 2017 = 1250
 ageAdjustmentFor r y = invalidRegime r (unsafeMakeYear y)
 
 ageAndSingleAdjustmentFor :: Regime -> Int -> Int
+ageAndSingleAdjustmentFor Trump 2022 = 350
 ageAndSingleAdjustmentFor Trump 2021 = 350
 ageAndSingleAdjustmentFor NonTrump 2017 = 300
 ageAndSingleAdjustmentFor r y = invalidRegime r (unsafeMakeYear y)
@@ -120,13 +124,73 @@ ageAtYearEnd year birthDate =
   fromEnum year - fromEnum (Date.year birthDate)
 
 bindRegime :: Regime -> Int -> FilingStatus -> BirthDate -> PersonalExemptions -> BoundRegime
+bindRegime Trump 2022 Single bd pes =
+  let regime = Trump
+      yearAsInt = 2022
+      year = unsafeMakeYear yearAsInt
+      fs = Single
+   in mkBoundRegime
+        regime
+        year
+        fs
+        bd
+        pes
+        (perPersonExemptionFor regime yearAsInt)
+        (unAdjustedStdDeductionFor regime yearAsInt fs)
+        (ageAdjustmentFor regime yearAsInt)
+        (ageAndSingleAdjustmentFor regime yearAsInt)
+        (FO.fromPairs
+          [ (Tuple 10.0 0),
+            (Tuple 12.0 10275),
+            (Tuple 22.0 41775),
+            (Tuple 24.0 89075),
+            (Tuple 32.0 170050),
+            (Tuple 35.0 215950),
+            (Tuple 37.0 539900)
+          ])
+        (FQ.fromPairs
+          [ (Tuple 0 0),
+            (Tuple 15 41675),
+            (Tuple 20 459750)
+          ])
+bindRegime Trump 2022 HeadOfHousehold bd pes =
+  let regime = Trump
+      yearAsInt = 2022
+      year = unsafeMakeYear yearAsInt
+      fs = HeadOfHousehold
+   in mkBoundRegime
+        Trump
+        year
+        fs
+        bd
+        pes
+        (perPersonExemptionFor regime yearAsInt)
+        (unAdjustedStdDeductionFor regime yearAsInt fs)
+        (ageAdjustmentFor regime yearAsInt)
+        (ageAndSingleAdjustmentFor regime yearAsInt)
+        ( FO.fromPairs
+          [ (Tuple 10.0 0),
+            (Tuple 12.0 14650),
+            (Tuple 22.0 55900),
+            (Tuple 24.0 89050),
+            (Tuple 32.0 170050),
+            (Tuple 35.0 215950),
+            (Tuple 37.0 539900)
+          ]
+        )
+        ( FQ.fromPairs
+          [ (Tuple 0 0),
+            (Tuple 15 55800),
+            (Tuple 20 488500)
+          ]
+        )
+
 bindRegime Trump 2021 Single bd pes =
   let regime = Trump
       yearAsInt = 2021
       year = unsafeMakeYear yearAsInt
       fs = Single
-    in
-      mkBoundRegime
+   in mkBoundRegime
         regime
         year
         fs
@@ -156,8 +220,7 @@ bindRegime Trump 2021 HeadOfHousehold bd pes =
       yearAsInt = 2021
       year = unsafeMakeYear yearAsInt
       fs = HeadOfHousehold
-    in      
-      mkBoundRegime
+   in mkBoundRegime
         Trump
         year
         fs
@@ -188,40 +251,38 @@ bindRegime NonTrump 2017 Single bd pes =
       yearAsInt = 2017
       year = unsafeMakeYear yearAsInt
       fs = Single
-    in      
-      mkBoundRegime
-      regime
-      year
-      fs
-      bd
-      pes
-      (perPersonExemptionFor regime yearAsInt)
-      (unAdjustedStdDeductionFor regime yearAsInt fs)
-      (ageAdjustmentFor regime yearAsInt)
-      (ageAndSingleAdjustmentFor regime yearAsInt)
-      ( FO.fromPairs
-        [ (Tuple 10.0 0),
-            (Tuple 15.0 9235),
-            (Tuple 25.0 37950),
-            (Tuple 28.0 91900),
-            (Tuple 33.0 191650),
-            (Tuple 35.0 416700),
-            (Tuple 39.6 418400)
-        ]
-      )
-      ( FQ.fromPairs
-        [ (Tuple 0 0),
-          (Tuple 15 37950),
-          (Tuple 20 418400)
-        ]
-      )
+   in mkBoundRegime
+        regime
+        year
+        fs
+        bd
+        pes
+        (perPersonExemptionFor regime yearAsInt)
+        (unAdjustedStdDeductionFor regime yearAsInt fs)
+        (ageAdjustmentFor regime yearAsInt)
+        (ageAndSingleAdjustmentFor regime yearAsInt)
+        ( FO.fromPairs
+          [ (Tuple 10.0 0),
+              (Tuple 15.0 9235),
+              (Tuple 25.0 37950),
+              (Tuple 28.0 91900),
+              (Tuple 33.0 191650),
+              (Tuple 35.0 416700),
+              (Tuple 39.6 418400)
+          ]
+        )
+        ( FQ.fromPairs
+          [ (Tuple 0 0),
+            (Tuple 15 37950),
+            (Tuple 20 418400)
+          ]
+        )
 bindRegime NonTrump 2017 HeadOfHousehold bd pes =
   let regime = NonTrump
       yearAsInt = 2017
       year = unsafeMakeYear yearAsInt
       fs = HeadOfHousehold
-    in      
-      mkBoundRegime
+   in mkBoundRegime
         regime
         year
         fs

@@ -22,7 +22,7 @@ instance Show Regime where
   show NonTrump = "NonTrump"
 
 lastYearKnown :: Regime -> Year
-lastYearKnown Trump = unsafeMakeYear 2021
+lastYearKnown Trump = unsafeMakeYear 2022
 lastYearKnown NonTrump = unsafeMakeYear 2017
 
 requireRegimeValidInYear :: Regime -> Year -> Unit
