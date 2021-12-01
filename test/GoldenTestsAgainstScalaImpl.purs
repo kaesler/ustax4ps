@@ -17,15 +17,16 @@ import TaxMath (roundHalfUp)
 import Test.Spec (Spec, it, describe)
 import Test.Spec.Assertions (shouldEqual)
 import Test.Spec.Reporter.Console (consoleReporter)
-import Test.Spec.Runner (runSpec)
+import Test.Spec.Runner (defaultConfig, runSpec')
 
 runAllTests :: Effect Unit
 runAllTests = do
-  -- TODO: by default this exits the program at the end.
-  -- Best solution might be to pull the prop tests into Aff using liftEffect
   launchAff_
-    $ runSpec [ consoleReporter ] do
-        testsAgainstScala
+    $ let
+        config = defaultConfig { exit = false }
+      in
+        runSpec' config [ consoleReporter ]
+          testsAgainstScala
 
 type Expectation
   = Aff Unit
@@ -68,7 +69,7 @@ testsAgainstScala =
       let
         dependents = if tc.personalExemptions <= 0 then 0 else tc.personalExemptions - 1
 
-        calculated = roundHalfUp $ MA.taxDue tc.year dependents tc.filingStatus (tc.ordinaryIncomeNonSS + tc.qualifiedIncome)
+        calculated = roundHalfUp $ MA.taxDue tc.year tc.birthDate dependents tc.filingStatus (tc.ordinaryIncomeNonSS + tc.qualifiedIncome)
       in
         do
           calculated `shouldEqual` tc.stateTaxDue

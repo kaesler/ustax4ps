@@ -3,6 +3,8 @@ module Federal.OrdinaryIncomeBracketSpec
   ) where
 
 import Prelude
+import Age as Age
+import CommonTypes (FilingStatus(..), OrdinaryIncome, SSRelevantOtherIncome, SocSec)
 import Data.Array as Array
 import Data.Array.NonEmpty.Internal (NonEmptyArray(..))
 import Data.Date (Date, Year)
@@ -13,19 +15,18 @@ import Data.Tuple (Tuple(..), curry)
 import Effect (Effect)
 import Effect.Aff (Aff, launchAff_)
 import Effect.Console (log)
-import CommonTypes (FilingStatus(..), OrdinaryIncome, SSRelevantOtherIncome, SocSec)
 import Federal.BoundRegime (BoundRegime(..), bindRegime, standardDeduction)
 import Federal.OrdinaryIncome (OrdinaryIncomeBrackets, applyOrdinaryIncomeBrackets, incomeToEndOfOrdinaryBracket, ordinaryRateAsFraction, ordinaryRatesExceptTop, taxToEndOfOrdinaryIncomeBracket, topRateOnOrdinaryIncome)
 import Federal.Regime (Regime(..))
 import Federal.Types (StandardDeduction(..))
 import TaxMath (nonNeg, roundHalfUp)
-import UnsafeDates (unsafeMakeDate, unsafeMakeYear)
 import Test.QuickCheck (class Arbitrary, quickCheck)
 import Test.QuickCheck.Gen (choose, elements)
 import Test.Spec (Spec, it, describe)
 import Test.Spec.Assertions (shouldEqual)
 import Test.Spec.Reporter.Console (consoleReporter)
 import Test.Spec.Runner (defaultConfig, runSpec')
+import UnsafeDates (unsafeMakeDate, unsafeMakeYear)
 
 -- TODO
 --foo :: Aff Unit
@@ -44,8 +45,6 @@ runAllTests = do
   log "  prop_zeroTaxOnlyOnZeroIncome"
   quickCheck prop_zeroTaxOnlyOnZeroIncome
   log "Running Spec tests"
-  -- TODO: I think because this runs async we don't fail the
-  -- runAllTests if it fails. Fix this somehow.
   launchAff_
     $ runSpec' config [ consoleReporter ] do
         correctAtBracketBoundaries

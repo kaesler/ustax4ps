@@ -8,12 +8,12 @@ module Federal.BoundRegime
   where
 
 import Prelude
+
+import Age (isAge65OrOlder)
+import CommonTypes (BirthDate, FilingStatus(..), Money, isUnmarried)
 import Data.Date (Year)
-import Data.Date as Date
-import Data.Enum (fromEnum)
 import Data.Int (toNumber)
 import Data.Tuple (Tuple(..))
-import CommonTypes (BirthDate, FilingStatus(..), Money, isUnmarried)
 import Federal.OrdinaryIncome (OrdinaryIncomeBrackets)
 import Federal.OrdinaryIncome (fromPairs) as FO
 import Federal.QualifiedIncome (QualifiedIncomeBrackets)
@@ -75,7 +75,7 @@ standardDeduction :: BoundRegime -> StandardDeduction
 standardDeduction (BoundRegime br) =
   StandardDeduction $
     br.unadjustedStandardDeduction +
-       ( if ageAtYearEnd br.year br.birthDate > 65
+       ( if isAge65OrOlder br.birthDate br.year
             then
               br.adjustmentWhenOver65
                 + ( if isUnmarried br.filingStatus
@@ -119,9 +119,6 @@ ageAndSingleAdjustmentFor Trump 2021 = 350
 ageAndSingleAdjustmentFor NonTrump 2017 = 300
 ageAndSingleAdjustmentFor r y = invalidRegime r (unsafeMakeYear y)
 
-ageAtYearEnd :: Year -> BirthDate -> Int
-ageAtYearEnd year birthDate =
-  fromEnum year - fromEnum (Date.year birthDate)
 
 bindRegime :: Regime -> Int -> FilingStatus -> BirthDate -> PersonalExemptions -> BoundRegime
 bindRegime Trump 2022 Single bd pes =

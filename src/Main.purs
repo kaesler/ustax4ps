@@ -51,7 +51,7 @@ main :: Effect Unit
 main = do
   print $ applyOrdinaryIncomeBrackets headOfHouseholdBrackets 50000.0
   print $ FedCalc.taxDue theRegime theYear2030 Single theBirthDate 1 40000.0 40000.0 5000.0 0.0
-  print $ StateCalc.taxDue theYear2030 1 Single 50000.0
+  print $ StateCalc.taxDue theYear2030 theBirthDate 1 Single 50000.0
   print $ ordinaryIncomeBracketStart singleBrackets (OrdinaryRate 22.0)
   print $ ordinaryIncomeBracketWidth singleBrackets (OrdinaryRate 22.0)
   print $ ordinaryRateSuccessor headOfHouseholdBrackets (OrdinaryRate 22.0)
@@ -72,4 +72,4 @@ main = do
   print $ unsafeOrdinaryRateSuccessor singleBrackets (OrdinaryRate 22.0)
   print $ unsafeReadFilingStatus "Single"
   print $ unsafeRmdFractionForAge 76
-  print $ StateCalc.taxRate
+  print $ StateCalc.taxRate theYear
