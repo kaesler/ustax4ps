@@ -8,7 +8,8 @@ import Data.Enum (fromEnum)
 import Data.Tuple (Tuple(..))
 import Data.Int (toNumber)
 import Data.Date (Year)
-import CommonTypes (CombinedIncome, FilingStatus(..), SSRelevantOtherIncome, SocSec)
+import CommonTypes (FilingStatus(..))
+import Federal.Types(CombinedIncome, SSRelevantOtherIncome, SocSec)
 
 amountTaxableInflationAdjusted :: Year -> FilingStatus -> SocSec -> SSRelevantOtherIncome -> Number
 amountTaxableInflationAdjusted year filingStatus ssBenefits relevantIncome =

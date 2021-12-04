@@ -10,14 +10,13 @@ where
   
 import Prelude
 
-import CommonTypes (OrdinaryIncome, QualifiedIncome)
 import Data.Int (toNumber)
 import Data.List (foldl, reverse, (!!))
 import Data.Map (Map)
 import Data.Map as Map
 import Data.Maybe (fromJust)
 import Data.Tuple (Tuple(..))
-import Federal.Types (BracketStart(..))
+import Federal.Types (BracketStart(..), OrdinaryIncome, QualifiedIncome)
 import Partial.Unsafe (unsafePartial)
 import TaxMath (nonNeg)
 

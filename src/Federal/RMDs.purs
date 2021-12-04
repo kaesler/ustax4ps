@@ -8,7 +8,8 @@ import Data.Map as Map
 import Data.Tuple (Tuple(..))
 import Partial.Unsafe (unsafePartial)
 import Data.Maybe (Maybe(..), fromJust)
-import CommonTypes (Age(..), DistributionPeriod)
+import CommonTypes (Age(..))
+import Federal.Types(DistributionPeriod)
 
 unsafeRmdFractionForAge :: Int -> Number
 unsafeRmdFractionForAge age = unsafePartial $ fromJust $ rmdFractionForAge (Age age)

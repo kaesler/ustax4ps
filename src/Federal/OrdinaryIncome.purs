@@ -20,7 +20,6 @@ where
   
 import TaxMath
 
-import CommonTypes (OrdinaryIncome)
 import Data.Array as Array
 import Data.Foldable as Data
 import Data.Int (toNumber)
@@ -30,7 +29,7 @@ import Data.Map as Map
 import Data.Maybe (Maybe(..), fromJust)
 import Data.Set as Set
 import Data.Tuple (Tuple(..), fst, snd)
-import Federal.Types (BracketStart(..), StandardDeduction(..))
+import Federal.Types (BracketStart(..), OrdinaryIncome, StandardDeduction(..))
 import Partial.Unsafe (unsafePartial)
 import Prelude (class Eq, class Ord, class Show, bind, map, show, ($), (*), (+), (-), (/), (<=), (==))
 

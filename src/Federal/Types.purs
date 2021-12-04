@@ -1,7 +1,13 @@
 module Federal.Types(
   BracketStart(..),
+  CombinedIncome,
+  DistributionPeriod,
   ItemizedDeductions,
+  OrdinaryIncome,
+  QualifiedIncome,
   PersonalExemptions,
+  SSRelevantOtherIncome,
+  SocSec,
   StandardDeduction(..),
   bracketStartAsNumber
 )
@@ -14,6 +20,14 @@ import CommonTypes
 
 type ItemizedDeductions = Money
 type PersonalExemptions = Int
+
+type CombinedIncome = Money
+type DistributionPeriod = Money
+
+type OrdinaryIncome = Money
+type QualifiedIncome = Money
+type SSRelevantOtherIncome = Money
+type SocSec = Money
 
 newtype BracketStart = BracketStart Int
 derive instance Eq BracketStart

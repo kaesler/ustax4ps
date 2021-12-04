@@ -1,15 +1,9 @@
 module CommonTypes(
   Age(..),
   BirthDate(..),
-  CombinedIncome,
-  DistributionPeriod,
   FilingStatus(..),
   MassachusettsGrossIncome,
   Money,
-  OrdinaryIncome,
-  QualifiedIncome,
-  SSRelevantOtherIncome,
-  SocSec,
   isUnmarried,
   unsafeReadFilingStatus
 )
@@ -23,14 +17,7 @@ import Partial.Unsafe (unsafePartial)
 
 type BirthDate = Date
 type Money = Number
-type CombinedIncome = Money
-type DistributionPeriod = Money
 type MassachusettsGrossIncome = Money
-type OrdinaryIncome = Money
-type QualifiedIncome = Money
-type SSRelevantOtherIncome = Money
-type SocSec = Money
-
 newtype Age = Age Int
 derive instance Eq Age
 derive instance Ord Age

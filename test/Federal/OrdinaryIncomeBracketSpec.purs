@@ -4,7 +4,7 @@ module Federal.OrdinaryIncomeBracketSpec
 
 import Prelude
 import Age as Age
-import CommonTypes (FilingStatus(..), OrdinaryIncome, SSRelevantOtherIncome, SocSec)
+import CommonTypes (FilingStatus(..))
 import Data.Array as Array
 import Data.Array.NonEmpty.Internal (NonEmptyArray(..))
 import Data.Date (Date, Year)
@@ -18,7 +18,7 @@ import Effect.Console (log)
 import Federal.BoundRegime (BoundRegime(..), bindRegime, standardDeduction)
 import Federal.OrdinaryIncome (OrdinaryIncomeBrackets, applyOrdinaryIncomeBrackets, incomeToEndOfOrdinaryBracket, ordinaryRateAsFraction, ordinaryRatesExceptTop, taxToEndOfOrdinaryIncomeBracket, topRateOnOrdinaryIncome)
 import Federal.Regime (Regime(..))
-import Federal.Types (StandardDeduction(..))
+import Federal.Types (StandardDeduction(..), OrdinaryIncome, SSRelevantOtherIncome, SocSec)
 import TaxMath (nonNeg, roundHalfUp)
 import Test.QuickCheck (class Arbitrary, quickCheck)
 import Test.QuickCheck.Gen (choose, elements)

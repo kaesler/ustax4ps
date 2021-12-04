@@ -14,13 +14,13 @@ import Effect.Console (log)
 import Data.Date (Year)
 import Data.Enum (fromEnum)
 import Effect (Effect)
-import CommonTypes (BirthDate, FilingStatus, Money, OrdinaryIncome, QualifiedIncome, SocSec)
+import CommonTypes (BirthDate, FilingStatus, Money)
 import Federal.OrdinaryIncome (applyOrdinaryIncomeBrackets)
 import Federal.QualifiedIncome (applyQualifiedIncomeBrackets)
 import Federal.BoundRegime (BoundRegime(..), bindRegime, netDeduction, personalExemptionDeduction, standardDeduction)
 import Federal.Regime (Regime)
 import Federal.TaxableSocialSecurity as TSS
-import Federal.Types (ItemizedDeductions, PersonalExemptions, StandardDeduction)
+import Federal.Types (OrdinaryIncome, QualifiedIncome, SocSec, ItemizedDeductions, PersonalExemptions, StandardDeduction)
 import TaxMath(nonNegSub)
 
 type TaxCalculator = SocSec -> OrdinaryIncome -> QualifiedIncome -> ItemizedDeductions -> FederalTaxResults
