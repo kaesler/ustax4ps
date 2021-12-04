@@ -19,7 +19,7 @@ amountTaxableInflationAdjusted year filingStatus ssBenefits relevantIncome =
 
     adjusted = unadjusted * adjustmentFactor
   in
-    min adjusted ssBenefits * 0.85
+    min adjusted (ssBenefits * 0.85)
 
 amountTaxable :: FilingStatus -> SocSec -> SSRelevantOtherIncome -> Number
 amountTaxable filingStatus ssBenefits relevantIncome =

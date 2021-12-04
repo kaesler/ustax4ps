@@ -1,3 +1,11 @@
+
+function DUMMY() {
+  const FR = PS.Federal_Regime;
+  const regime = FR.unsafeReadRegime("Trump");
+  const res = PS.showRegime(regime);
+  return res
+}
+
 function STD_DEDUCTION(filingStatus) {
   const T = PS.Taxes;
 
@@ -25,14 +33,6 @@ function LTCG_TAX_START(filingStatus) {
   const fs = T.unsafeReadFilingStatus(filingStatus);
 
   return T.startOfNonZeroQualifiedRateBracket(fs);
-}
-
-function RATE_SUCCESSOR(filingStatus, rate) {
-  const T = PS.Taxes;
-  const fs = T.unsafeReadFilingStatus(filingStatus);
-  const r = T.unsafeOrdinaryRateFromNumber(rate);
-
-  return T.unsafeOrdinaryRateSuccessor(fs)(r);
 }
 
 function RMD_FRACTION_FOR_AGE(age) {

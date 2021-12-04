@@ -24,7 +24,7 @@ You can edit this file as you like.
   , "read"
   , "spec"
   , "tuples"
-  , "undefined"
+  -- , "undefined"
   ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs", "test/**/*.purs" ]

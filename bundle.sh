@@ -1,1 +1,1 @@
-spago bundle-module --main GoogleSheetInterface --to bundle.js
+spago bundle-module --main GoogleSheetModule --to GoogleSheetBundle.js
