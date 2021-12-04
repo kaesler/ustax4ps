@@ -95,12 +95,12 @@ netDeduction br itemized =
 
 -- Note: does't seem to get adjusted for inflation.
 perPersonExemptionFor :: Regime -> Int -> Money
-perPersonExemptionFor NonTrump _ = 4050.0
+perPersonExemptionFor PreTrump _ = 4050.0
 perPersonExemptionFor Trump _ = 0.0
 
 unAdjustedStdDeductionFor :: Regime -> Int -> FilingStatus -> Int
-unAdjustedStdDeductionFor NonTrump 2017 Single = 6350
-unAdjustedStdDeductionFor NonTrump 2017 HeadOfHousehold = 9350
+unAdjustedStdDeductionFor PreTrump 2017 Single = 6350
+unAdjustedStdDeductionFor PreTrump 2017 HeadOfHousehold = 9350
 unAdjustedStdDeductionFor Trump 2022 Single = 12950
 unAdjustedStdDeductionFor Trump 2022 HeadOfHousehold = 19400
 unAdjustedStdDeductionFor Trump 2021 Single = 12550
@@ -110,13 +110,13 @@ unAdjustedStdDeductionFor r y _ = invalidRegime r (unsafeMakeYear y)
 ageAdjustmentFor :: Regime -> Int -> Int
 ageAdjustmentFor Trump 2022 = 1400
 ageAdjustmentFor Trump 2021 = 1350
-ageAdjustmentFor NonTrump 2017 = 1250
+ageAdjustmentFor PreTrump 2017 = 1250
 ageAdjustmentFor r y = invalidRegime r (unsafeMakeYear y)
 
 ageAndSingleAdjustmentFor :: Regime -> Int -> Int
 ageAndSingleAdjustmentFor Trump 2022 = 350
 ageAndSingleAdjustmentFor Trump 2021 = 350
-ageAndSingleAdjustmentFor NonTrump 2017 = 300
+ageAndSingleAdjustmentFor PreTrump 2017 = 300
 ageAndSingleAdjustmentFor r y = invalidRegime r (unsafeMakeYear y)
 
 
@@ -243,8 +243,8 @@ bindRegime Trump 2021 HeadOfHousehold bd pes =
             (Tuple 20 473850)
           ]
         )
-bindRegime NonTrump 2017 Single bd pes =
-  let regime = NonTrump
+bindRegime PreTrump 2017 Single bd pes =
+  let regime = PreTrump
       yearAsInt = 2017
       year = unsafeMakeYear yearAsInt
       fs = Single
@@ -274,8 +274,8 @@ bindRegime NonTrump 2017 Single bd pes =
             (Tuple 20 418400)
           ]
         )
-bindRegime NonTrump 2017 HeadOfHousehold bd pes =
-  let regime = NonTrump
+bindRegime PreTrump 2017 HeadOfHousehold bd pes =
+  let regime = PreTrump
       yearAsInt = 2017
       year = unsafeMakeYear yearAsInt
       fs = HeadOfHousehold
