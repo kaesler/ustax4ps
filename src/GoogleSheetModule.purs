@@ -8,7 +8,8 @@ module GoogleSheetModule
   , module Federal.Regime
   , module Federal.TaxableSocialSecurity
   , module UnsafeDates
-  , stateTaxDue
+  , maStateTaxDue
+  , maStateTaxRate
   )
   where
 
@@ -27,6 +28,9 @@ import StateMA.Calculator as StateCalc
 import StateMA.Types (MassachusettsGrossIncome)
 import UnsafeDates (unsafeMakeDate, unsafeMakeDay, unsafeMakeMonth, unsafeMakeYear)
 
-stateTaxDue :: Year -> BirthDate -> Int -> FilingStatus -> MassachusettsGrossIncome -> Money
-stateTaxDue = StateCalc.taxDue
+maStateTaxDue :: Year -> BirthDate -> Int -> FilingStatus -> MassachusettsGrossIncome -> Money
+maStateTaxDue = StateCalc.taxDue
+
+maStateTaxRate :: Year -> Number
+maStateTaxRate = StateCalc.taxRate
 
