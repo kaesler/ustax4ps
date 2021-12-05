@@ -1,26 +1,32 @@
 module GoogleSheetModule
   ( module CommonTypes
   , module Federal.BoundRegime
+  , module Federal.Calculator
   , module Federal.OrdinaryIncome
   , module Federal.QualifiedIncome
-  , module Federal.Regime
   , module Federal.RMDs
+  , module Federal.Regime
   , module Federal.TaxableSocialSecurity
   , module UnsafeDates
-  , showIt
-  ) where
+  , stateTaxDue
+  )
+  where
 
 -- Import here waht we want accessbible from GoogleSheetInterface
 
-import Prelude
-import UnsafeDates (unsafeMakeDate, unsafeMakeDay, unsafeMakeMonth, unsafeMakeYear)
-import CommonTypes (FilingStatus(..), unsafeReadFilingStatus)
+import CommonTypes (BirthDate, FilingStatus(..), unsafeReadFilingStatus)
+import Data.Date (Year)
 import Federal.BoundRegime (BoundRegime(..), bindRegime, netDeduction, personalExemptionDeduction, standardDeduction)
+import Federal.Calculator (taxDue)
 import Federal.OrdinaryIncome (ordinaryIncomeBracketStart, ordinaryIncomeBracketWidth)
 import Federal.QualifiedIncome (startOfNonZeroQualifiedRateBracket)
 import Federal.RMDs (unsafeRmdFractionForAge)
 import Federal.Regime (Regime(..), unsafeReadRegime)
 import Federal.TaxableSocialSecurity (amountTaxableInflationAdjusted)
+import StateMA.Calculator as StateCalc
+import StateMA.Types (MassachusettsGrossIncome)
+import UnsafeDates (unsafeMakeDate, unsafeMakeDay, unsafeMakeMonth, unsafeMakeYear)
 
-showIt :: forall t. Show t => t -> String
-showIt x = show x
+stateTaxDue :: Year -> BirthDate -> Int -> FilingStatus -> MassachusettsGrossIncome -> Number
+stateTaxDue = StateCalc.taxDue
+

@@ -2,7 +2,6 @@ module CommonTypes(
   Age(..),
   BirthDate(..),
   FilingStatus(..),
-  MassachusettsGrossIncome,
   Money,
   isUnmarried,
   unsafeReadFilingStatus
@@ -17,7 +16,6 @@ import Partial.Unsafe (unsafePartial)
 
 type BirthDate = Date
 type Money = Number
-type MassachusettsGrossIncome = Money
 newtype Age = Age Int
 derive instance Eq Age
 derive instance Ord Age

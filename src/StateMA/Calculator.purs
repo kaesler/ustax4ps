@@ -4,11 +4,13 @@ module StateMA.Calculator
   ) where
 
 import Prelude
+
 import Age (isAge65OrOlder)
-import CommonTypes (FilingStatus(..), MassachusettsGrossIncome, BirthDate, Money)
+import CommonTypes (FilingStatus(..), BirthDate, Money)
 import Data.Date (Year)
 import Data.Enum (fromEnum)
 import Data.Int (toNumber)
+import StateMA.Types (MassachusettsGrossIncome)
 import TaxMath (nonNegSub)
 
 taxRate :: Year -> Number
