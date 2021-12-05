@@ -45,8 +45,8 @@ testsAgainstScala =
           FC.taxResults
             tc.regime
             tc.year
-            tc.filingStatus
             tc.birthDate
+            tc.filingStatus
             tc.personalExemptions
             tc.socSec
             tc.ordinaryIncomeNonSS

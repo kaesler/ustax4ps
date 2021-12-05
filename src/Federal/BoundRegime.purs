@@ -133,8 +133,8 @@ ageAndSingleAdjustmentFor PreTrump 2017 = 300
 ageAndSingleAdjustmentFor r y = invalidRegime r (unsafeMakeYear y)
 
 
-bindRegime :: Regime -> Int -> FilingStatus -> BirthDate -> PersonalExemptions -> BoundRegime
-bindRegime Trump 2022 HeadOfHousehold bd pes =
+bindRegime :: Regime -> Int -> BirthDate -> FilingStatus -> PersonalExemptions -> BoundRegime
+bindRegime Trump 2022 bd HeadOfHousehold pes =
   let regime = Trump
       yearAsInt = 2022
       year = unsafeMakeYear yearAsInt
@@ -165,7 +165,7 @@ bindRegime Trump 2022 HeadOfHousehold bd pes =
             (Tuple 20 488500)
           ]
         )
-bindRegime Trump 2022 Single bd pes =
+bindRegime Trump 2022 bd Single pes =
   let regime = Trump
       yearAsInt = 2022
       year = unsafeMakeYear yearAsInt
@@ -195,7 +195,7 @@ bindRegime Trump 2022 Single bd pes =
             (Tuple 20 459750)
           ])
 
-bindRegime Trump 2021 HeadOfHousehold bd pes =
+bindRegime Trump 2021 bd HeadOfHousehold pes =
   let regime = Trump
       yearAsInt = 2021
       year = unsafeMakeYear yearAsInt
@@ -227,7 +227,7 @@ bindRegime Trump 2021 HeadOfHousehold bd pes =
           ]
         )
 
-bindRegime Trump 2021 Single bd pes =
+bindRegime Trump 2021 bd Single pes =
   let regime = Trump
       yearAsInt = 2021
       year = unsafeMakeYear yearAsInt
@@ -257,7 +257,7 @@ bindRegime Trump 2021 Single bd pes =
             (Tuple 20 445850)
           ])
 
-bindRegime Trump 2020 HeadOfHousehold bd pes =
+bindRegime Trump 2020 bd HeadOfHousehold pes =
   let regime = Trump
       yearAsInt = 2020
       year = unsafeMakeYear yearAsInt
@@ -289,7 +289,7 @@ bindRegime Trump 2020 HeadOfHousehold bd pes =
           ]
         )
 
-bindRegime Trump 2020 Single bd pes =
+bindRegime Trump 2020 bd Single pes =
   let regime = Trump
       yearAsInt = 2020
       year = unsafeMakeYear yearAsInt
@@ -319,7 +319,7 @@ bindRegime Trump 2020 Single bd pes =
             (Tuple 20 442450)
           ])
 
-bindRegime Trump 2019 HeadOfHousehold bd pes =
+bindRegime Trump 2019 bd HeadOfHousehold pes =
   let regime = Trump
       yearAsInt = 2019
       year = unsafeMakeYear yearAsInt
@@ -351,7 +351,7 @@ bindRegime Trump 2019 HeadOfHousehold bd pes =
           ]
         )
 
-bindRegime Trump 2019 Single bd pes =
+bindRegime Trump 2019 bd Single pes =
   let regime = Trump
       yearAsInt = 2019
       year = unsafeMakeYear yearAsInt
@@ -381,7 +381,7 @@ bindRegime Trump 2019 Single bd pes =
             (Tuple 20 434550)
           ])
 
-bindRegime Trump 2018 HeadOfHousehold bd pes =
+bindRegime Trump 2018 bd HeadOfHousehold pes =
   let regime = Trump
       yearAsInt = 2018
       year = unsafeMakeYear yearAsInt
@@ -413,7 +413,7 @@ bindRegime Trump 2018 HeadOfHousehold bd pes =
           ]
         )
 
-bindRegime Trump 2018 Single bd pes =
+bindRegime Trump 2018 bd Single pes =
   let regime = Trump
       yearAsInt = 2018
       year = unsafeMakeYear yearAsInt
@@ -443,7 +443,7 @@ bindRegime Trump 2018 Single bd pes =
             (Tuple 20 425800)
           ])
 
-bindRegime PreTrump 2017 HeadOfHousehold bd pes =
+bindRegime PreTrump 2017 bd HeadOfHousehold pes =
   let regime = PreTrump
       yearAsInt = 2017
       year = unsafeMakeYear yearAsInt
@@ -474,7 +474,7 @@ bindRegime PreTrump 2017 HeadOfHousehold bd pes =
             (Tuple 20 444550)
           ]
       )
-bindRegime PreTrump 2017 Single bd pes =
+bindRegime PreTrump 2017 bd Single pes =
   let regime = PreTrump
       yearAsInt = 2017
       year = unsafeMakeYear yearAsInt

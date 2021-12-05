@@ -62,47 +62,47 @@ instance Show FederalTaxResults where
 taxResults ::
   Regime ->
   Year ->
-  FilingStatus ->
   BirthDate ->
+  FilingStatus ->
   PersonalExemptions ->
   SocSec ->
   OrdinaryIncome ->
   QualifiedIncome ->
   ItemizedDeductions ->
   FederalTaxResults
-taxResults regime year filingStatus birthDate personalExemptions socSec ordinaryIncome qualifiedIncome itemized =
-  let boundRegime = bindRegime regime (fromEnum year) filingStatus birthDate personalExemptions
+taxResults regime year birthDate filingStatus personalExemptions socSec ordinaryIncome qualifiedIncome itemized =
+  let boundRegime = bindRegime regime (fromEnum year) birthDate filingStatus personalExemptions
       calculator = makeCalculator boundRegime
    in calculator socSec ordinaryIncome qualifiedIncome itemized
 
 taxDue ::
   Regime ->
   Year ->
-  FilingStatus ->
   BirthDate ->
+  FilingStatus ->
   PersonalExemptions ->
   SocSec ->
   OrdinaryIncome ->
   QualifiedIncome ->
   ItemizedDeductions ->
   Number
-taxDue regime year filingStatus birthDate personalExemptions socSec ordinaryIncome qualifiedIncome itemized =
-  let FederalTaxResults results = taxResults regime year filingStatus birthDate personalExemptions socSec ordinaryIncome qualifiedIncome itemized
+taxDue regime year birthDate filingStatus personalExemptions socSec ordinaryIncome qualifiedIncome itemized =
+  let FederalTaxResults results = taxResults regime year birthDate filingStatus personalExemptions socSec ordinaryIncome qualifiedIncome itemized
    in results.taxOnOrdinaryIncome + results.taxOnQualifiedIncome
 
 taxDueDebug ::
   Regime ->
   Year ->
-  FilingStatus ->
   BirthDate ->
+  FilingStatus ->
   PersonalExemptions ->
   SocSec ->
   OrdinaryIncome ->
   QualifiedIncome ->
   ItemizedDeductions ->
   Effect Unit
-taxDueDebug regime year filingStatus birthDate personalExemptions socSec ordinaryIncome qualifiedIncome itemized =
-  let FederalTaxResults r = taxResults regime year filingStatus birthDate personalExemptions socSec ordinaryIncome qualifiedIncome itemized
+taxDueDebug regime year birthDate filingStatus personalExemptions socSec ordinaryIncome qualifiedIncome itemized =
+  let FederalTaxResults r = taxResults regime year birthDate filingStatus personalExemptions socSec ordinaryIncome qualifiedIncome itemized
    in do
         log "Inputs"
         log $ " fs: " <> show filingStatus

@@ -89,7 +89,7 @@ theBirthDate :: Date
 theBirthDate = unsafeMakeDate 2021 10 2
 
 boundRegimeFor :: FilingStatus -> BoundRegime
-boundRegimeFor fs = bindRegime theRegime (fromEnum theYear) fs theBirthDate (if fs == Single then 1 else 2)
+boundRegimeFor fs = bindRegime theRegime (fromEnum theYear) theBirthDate fs (if fs == Single then 1 else 2)
 
 ordinaryBracketsFor :: FilingStatus -> OrdinaryIncomeBrackets
 ordinaryBracketsFor fs =
