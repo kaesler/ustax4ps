@@ -26,8 +26,8 @@ newtype BoundRegime
   = BoundRegime
     { regime :: Regime
     , year :: Year
-    , filingStatus :: FilingStatus
     , birthDate :: BirthDate
+    , filingStatus :: FilingStatus
     , personalExemptions :: Int
       --
       -- The following are inflatable. They may get adjusted to estimate the
@@ -45,8 +45,8 @@ instance Show BoundRegime where
 mkBoundRegime ::
   Regime ->
   Year ->
-  FilingStatus ->
   BirthDate ->
+  FilingStatus ->
   Int ->
   Money ->
   Int ->
@@ -56,12 +56,12 @@ mkBoundRegime ::
   QualifiedIncomeBrackets ->
   BoundRegime
  
-mkBoundRegime r y fs bd pes ppe uasd a65 a65s ob qb = 
+mkBoundRegime r y bd fs pes ppe uasd a65 a65s ob qb = 
    BoundRegime {
      regime: r,
      year: y,
-     filingStatus: fs,
      birthDate: bd,
+     filingStatus: fs,
      personalExemptions: pes,
      perPersonExemption: ppe,
      unadjustedStandardDeduction: uasd,
@@ -142,8 +142,8 @@ bindRegime Trump 2022 HeadOfHousehold bd pes =
    in mkBoundRegime
         Trump
         year
-        fs
         bd
+        fs
         pes
         (perPersonExemptionFor regime yearAsInt)
         (unAdjustedStdDeductionFor regime yearAsInt fs)
@@ -173,8 +173,8 @@ bindRegime Trump 2022 Single bd pes =
    in mkBoundRegime
         regime
         year
-        fs
         bd
+        fs
         pes
         (perPersonExemptionFor regime yearAsInt)
         (unAdjustedStdDeductionFor regime yearAsInt fs)
@@ -203,8 +203,8 @@ bindRegime Trump 2021 HeadOfHousehold bd pes =
    in mkBoundRegime
         Trump
         year
-        fs
         bd
+        fs
         pes
         (perPersonExemptionFor regime yearAsInt)
         (unAdjustedStdDeductionFor regime yearAsInt fs)
@@ -235,8 +235,8 @@ bindRegime Trump 2021 Single bd pes =
    in mkBoundRegime
         regime
         year
-        fs
         bd
+        fs
         pes
         (perPersonExemptionFor regime yearAsInt)
         (unAdjustedStdDeductionFor regime yearAsInt fs)
@@ -265,8 +265,8 @@ bindRegime Trump 2020 HeadOfHousehold bd pes =
    in mkBoundRegime
         Trump
         year
-        fs
         bd
+        fs
         pes
         (perPersonExemptionFor regime yearAsInt)
         (unAdjustedStdDeductionFor regime yearAsInt fs)
@@ -297,8 +297,8 @@ bindRegime Trump 2020 Single bd pes =
    in mkBoundRegime
         regime
         year
-        fs
         bd
+        fs
         pes
         (perPersonExemptionFor regime yearAsInt)
         (unAdjustedStdDeductionFor regime yearAsInt fs)
@@ -327,8 +327,8 @@ bindRegime Trump 2019 HeadOfHousehold bd pes =
    in mkBoundRegime
         Trump
         year
-        fs
         bd
+        fs
         pes
         (perPersonExemptionFor regime yearAsInt)
         (unAdjustedStdDeductionFor regime yearAsInt fs)
@@ -359,8 +359,8 @@ bindRegime Trump 2019 Single bd pes =
    in mkBoundRegime
         regime
         year
-        fs
         bd
+        fs
         pes
         (perPersonExemptionFor regime yearAsInt)
         (unAdjustedStdDeductionFor regime yearAsInt fs)
@@ -389,8 +389,8 @@ bindRegime Trump 2018 HeadOfHousehold bd pes =
    in mkBoundRegime
         Trump
         year
-        fs
         bd
+        fs
         pes
         (perPersonExemptionFor regime yearAsInt)
         (unAdjustedStdDeductionFor regime yearAsInt fs)
@@ -421,8 +421,8 @@ bindRegime Trump 2018 Single bd pes =
    in mkBoundRegime
         regime
         year
-        fs
         bd
+        fs
         pes
         (perPersonExemptionFor regime yearAsInt)
         (unAdjustedStdDeductionFor regime yearAsInt fs)
@@ -451,8 +451,8 @@ bindRegime PreTrump 2017 HeadOfHousehold bd pes =
    in mkBoundRegime
         regime
         year
-        fs
         bd
+        fs
         pes
         (perPersonExemptionFor regime yearAsInt)
         (unAdjustedStdDeductionFor regime yearAsInt fs)
@@ -482,8 +482,8 @@ bindRegime PreTrump 2017 Single bd pes =
    in mkBoundRegime
         regime
         year
-        fs
         bd
+        fs
         pes
         (perPersonExemptionFor regime yearAsInt)
         (unAdjustedStdDeductionFor regime yearAsInt fs)
