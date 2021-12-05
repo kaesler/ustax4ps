@@ -15,6 +15,7 @@ You can edit this file as you like.
   , "integers"
   , "interpolate"
   , "lists"
+  , "math"
   , "maybe"
   , "ordered-collections"
   , "partial"

@@ -3,7 +3,7 @@ module Federal.OrdinaryIncomeBracketSpec
   ) where
 
 import Prelude
-import Age as Age
+
 import CommonTypes (FilingStatus(..))
 import Data.Array as Array
 import Data.Array.NonEmpty.Internal (NonEmptyArray(..))

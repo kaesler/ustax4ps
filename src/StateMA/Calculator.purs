@@ -5,7 +5,7 @@ module StateMA.Calculator
 
 import Prelude
 import Age (isAge65OrOlder)
-import CommonTypes (FilingStatus(HeadOfHousehold), MassachusettsGrossIncome, BirthDate)
+import CommonTypes (FilingStatus(..), MassachusettsGrossIncome, BirthDate, Money)
 import Data.Date (Year)
 import Data.Enum (fromEnum)
 import Data.Int (toNumber)
@@ -19,10 +19,15 @@ taxRate year
   | fromEnum year < 2018 = 0.051
   | otherwise = 0.05
 
+personalExemptionFor :: Year -> FilingStatus -> Money
+personalExemptionFor _ HeadOfHousehold = 6800.0
+
+personalExemptionFor _ Single = 4400.0
+
 taxDue :: Year -> BirthDate -> Int -> FilingStatus -> MassachusettsGrossIncome -> Number
 taxDue year bd dependents filingStatus maGrossIncome =
   let
-    personalExemption = if filingStatus == HeadOfHousehold then 6800.0 else 4400.0
+    personalExemption = personalExemptionFor year filingStatus
 
     ageExemption = if isAge65OrOlder bd year then 700.0 else 0.0
 

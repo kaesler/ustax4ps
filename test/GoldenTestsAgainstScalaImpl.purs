@@ -12,10 +12,11 @@ import Effect.Console (log)
 import Federal.Calculator (FederalTaxResults(..))
 import Federal.Calculator as FC
 import GoldenTestCasesFromScala as GTC
+import MathInSpecs (closeEnoughTo)
 import StateMA.Calculator as MA
 import TaxMath (roundHalfUp)
 import Test.Spec (Spec, it, describe)
-import Test.Spec.Assertions (shouldEqual)
+import Test.Spec.Assertions (shouldSatisfy)
 import Test.Spec.Reporter.Console (consoleReporter)
 import Test.Spec.Runner (defaultConfig, runSpec')
 
@@ -56,7 +57,7 @@ testsAgainstScala =
       in
         do
           --logInAff $ show results 
-          calculated `shouldEqual` tc.federalTaxDue
+          calculated `shouldSatisfy` closeEnoughTo tc.federalTaxDue
 
     federalExpectations :: Array Expectation
     federalExpectations = map makeFederalExpectation GTC.cases
@@ -72,7 +73,7 @@ testsAgainstScala =
         calculated = roundHalfUp $ MA.taxDue tc.year tc.birthDate dependents tc.filingStatus (tc.ordinaryIncomeNonSS + tc.qualifiedIncome)
       in
         do
-          calculated `shouldEqual` tc.stateTaxDue
+          calculated `shouldSatisfy` closeEnoughTo tc.stateTaxDue
 
     stateExpectations :: Array Expectation
     stateExpectations = map makeStateExpectation GTC.cases
