@@ -14,7 +14,7 @@ module GoogleSheetModule
 
 -- Import here waht we want accessbible from GoogleSheetInterface
 
-import CommonTypes (BirthDate, FilingStatus(..), unsafeReadFilingStatus)
+import CommonTypes (BirthDate, FilingStatus(..), Money, unsafeReadFilingStatus)
 import Data.Date (Year)
 import Federal.BoundRegime (BoundRegime(..), bindRegime, netDeduction, personalExemptionDeduction, standardDeduction)
 import Federal.Calculator (taxDue)
@@ -27,6 +27,6 @@ import StateMA.Calculator as StateCalc
 import StateMA.Types (MassachusettsGrossIncome)
 import UnsafeDates (unsafeMakeDate, unsafeMakeDay, unsafeMakeMonth, unsafeMakeYear)
 
-stateTaxDue :: Year -> BirthDate -> Int -> FilingStatus -> MassachusettsGrossIncome -> Number
+stateTaxDue :: Year -> BirthDate -> Int -> FilingStatus -> MassachusettsGrossIncome -> Money
 stateTaxDue = StateCalc.taxDue
 

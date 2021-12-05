@@ -26,7 +26,7 @@ personalExemptionFor _ HeadOfHousehold = 6800.0
 
 personalExemptionFor _ Single = 4400.0
 
-taxDue :: Year -> BirthDate -> Int -> FilingStatus -> MassachusettsGrossIncome -> Number
+taxDue :: Year -> BirthDate -> Int -> FilingStatus -> MassachusettsGrossIncome -> Money
 taxDue year bd dependents filingStatus maGrossIncome =
   let
     personalExemption = personalExemptionFor year filingStatus
