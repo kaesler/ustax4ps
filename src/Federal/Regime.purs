@@ -22,7 +22,7 @@ data Regime = Trump | PreTrump
 derive instance Eq Regime
 derive instance Ord Regime
 instance Show Regime where
-  show Trump = " Trump"
+  show Trump = "Trump"
   show PreTrump = "PreTrump"
 instance Read Regime where
   read s = 
