@@ -1,15 +1,17 @@
 
-function DUMMY() {
-  const FR = PS.Federal_Regime;
-  const regime = FR.unsafeReadRegime("Trump");
-  const res = PS.showRegime(regime);
-  return res
-}
+// Note: This file must be loaded AFTER the PS bundle.
+const M = PS.GoogleSheetModule;
+const Trump = M.unsafeReadRegime('Trump');
+const year2021 = M.unsafeMakeYear(2021);
+const birthDate = M.unsafeMakeDate(1955)(10)(2);
+const personalExemptions = 1;
 
 function STD_DEDUCTION(filingStatus) {
-  const T = PS.Taxes;
-
-  return T.standardDeduction(T.unsafeReadFilingStatus(filingStatus));
+  
+  const fs = M.unsafeReadFilingStatus(filingStatus);
+    
+  const boundRegime = M.bindRegime(Trump)(year2021)(birthDate)(fs)(1); 
+  return M.standardDeduction(boundRegime);
 }
 
 function BRACKET_START(filingStatus, rate) {
