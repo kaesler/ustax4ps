@@ -23,7 +23,7 @@ import Federal.OrdinaryIncome (ordinaryIncomeBracketStart, ordinaryIncomeBracket
 import Federal.QualifiedIncome (startOfNonZeroQualifiedRateBracket)
 import Federal.RMDs (unsafeRmdFractionForAge)
 import Federal.Regime (Regime(..), unsafeReadRegime)
-import Federal.TaxableSocialSecurity (amountTaxableInflationAdjusted)
+import Federal.TaxableSocialSecurity (amountTaxable, amountTaxableInflationAdjusted)
 import StateMA.Calculator as StateCalc
 import StateMA.Types (MassachusettsGrossIncome)
 import UnsafeDates (unsafeMakeDate, unsafeMakeDay, unsafeMakeMonth, unsafeMakeYear)

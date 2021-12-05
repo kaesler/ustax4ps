@@ -3057,6 +3057,7 @@ var PS = {};
   exports["PreTrump"] = Federal_Regime.PreTrump;
   exports["Trump"] = Federal_Regime.Trump;
   exports["unsafeReadRegime"] = Federal_Regime.unsafeReadRegime;
+  exports["amountTaxable"] = Federal_TaxableSocialSecurity.amountTaxable;
   exports["amountTaxableInflationAdjusted"] = Federal_TaxableSocialSecurity.amountTaxableInflationAdjusted;
   exports["unsafeMakeDate"] = UnsafeDates.unsafeMakeDate;
   exports["unsafeMakeDay"] = UnsafeDates.unsafeMakeDay;
