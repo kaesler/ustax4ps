@@ -7,7 +7,7 @@ const ThePersonalExemptions = 1;
 const TheItemizedDeductions = 0;
 
 // For now use 2022 for future years.
-function predictIfNecessary(year) {
+function use2022after2022(year) {
   if (year <= 2022)
     return year;
   else
@@ -16,7 +16,7 @@ function predictIfNecessary(year) {
 
 function bindRegime(year, filingStatusName) {
   const filingStatus = M.unsafeReadFilingStatus(filingStatusName);
-  return M.bindRegime(TheRegime)(predictIfNecessary(year))(TheBirthDate)(filingStatus)(ThePersonalExemptions);
+  return M.bindRegime(TheRegime)(use2022after2022(year))(TheBirthDate)(filingStatus)(ThePersonalExemptions);
 }
 
 function STD_DEDUCTION(year, filingStatusName) {
@@ -48,16 +48,25 @@ function RMD_FRACTION_FOR_AGE(age) {
 function FEDERAL_TAX_DUE(year, filingStatusName, socSec, ordinaryIncomeNonSS, qualifiedIncome) {
   const filingStatus = M.unsafeReadFilingStatus(filingStatusName);
 
-  return M.taxDue(TheRegime)(predictIfNecessary(year))(TheBirthDate)(
-          filingStatus)(ThePersonalExemptions)(socSec)(
-          ordinaryIncomeNonSS)(qualifiedIncome)(
-          TheItemizedDeductions);
+  return M.taxDue(
+    TheRegime)(
+    use2022after2022(year))(
+    TheBirthDate)(
+    filingStatus)(
+    ThePersonalExemptions)(socSec)(
+    ordinaryIncomeNonSS)(qualifiedIncome)(
+    TheItemizedDeductions);
 }
 
 function MA_STATE_TAX_DUE(year, dependents, filingStatusName, massacchusettsGrossIncome) {
   const filingStatus = M.unsafeReadFilingStatus(filingStatusName);
  
-  return M.maStateTaxDue(predictIfNecessary(year))(TheBirthDate)(dependents)(filingStatus)(massacchusettsGrossIncome);
+  return M.maStateTaxDue(
+    use2022after2022(year))(
+    TheBirthDate)(
+    dependents)(
+    filingStatus)(
+    massacchusettsGrossIncome);
 }
 
 function TAX_SLOPE(year, filingStatusName, socSec, ordinaryIncomeNonSS, qualifiedIncome) {
