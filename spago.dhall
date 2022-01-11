@@ -2,7 +2,7 @@
 Welcome to a Spago project!
 You can edit this file as you like.
 -}
-{ name = "retirement-model-purescript"
+{ name = "ustax4ps"
 , dependencies =
   [ "aff"
   , "arrays"

@@ -1,5 +1,5 @@
 {
-  "name": "retirement-model-purescript",
+  "name": "ustax4ps",
   "dependencies": {
     "purty": "^6.3.1"
   }
