@@ -1,12 +1,12 @@
-module CommonTypes(
-  Age(..),
-  BirthDate(..),
-  FilingStatus(..),
-  Money,
-  isUnmarried,
-  unsafeReadFilingStatus
-)
-where
+module CommonTypes
+  ( Age(..)
+  , BirthDate(..)
+  , FilingStatus(..)
+  , Money
+  , isUnmarried
+  , unsafeReadFilingStatus
+  )
+  where
 
 import Prelude
 import Data.Date(Date)

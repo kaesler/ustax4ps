@@ -23,6 +23,7 @@ You can edit this file as you like.
   , "psci-support"
   , "quickcheck"
   , "read"
+  , "safe-coerce"
   , "spec"
   , "tuples"
   -- , "undefined"
