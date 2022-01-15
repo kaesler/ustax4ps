@@ -26,6 +26,7 @@ You can edit this file as you like.
   , "safe-coerce"
   , "spec"
   , "tuples"
+  , "unsafe-coerce"
   -- , "undefined"
   ]
 , packages = ./packages.dhall
