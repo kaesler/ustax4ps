@@ -15,7 +15,8 @@ import Prelude
 import Data.Map (Map, keys)
 import Data.Map as Map
 import Data.Tuple (Tuple(..), fst, snd)
-import Moneys (IncomeThreshold, TaxPayable, TaxableIncome, inflateThreshold, makeFromInt)
+import Moneys (IncomeThreshold, TaxPayable, TaxableIncome, inflateThreshold, makeFromInt, thresholdAsTaxableIncome)
+import Partial.Unsafe (unsafePartial)
 import TaxRate (class TaxRate)
 import Undefined (undefined)
 
@@ -54,7 +55,13 @@ ratesExceptTop brackets =
     Array.dropEnd 1 rates
 
 taxableIncomeToEndOfBracket :: forall r. TaxRate r => Brackets r -> r -> TaxableIncome
-taxableIncomeToEndOfBracket = undefined
+taxableIncomeToEndOfBracket brackets bracketRate =
+  let
+    successorRate = unsafePartial $ fromJust (rateSuccessor bracketRate brackets)
+
+    startOfSuccessor = unsafePartial $ fromJust (Map.lookup successorRate brackets)
+  in
+    thresholdAsTaxableIncome startOfSuccessor
 
 bracketWidth :: forall r. TaxRate r => Brackets r -> r -> TaxableIncome
 bracketWidth = undefined
