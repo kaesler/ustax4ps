@@ -12,10 +12,12 @@ module Brackets
 import Data.Array as Array
 import Data.Maybe
 import Prelude
+import Data.List (List, find, foldl, reverse, tail, zip)
 import Data.Map (Map, keys)
 import Data.Map as Map
+import Data.Set as Set
 import Data.Tuple (Tuple(..), fst, snd)
-import Moneys (IncomeThreshold, TaxPayable, TaxableIncome, inflateThreshold, makeFromInt, thresholdAsTaxableIncome)
+import Moneys (IncomeThreshold, TaxPayable, TaxableIncome, inflateThreshold, makeFromInt, thresholdAsTaxableIncome, thresholdDifference)
 import Partial.Unsafe (unsafePartial)
 import TaxRate (class TaxRate)
 import Undefined (undefined)
@@ -63,8 +65,22 @@ taxableIncomeToEndOfBracket brackets bracketRate =
   in
     thresholdAsTaxableIncome startOfSuccessor
 
+safeBracketWidth :: forall r. TaxRate r => Brackets r -> r -> Maybe TaxableIncome
+safeBracketWidth brackets rate = do
+  let
+    rates = (Set.toUnfoldable (Map.keys brackets)) :: List r
+  ratesTail <- (tail rates)
+  let
+    pairs = zip rates ratesTail
+  pair <- find (\p -> fst p == rate) pairs
+  let
+    successor = snd pair
+  rateStart <- Map.lookup rate brackets
+  successorStart <- Map.lookup successor brackets
+  Just (thresholdDifference successorStart rateStart)
+
 bracketWidth :: forall r. TaxRate r => Brackets r -> r -> TaxableIncome
-bracketWidth = undefined
+bracketWidth brackets rate = unsafePartial $ fromJust $ safeBracketWidth brackets rate
 
 taxToEndOfBracket :: forall r. TaxRate r => Brackets r -> r -> TaxPayable
 taxToEndOfBracket = undefined
