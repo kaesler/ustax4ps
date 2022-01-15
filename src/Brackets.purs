@@ -12,12 +12,13 @@ module Brackets
 import Data.Array as Array
 import Data.Maybe
 import Prelude
+import Data.Foldable as Foldable
 import Data.List (List, find, foldl, reverse, tail, zip)
 import Data.Map (Map, keys)
 import Data.Map as Map
 import Data.Set as Set
 import Data.Tuple (Tuple(..), fst, snd)
-import Moneys (IncomeThreshold, TaxPayable, TaxableIncome, inflateThreshold, makeFromInt, thresholdAsTaxableIncome, thresholdDifference)
+import Moneys (IncomeThreshold, TaxPayable, TaxableIncome, applyTaxRate, inflateThreshold, makeFromInt, thresholdAsTaxableIncome, thresholdDifference)
 import Partial.Unsafe (unsafePartial)
 import TaxRate (class TaxRate)
 import Undefined (undefined)
@@ -83,4 +84,16 @@ bracketWidth :: forall r. TaxRate r => Brackets r -> r -> TaxableIncome
 bracketWidth brackets rate = unsafePartial $ fromJust $ safeBracketWidth brackets rate
 
 taxToEndOfBracket :: forall r. TaxRate r => Brackets r -> r -> TaxPayable
-taxToEndOfBracket = undefined
+taxToEndOfBracket brackets bracketRate =
+  let
+    relevantRates = Array.takeWhile (_ <= bracketRate) (ratesExceptTop brackets)
+
+    bracketWidths = map (bracketWidth brackets) relevantRates
+
+    pairs = relevantRates `Array.zip` bracketWidths
+
+    taxesDue = map taxForBracket pairs
+      where
+      taxForBracket (Tuple rate width) = applyTaxRate rate width
+  in
+    Foldable.fold taxesDue
