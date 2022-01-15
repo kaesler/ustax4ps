@@ -47,7 +47,11 @@ rateSuccessor rate brackets =
     map snd pair
 
 ratesExceptTop :: forall r. TaxRate r => Brackets r -> Array r
-ratesExceptTop = undefined
+ratesExceptTop brackets =
+  let
+    rates = Array.fromFoldable $ keys brackets
+  in
+    Array.dropEnd 1 rates
 
 taxableIncomeToEndOfBracket :: forall r. TaxRate r => Brackets r -> r -> TaxableIncome
 taxableIncomeToEndOfBracket = undefined
