@@ -21,7 +21,7 @@ where
 import TaxMath
 
 import Data.Array as Array
-import Data.Foldable as Data
+import Data.Foldable as Foldable
 import Data.Int (toNumber)
 import Data.List (List, find, foldl, reverse, tail, zip)
 import Data.Map (Map, keys)
@@ -110,7 +110,7 @@ taxToEndOfOrdinaryIncomeBracket brackets bracketRate =
       where
       taxForBracket (Tuple rate width) = (toNumber width) * (ordinaryRateAsFraction rate)
   in
-    Data.sum taxesDue
+    Foldable.sum taxesDue
 
 topRateOnOrdinaryIncome :: OrdinaryIncomeBrackets -> OrdinaryRate
 topRateOnOrdinaryIncome brackets = 
