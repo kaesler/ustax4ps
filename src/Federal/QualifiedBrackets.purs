@@ -1,4 +1,4 @@
-module QualifiedBrackets(
+module Federal.QualifiedBrackets(
   QualifiedBrackets
   , fromPairs
   , inflateThresholds
