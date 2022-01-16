@@ -13,7 +13,7 @@ import Data.Array as Array
 import Data.Maybe
 import Prelude
 import Data.Foldable as Foldable
-import Data.List (List, find, foldl, reverse, tail, zip)
+import Data.List (List, find, tail, zip)
 import Data.Map (Map, keys)
 import Data.Map as Map
 import Data.Set as Set

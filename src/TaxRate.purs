@@ -1,6 +1,6 @@
 module TaxRate
   ( class TaxRate,
-    zero,
+    zeroRate,
     rateToNumber,
     absoluteDifference
   )
@@ -10,6 +10,6 @@ where
 import Prelude
 
 class Ord r <= TaxRate r where
-  zero :: r
+  zeroRate :: r
   rateToNumber :: r -> Number
   absoluteDifference :: r -> r -> r

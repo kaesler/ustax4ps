@@ -5,9 +5,11 @@ module Moneys
   , TaxCredit
   , TaxPayable
   , TaxableIncome
+  , amountOverThreshold
   , applyDeductions
   , applyTaxRate
   , asTaxable
+  , class HasAmountOverThreshold
   , class HasMakeFromInt
   , class HasMul
   , class HasNoMoney
