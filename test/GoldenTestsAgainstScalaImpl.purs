@@ -3,7 +3,6 @@ module GoldenTestsAgainstScalaImpl
   , logInAff
   ) where
 
-import Prelude
 import Data.Traversable (sequence)
 import Effect (Effect)
 import Effect.Aff (Aff, launchAff_)
@@ -12,9 +11,9 @@ import Effect.Console (log)
 import Federal.Calculator (FederalTaxResults(..))
 import Federal.Calculator as FC
 import GoldenTestCasesFromScala as GTC
-import MathInSpecs (closeEnoughTo)
+import Moneys (closeEnoughTo)
+import Prelude
 import StateMA.Calculator as MA
-import TaxMath (roundHalfUp)
 import Test.Spec (Spec, it, describe)
 import Test.Spec.Assertions (shouldSatisfy)
 import Test.Spec.Reporter.Console (consoleReporter)
@@ -53,7 +52,7 @@ testsAgainstScala =
             tc.qualifiedIncome
             tc.itemizedDeductions
 
-        calculated = roundHalfUp $ results.taxOnOrdinaryIncome + results.taxOnQualifiedIncome
+        calculated = results.taxOnOrdinaryIncome <> results.taxOnQualifiedIncome
       in
         do
           --logInAff $ show results 
@@ -70,7 +69,7 @@ testsAgainstScala =
       let
         dependents = if tc.personalExemptions <= 0 then 0 else tc.personalExemptions - 1
 
-        calculated = roundHalfUp $ MA.taxDue tc.year tc.birthDate dependents tc.filingStatus (tc.ordinaryIncomeNonSS + tc.qualifiedIncome)
+        calculated = MA.taxDue tc.year tc.birthDate dependents tc.filingStatus (tc.ordinaryIncomeNonSS <> tc.qualifiedIncome)
       in
         do
           calculated `shouldSatisfy` closeEnoughTo tc.stateTaxDue

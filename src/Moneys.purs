@@ -10,9 +10,12 @@ module Moneys
   , applyTaxRate
   , asTaxable
   , class HasAmountOverThreshold
+  , class HasCloseEnoughTo
   , class HasMakeFromInt
   , class HasMul
   , class HasNoMoney
+  , class HasTimes
+  , closeEnoughTo
   , closeEnoughToImpl
   , inflateThreshold
   , isBelow
@@ -23,6 +26,7 @@ module Moneys
   , roundTaxPayable
   , thresholdAsTaxableIncome
   , thresholdDifference
+  , times
   )
   where
   
@@ -37,7 +41,6 @@ import TaxMath (roundHalfUp)
 
 class Monoid m <= HasNoMoney m where
   noMoney :: m
-  --noMoney = mempty
 noMoneyImpl :: forall m. Monoid m => m
 noMoneyImpl = mempty
 

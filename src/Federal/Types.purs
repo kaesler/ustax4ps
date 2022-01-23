@@ -1,45 +1,31 @@
-module Federal.Types(
-  BracketStart(..),
-  CombinedIncome,
-  DistributionPeriod,
-  ItemizedDeductions,
-  OrdinaryIncome,
-  QualifiedIncome,
-  PersonalExemptions,
-  SSRelevantOtherIncome,
-  SocSec,
-  StandardDeduction(..),
-  bracketStartAsNumber
-)
+module Federal.Types
+  ( CombinedIncome
+  , DistributionPeriod
+  , ItemizedDeductions
+  , OrdinaryIncome
+  , QualifiedIncome
+  , PersonalExemptions
+  , SSRelevantOtherIncome
+  , SocSec
+  , StandardDeduction
+  ) where
 
-where
+import Moneys
 
-import Prelude (class Eq, class Ord, class Show, show)
-import Data.Int (toNumber)
-import CommonTypes
+type CombinedIncome = Income
 
-type ItemizedDeductions = Money
+type DistributionPeriod = Number
+
+type ItemizedDeductions = Deduction
+
+type OrdinaryIncome = Income
+
 type PersonalExemptions = Int
 
-type CombinedIncome = Money
-type DistributionPeriod = Money
+type QualifiedIncome = Income
 
-type OrdinaryIncome = Money
-type QualifiedIncome = Money
-type SSRelevantOtherIncome = Money
-type SocSec = Money
+type SocSec = Income
 
-newtype BracketStart = BracketStart Int
-derive instance Eq BracketStart
-derive instance Ord BracketStart
-derive newtype instance Show BracketStart
-bracketStartAsNumber :: BracketStart -> Number
-bracketStartAsNumber (BracketStart i) = toNumber i
+type SSRelevantOtherIncome = Income
 
-newtype StandardDeduction = StandardDeduction Int
-derive instance Eq StandardDeduction
-derive instance Ord StandardDeduction
-instance Show StandardDeduction where
-  show (StandardDeduction sd) = show sd 
-
-
+type StandardDeduction = Deduction

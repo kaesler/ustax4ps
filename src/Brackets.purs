@@ -10,16 +10,16 @@ module Brackets
   ) where
 
 import Data.Array as Array
-import Data.Maybe
-import Prelude
 import Data.Foldable as Foldable
 import Data.List (List, find, tail, zip)
 import Data.Map (Map, keys)
 import Data.Map as Map
+import Data.Maybe
 import Data.Set as Set
 import Data.Tuple (Tuple(..), fst, snd)
 import Moneys (IncomeThreshold, TaxPayable, TaxableIncome, applyTaxRate, inflateThreshold, makeFromInt, thresholdAsTaxableIncome, thresholdDifference)
 import Partial.Unsafe (unsafePartial)
+import Prelude
 import TaxRate (class TaxRate)
 import Undefined (undefined)
 
@@ -30,7 +30,7 @@ fromPairs :: forall r. (TaxRate r) => Array (Tuple Number Int) -> (Number -> r) 
 fromPairs tuples mkRate =
   let
     f :: Tuple Number Int -> Tuple r IncomeThreshold
-    f (Tuple rate threshold) = Tuple (mkRate rate) (makeFromInt threshold)
+    f (Tuple rateAsPercentage threshold) = Tuple (mkRate (rateAsPercentage / 100.00)) (makeFromInt threshold)
   in
     Map.fromFoldable $ map f tuples
 

@@ -7,19 +7,18 @@ module Federal.BoundRegime
   )
   where
 
-import Prelude
-
 import Age (isAge65OrOlder)
-import CommonTypes (BirthDate, FilingStatus(..), Money, isUnmarried)
+import CommonTypes (BirthDate, FilingStatus(..), isUnmarried)
 import Data.Date (Year)
-import Data.Int (toNumber)
+import Data.Enum (fromEnum)
 import Data.Tuple (Tuple(..))
-import Federal.OrdinaryIncome (OrdinaryIncomeBrackets)
-import Federal.OrdinaryIncome (fromPairs) as FO
-import Federal.QualifiedIncome (QualifiedIncomeBrackets)
-import Federal.QualifiedIncome (fromPairs) as FQ
+import Federal.OrdinaryBrackets (OrdinaryBrackets, fromPairs) as OB
+import Federal.QualifiedBrackets (QualifiedBrackets, fromPairs) as QB
 import Federal.Regime (Regime(..), invalidRegime)
-import Federal.Types (ItemizedDeductions, PersonalExemptions, StandardDeduction(..))
+import Federal.Types (ItemizedDeductions, PersonalExemptions, StandardDeduction)
+import Moneys (Deduction, makeFromInt, noMoney, times)
+import Prelude
+import Undefined (undefined)
 import UnsafeDates (unsafeMakeYear)
 
 newtype BoundRegime
@@ -32,15 +31,14 @@ newtype BoundRegime
       --
       -- The following are inflatable. They may get adjusted to estimate the
       -- the tax regime for a future year, based on estimated inflation.
-    , perPersonExemption :: Money
-    , unadjustedStandardDeduction :: Int
-    , adjustmentWhenOver65 :: Int
-    , adjustmentWhenOver65AndSingle :: Int
-    , ordinaryIncomeBrackets :: OrdinaryIncomeBrackets
-    , qualifiedIncomeBrackets :: QualifiedIncomeBrackets
+    , perPersonExemption :: Deduction
+    , unadjustedStandardDeduction :: Deduction
+    , adjustmentWhenOver65 :: Deduction
+    , adjustmentWhenOver65AndSingle :: Deduction
+    , ordinaryBrackets :: OB.OrdinaryBrackets
+    , qualifiedBrackets :: QB.QualifiedBrackets
     }
-instance Show BoundRegime where
-  show (BoundRegime r) = (show r)
+derive newtype instance Show BoundRegime
 
 mkBoundRegime ::
   Regime ->
@@ -48,12 +46,12 @@ mkBoundRegime ::
   BirthDate ->
   FilingStatus ->
   Int ->
-  Money ->
-  Int ->
-  Int ->
-  Int ->
-  OrdinaryIncomeBrackets ->
-  QualifiedIncomeBrackets ->
+  Deduction ->
+  Deduction ->
+  Deduction ->
+  Deduction ->
+  OB.OrdinaryBrackets ->
+  QB.QualifiedBrackets ->
   BoundRegime
  
 mkBoundRegime r y bd fs pes ppe uasd a65 a65s ob qb = 
@@ -67,71 +65,77 @@ mkBoundRegime r y bd fs pes ppe uasd a65 a65s ob qb =
      unadjustedStandardDeduction: uasd,
      adjustmentWhenOver65: a65,
      adjustmentWhenOver65AndSingle: a65s,
-     ordinaryIncomeBrackets: ob,
-     qualifiedIncomeBrackets: qb
+     ordinaryBrackets: ob,
+     qualifiedBrackets: qb
    }
 
 standardDeduction :: BoundRegime -> StandardDeduction
 standardDeduction (BoundRegime br) =
-  StandardDeduction $
-    br.unadjustedStandardDeduction +
-       ( if isAge65OrOlder br.birthDate br.year
-            then
-              br.adjustmentWhenOver65
-                + ( if isUnmarried br.filingStatus
-                      then br.adjustmentWhenOver65AndSingle
-                      else 0
-                  )
-            else 0
-        )
-personalExemptionDeduction :: BoundRegime -> Money
+  br.unadjustedStandardDeduction <>
+     ( if isAge65OrOlder br.birthDate br.year
+          then
+            br.adjustmentWhenOver65
+              <> ( if isUnmarried br.filingStatus
+                    then br.adjustmentWhenOver65AndSingle
+                    else noMoney
+                )
+          else noMoney
+      )
+personalExemptionDeduction :: BoundRegime -> Deduction
 personalExemptionDeduction (BoundRegime br) =
-  br.perPersonExemption * toNumber br.personalExemptions
+  br.personalExemptions `times` br.perPersonExemption
 
-netDeduction :: BoundRegime -> ItemizedDeductions -> Money
+netDeduction :: BoundRegime -> ItemizedDeductions -> Deduction
 netDeduction br itemized =
-  let StandardDeduction stdDed = standardDeduction br
-   in personalExemptionDeduction br + max itemized (toNumber stdDed)
+  personalExemptionDeduction br <> max itemized (standardDeduction br)
 
 -- Note: does't seem to get adjusted for inflation.
-perPersonExemptionFor :: Regime -> Int -> Money
-perPersonExemptionFor PreTrump _ = 4050.0
-perPersonExemptionFor Trump _ = 0.0
+perPersonExemptionFor :: Regime -> Year -> Deduction
+perPersonExemptionFor PreTrump _ = makeFromInt 4050
+perPersonExemptionFor Trump _ = noMoney
 
-unAdjustedStdDeductionFor :: Regime -> Int -> FilingStatus -> Int
-unAdjustedStdDeductionFor Trump 2022 Single = 12950
-unAdjustedStdDeductionFor Trump 2022 HeadOfHousehold = 19400
-unAdjustedStdDeductionFor Trump 2021 Single = 12550
-unAdjustedStdDeductionFor Trump 2021 HeadOfHousehold = 18800
-unAdjustedStdDeductionFor Trump 2020 HeadOfHousehold = 18650
-unAdjustedStdDeductionFor Trump 2020 Single = 12400
-unAdjustedStdDeductionFor Trump 2019 HeadOfHousehold = 18350
-unAdjustedStdDeductionFor Trump 2019 Single = 12200
-unAdjustedStdDeductionFor Trump 2018 HeadOfHousehold = 18000
-unAdjustedStdDeductionFor Trump 2018 Single = 12000
-unAdjustedStdDeductionFor PreTrump 2017 Single = 6350
-unAdjustedStdDeductionFor PreTrump 2017 HeadOfHousehold = 9350
-unAdjustedStdDeductionFor r y _ = invalidRegime r (unsafeMakeYear y)
+unAdjustedStdDeductionFor :: Regime -> Year -> FilingStatus -> Deduction
+unAdjustedStdDeductionFor regime year fs = 
+  (case T3 regime (fromEnum year) fs of 
+     T3 Trump 2022 Single -> 12950
+     T3 Trump 2022 Single -> 12950
+     T3 Trump 2022 HeadOfHousehold -> 19400
+     T3 Trump 2021 Single -> 12550
+     T3 Trump 2021 HeadOfHousehold -> 18800
+     T3 Trump 2020 HeadOfHousehold -> 18650
+     T3 Trump 2020 Single -> 12400
+     T3 Trump 2019 HeadOfHousehold -> 18350
+     T3 Trump 2019 Single -> 12200
+     T3 Trump 2018 HeadOfHousehold -> 18000
+     T3 Trump 2018 Single -> 12000
+     T3 PreTrump 2017 Single -> 6350
+     T3 PreTrump 2017 HeadOfHousehold -> 9350
+     T3 r yy _ -> invalidRegime r (unsafeMakeYear yy)
+  ) # makeFromInt
 
-ageAdjustmentFor :: Regime -> Int -> Int
-ageAdjustmentFor Trump 2022 = 1400
-ageAdjustmentFor Trump 2021 = 1350
-ageAdjustmentFor Trump 2020 = 1300
-ageAdjustmentFor Trump 2019 = 1300
-ageAdjustmentFor Trump 2018 = 1300
+ageAdjustmentFor :: Regime -> Year -> Deduction
+ageAdjustmentFor regime year = 
+  (case T2 regime (fromEnum year) of 
+    T2 Trump 2022 -> 1400
+    T2 Trump 2021 -> 1350
+    T2 Trump 2020 -> 1300
+    T2 Trump 2019 -> 1300
+    T2 Trump 2018 -> 1300
+    T2 PreTrump 2017 -> 1250
+    T2 r y -> invalidRegime r (unsafeMakeYear y)
+  ) # makeFromInt
 
-ageAdjustmentFor PreTrump 2017 = 1250
-ageAdjustmentFor r y = invalidRegime r (unsafeMakeYear y)
-
-ageAndSingleAdjustmentFor :: Regime -> Int -> Int
-ageAndSingleAdjustmentFor Trump 2022 = 350
-ageAndSingleAdjustmentFor Trump 2021 = 350
-ageAndSingleAdjustmentFor Trump 2020 = 350
-ageAndSingleAdjustmentFor Trump 2019 = 350
-ageAndSingleAdjustmentFor Trump 2018 = 300
-ageAndSingleAdjustmentFor PreTrump 2017 = 300
-ageAndSingleAdjustmentFor r y = invalidRegime r (unsafeMakeYear y)
-
+ageAndSingleAdjustmentFor :: Regime -> Year -> Deduction
+ageAndSingleAdjustmentFor regime year =
+  (case T2 regime (fromEnum year) of 
+    T2 Trump 2022 -> 350
+    T2 Trump 2021 -> 350
+    T2 Trump 2020 -> 350
+    T2 Trump 2019 -> 350
+    T2 Trump 2018 -> 300
+    T2 PreTrump 2017 -> 300
+    T2 r y -> invalidRegime r (unsafeMakeYear y)
+  ) # makeFromInt
 
 bindRegime :: Regime -> Int -> BirthDate -> FilingStatus -> PersonalExemptions -> BoundRegime
 bindRegime Trump 2022 bd HeadOfHousehold pes =
@@ -145,11 +149,11 @@ bindRegime Trump 2022 bd HeadOfHousehold pes =
         bd
         fs
         pes
-        (perPersonExemptionFor regime yearAsInt)
-        (unAdjustedStdDeductionFor regime yearAsInt fs)
-        (ageAdjustmentFor regime yearAsInt)
-        (ageAndSingleAdjustmentFor regime yearAsInt)
-        ( FO.fromPairs
+        (perPersonExemptionFor regime year)
+        (unAdjustedStdDeductionFor regime year fs)
+        (ageAdjustmentFor regime year)
+        (ageAndSingleAdjustmentFor regime year)
+        ( OB.fromPairs
           [ (Tuple 10.0 0),
             (Tuple 12.0 14650),
             (Tuple 22.0 55900),
@@ -159,10 +163,10 @@ bindRegime Trump 2022 bd HeadOfHousehold pes =
             (Tuple 37.0 539900)
           ]
         )
-        ( FQ.fromPairs
-          [ (Tuple 0 0),
-            (Tuple 15 55800),
-            (Tuple 20 488500)
+        ( QB.fromPairs
+          [ (Tuple 0.0 0),
+            (Tuple 15.0 55800),
+            (Tuple 20.0 488500)
           ]
         )
 bindRegime Trump 2022 bd Single pes =
@@ -176,11 +180,11 @@ bindRegime Trump 2022 bd Single pes =
         bd
         fs
         pes
-        (perPersonExemptionFor regime yearAsInt)
-        (unAdjustedStdDeductionFor regime yearAsInt fs)
-        (ageAdjustmentFor regime yearAsInt)
-        (ageAndSingleAdjustmentFor regime yearAsInt)
-        (FO.fromPairs
+        (perPersonExemptionFor regime year)
+        (unAdjustedStdDeductionFor regime year fs)
+        (ageAdjustmentFor regime year)
+        (ageAndSingleAdjustmentFor regime year)
+        (OB.fromPairs
           [ (Tuple 10.0 0),
             (Tuple 12.0 10275),
             (Tuple 22.0 41775),
@@ -189,10 +193,10 @@ bindRegime Trump 2022 bd Single pes =
             (Tuple 35.0 215950),
             (Tuple 37.0 539900)
           ])
-        (FQ.fromPairs
-          [ (Tuple 0 0),
-            (Tuple 15 41675),
-            (Tuple 20 459750)
+        (QB.fromPairs
+          [ (Tuple 0.0 0),
+            (Tuple 15.0 41675),
+            (Tuple 20.0 459750)
           ])
 
 bindRegime Trump 2021 bd HeadOfHousehold pes =
@@ -206,11 +210,11 @@ bindRegime Trump 2021 bd HeadOfHousehold pes =
         bd
         fs
         pes
-        (perPersonExemptionFor regime yearAsInt)
-        (unAdjustedStdDeductionFor regime yearAsInt fs)
-        (ageAdjustmentFor regime yearAsInt)
-        (ageAndSingleAdjustmentFor regime yearAsInt)
-        ( FO.fromPairs
+        (perPersonExemptionFor regime year)
+        (unAdjustedStdDeductionFor regime year fs)
+        (ageAdjustmentFor regime year)
+        (ageAndSingleAdjustmentFor regime year)
+        ( OB.fromPairs
           [ (Tuple 10.0 0),
             (Tuple 12.0 14200),
             (Tuple 22.0 54200),
@@ -220,10 +224,10 @@ bindRegime Trump 2021 bd HeadOfHousehold pes =
             (Tuple 37.0 523600)
           ]
         )
-        ( FQ.fromPairs
-          [ (Tuple 0 0),
-            (Tuple 15 54100),
-            (Tuple 20 473850)
+        ( QB.fromPairs
+          [ (Tuple 0.0 0),
+            (Tuple 15.0 54100),
+            (Tuple 20.0 473850)
           ]
         )
 
@@ -238,11 +242,11 @@ bindRegime Trump 2021 bd Single pes =
         bd
         fs
         pes
-        (perPersonExemptionFor regime yearAsInt)
-        (unAdjustedStdDeductionFor regime yearAsInt fs)
-        (ageAdjustmentFor regime yearAsInt)
-        (ageAndSingleAdjustmentFor regime yearAsInt)
-        (FO.fromPairs
+        (perPersonExemptionFor regime year)
+        (unAdjustedStdDeductionFor regime year fs)
+        (ageAdjustmentFor regime year)
+        (ageAndSingleAdjustmentFor regime year)
+        (OB.fromPairs
           [ (Tuple 10.0 0),
             (Tuple 12.0 9950),
             (Tuple 22.0 40525),
@@ -251,10 +255,10 @@ bindRegime Trump 2021 bd Single pes =
             (Tuple 35.0 209425),
             (Tuple 37.0 523600)
           ])
-        (FQ.fromPairs
-          [ (Tuple 0 0),
-            (Tuple 15 40400),
-            (Tuple 20 445850)
+        (QB.fromPairs
+          [ (Tuple 0.0 0),
+            (Tuple 15.0 40400),
+            (Tuple 20.0 445850)
           ])
 
 bindRegime Trump 2020 bd HeadOfHousehold pes =
@@ -268,11 +272,11 @@ bindRegime Trump 2020 bd HeadOfHousehold pes =
         bd
         fs
         pes
-        (perPersonExemptionFor regime yearAsInt)
-        (unAdjustedStdDeductionFor regime yearAsInt fs)
-        (ageAdjustmentFor regime yearAsInt)
-        (ageAndSingleAdjustmentFor regime yearAsInt)
-        ( FO.fromPairs
+        (perPersonExemptionFor regime year)
+        (unAdjustedStdDeductionFor regime year fs)
+        (ageAdjustmentFor regime year)
+        (ageAndSingleAdjustmentFor regime year)
+        ( OB.fromPairs
           [ (Tuple 10.0 0),
             (Tuple 12.0 14100),
             (Tuple 22.0 53700),
@@ -282,10 +286,10 @@ bindRegime Trump 2020 bd HeadOfHousehold pes =
             (Tuple 37.0 518400)
           ]
         )
-        ( FQ.fromPairs
-          [ (Tuple 0 0),
-            (Tuple 15 53600),
-            (Tuple 20 469050)
+        ( QB.fromPairs
+          [ (Tuple 0.0 0),
+            (Tuple 15.0 53600),
+            (Tuple 20.0 469050)
           ]
         )
 
@@ -300,11 +304,11 @@ bindRegime Trump 2020 bd Single pes =
         bd
         fs
         pes
-        (perPersonExemptionFor regime yearAsInt)
-        (unAdjustedStdDeductionFor regime yearAsInt fs)
-        (ageAdjustmentFor regime yearAsInt)
-        (ageAndSingleAdjustmentFor regime yearAsInt)
-        (FO.fromPairs
+        (perPersonExemptionFor regime year)
+        (unAdjustedStdDeductionFor regime year fs)
+        (ageAdjustmentFor regime year)
+        (ageAndSingleAdjustmentFor regime year)
+        (OB.fromPairs
           [ (Tuple 10.0 0),
             (Tuple 12.0 9875),
             (Tuple 22.0 40125),
@@ -313,10 +317,10 @@ bindRegime Trump 2020 bd Single pes =
             (Tuple 35.0 207350),
             (Tuple 37.0 518400)
           ])
-        (FQ.fromPairs
-          [ (Tuple 0 0),
-            (Tuple 15 40000),
-            (Tuple 20 442450)
+        (QB.fromPairs
+          [ (Tuple 0.0 0),
+            (Tuple 15.0 40000),
+            (Tuple 20.0 442450)
           ])
 
 bindRegime Trump 2019 bd HeadOfHousehold pes =
@@ -330,11 +334,11 @@ bindRegime Trump 2019 bd HeadOfHousehold pes =
         bd
         fs
         pes
-        (perPersonExemptionFor regime yearAsInt)
-        (unAdjustedStdDeductionFor regime yearAsInt fs)
-        (ageAdjustmentFor regime yearAsInt)
-        (ageAndSingleAdjustmentFor regime yearAsInt)
-        ( FO.fromPairs
+        (perPersonExemptionFor regime year)
+        (unAdjustedStdDeductionFor regime year fs)
+        (ageAdjustmentFor regime year)
+        (ageAndSingleAdjustmentFor regime year)
+        ( OB.fromPairs
           [ (Tuple 10.0 0),
             (Tuple 12.0 13850),
             (Tuple 22.0 52850),
@@ -344,10 +348,10 @@ bindRegime Trump 2019 bd HeadOfHousehold pes =
             (Tuple 37.0 510300)
           ]
         )
-        ( FQ.fromPairs
-          [ (Tuple 0 0),
-            (Tuple 15 52750),
-            (Tuple 20 461700)
+        ( QB.fromPairs
+          [ (Tuple 0.0 0),
+            (Tuple 15.0 52750),
+            (Tuple 20.0 461700)
           ]
         )
 
@@ -362,11 +366,11 @@ bindRegime Trump 2019 bd Single pes =
         bd
         fs
         pes
-        (perPersonExemptionFor regime yearAsInt)
-        (unAdjustedStdDeductionFor regime yearAsInt fs)
-        (ageAdjustmentFor regime yearAsInt)
-        (ageAndSingleAdjustmentFor regime yearAsInt)
-        (FO.fromPairs
+        (perPersonExemptionFor regime year)
+        (unAdjustedStdDeductionFor regime year fs)
+        (ageAdjustmentFor regime year)
+        (ageAndSingleAdjustmentFor regime year)
+        (OB.fromPairs
           [ (Tuple 10.0 0),
             (Tuple 12.0 9700),
             (Tuple 22.0 39475),
@@ -375,10 +379,10 @@ bindRegime Trump 2019 bd Single pes =
             (Tuple 35.0 204100),
             (Tuple 37.0 510300)
           ])
-        (FQ.fromPairs
-          [ (Tuple 0 0),
-            (Tuple 15 39375),
-            (Tuple 20 434550)
+        (QB.fromPairs
+          [ (Tuple 0.0 0),
+            (Tuple 15.0 39375),
+            (Tuple 20.0 434550)
           ])
 
 bindRegime Trump 2018 bd HeadOfHousehold pes =
@@ -392,11 +396,11 @@ bindRegime Trump 2018 bd HeadOfHousehold pes =
         bd
         fs
         pes
-        (perPersonExemptionFor regime yearAsInt)
-        (unAdjustedStdDeductionFor regime yearAsInt fs)
-        (ageAdjustmentFor regime yearAsInt)
-        (ageAndSingleAdjustmentFor regime yearAsInt)
-        ( FO.fromPairs
+        (perPersonExemptionFor regime year)
+        (unAdjustedStdDeductionFor regime year fs)
+        (ageAdjustmentFor regime year)
+        (ageAndSingleAdjustmentFor regime year)
+        ( OB.fromPairs
           [ (Tuple 10.0 0),
             (Tuple 12.0 13600),
             (Tuple 22.0 51800),
@@ -406,10 +410,10 @@ bindRegime Trump 2018 bd HeadOfHousehold pes =
             (Tuple 37.0 500000)
           ]
         )
-        ( FQ.fromPairs
-          [ (Tuple 0 0),
-            (Tuple 15 51700),
-            (Tuple 20 452400)
+        ( QB.fromPairs
+          [ (Tuple 0.0 0),
+            (Tuple 15.0 51700),
+            (Tuple 20.0 452400)
           ]
         )
 
@@ -424,11 +428,11 @@ bindRegime Trump 2018 bd Single pes =
         bd
         fs
         pes
-        (perPersonExemptionFor regime yearAsInt)
-        (unAdjustedStdDeductionFor regime yearAsInt fs)
-        (ageAdjustmentFor regime yearAsInt)
-        (ageAndSingleAdjustmentFor regime yearAsInt)
-        (FO.fromPairs
+        (perPersonExemptionFor regime year)
+        (unAdjustedStdDeductionFor regime year fs)
+        (ageAdjustmentFor regime year)
+        (ageAndSingleAdjustmentFor regime year)
+        (OB.fromPairs
           [ (Tuple 10.0 0),
             (Tuple 12.0 9525),
             (Tuple 22.0 38700),
@@ -437,10 +441,10 @@ bindRegime Trump 2018 bd Single pes =
             (Tuple 35.0 200000),
             (Tuple 37.0 500000)
           ])
-        (FQ.fromPairs
-          [ (Tuple 0 0),
-            (Tuple 15 38600),
-            (Tuple 20 425800)
+        (QB.fromPairs
+          [ (Tuple 0.0 0),
+            (Tuple 15.0 38600),
+            (Tuple 20.0 425800)
           ])
 
 bindRegime PreTrump 2017 bd HeadOfHousehold pes =
@@ -454,11 +458,11 @@ bindRegime PreTrump 2017 bd HeadOfHousehold pes =
         bd
         fs
         pes
-        (perPersonExemptionFor regime yearAsInt)
-        (unAdjustedStdDeductionFor regime yearAsInt fs)
-        (ageAdjustmentFor regime yearAsInt)
-        (ageAndSingleAdjustmentFor regime yearAsInt)
-        ( FO.fromPairs
+        (perPersonExemptionFor regime year)
+        (unAdjustedStdDeductionFor regime year fs)
+        (ageAdjustmentFor regime year)
+        (ageAndSingleAdjustmentFor regime year)
+        ( OB.fromPairs
            [ (Tuple 10.0 0),
               (Tuple 15.0 13350),
               (Tuple 25.0 50800),
@@ -468,10 +472,10 @@ bindRegime PreTrump 2017 bd HeadOfHousehold pes =
                (Tuple 39.6 444550)
            ]
         )
-        ( FQ.fromPairs
-          [ (Tuple 0 0),
-            (Tuple 15 50800),
-            (Tuple 20 444550)
+        ( QB.fromPairs
+          [ (Tuple 0.0 0),
+            (Tuple 15.0 50800),
+            (Tuple 20.0 444550)
           ]
       )
 bindRegime PreTrump 2017 bd Single pes =
@@ -485,11 +489,11 @@ bindRegime PreTrump 2017 bd Single pes =
         bd
         fs
         pes
-        (perPersonExemptionFor regime yearAsInt)
-        (unAdjustedStdDeductionFor regime yearAsInt fs)
-        (ageAdjustmentFor regime yearAsInt)
-        (ageAndSingleAdjustmentFor regime yearAsInt)
-        ( FO.fromPairs
+        (perPersonExemptionFor regime year)
+        (unAdjustedStdDeductionFor regime year fs)
+        (ageAdjustmentFor regime year)
+        (ageAndSingleAdjustmentFor regime year)
+        ( OB.fromPairs
           [ (Tuple 10.0 0),
               (Tuple 15.0 9235),
               (Tuple 25.0 37950),
@@ -499,11 +503,14 @@ bindRegime PreTrump 2017 bd Single pes =
               (Tuple 39.6 418400)
           ]
         )
-        ( FQ.fromPairs
-          [ (Tuple 0 0),
-            (Tuple 15 37950),
-            (Tuple 20 418400)
+        ( QB.fromPairs
+          [ (Tuple 0.0 0),
+            (Tuple 15.0 37950),
+            (Tuple 20.0 418400)
           ]
         )
 bindRegime r y _ _ _ =
   invalidRegime r (unsafeMakeYear y)
+
+data T2 x y = T2 x y
+data T3 x y z = T3 x y z

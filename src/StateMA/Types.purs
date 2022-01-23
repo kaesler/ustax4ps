@@ -1,9 +1,7 @@
-module StateMA.Types(
-  MassachusettsGrossIncome
-)
+module StateMA.Types
+  ( MassachusettsGrossIncome
+  ) where
 
-where
-  
-import CommonTypes (Money)
+import Moneys
 
-type MassachusettsGrossIncome = Money
+type MassachusettsGrossIncome = Income

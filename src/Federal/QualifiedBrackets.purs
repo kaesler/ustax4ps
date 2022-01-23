@@ -5,6 +5,7 @@ module Federal.QualifiedBrackets(
   , ordinaryIncomeBracketWidth
   , ordinaryRatesExceptTop
   , rateSuccessor
+  , startOfNonZeroQualifiedRateBracket
   , taxFunctionFor
   , taxToEndOfOrdinaryBracket
   , taxableIncomeToEndOfOrdinaryBracket
@@ -13,13 +14,18 @@ module Federal.QualifiedBrackets(
 where
   
 import Brackets as Brackets
+import Data.List ((!!))
+import Data.Map as Map
+import Data.Maybe (fromJust)
 import Data.Maybe (Maybe)
 import Data.Tuple (Tuple)
 import Federal.FederalTaxRate (FederalTaxRate, mkFederalTaxRate)
-import Moneys (TaxPayable, TaxableIncome)
+import Moneys (IncomeThreshold, TaxPayable, TaxableIncome)
+import Partial.Unsafe (unsafePartial)
 import Prelude
 import Safe.Coerce (coerce)
 import TaxFunction (TaxFunction, bracketsTaxFunction)
+
 
 newtype QualifiedBrackets = QualifiedBrackets (Brackets.Brackets FederalTaxRate)
 derive newtype instance Show QualifiedBrackets
@@ -47,3 +53,7 @@ ordinaryIncomeBracketWidth brackets = Brackets.bracketWidth (coerce brackets)
 
 taxToEndOfOrdinaryBracket :: QualifiedBrackets -> FederalTaxRate -> TaxPayable
 taxToEndOfOrdinaryBracket brackets = Brackets.taxToEndOfBracket (coerce brackets)
+
+startOfNonZeroQualifiedRateBracket :: QualifiedBrackets -> IncomeThreshold
+startOfNonZeroQualifiedRateBracket (QualifiedBrackets brs) =
+  unsafePartial (fromJust (Map.values brs !! 1))

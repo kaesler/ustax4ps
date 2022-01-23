@@ -3,41 +3,45 @@ module StateMA.Calculator
   , taxRate
   ) where
 
-import Prelude
-
 import Age (isAge65OrOlder)
-import CommonTypes (FilingStatus(..), BirthDate, Money)
+import CommonTypes (FilingStatus(..), BirthDate)
+import Data.Array (fold)
 import Data.Date (Year)
 import Data.Enum (fromEnum)
-import Data.Int (toNumber)
-import StateMA.Types (MassachusettsGrossIncome)
-import TaxMath (nonNegSub)
+import Moneys (Deduction, Income, TaxPayable, applyDeductions, makeFromInt)
+import Prelude
+import StateMA.StateMATaxRate (StateMATaxRate, mkStateMATaxRate)
+import TaxFunction (TaxFunction, flatTaxFunction)
 
-taxRate :: Year -> Number
-taxRate year
-  | fromEnum year == 2020 = 0.05
-  | fromEnum year == 2019 = 0.0505
-  | fromEnum year == 2018 = 0.051
-  | fromEnum year < 2018 = 0.051
-  | otherwise = 0.05
+taxRate :: Year -> StateMATaxRate
+taxRate year = mkStateMATaxRate $ selectRate $ fromEnum year
+  where
+  selectRate i
+    | i == 2020 = 0.05
+    | i == 2019 = 0.0505
+    | i == 2018 = 0.051
+    | i < 2018 = 0.051
+    | otherwise = 0.05
 
-personalExemptionFor :: Year -> FilingStatus -> Money
-personalExemptionFor _ HeadOfHousehold = 6800.0
+taxFunction :: Year -> TaxFunction
+taxFunction = flatTaxFunction <<< taxRate
 
-personalExemptionFor _ Single = 4400.0
+personalExemptionFor :: Year -> FilingStatus -> Deduction
+personalExemptionFor _ HeadOfHousehold = makeFromInt 6800
 
-taxDue :: Year -> BirthDate -> Int -> FilingStatus -> MassachusettsGrossIncome -> Money
+personalExemptionFor _ Single = makeFromInt 4400
+
+taxDue :: Year -> BirthDate -> Int -> FilingStatus -> Income -> TaxPayable
 taxDue year bd dependents filingStatus maGrossIncome =
   let
     personalExemption = personalExemptionFor year filingStatus
 
-    ageExemption = if isAge65OrOlder bd year then 700.0 else 0.0
+    ageExemption = makeFromInt (if isAge65OrOlder bd year then 700 else 0)
 
-    dependentsExemption = 1000.0 * toNumber dependents
+    dependentsExemption = makeFromInt $ 1000 * dependents
+
+    deductions = fold [ personalExemption, ageExemption, dependentsExemption ]
+
+    taxableIncome = maGrossIncome `applyDeductions` deductions
   in
-    taxRate year
-      * ( maGrossIncome
-            `nonNegSub`
-              ( personalExemption + ageExemption + dependentsExemption
-              )
-        )
+    taxFunction year taxableIncome

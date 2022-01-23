@@ -9,30 +9,32 @@ module Federal.Calculator(
 
 where
 
-import Prelude
-import Effect.Console (log)
+import CommonTypes (BirthDate, FilingStatus)
 import Data.Date (Year)
 import Data.Enum (fromEnum)
 import Effect (Effect)
-import CommonTypes (BirthDate, FilingStatus, Money)
-import Federal.OrdinaryIncome (applyOrdinaryIncomeBrackets)
-import Federal.QualifiedIncome (applyQualifiedIncomeBrackets)
+import Effect.Console (log)
 import Federal.BoundRegime (BoundRegime(..), bindRegime, netDeduction, personalExemptionDeduction, standardDeduction)
+import Federal.OrdinaryBrackets
+import Federal.QualifiedBrackets
 import Federal.Regime (Regime)
 import Federal.TaxableSocialSecurity as TSS
+import Federal.TaxFunctions as TFS
 import Federal.Types (OrdinaryIncome, QualifiedIncome, SocSec, ItemizedDeductions, PersonalExemptions, StandardDeduction)
-import TaxMath(nonNegSub)
+import Moneys
+import Prelude (class Show, Unit, discard, show, ($), (<>))
 
 type TaxCalculator = SocSec -> OrdinaryIncome -> QualifiedIncome -> ItemizedDeductions -> FederalTaxResults
 
 makeCalculator :: BoundRegime -> TaxCalculator
 makeCalculator br socSec ordinaryIncome qualifiedIncome itemized =
   let BoundRegime brRec = br
-      ssRelevantOtherIncome = ordinaryIncome + qualifiedIncome
+      ssRelevantOtherIncome = ordinaryIncome <> qualifiedIncome
       taxableSocSec = TSS.amountTaxable brRec.filingStatus socSec ssRelevantOtherIncome
-      taxableOrdinaryIncome = (taxableSocSec + ordinaryIncome) `nonNegSub` (netDeduction br) itemized
-      taxOnOrdinaryIncome = applyOrdinaryIncomeBrackets brRec.ordinaryIncomeBrackets taxableOrdinaryIncome
-      taxOnQualifiedIncome = applyQualifiedIncomeBrackets brRec.qualifiedIncomeBrackets taxableOrdinaryIncome qualifiedIncome
+      taxableOrdinaryIncome = (taxableSocSec <> ordinaryIncome) `applyDeductions` netDeduction br itemized
+      taxOnOrdinaryIncome = TFS.taxDueOnOrdinaryIncome brRec.ordinaryBrackets taxableOrdinaryIncome
+      taxOnQualifiedIncome =
+        TFS.taxDueOnQualifiedIncome brRec.qualifiedBrackets taxableOrdinaryIncome (asTaxable qualifiedIncome)
    in FederalTaxResults
         { boundRegime: br,
           ssRelevantOtherIncome: ssRelevantOtherIncome,
@@ -47,17 +49,16 @@ makeCalculator br socSec ordinaryIncome qualifiedIncome itemized =
 
 newtype FederalTaxResults = FederalTaxResults
   { boundRegime :: BoundRegime,
-    ssRelevantOtherIncome :: Money,
-    taxableSocSec :: Money,
-    finalStandardDeduction :: StandardDeduction,
-    finalPersonalExemptionDeduction :: Money,
-    finalNetDeduction :: Money,
-    taxableOrdinaryIncome :: Money,
-    taxOnOrdinaryIncome :: Money,
-    taxOnQualifiedIncome :: Money
+    ssRelevantOtherIncome :: Income,
+    taxableSocSec :: Income,
+    finalStandardDeduction :: Deduction,
+    finalPersonalExemptionDeduction :: Deduction,
+    finalNetDeduction :: Deduction,
+    taxableOrdinaryIncome :: TaxableIncome,
+    taxOnOrdinaryIncome :: TaxPayable,
+    taxOnQualifiedIncome :: TaxPayable
   }
-instance Show FederalTaxResults where
-  show (FederalTaxResults r) = (show r)
+derive newtype instance Show FederalTaxResults 
 
 taxResults ::
   Regime ->
@@ -85,10 +86,10 @@ taxDue ::
   OrdinaryIncome ->
   QualifiedIncome ->
   ItemizedDeductions ->
-  Number
+  TaxPayable
 taxDue regime year birthDate filingStatus personalExemptions socSec ordinaryIncome qualifiedIncome itemized =
   let FederalTaxResults results = taxResults regime year birthDate filingStatus personalExemptions socSec ordinaryIncome qualifiedIncome itemized
-   in results.taxOnOrdinaryIncome + results.taxOnQualifiedIncome
+   in results.taxOnOrdinaryIncome <> results.taxOnQualifiedIncome
 
 taxDueDebug ::
   Regime ->
@@ -118,4 +119,4 @@ taxDueDebug regime year birthDate filingStatus personalExemptions socSec ordinar
         log $ "  taxableOrdinaryIncome: " <> show r.taxableOrdinaryIncome
         log $ "  taxOnOrdinaryIncome: " <> show r.taxOnOrdinaryIncome
         log $ "  taxOnQualifiedIncome: " <> show r.taxOnQualifiedIncome
-        log $ "  result: " <> show (r.taxOnOrdinaryIncome + r.taxOnQualifiedIncome)
+        log $ "  result: " <> show (r.taxOnOrdinaryIncome <> r.taxOnQualifiedIncome)
