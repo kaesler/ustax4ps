@@ -24,21 +24,15 @@ function STD_DEDUCTION(year, filingStatusName) {
   return M.standardDeduction(br);
 }
 
-function BRACKET_START(year, filingStatusName, ordinaryRate) {
-  const br = bindRegime(year, filingStatusName);
-  const brackets = br.ordinaryIncomeBrackets;
-  return M.ordinaryIncomeBracketStart(brackets)(ordinaryRate);
-}
-
 function BRACKET_WIDTH(year, filingStatusName, ordinaryRate) {
   const br = bindRegime(year, filingStatusName);
-  const brackets = br.ordinaryIncomeBrackets;
+  const brackets = br.ordinaryBrackets;
   return M.ordinaryIncomeBracketWidth(brackets)(ordinaryRate);
 }
 
 function LTCG_TAX_START(year, filingStatusName) {
   const br = bindRegime(year, filingStatusName);
-  return M.startOfNonZeroQualifiedRateBracket(br.qualifiedIncomeBrackets);
+  return M.startOfNonZeroQualifiedRateBracket(br.qualifiedBrackets);
 }
 
 function RMD_FRACTION_FOR_AGE(age) {
