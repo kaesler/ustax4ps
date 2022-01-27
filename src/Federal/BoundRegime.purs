@@ -4,8 +4,7 @@ module Federal.BoundRegime
   , netDeduction
   , personalExemptionDeduction
   , standardDeduction
-  )
-  where
+  ) where
 
 import Age (isAge65OrOlder)
 import CommonTypes (BirthDate, FilingStatus(..), isUnmarried)

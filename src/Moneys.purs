@@ -27,17 +27,15 @@ module Moneys
   , thresholdAsTaxableIncome
   , thresholdDifference
   , times
-  )
-  where
+  ) where
   
-import Data.Int (toNumber)
+import Data.Int (round, toNumber)
 import Data.Monoid.Additive (Additive(..))
-import Prelude (class Eq, class Monoid, class Ord, class Semigroup, class Show, mempty, otherwise, ($), (*), (-), (<), (<=), (>))
+import Prelude (class Eq, class Monoid, class Ord, class Semigroup, class Show, mempty, otherwise, ($), (*), (-), (<), (<=), (>), (<<<))
 import Safe.Coerce (class Coercible, coerce)
 import TaxRate
 import Effect.Exception.Unsafe (unsafeThrow)
 import Math (abs)
-import TaxMath (roundHalfUp)
 
 class Monoid m <= HasNoMoney m where
   noMoney :: m
@@ -184,3 +182,5 @@ reduceBy x y = coerce $ coerce x `monus` coerce y
 roundTaxPayable :: TaxPayable -> TaxPayable
 roundTaxPayable tp = coerce $ roundHalfUp $ coerce tp
 
+roundHalfUp :: Number -> Number
+roundHalfUp = toNumber <<< round

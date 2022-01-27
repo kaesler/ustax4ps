@@ -4,8 +4,7 @@ module Federal.Regime
     lastYearKnown,
     requireRegimeValidInYear,
     unsafeReadRegime
-  )
-where
+  ) where
 
 import Data.Enum
 

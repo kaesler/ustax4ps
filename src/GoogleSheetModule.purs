@@ -10,8 +10,7 @@ module GoogleSheetModule
   , module UnsafeDates
   , maStateTaxDue
   , maStateTaxRate
-  )
-  where
+  ) where
 
 -- Import here waht we want accessbible from GoogleSheetInterface
 

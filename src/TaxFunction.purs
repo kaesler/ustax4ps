@@ -6,10 +6,9 @@ module TaxFunction
   , thresholdTaxFunction
   ) where
 
-import Data.List
-import Data.Map
-import Data.Tuple
-import Prelude
+import Data.List (List, fold, zip, zipWith, (:))
+import Data.Tuple (Tuple, fst, snd, uncurry)
+import Prelude (map, mempty)
 import Brackets (Brackets)
 import Data.Map as Map
 import Moneys (IncomeThreshold, TaxPayable, TaxableIncome, amountOverThreshold, applyTaxRate)

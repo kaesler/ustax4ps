@@ -1,8 +1,6 @@
 module Undefined(
   undefined
-)
-
-where
+) where
 
 import Prelude
 

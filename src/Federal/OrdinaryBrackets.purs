@@ -8,8 +8,7 @@ module Federal.OrdinaryBrackets
   , taxFunctionFor
   , taxToEndOfOrdinaryBracket
   , taxableIncomeToEndOfOrdinaryBracket
-  )
-  where
+  ) where
   
 import Brackets as Brackets
 import Data.Maybe (Maybe)

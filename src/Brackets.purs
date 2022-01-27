@@ -14,14 +14,13 @@ import Data.Foldable as Foldable
 import Data.List (List, find, tail, zip)
 import Data.Map (Map, keys)
 import Data.Map as Map
-import Data.Maybe
+import Data.Maybe (Maybe(..), fromJust)
 import Data.Set as Set
 import Data.Tuple (Tuple(..), fst, snd)
 import Moneys (IncomeThreshold, TaxPayable, TaxableIncome, applyTaxRate, inflateThreshold, makeFromInt, thresholdAsTaxableIncome, thresholdDifference)
 import Partial.Unsafe (unsafePartial)
-import Prelude
+import Prelude (bind, map, ($), (/), (<=), (==))
 import TaxRate (class TaxRate)
-import Undefined (undefined)
 
 type Brackets r
   = Map r IncomeThreshold

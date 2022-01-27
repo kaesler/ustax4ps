@@ -4,8 +4,7 @@ module CommonTypes
   , FilingStatus(..)
   , isUnmarried
   , unsafeReadFilingStatus
-  )
-  where
+  ) where
 
 import Prelude
 import Data.Date(Date)

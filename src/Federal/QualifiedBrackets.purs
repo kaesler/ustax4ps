@@ -9,15 +9,12 @@ module Federal.QualifiedBrackets(
   , taxFunctionFor
   , taxToEndOfOrdinaryBracket
   , taxableIncomeToEndOfOrdinaryBracket
-)
-
-where
+) where
   
 import Brackets as Brackets
 import Data.List ((!!))
 import Data.Map as Map
-import Data.Maybe (fromJust)
-import Data.Maybe (Maybe)
+import Data.Maybe (Maybe, fromJust)
 import Data.Tuple (Tuple)
 import Federal.FederalTaxRate (FederalTaxRate, mkFederalTaxRate)
 import Moneys (IncomeThreshold, TaxPayable, TaxableIncome)

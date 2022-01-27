@@ -5,9 +5,7 @@ module Federal.Calculator(
   taxDue,
   taxDueDebug,
   taxResults
-)
-
-where
+) where
 
 import CommonTypes (BirthDate, FilingStatus)
 import Data.Date (Year)

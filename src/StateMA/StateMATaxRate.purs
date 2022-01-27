@@ -1,9 +1,7 @@
 module StateMA.StateMATaxRate(
   StateMATaxRate,
   mkStateMATaxRate
-)
-
-where
+) where
 
 import TaxRate ( class TaxRate )
 import Effect.Exception.Unsafe (unsafeThrow)

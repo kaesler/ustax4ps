@@ -1,8 +1,7 @@
 module Federal.FederalTaxRate
   ( FederalTaxRate
   , mkFederalTaxRate
-  )
-  where
+  ) where
 
 import Prelude
 

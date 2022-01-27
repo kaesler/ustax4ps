@@ -3,9 +3,7 @@ module TaxRate
     zeroRate,
     rateToNumber,
     absoluteDifference
-  )
-
-where
+  ) where
 
 import Prelude
 
