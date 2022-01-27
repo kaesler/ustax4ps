@@ -18,7 +18,6 @@ import Federal.Regime (Regime(..), invalidRegime)
 import Federal.Types (ItemizedDeductions, PersonalExemptions, StandardDeduction)
 import Moneys (Deduction, makeFromInt, noMoney, times)
 import Prelude
-import Undefined (undefined)
 import UnsafeDates (unsafeMakeYear)
 
 newtype BoundRegime

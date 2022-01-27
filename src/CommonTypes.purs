@@ -2,7 +2,6 @@ module CommonTypes
   ( Age(..)
   , BirthDate(..)
   , FilingStatus(..)
-  , Money
   , isUnmarried
   , unsafeReadFilingStatus
   )
@@ -15,7 +14,7 @@ import Data.Maybe (Maybe(..), fromJust)
 import Partial.Unsafe (unsafePartial)
 
 type BirthDate = Date
-type Money = Number
+
 newtype Age = Age Int
 derive instance Eq Age
 derive instance Ord Age

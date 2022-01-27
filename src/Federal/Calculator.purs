@@ -15,13 +15,11 @@ import Data.Enum (fromEnum)
 import Effect (Effect)
 import Effect.Console (log)
 import Federal.BoundRegime (BoundRegime(..), bindRegime, netDeduction, personalExemptionDeduction, standardDeduction)
-import Federal.OrdinaryBrackets
-import Federal.QualifiedBrackets
 import Federal.Regime (Regime)
 import Federal.TaxableSocialSecurity as TSS
 import Federal.TaxFunctions as TFS
-import Federal.Types (OrdinaryIncome, QualifiedIncome, SocSec, ItemizedDeductions, PersonalExemptions, StandardDeduction)
-import Moneys
+import Federal.Types (OrdinaryIncome, QualifiedIncome, SocSec, ItemizedDeductions, PersonalExemptions)
+import Moneys (Deduction, Income, TaxPayable, TaxableIncome, applyDeductions, asTaxable)
 import Prelude (class Show, Unit, discard, show, ($), (<>))
 
 type TaxCalculator = SocSec -> OrdinaryIncome -> QualifiedIncome -> ItemizedDeductions -> FederalTaxResults
