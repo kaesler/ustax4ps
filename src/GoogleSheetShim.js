@@ -24,10 +24,11 @@ function STD_DEDUCTION(year, filingStatusName) {
   return M.standardDeduction(br);
 }
 
-function BRACKET_WIDTH(year, filingStatusName, ordinaryRate) {
+function BRACKET_WIDTH(year, filingStatusName, ordinaryRatePercentage) {
   const br = bindRegime(year, filingStatusName);
   const brackets = br.ordinaryBrackets;
-  return M.ordinaryIncomeBracketWidth(brackets)(ordinaryRate);
+  const rate = ordinaryRatePercentage / 100.0;
+  return M.ordinaryIncomeBracketWidth(brackets)(rate);
 }
 
 function LTCG_TAX_START(year, filingStatusName) {
