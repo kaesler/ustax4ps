@@ -493,7 +493,7 @@ bindRegime PreTrump 2017 bd Single pes =
         (ageAndSingleAdjustmentFor regime year)
         ( OB.fromPairs
           [ (Tuple 10.0 0),
-              (Tuple 15.0 9235),
+              (Tuple 15.0 9325),
               (Tuple 25.0 37950),
               (Tuple 28.0 91900),
               (Tuple 33.0 191650),
