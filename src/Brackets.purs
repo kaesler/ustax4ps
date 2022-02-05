@@ -2,6 +2,7 @@ module Brackets
   ( Brackets
   , bracketWidth
   , fromPairs
+  , fromRPairs
   , inflateThresholds
   , rateSuccessor
   , ratesExceptTop
@@ -32,6 +33,16 @@ fromPairs tuples mkRate =
     f (Tuple rateAsPercentage threshold) = Tuple (mkRate (rateAsPercentage / 100.00)) (makeFromInt threshold)
   in
     Map.fromFoldable $ map f tuples
+
+--TODO delete
+fromRPairs :: forall r. (TaxRate r) => Array (Tuple Int Number) -> (Number -> r) -> Brackets r
+fromRPairs tuples mkRate =
+  let
+    f :: Tuple Int Number -> Tuple r IncomeThreshold
+    f (Tuple threshold rateAsPercentage) = Tuple (mkRate (rateAsPercentage / 100.00)) (makeFromInt threshold)
+  in
+    Map.fromFoldable $ map f tuples
+
 
 inflateThresholds :: forall r. TaxRate r => Number -> Brackets r -> Brackets r
 inflateThresholds factor = map (inflateThreshold factor)

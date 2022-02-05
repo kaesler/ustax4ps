@@ -1,6 +1,7 @@
 module Federal.OrdinaryBrackets
   ( OrdinaryBrackets
   , fromPairs
+  , fromRPairs
   , inflateThresholds
   , ordinaryIncomeBracketWidth
   , ordinaryRatesExceptTop
@@ -24,6 +25,10 @@ derive newtype instance Show OrdinaryBrackets
 
 fromPairs :: Array (Tuple Number Int) -> OrdinaryBrackets
 fromPairs pairs = coerce $ Brackets.fromPairs pairs mkFederalTaxRate
+
+--TODO delete
+fromRPairs :: Array (Tuple Int Number) -> OrdinaryBrackets
+fromRPairs pairs = coerce $ Brackets.fromRPairs pairs mkFederalTaxRate
 
 inflateThresholds :: Number -> OrdinaryBrackets -> OrdinaryBrackets
 inflateThresholds factor (OrdinaryBrackets brackets) = coerce $ Brackets.inflateThresholds factor brackets
