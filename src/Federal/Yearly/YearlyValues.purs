@@ -1,17 +1,18 @@
 module Federal.Yearly.YearlyValues
-  ( forYear
+  ( mostRecent
+  , mostRecentForRegime
+  , mostRecentYearForRegime
+  , unsafeValuesForYear
   , valuesAscendingByYear
   , valuesAscendingByYearForRegime
+  , valuesForYear
   ) where
 
-import Data.List
-import Data.Ord
-import Data.Tuple
-import CommonTypes (FilingStatus)
 import Data.Date (Year)
+import Data.List (List, filter, last, sortBy)
 import Data.Map as Map
-import Federal.OrdinaryBrackets (OrdinaryBrackets)
-import Federal.QualifiedBrackets (QualifiedBrackets)
+import Data.Maybe (Maybe, fromJust)
+import Data.Tuple (Tuple(..))
 import Federal.Regime (Regime)
 import Federal.Yearly.Type (YearlyValues)
 import Federal.Yearly.Year2016 as Year2016
@@ -21,9 +22,9 @@ import Federal.Yearly.Year2019 as Year2019
 import Federal.Yearly.Year2020 as Year2020
 import Federal.Yearly.Year2021 as Year2021
 import Federal.Yearly.Year2022 as Year2022
-import Moneys (Deduction)
-import UnsafeDates (unsafeMakeYear)
+import Partial.Unsafe (unsafePartial)
 import Prelude
+import UnsafeDates (unsafeMakeYear)
 
 forYear :: Map.Map Year YearlyValues
 forYear =
@@ -36,6 +37,21 @@ forYear =
     , (Tuple (unsafeMakeYear 2021) Year2021.values)
     , (Tuple (unsafeMakeYear 2022) Year2022.values)
     ]
+
+unsafeValuesForYear :: Year -> YearlyValues
+unsafeValuesForYear y = unsafePartial $ fromJust $ Map.lookup y forYear
+
+valuesForYear :: Year -> Maybe YearlyValues
+valuesForYear y = Map.lookup y forYear
+
+mostRecent :: YearlyValues
+mostRecent = unsafePartial $ fromJust $ last valuesAscendingByYear
+
+mostRecentForRegime :: Regime -> YearlyValues
+mostRecentForRegime reg = unsafePartial $ fromJust $ last $ valuesAscendingByYearForRegime reg
+
+mostRecentYearForRegime :: Regime -> Year
+mostRecentYearForRegime reg = (mostRecentForRegime reg).year
 
 valuesAscendingByYear :: List YearlyValues
 valuesAscendingByYear = sortBy cmp (Map.values forYear)
