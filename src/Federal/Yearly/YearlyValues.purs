@@ -29,14 +29,17 @@ import UnsafeDates (unsafeMakeYear)
 forYear :: Map.Map Year YearlyValues
 forYear =
   Map.fromFoldable
-    [ (Tuple (unsafeMakeYear 2016) Year2016.values)
-    , (Tuple (unsafeMakeYear 2017) Year2017.values)
-    , (Tuple (unsafeMakeYear 2018) Year2018.values)
-    , (Tuple (unsafeMakeYear 2019) Year2019.values)
-    , (Tuple (unsafeMakeYear 2020) Year2020.values)
-    , (Tuple (unsafeMakeYear 2021) Year2021.values)
-    , (Tuple (unsafeMakeYear 2022) Year2022.values)
-    ]
+    ( [ (Tuple 2016 Year2016.values)
+      , (Tuple 2017 Year2017.values)
+      , (Tuple 2018 Year2018.values)
+      , (Tuple 2019 Year2019.values)
+      , (Tuple 2020 Year2020.values)
+      , (Tuple 2021 Year2021.values)
+      , (Tuple 2022 Year2022.values)
+      ]
+        # map case _ of
+            Tuple y v -> Tuple (unsafeMakeYear y) v
+    )
 
 unsafeValuesForYear :: Year -> YearlyValues
 unsafeValuesForYear y = unsafePartial $ fromJust $ Map.lookup y forYear
