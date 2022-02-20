@@ -18,24 +18,44 @@ values =
   , perPersonExemption: makeFromInt 0
   , unadjustedStandardDeduction:
       case _ of
-        HeadOfHousehold -> makeFromInt 666
-        Single -> makeFromInt 666
-  , adjustmentWhenOver65: makeFromInt 666
-  , adjustmentWhenOver65AndSingle: makeFromInt 666
+        HeadOfHousehold -> makeFromInt 18650
+        Single -> makeFromInt 12400
+  , adjustmentWhenOver65: makeFromInt 1300
+  , adjustmentWhenOver65AndSingle: makeFromInt 350
   , ordinaryBrackets:
       case _ of
         HeadOfHousehold ->
           OB.fromRPairs
-            []
+            [ (Tuple 0 10.0)
+            , (Tuple 14100 12.0)
+            , (Tuple 53700 22.0)
+            , (Tuple 85500 24.0)
+            , (Tuple 163300 32.0)
+            , (Tuple 207350 35.0)
+            , (Tuple 518400 37.0)
+            ]
         Single ->
           OB.fromRPairs
-            []
+            [ (Tuple 0 10.0)
+            , (Tuple 9875 12.0)
+            , (Tuple 40125 22.0)
+            , (Tuple 85525 24.0)
+            , (Tuple 163300 32.0)
+            , (Tuple 207350 35.0)
+            , (Tuple 518400 37.0)
+            ]
   , qualifiedBrackets:
       case _ of
         HeadOfHousehold ->
           QB.fromRPairs
-            []
+            [ (Tuple 0 0.0)
+            , (Tuple 53600 15.0)
+            , (Tuple 469050 20.0)
+            ]
         Single ->
           QB.fromRPairs
-            []
+            [ (Tuple 0 0.0)
+            , (Tuple 40000 15.0)
+            , (Tuple 442450 20.0)
+            ]
   }
