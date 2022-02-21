@@ -1,22 +1,27 @@
 module Federal.BoundRegime
   ( BoundRegime(..)
   , bindRegime
+  , boundRegimeForFutureYear
+  , boundRegimeForKnownYear
   , netDeduction
   , personalExemptionDeduction
   , standardDeduction
-  ) where
+  )
+  where
+
+import Prelude
 
 import Age (isAge65OrOlder)
-import CommonTypes (BirthDate, FilingStatus(..), isUnmarried)
+import CommonTypes (BirthDate, FilingStatus(..), InflationEstimate(..), inflationFactor, isUnmarried)
 import Data.Date (Year)
 import Data.Enum (fromEnum)
 import Data.Tuple (Tuple(..))
-import Federal.OrdinaryBrackets (OrdinaryBrackets, fromPairs) as OB
-import Federal.QualifiedBrackets (QualifiedBrackets, fromPairs) as QB
+import Federal.OrdinaryBrackets (OrdinaryBrackets, fromPairs, inflateThresholds) as OB
+import Federal.QualifiedBrackets (QualifiedBrackets, fromPairs, inflateThresholds) as QB
 import Federal.Regime (Regime(..), invalidRegime)
 import Federal.Types (ItemizedDeductions, PersonalExemptions, StandardDeduction)
-import Moneys (Deduction, makeFromInt, noMoney, times)
-import Prelude
+import Federal.Yearly.YearlyValues as YV
+import Moneys (Deduction, makeFromInt, noMoney, times, mul)
 import UnsafeDates (unsafeMakeYear)
 
 newtype BoundRegime
@@ -87,6 +92,47 @@ netDeduction :: BoundRegime -> ItemizedDeductions -> Deduction
 netDeduction br itemized =
   personalExemptionDeduction br <> max itemized (standardDeduction br)
 
+boundRegimeForKnownYear :: Year -> BirthDate -> FilingStatus -> PersonalExemptions -> BoundRegime
+boundRegimeForKnownYear y bd fs pe =
+  let yvs = YV.unsafeValuesForYear y
+   in BoundRegime {
+     regime: yvs.regime,
+     year: y,
+     birthDate: bd,
+     filingStatus: fs,
+     personalExemptions: pe,
+     perPersonExemption: yvs.perPersonExemption,
+     unadjustedStandardDeduction: yvs.unadjustedStandardDeduction fs,
+     adjustmentWhenOver65: yvs.adjustmentWhenOver65,
+     adjustmentWhenOver65AndSingle: yvs.adjustmentWhenOver65AndSingle,
+     ordinaryBrackets: yvs.ordinaryBrackets fs,
+     qualifiedBrackets: yvs.qualifiedBrackets fs
+   }
+
+boundRegimeForFutureYear :: Regime -> InflationEstimate -> BirthDate -> FilingStatus -> PersonalExemptions -> BoundRegime
+boundRegimeForFutureYear reg estimate bd fs pe =
+  let baseYear = YV.mostRecentYearForRegime reg
+   in futureEstimated (boundRegimeForKnownYear baseYear bd fs pe) estimate
+
+futureEstimated :: BoundRegime -> InflationEstimate -> BoundRegime
+futureEstimated (BoundRegime br) inflationEstimate =
+  let InflationEstimate futureYear _ = inflationEstimate
+      factor = inflationFactor inflationEstimate br.year
+   in mkBoundRegime
+        br.regime
+        --br.year
+        futureYear
+        br.birthDate
+        br.filingStatus
+        br.personalExemptions
+        (br.perPersonExemption `mul` factor)
+        (br.unadjustedStandardDeduction `mul` factor)
+        (br.adjustmentWhenOver65 `mul` factor)
+        (br.adjustmentWhenOver65AndSingle `mul` factor)
+        (OB.inflateThresholds factor br.ordinaryBrackets)
+        (QB.inflateThresholds factor br.qualifiedBrackets)
+
+-----------------------TODO: remove below ----------------------------------
 -- Note: does't seem to get adjusted for inflation.
 perPersonExemptionFor :: Regime -> Year -> Deduction
 perPersonExemptionFor PreTrump _ = makeFromInt 4050
