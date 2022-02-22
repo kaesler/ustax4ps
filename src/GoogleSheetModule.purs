@@ -12,21 +12,21 @@ module GoogleSheetModule
   , maStateTaxRate
   ) where
 
--- Import here waht we want accessbible from GoogleSheetInterface
+-- Import here what we want accessbible from GoogleSheetInterface
 
 import CommonTypes (BirthDate, FilingStatus(..), unsafeReadFilingStatus)
 import Data.Date (Year)
-import Federal.BoundRegime (BoundRegime(..), bindRegime, netDeduction, personalExemptionDeduction, standardDeduction)
-import Federal.Calculator (taxDue)
-import Federal.OrdinaryBrackets ( ordinaryIncomeBracketWidth)
+import Federal.BoundRegime (BoundRegime(..), boundRegimeForKnownYear, netDeduction, personalExemptionDeduction, standardDeduction)
+import Federal.Calculator (taxDueForKnownYear)
+import Federal.OrdinaryBrackets (ordinaryIncomeBracketWidth)
 import Federal.QualifiedBrackets (startOfNonZeroQualifiedRateBracket)
 import Federal.RMDs (unsafeRmdFractionForAge)
 import Federal.Regime (Regime(..), unsafeReadRegime)
 import Federal.TaxableSocialSecurity (amountTaxable, amountTaxableInflationAdjusted)
 import Moneys (TaxPayable)
 import StateMA.Calculator as StateCalc
-import StateMA.Types (MassachusettsGrossIncome)
 import StateMA.StateMATaxRate (StateMATaxRate)
+import StateMA.Types (MassachusettsGrossIncome)
 import UnsafeDates (unsafeMakeDate, unsafeMakeDay, unsafeMakeMonth, unsafeMakeYear)
 
 maStateTaxDue :: Year -> BirthDate -> Int -> FilingStatus -> MassachusettsGrossIncome -> TaxPayable

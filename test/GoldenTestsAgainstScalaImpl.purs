@@ -3,6 +3,8 @@ module GoldenTestsAgainstScalaImpl
   , logInAff
   ) where
 
+import Prelude
+
 import Data.Traversable (sequence)
 import Effect (Effect)
 import Effect.Aff (Aff, launchAff_)
@@ -12,7 +14,6 @@ import Federal.Calculator (FederalTaxResults(..))
 import Federal.Calculator as FC
 import GoldenTestCasesFromScala as GTC
 import Moneys (closeEnoughTo)
-import Prelude
 import StateMA.Calculator as MA
 import Test.Spec (Spec, it, describe)
 import Test.Spec.Assertions (shouldSatisfy)
@@ -41,8 +42,7 @@ testsAgainstScala =
     makeFederalExpectation (GTC.TestCase tc) =
       let
         FederalTaxResults results =
-          FC.taxResults
-            tc.regime
+          FC.taxResultsForKnownYear
             tc.year
             tc.birthDate
             tc.filingStatus

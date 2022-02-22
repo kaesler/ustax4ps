@@ -6,15 +6,13 @@ import CommonTypes (FilingStatus(..))
 import Data.Array as Array
 import Data.Array.NonEmpty.Internal (NonEmptyArray(..))
 import Data.Date (Date, Year)
-import Data.Enum (fromEnum)
 import Data.Traversable (sequence)
 import Data.Tuple (Tuple(..), curry)
 import Effect (Effect)
 import Effect.Aff (Aff, launchAff_)
 import Effect.Console (log)
-import Federal.BoundRegime (BoundRegime(..), bindRegime)
+import Federal.BoundRegime (BoundRegime(..), boundRegimeForKnownYear)
 import Federal.OrdinaryBrackets (OrdinaryBrackets, taxableIncomeToEndOfOrdinaryBracket, ordinaryRatesExceptTop, taxToEndOfOrdinaryBracket)
-import Federal.Regime (Regime(..))
 import Federal.TaxFunctions as TFS
 import Federal.Types (SSRelevantOtherIncome, SocSec)
 import Moneys (TaxPayable, TaxableIncome, makeFromInt, noMoney, roundTaxPayable)
@@ -50,7 +48,7 @@ runAllTests = do
 
 
 boundRegimeFor :: FilingStatus -> BoundRegime
-boundRegimeFor fs = bindRegime theRegime (fromEnum theYear) theBirthDate fs (if fs == Single then 1 else 2)
+boundRegimeFor fs = boundRegimeForKnownYear theYear theBirthDate fs (if fs == Single then 1 else 2)
 
 ordinaryBracketsFor :: FilingStatus -> OrdinaryBrackets
 ordinaryBracketsFor fs =
@@ -114,9 +112,6 @@ assertCorrectTaxDueAtBracketBoundaries filingStatus =
             computedTax `shouldEqual` roundTaxPayable expectedTax
   in
     (sequence federalExpectations) *> (pure unit)
-
-theRegime :: Regime
-theRegime = Trump
 
 theYear :: Year
 theYear = unsafeMakeYear 2021
