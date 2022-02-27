@@ -1,5 +1,4 @@
 // Note: This file must be loaded AFTER the PS bundle.
-// TODO: how to deal with years after 2022?
 const M = PS.GoogleSheetModule;
 const TheRegime = M.unsafeReadRegime('Trump');
 const TheBirthDate = M.unsafeMakeDate(1955)(10)(2);
@@ -7,32 +6,37 @@ const ThePersonalExemptions = 1;
 const TheItemizedDeductions = 0;
 
 // For now use 2022 for future years.
-function use2022after2022(year) {
-  if (year <= 2022)
-    return year;
+function use2022after2022(yearAsNumber) {
+  if (yearAsNumber <= 2022)
+    return M.unsafeMakeYear(yearAsNumber);
   else
-    return 2022;
+    return M.unsafeMakeYear(2022);
 }
 
-function bindRegime(year, filingStatusName) {
+function bindRegime(yearAsNumber, filingStatusName) {
   const filingStatus = M.unsafeReadFilingStatus(filingStatusName);
-  return M.bindRegime(TheRegime)(use2022after2022(year))(TheBirthDate)(filingStatus)(ThePersonalExemptions);
+  return M.boundRegimeForKnownYear(
+    use2022after2022(yearAsNumber))(
+    TheBirthDate)(
+    filingStatus)(
+    ThePersonalExemptions
+  );
 }
 
-function STD_DEDUCTION(year, filingStatusName) {
-  const br = bindRegime(year, filingStatusName); 
+function STD_DEDUCTION(yearAsNumber, filingStatusName) {
+  const br = bindRegime(yearAsNumber, filingStatusName); 
   return M.standardDeduction(br);
 }
 
-function BRACKET_WIDTH(year, filingStatusName, ordinaryRatePercentage) {
-  const br = bindRegime(year, filingStatusName);
+function BRACKET_WIDTH(yearAsNumber, filingStatusName, ordinaryRatePercentage) {
+  const br = bindRegime(yearAsNumber, filingStatusName);
   const brackets = br.ordinaryBrackets;
   const rate = ordinaryRatePercentage / 100.0;
   return M.ordinaryIncomeBracketWidth(brackets)(rate);
 }
 
-function LTCG_TAX_START(year, filingStatusName) {
-  const br = bindRegime(year, filingStatusName);
+function LTCG_TAX_START(yearAsNumber, filingStatusName) {
+  const br = bindRegime(yearAsNumber, filingStatusName);
   return M.startOfNonZeroQualifiedRateBracket(br.qualifiedBrackets);
 }
 
@@ -40,36 +44,50 @@ function RMD_FRACTION_FOR_AGE(age) {
   return M.unsafeRmdFractionForAge(age);
 }
 
-function FEDERAL_TAX_DUE(year, filingStatusName, socSec, ordinaryIncomeNonSS, qualifiedIncome) {
+function FEDERAL_TAX_DUE(yearAsNumber, filingStatusName, socSec, ordinaryIncomeNonSS, qualifiedIncome) {
   const filingStatus = M.unsafeReadFilingStatus(filingStatusName);
-
-  return M.taxDue(
-    TheRegime)(
-    use2022after2022(year))(
-    TheBirthDate)(
+ 
+  return M.taxDueForKnownYear(
+    use2022after2022(yearAsNumber))(
     filingStatus)(
-    ThePersonalExemptions)(socSec)(
-    ordinaryIncomeNonSS)(qualifiedIncome)(
+    TheBirthDate)(
+    ThePersonalExemptions)(
+    socSec)(
+    ordinaryIncomeNonSS)(
+    qualifiedIncome)(
     TheItemizedDeductions);
 }
 
-function MA_STATE_TAX_DUE(year, dependents, filingStatusName, massacchusettsGrossIncome) {
+function MA_STATE_TAX_DUE(yearAsNumber, dependents, filingStatusName, massachusettsGrossIncome) {
   const filingStatus = M.unsafeReadFilingStatus(filingStatusName);
  
   return M.maStateTaxDue(
-    use2022after2022(year))(
+    use2022after2022(yearAsNumber))(
     TheBirthDate)(
     dependents)(
     filingStatus)(
-    massacchusettsGrossIncome);
+    massachusettsGrossIncome);
 }
 
-function TAX_SLOPE(year, filingStatusName, socSec, ordinaryIncomeNonSS, qualifiedIncome) {
-  const deltaX = 1000.0
+function TAX_SLOPE(yearAsNumber, filingStatusName, socSec, ordinaryIncomeNonSS, qualifiedIncome) {
+    const deltaX = 1000.0
 
-  const federalTaxAtStart = FEDERAL_TAX_DUE(year, filingStatusName, socSec, ordinaryIncomeNonSS, qualifiedIncome);
-  const federalTaxAtEnd   = FEDERAL_TAX_DUE(year, filingStatusName, socSec, ordinaryIncomeNonSS + deltaX, qualifiedIncome);
-  const deltaY = (federalTaxAtEnd - federalTaxAtStart) + (deltaX * M.maStateTaxRate(year));
+  const federalTaxAtStart = FEDERAL_TAX_DUE(
+    yearAsNumber, 
+    filingStatusName, 
+    socSec, 
+    ordinaryIncomeNonSS, 
+    qualifiedIncome
+  );
+  const federalTaxAtEnd = FEDERAL_TAX_DUE(
+    yearAsNumber, 
+    filingStatusName, 
+    socSec, 
+    ordinaryIncomeNonSS + deltaX, 
+    qualifiedIncome
+  );
+  const deltaY = (federalTaxAtEnd - federalTaxAtStart) + 
+    (deltaX * M.maStateTaxRate(M.unsafeMakeYear(yearAsNumber)));
 
   return deltaY/deltaX;
 }
@@ -80,8 +98,14 @@ function TAXABLE_SS(filingStatusName, ssRelevantOtherIncome, socSec) {
   return M.amountTaxable(filingStatus)(socSec)(ssRelevantOtherIncome);
 }
 
-function TAXABLE_SS_ADJUSTED(year, filingStatusName, ssRelevantOtherIncome, socSec) {
+function TAXABLE_SS_ADJUSTED(yearAsNumber, filingStatusName, ssRelevantOtherIncome, socSec) {
+  const year = M.unsafeMakeYear(yearAsNumber);
   const filingStatus = M.unsafeReadFilingStatus(filingStatusName);
 
-  return M.amountTaxableInflationAdjusted(year)(filingStatus)(socSec)(ssRelevantOtherIncome);
+  return M.amountTaxableInflationAdjusted(
+    year)(
+    filingStatus)(
+    socSec)(
+    ssRelevantOtherIncome
+  );
 }
