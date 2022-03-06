@@ -2,7 +2,7 @@ module Federal.Yearly.Year2017
   ( values
   ) where
 
-import CommonTypes (FilingStatus(HeadOfHousehold, Single))
+import CommonTypes (FilingStatus(..))
 import Data.Tuple
 import Federal.OrdinaryBrackets (fromRPairs) as OB
 import Federal.QualifiedBrackets (fromRPairs) as QB
@@ -18,12 +18,23 @@ values =
   , perPersonExemption: makeFromInt 4050
   , unadjustedStandardDeduction:
       case _ of
+        Married -> makeFromInt 12700
         HeadOfHousehold -> makeFromInt 9350
         Single -> makeFromInt 6350
   , adjustmentWhenOver65: makeFromInt 1250
   , adjustmentWhenOver65AndSingle: makeFromInt 300
   , ordinaryBrackets:
       case _ of
+        Married ->
+          OB.fromRPairs
+            [ (Tuple 0 10.0)
+            , (Tuple 18650 15.0)
+            , (Tuple 75900 25.0)
+            , (Tuple 153100 28.0)
+            , (Tuple 233350 33.0)
+            , (Tuple 416700 35.0)
+            , (Tuple 470700 39.6)
+            ]
         HeadOfHousehold ->
           OB.fromRPairs
             [ (Tuple 0 10.0)
@@ -46,6 +57,12 @@ values =
             ]
   , qualifiedBrackets:
       case _ of
+        Married ->
+          QB.fromRPairs
+            [ (Tuple 0 0.0)
+            , (Tuple 75900 15.0)
+            , (Tuple 470700 20.0)
+            ]
         HeadOfHousehold ->
           QB.fromRPairs
             [ (Tuple 0 0.0)
