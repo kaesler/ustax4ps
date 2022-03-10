@@ -19,7 +19,7 @@ values =
   , unadjustedStandardDeduction:
       case _ of
         Married -> makeFromInt 12600
-        HeadOfHousehold -> makeFromInt 9200
+        HeadOfHousehold -> makeFromInt 9300
         Single -> makeFromInt 6300
   , adjustmentWhenOver65: makeFromInt 1250
   , adjustmentWhenOver65AndSingle: makeFromInt 300
