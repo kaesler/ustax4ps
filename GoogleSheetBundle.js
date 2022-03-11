@@ -2668,6 +2668,13 @@ var PS = {};
   var Data_Maybe = $PS["Data.Maybe"];
   var Data_Ord = $PS["Data.Ord"];
   var Data_String_Read = $PS["Data.String.Read"];
+  var Married = (function () {
+      function Married() {
+
+      };
+      Married.value = new Married();
+      return Married;
+  })();
   var HeadOfHousehold = (function () {
       function HeadOfHousehold() {
 
@@ -2684,6 +2691,9 @@ var PS = {};
   })();                           
   var readFilingStatus = {
       read: function (s) {
+          if (s === "Married") {
+              return new Data_Maybe.Just(Married.value);
+          };
           if (s === "HOH") {
               return new Data_Maybe.Just(HeadOfHousehold.value);
           };
@@ -2717,8 +2727,12 @@ var PS = {};
       return Data_Maybe.fromJust()(Data_String_Read.read(readFilingStatus)(s));
   };
   var isUnmarried = function (v) {
+      if (v instanceof Married) {
+          return false;
+      };
       return true;
   };
+  exports["Married"] = Married;
   exports["HeadOfHousehold"] = HeadOfHousehold;
   exports["Single"] = Single;
   exports["isUnmarried"] = isUnmarried;
@@ -3007,33 +3021,42 @@ var PS = {};
       year: UnsafeDates.unsafeMakeYear(2016),
       perPersonExemption: Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(4050),
       unadjustedStandardDeduction: function (v) {
+          if (v instanceof CommonTypes.Married) {
+              return Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(12600);
+          };
           if (v instanceof CommonTypes.HeadOfHousehold) {
-              return Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(9200);
+              return Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(9300);
           };
           if (v instanceof CommonTypes.Single) {
               return Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(6300);
           };
-          throw new Error("Failed pattern match at Federal.Yearly.Year2016 (line 20, column 7 - line 22, column 35): " + [ v.constructor.name ]);
+          throw new Error("Failed pattern match at Federal.Yearly.Year2016 (line 20, column 7 - line 23, column 35): " + [ v.constructor.name ]);
       },
       adjustmentWhenOver65: Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(1250),
       adjustmentWhenOver65AndSingle: Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(300),
       ordinaryBrackets: function (v) {
+          if (v instanceof CommonTypes.Married) {
+              return Federal_OrdinaryBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 10.0), new Data_Tuple.Tuple(18550, 15.0), new Data_Tuple.Tuple(75300, 25.0), new Data_Tuple.Tuple(151900, 28.0), new Data_Tuple.Tuple(231450, 33.0), new Data_Tuple.Tuple(413350, 35.0), new Data_Tuple.Tuple(466950, 39.6) ]);
+          };
           if (v instanceof CommonTypes.HeadOfHousehold) {
               return Federal_OrdinaryBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 10.0), new Data_Tuple.Tuple(13250, 15.0), new Data_Tuple.Tuple(50400, 25.0), new Data_Tuple.Tuple(130150, 28.0), new Data_Tuple.Tuple(210800, 33.0), new Data_Tuple.Tuple(413350, 35.0), new Data_Tuple.Tuple(441000, 39.6) ]);
           };
           if (v instanceof CommonTypes.Single) {
               return Federal_OrdinaryBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 10.0), new Data_Tuple.Tuple(9275, 15.0), new Data_Tuple.Tuple(37650, 25.0), new Data_Tuple.Tuple(91150, 28.0), new Data_Tuple.Tuple(190150, 33.0), new Data_Tuple.Tuple(413350, 35.0), new Data_Tuple.Tuple(415050, 39.6) ]);
           };
-          throw new Error("Failed pattern match at Federal.Yearly.Year2016 (line 26, column 7 - line 46, column 14): " + [ v.constructor.name ]);
+          throw new Error("Failed pattern match at Federal.Yearly.Year2016 (line 27, column 7 - line 57, column 14): " + [ v.constructor.name ]);
       },
       qualifiedBrackets: function (v) {
+          if (v instanceof CommonTypes.Married) {
+              return Federal_QualifiedBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 0.0), new Data_Tuple.Tuple(75300, 15.0), new Data_Tuple.Tuple(466950, 20.0) ]);
+          };
           if (v instanceof CommonTypes.HeadOfHousehold) {
               return Federal_QualifiedBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 0.0), new Data_Tuple.Tuple(50400, 15.0), new Data_Tuple.Tuple(441000, 20.0) ]);
           };
           if (v instanceof CommonTypes.Single) {
               return Federal_QualifiedBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 0.0), new Data_Tuple.Tuple(37650, 15.0), new Data_Tuple.Tuple(415050, 20.0) ]);
           };
-          throw new Error("Failed pattern match at Federal.Yearly.Year2016 (line 48, column 7 - line 60, column 14): " + [ v.constructor.name ]);
+          throw new Error("Failed pattern match at Federal.Yearly.Year2016 (line 59, column 7 - line 77, column 14): " + [ v.constructor.name ]);
       }
   };
   exports["values"] = values;
@@ -3055,33 +3078,42 @@ var PS = {};
       year: UnsafeDates.unsafeMakeYear(2017),
       perPersonExemption: Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(4050),
       unadjustedStandardDeduction: function (v) {
+          if (v instanceof CommonTypes.Married) {
+              return Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(12700);
+          };
           if (v instanceof CommonTypes.HeadOfHousehold) {
               return Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(9350);
           };
           if (v instanceof CommonTypes.Single) {
               return Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(6350);
           };
-          throw new Error("Failed pattern match at Federal.Yearly.Year2017 (line 20, column 7 - line 22, column 35): " + [ v.constructor.name ]);
+          throw new Error("Failed pattern match at Federal.Yearly.Year2017 (line 20, column 7 - line 23, column 35): " + [ v.constructor.name ]);
       },
       adjustmentWhenOver65: Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(1250),
       adjustmentWhenOver65AndSingle: Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(300),
       ordinaryBrackets: function (v) {
+          if (v instanceof CommonTypes.Married) {
+              return Federal_OrdinaryBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 10.0), new Data_Tuple.Tuple(18650, 15.0), new Data_Tuple.Tuple(75900, 25.0), new Data_Tuple.Tuple(153100, 28.0), new Data_Tuple.Tuple(233350, 33.0), new Data_Tuple.Tuple(416700, 35.0), new Data_Tuple.Tuple(470700, 39.6) ]);
+          };
           if (v instanceof CommonTypes.HeadOfHousehold) {
               return Federal_OrdinaryBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 10.0), new Data_Tuple.Tuple(13350, 15.0), new Data_Tuple.Tuple(50800, 25.0), new Data_Tuple.Tuple(131200, 28.0), new Data_Tuple.Tuple(212500, 33.0), new Data_Tuple.Tuple(416700, 35.0), new Data_Tuple.Tuple(444550, 39.6) ]);
           };
           if (v instanceof CommonTypes.Single) {
               return Federal_OrdinaryBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 10.0), new Data_Tuple.Tuple(9325, 15.0), new Data_Tuple.Tuple(37950, 25.0), new Data_Tuple.Tuple(91900, 28.0), new Data_Tuple.Tuple(191650, 33.0), new Data_Tuple.Tuple(416700, 35.0), new Data_Tuple.Tuple(418400, 39.6) ]);
           };
-          throw new Error("Failed pattern match at Federal.Yearly.Year2017 (line 26, column 7 - line 46, column 14): " + [ v.constructor.name ]);
+          throw new Error("Failed pattern match at Federal.Yearly.Year2017 (line 27, column 7 - line 57, column 14): " + [ v.constructor.name ]);
       },
       qualifiedBrackets: function (v) {
+          if (v instanceof CommonTypes.Married) {
+              return Federal_QualifiedBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 0.0), new Data_Tuple.Tuple(75900, 15.0), new Data_Tuple.Tuple(470700, 20.0) ]);
+          };
           if (v instanceof CommonTypes.HeadOfHousehold) {
               return Federal_QualifiedBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 0.0), new Data_Tuple.Tuple(50800, 15.0), new Data_Tuple.Tuple(444550, 20.0) ]);
           };
           if (v instanceof CommonTypes.Single) {
               return Federal_QualifiedBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 0.0), new Data_Tuple.Tuple(37950, 15.0), new Data_Tuple.Tuple(418400, 20.0) ]);
           };
-          throw new Error("Failed pattern match at Federal.Yearly.Year2017 (line 48, column 7 - line 60, column 14): " + [ v.constructor.name ]);
+          throw new Error("Failed pattern match at Federal.Yearly.Year2017 (line 59, column 7 - line 77, column 14): " + [ v.constructor.name ]);
       }
   };
   exports["values"] = values;
@@ -3103,33 +3135,42 @@ var PS = {};
       year: UnsafeDates.unsafeMakeYear(2018),
       perPersonExemption: Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(0),
       unadjustedStandardDeduction: function (v) {
+          if (v instanceof CommonTypes.Married) {
+              return Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(24000);
+          };
           if (v instanceof CommonTypes.HeadOfHousehold) {
               return Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(18000);
           };
           if (v instanceof CommonTypes.Single) {
               return Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(12000);
           };
-          throw new Error("Failed pattern match at Federal.Yearly.Year2018 (line 20, column 7 - line 22, column 36): " + [ v.constructor.name ]);
+          throw new Error("Failed pattern match at Federal.Yearly.Year2018 (line 20, column 7 - line 23, column 36): " + [ v.constructor.name ]);
       },
       adjustmentWhenOver65: Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(1300),
       adjustmentWhenOver65AndSingle: Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(300),
       ordinaryBrackets: function (v) {
+          if (v instanceof CommonTypes.Married) {
+              return Federal_OrdinaryBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 10.0), new Data_Tuple.Tuple(19050, 12.0), new Data_Tuple.Tuple(77400, 22.0), new Data_Tuple.Tuple(165000, 24.0), new Data_Tuple.Tuple(315000, 32.0), new Data_Tuple.Tuple(400000, 35.0), new Data_Tuple.Tuple(600000, 37.0) ]);
+          };
           if (v instanceof CommonTypes.HeadOfHousehold) {
               return Federal_OrdinaryBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 10.0), new Data_Tuple.Tuple(13600, 12.0), new Data_Tuple.Tuple(51800, 22.0), new Data_Tuple.Tuple(82500, 24.0), new Data_Tuple.Tuple(157500, 32.0), new Data_Tuple.Tuple(200000, 35.0), new Data_Tuple.Tuple(500000, 37.0) ]);
           };
           if (v instanceof CommonTypes.Single) {
               return Federal_OrdinaryBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 10.0), new Data_Tuple.Tuple(9525, 12.0), new Data_Tuple.Tuple(38700, 22.0), new Data_Tuple.Tuple(82500, 24.0), new Data_Tuple.Tuple(157500, 32.0), new Data_Tuple.Tuple(200000, 35.0), new Data_Tuple.Tuple(500000, 37.0) ]);
           };
-          throw new Error("Failed pattern match at Federal.Yearly.Year2018 (line 26, column 7 - line 46, column 14): " + [ v.constructor.name ]);
+          throw new Error("Failed pattern match at Federal.Yearly.Year2018 (line 27, column 7 - line 57, column 14): " + [ v.constructor.name ]);
       },
       qualifiedBrackets: function (v) {
+          if (v instanceof CommonTypes.Married) {
+              return Federal_QualifiedBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 0.0), new Data_Tuple.Tuple(77200, 15.0), new Data_Tuple.Tuple(479000, 20.0) ]);
+          };
           if (v instanceof CommonTypes.HeadOfHousehold) {
               return Federal_QualifiedBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 0.0), new Data_Tuple.Tuple(51700, 15.0), new Data_Tuple.Tuple(452400, 20.0) ]);
           };
           if (v instanceof CommonTypes.Single) {
               return Federal_QualifiedBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 0.0), new Data_Tuple.Tuple(38600, 15.0), new Data_Tuple.Tuple(425800, 20.0) ]);
           };
-          throw new Error("Failed pattern match at Federal.Yearly.Year2018 (line 48, column 7 - line 60, column 14): " + [ v.constructor.name ]);
+          throw new Error("Failed pattern match at Federal.Yearly.Year2018 (line 59, column 7 - line 77, column 14): " + [ v.constructor.name ]);
       }
   };
   exports["values"] = values;
@@ -3151,33 +3192,42 @@ var PS = {};
       year: UnsafeDates.unsafeMakeYear(2019),
       perPersonExemption: Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(0),
       unadjustedStandardDeduction: function (v) {
+          if (v instanceof CommonTypes.Married) {
+              return Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(24400);
+          };
           if (v instanceof CommonTypes.HeadOfHousehold) {
               return Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(18350);
           };
           if (v instanceof CommonTypes.Single) {
               return Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(12200);
           };
-          throw new Error("Failed pattern match at Federal.Yearly.Year2019 (line 20, column 7 - line 22, column 36): " + [ v.constructor.name ]);
+          throw new Error("Failed pattern match at Federal.Yearly.Year2019 (line 20, column 7 - line 23, column 36): " + [ v.constructor.name ]);
       },
       adjustmentWhenOver65: Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(1300),
       adjustmentWhenOver65AndSingle: Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(350),
       ordinaryBrackets: function (v) {
+          if (v instanceof CommonTypes.Married) {
+              return Federal_OrdinaryBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 10.0), new Data_Tuple.Tuple(19400, 12.0), new Data_Tuple.Tuple(78950, 22.0), new Data_Tuple.Tuple(168400, 24.0), new Data_Tuple.Tuple(321450, 32.0), new Data_Tuple.Tuple(408200, 35.0), new Data_Tuple.Tuple(612350, 37.0) ]);
+          };
           if (v instanceof CommonTypes.HeadOfHousehold) {
               return Federal_OrdinaryBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 10.0), new Data_Tuple.Tuple(13850, 12.0), new Data_Tuple.Tuple(52850, 22.0), new Data_Tuple.Tuple(84200, 24.0), new Data_Tuple.Tuple(160700, 32.0), new Data_Tuple.Tuple(204100, 35.0), new Data_Tuple.Tuple(510300, 37.0) ]);
           };
           if (v instanceof CommonTypes.Single) {
               return Federal_OrdinaryBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 10.0), new Data_Tuple.Tuple(9700, 12.0), new Data_Tuple.Tuple(39475, 22.0), new Data_Tuple.Tuple(84200, 24.0), new Data_Tuple.Tuple(160725, 32.0), new Data_Tuple.Tuple(204100, 35.0), new Data_Tuple.Tuple(510300, 37.0) ]);
           };
-          throw new Error("Failed pattern match at Federal.Yearly.Year2019 (line 26, column 7 - line 46, column 14): " + [ v.constructor.name ]);
+          throw new Error("Failed pattern match at Federal.Yearly.Year2019 (line 27, column 7 - line 57, column 14): " + [ v.constructor.name ]);
       },
       qualifiedBrackets: function (v) {
+          if (v instanceof CommonTypes.Married) {
+              return Federal_QualifiedBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 0.0), new Data_Tuple.Tuple(78750, 15.0), new Data_Tuple.Tuple(488850, 20.0) ]);
+          };
           if (v instanceof CommonTypes.HeadOfHousehold) {
               return Federal_QualifiedBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 0.0), new Data_Tuple.Tuple(52750, 15.0), new Data_Tuple.Tuple(461700, 20.0) ]);
           };
           if (v instanceof CommonTypes.Single) {
               return Federal_QualifiedBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 0.0), new Data_Tuple.Tuple(39375, 15.0), new Data_Tuple.Tuple(434550, 20.0) ]);
           };
-          throw new Error("Failed pattern match at Federal.Yearly.Year2019 (line 48, column 7 - line 60, column 14): " + [ v.constructor.name ]);
+          throw new Error("Failed pattern match at Federal.Yearly.Year2019 (line 59, column 7 - line 77, column 14): " + [ v.constructor.name ]);
       }
   };
   exports["values"] = values;
@@ -3199,33 +3249,42 @@ var PS = {};
       year: UnsafeDates.unsafeMakeYear(2020),
       perPersonExemption: Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(0),
       unadjustedStandardDeduction: function (v) {
+          if (v instanceof CommonTypes.Married) {
+              return Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(24800);
+          };
           if (v instanceof CommonTypes.HeadOfHousehold) {
               return Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(18650);
           };
           if (v instanceof CommonTypes.Single) {
               return Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(12400);
           };
-          throw new Error("Failed pattern match at Federal.Yearly.Year2020 (line 20, column 7 - line 22, column 36): " + [ v.constructor.name ]);
+          throw new Error("Failed pattern match at Federal.Yearly.Year2020 (line 20, column 7 - line 23, column 36): " + [ v.constructor.name ]);
       },
       adjustmentWhenOver65: Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(1300),
       adjustmentWhenOver65AndSingle: Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(350),
       ordinaryBrackets: function (v) {
+          if (v instanceof CommonTypes.Married) {
+              return Federal_OrdinaryBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 10.0), new Data_Tuple.Tuple(19750, 12.0), new Data_Tuple.Tuple(80250, 22.0), new Data_Tuple.Tuple(171050, 24.0), new Data_Tuple.Tuple(326600, 32.0), new Data_Tuple.Tuple(414700, 35.0), new Data_Tuple.Tuple(622050, 37.0) ]);
+          };
           if (v instanceof CommonTypes.HeadOfHousehold) {
               return Federal_OrdinaryBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 10.0), new Data_Tuple.Tuple(14100, 12.0), new Data_Tuple.Tuple(53700, 22.0), new Data_Tuple.Tuple(85500, 24.0), new Data_Tuple.Tuple(163300, 32.0), new Data_Tuple.Tuple(207350, 35.0), new Data_Tuple.Tuple(518400, 37.0) ]);
           };
           if (v instanceof CommonTypes.Single) {
               return Federal_OrdinaryBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 10.0), new Data_Tuple.Tuple(9875, 12.0), new Data_Tuple.Tuple(40125, 22.0), new Data_Tuple.Tuple(85525, 24.0), new Data_Tuple.Tuple(163300, 32.0), new Data_Tuple.Tuple(207350, 35.0), new Data_Tuple.Tuple(518400, 37.0) ]);
           };
-          throw new Error("Failed pattern match at Federal.Yearly.Year2020 (line 26, column 7 - line 46, column 14): " + [ v.constructor.name ]);
+          throw new Error("Failed pattern match at Federal.Yearly.Year2020 (line 27, column 7 - line 57, column 14): " + [ v.constructor.name ]);
       },
       qualifiedBrackets: function (v) {
+          if (v instanceof CommonTypes.Married) {
+              return Federal_QualifiedBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 0.0), new Data_Tuple.Tuple(80000, 15.0), new Data_Tuple.Tuple(496600, 20.0) ]);
+          };
           if (v instanceof CommonTypes.HeadOfHousehold) {
               return Federal_QualifiedBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 0.0), new Data_Tuple.Tuple(53600, 15.0), new Data_Tuple.Tuple(469050, 20.0) ]);
           };
           if (v instanceof CommonTypes.Single) {
               return Federal_QualifiedBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 0.0), new Data_Tuple.Tuple(40000, 15.0), new Data_Tuple.Tuple(442450, 20.0) ]);
           };
-          throw new Error("Failed pattern match at Federal.Yearly.Year2020 (line 48, column 7 - line 60, column 14): " + [ v.constructor.name ]);
+          throw new Error("Failed pattern match at Federal.Yearly.Year2020 (line 59, column 7 - line 77, column 14): " + [ v.constructor.name ]);
       }
   };
   exports["values"] = values;
@@ -3247,33 +3306,42 @@ var PS = {};
       year: UnsafeDates.unsafeMakeYear(2021),
       perPersonExemption: Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(0),
       unadjustedStandardDeduction: function (v) {
+          if (v instanceof CommonTypes.Married) {
+              return Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(25100);
+          };
           if (v instanceof CommonTypes.HeadOfHousehold) {
               return Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(18800);
           };
           if (v instanceof CommonTypes.Single) {
               return Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(12550);
           };
-          throw new Error("Failed pattern match at Federal.Yearly.Year2021 (line 20, column 7 - line 22, column 36): " + [ v.constructor.name ]);
+          throw new Error("Failed pattern match at Federal.Yearly.Year2021 (line 20, column 7 - line 23, column 36): " + [ v.constructor.name ]);
       },
       adjustmentWhenOver65: Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(1350),
       adjustmentWhenOver65AndSingle: Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(350),
       ordinaryBrackets: function (v) {
+          if (v instanceof CommonTypes.Married) {
+              return Federal_OrdinaryBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 10.0), new Data_Tuple.Tuple(19900, 12.0), new Data_Tuple.Tuple(81050, 22.0), new Data_Tuple.Tuple(172750, 24.0), new Data_Tuple.Tuple(329850, 32.0), new Data_Tuple.Tuple(418850, 35.0), new Data_Tuple.Tuple(628300, 37.0) ]);
+          };
           if (v instanceof CommonTypes.HeadOfHousehold) {
               return Federal_OrdinaryBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 10.0), new Data_Tuple.Tuple(14200, 12.0), new Data_Tuple.Tuple(54200, 22.0), new Data_Tuple.Tuple(86350, 24.0), new Data_Tuple.Tuple(164900, 32.0), new Data_Tuple.Tuple(209400, 35.0), new Data_Tuple.Tuple(523600, 37.0) ]);
           };
           if (v instanceof CommonTypes.Single) {
               return Federal_OrdinaryBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 10.0), new Data_Tuple.Tuple(9950, 12.0), new Data_Tuple.Tuple(40525, 22.0), new Data_Tuple.Tuple(86375, 24.0), new Data_Tuple.Tuple(164925, 32.0), new Data_Tuple.Tuple(209425, 35.0), new Data_Tuple.Tuple(523600, 37.0) ]);
           };
-          throw new Error("Failed pattern match at Federal.Yearly.Year2021 (line 26, column 7 - line 46, column 14): " + [ v.constructor.name ]);
+          throw new Error("Failed pattern match at Federal.Yearly.Year2021 (line 27, column 7 - line 57, column 14): " + [ v.constructor.name ]);
       },
       qualifiedBrackets: function (v) {
+          if (v instanceof CommonTypes.Married) {
+              return Federal_QualifiedBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 0.0), new Data_Tuple.Tuple(80800, 15.0), new Data_Tuple.Tuple(501600, 20.0) ]);
+          };
           if (v instanceof CommonTypes.HeadOfHousehold) {
               return Federal_QualifiedBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 0.0), new Data_Tuple.Tuple(54100, 15.0), new Data_Tuple.Tuple(473750, 20.0) ]);
           };
           if (v instanceof CommonTypes.Single) {
               return Federal_QualifiedBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 0.0), new Data_Tuple.Tuple(40400, 15.0), new Data_Tuple.Tuple(445850, 20.0) ]);
           };
-          throw new Error("Failed pattern match at Federal.Yearly.Year2021 (line 48, column 7 - line 60, column 14): " + [ v.constructor.name ]);
+          throw new Error("Failed pattern match at Federal.Yearly.Year2021 (line 59, column 7 - line 77, column 14): " + [ v.constructor.name ]);
       }
   };
   exports["values"] = values;
@@ -3295,33 +3363,42 @@ var PS = {};
       year: UnsafeDates.unsafeMakeYear(2022),
       perPersonExemption: Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(0),
       unadjustedStandardDeduction: function (v) {
+          if (v instanceof CommonTypes.Married) {
+              return Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(25900);
+          };
           if (v instanceof CommonTypes.HeadOfHousehold) {
               return Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(19400);
           };
           if (v instanceof CommonTypes.Single) {
               return Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(12950);
           };
-          throw new Error("Failed pattern match at Federal.Yearly.Year2022 (line 20, column 7 - line 22, column 36): " + [ v.constructor.name ]);
+          throw new Error("Failed pattern match at Federal.Yearly.Year2022 (line 20, column 7 - line 23, column 36): " + [ v.constructor.name ]);
       },
       adjustmentWhenOver65: Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(1400),
       adjustmentWhenOver65AndSingle: Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(350),
       ordinaryBrackets: function (v) {
+          if (v instanceof CommonTypes.Married) {
+              return Federal_OrdinaryBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 10.0), new Data_Tuple.Tuple(20550, 12.0), new Data_Tuple.Tuple(83550, 22.0), new Data_Tuple.Tuple(178150, 24.0), new Data_Tuple.Tuple(340100, 32.0), new Data_Tuple.Tuple(431900, 35.0), new Data_Tuple.Tuple(647850, 37.0) ]);
+          };
           if (v instanceof CommonTypes.HeadOfHousehold) {
               return Federal_OrdinaryBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 10.0), new Data_Tuple.Tuple(14650, 12.0), new Data_Tuple.Tuple(55900, 22.0), new Data_Tuple.Tuple(89050, 24.0), new Data_Tuple.Tuple(170050, 32.0), new Data_Tuple.Tuple(215950, 35.0), new Data_Tuple.Tuple(539900, 37.0) ]);
           };
           if (v instanceof CommonTypes.Single) {
               return Federal_OrdinaryBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 10.0), new Data_Tuple.Tuple(10275, 12.0), new Data_Tuple.Tuple(41775, 22.0), new Data_Tuple.Tuple(89075, 24.0), new Data_Tuple.Tuple(170050, 32.0), new Data_Tuple.Tuple(215950, 35.0), new Data_Tuple.Tuple(539900, 37.0) ]);
           };
-          throw new Error("Failed pattern match at Federal.Yearly.Year2022 (line 26, column 7 - line 46, column 14): " + [ v.constructor.name ]);
+          throw new Error("Failed pattern match at Federal.Yearly.Year2022 (line 27, column 7 - line 57, column 14): " + [ v.constructor.name ]);
       },
       qualifiedBrackets: function (v) {
+          if (v instanceof CommonTypes.Married) {
+              return Federal_QualifiedBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 0.0), new Data_Tuple.Tuple(83350, 15.0), new Data_Tuple.Tuple(517200, 20.0) ]);
+          };
           if (v instanceof CommonTypes.HeadOfHousehold) {
               return Federal_QualifiedBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 0.0), new Data_Tuple.Tuple(55800, 15.0), new Data_Tuple.Tuple(488500, 20.0) ]);
           };
           if (v instanceof CommonTypes.Single) {
               return Federal_QualifiedBrackets.fromRPairs([ new Data_Tuple.Tuple(0, 0.0), new Data_Tuple.Tuple(41675, 15.0), new Data_Tuple.Tuple(459750, 20.0) ]);
           };
-          throw new Error("Failed pattern match at Federal.Yearly.Year2022 (line 48, column 7 - line 60, column 14): " + [ v.constructor.name ]);
+          throw new Error("Failed pattern match at Federal.Yearly.Year2022 (line 59, column 7 - line 77, column 14): " + [ v.constructor.name ]);
       }
   };
   exports["values"] = values;
@@ -3442,7 +3519,6 @@ var PS = {};
   exports["taxDueOnQualifiedIncome"] = taxDueOnQualifiedIncome;
 })(PS);
 (function($PS) {
-  // Generated by purs version 0.14.5
   "use strict";
   $PS["Federal.TaxableSocialSecurity"] = $PS["Federal.TaxableSocialSecurity"] || {};
   var exports = $PS["Federal.TaxableSocialSecurity"];
@@ -3470,26 +3546,32 @@ var PS = {};
                           var maxSocSecTaxable = Moneys.mul(Moneys.hasMulIncome)(ssBenefits)(0.85);
                           return Data_Ord.min(Moneys.ordIncome)(Data_Semigroup.append(Moneys.semigroupIncome)(Moneys.makeFromInt(Moneys.hasMakeFromIntIncome)(4500))(Moneys.mul(Moneys.hasMulIncome)(Moneys.amountOverThreshold(Moneys.hasAmountOverThresholdInc)(combinedIncome)(v.value1))(0.85)))(maxSocSecTaxable);
                       };
-                      throw new Error("Failed pattern match at Federal.TaxableSocialSecurity (line 45, column 3 - line 45, column 73): " + [ combinedIncome.constructor.name, v.constructor.name ]);
+                      throw new Error("Failed pattern match at Federal.TaxableSocialSecurity (line 49, column 3 - line 49, column 73): " + [ combinedIncome.constructor.name, v.constructor.name ]);
                   };
               };
               var lowBase = Moneys.makeFromInt(Moneys.hasMakeFromIntIncomeThres)((function () {
-                  if (filingStatus instanceof CommonTypes.Single) {
-                      return 25000;
+                  if (filingStatus instanceof CommonTypes.Married) {
+                      return 32000;
                   };
                   if (filingStatus instanceof CommonTypes.HeadOfHousehold) {
                       return 25000;
                   };
-                  throw new Error("Failed pattern match at Federal.TaxableSocialSecurity (line 30, column 9 - line 32, column 35): " + [ filingStatus.constructor.name ]);
+                  if (filingStatus instanceof CommonTypes.Single) {
+                      return 25000;
+                  };
+                  throw new Error("Failed pattern match at Federal.TaxableSocialSecurity (line 30, column 9 - line 33, column 26): " + [ filingStatus.constructor.name ]);
               })());
               var highBase = Moneys.makeFromInt(Moneys.hasMakeFromIntIncomeThres)((function () {
-                  if (filingStatus instanceof CommonTypes.Single) {
-                      return 34000;
+                  if (filingStatus instanceof CommonTypes.Married) {
+                      return 44000;
                   };
                   if (filingStatus instanceof CommonTypes.HeadOfHousehold) {
                       return 34000;
                   };
-                  throw new Error("Failed pattern match at Federal.TaxableSocialSecurity (line 36, column 9 - line 38, column 35): " + [ filingStatus.constructor.name ]);
+                  if (filingStatus instanceof CommonTypes.Single) {
+                      return 34000;
+                  };
+                  throw new Error("Failed pattern match at Federal.TaxableSocialSecurity (line 38, column 9 - line 41, column 26): " + [ filingStatus.constructor.name ]);
               })());
               var combinedIncome = Data_Semigroup.append(Moneys.semigroupIncome)(relevantIncome)(Moneys.mul(Moneys.hasMulIncome)(ssBenefits)(0.5));
               return f(combinedIncome)(new Data_Tuple.Tuple(lowBase, highBase));
@@ -3650,7 +3732,6 @@ var PS = {};
   exports["taxRateStateMATaxRate"] = taxRateStateMATaxRate;
 })(PS);
 (function($PS) {
-  // Generated by purs version 0.14.5
   "use strict";
   $PS["StateMA.Calculator"] = $PS["StateMA.Calculator"] || {};
   var exports = $PS["StateMA.Calculator"];
@@ -3692,6 +3773,9 @@ var PS = {};
   })();
   var personalExemptionFor = function (v) {
       return function (v1) {
+          if (v1 instanceof CommonTypes.Married) {
+              return Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(8800);
+          };
           if (v1 instanceof CommonTypes.HeadOfHousehold) {
               return Moneys.makeFromInt(Moneys.hasMakeFromIntDeduction)(6800);
           };
@@ -3746,6 +3830,7 @@ var PS = {};
   exports["maStateTaxDue"] = maStateTaxDue;
   exports["maStateTaxRate"] = maStateTaxRate;
   exports["HeadOfHousehold"] = CommonTypes.HeadOfHousehold;
+  exports["Married"] = CommonTypes.Married;
   exports["Single"] = CommonTypes.Single;
   exports["unsafeReadFilingStatus"] = CommonTypes.unsafeReadFilingStatus;
   exports["BoundRegime"] = Federal_BoundRegime.BoundRegime;
