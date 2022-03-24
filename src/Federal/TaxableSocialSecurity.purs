@@ -3,14 +3,14 @@ module Federal.TaxableSocialSecurity
   , amountTaxable
   ) where
 
+import Prelude hiding (mul)
 import CommonTypes (FilingStatus(..))
 import Data.Date (Year)
 import Data.Enum (fromEnum)
 import Data.Int (toNumber)
 import Data.Tuple (Tuple(..))
 import Federal.Types (CombinedIncome, SSRelevantOtherIncome, SocSec)
-import Moneys (Income, IncomeThreshold, amountOverThreshold, isBelow, makeFromInt, mul)
-import Prelude hiding (mul)
+import Moneys (Income, IncomeThreshold, amountOverThreshold, divInt, isBelow, makeFromInt, mul, taxableAsIncome, thresholdDifference)
 
 amountTaxableInflationAdjusted :: Year -> FilingStatus -> SocSec -> SSRelevantOtherIncome -> Income
 amountTaxableInflationAdjusted year filingStatus ssBenefits relevantIncome =
@@ -26,7 +26,7 @@ amountTaxableInflationAdjusted year filingStatus ssBenefits relevantIncome =
 amountTaxable :: FilingStatus -> SocSec -> SSRelevantOtherIncome -> Income
 amountTaxable filingStatus ssBenefits relevantIncome =
   let
-    lowBase =
+    lowThreshold =
       ( case filingStatus of
           Married -> 32000
           HeadOfHousehold -> 25000
@@ -34,7 +34,7 @@ amountTaxable filingStatus ssBenefits relevantIncome =
       )
         # makeFromInt
 
-    highBase =
+    highThreshold =
       ( case filingStatus of
           Married -> 44000
           HeadOfHousehold -> 34000
@@ -44,24 +44,26 @@ amountTaxable filingStatus ssBenefits relevantIncome =
 
     combinedIncome = relevantIncome <> (ssBenefits `mul` 0.5)
   in
-    f combinedIncome (Tuple lowBase highBase)
+    f combinedIncome (Tuple lowThreshold highThreshold)
   where
   f :: CombinedIncome -> Tuple IncomeThreshold IncomeThreshold -> Income
-  f combinedIncome (Tuple lowBase highBase)
-    | combinedIncome `isBelow` lowBase = makeFromInt 0
-    | combinedIncome `isBelow` highBase =
+  f combinedIncome (Tuple lowThreshold highThreshold)
+    | combinedIncome `isBelow` lowThreshold = makeFromInt 0
+    | combinedIncome `isBelow` highThreshold =
       let
         fractionTaxable = 0.5
 
         maxSocSecTaxable = ssBenefits `mul` fractionTaxable
       in
-        min ((combinedIncome `amountOverThreshold` lowBase) `mul` fractionTaxable) maxSocSecTaxable
+        min ((combinedIncome `amountOverThreshold` lowThreshold) `mul` fractionTaxable) maxSocSecTaxable
     | true =
       let
         fractionTaxable = 0.85
 
         maxSocSecTaxable = ssBenefits `mul` fractionTaxable
+
+        halfMiddleBracketWidth = (highThreshold `thresholdDifference` lowThreshold) `divInt` 2
       in
         min
-          (makeFromInt 4500 <> ((combinedIncome `amountOverThreshold` highBase) `mul` fractionTaxable))
+          (taxableAsIncome halfMiddleBracketWidth <> ((combinedIncome `amountOverThreshold` highThreshold) `mul` fractionTaxable))
           maxSocSecTaxable
