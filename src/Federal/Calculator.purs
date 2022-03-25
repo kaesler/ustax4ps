@@ -2,6 +2,7 @@ module Federal.Calculator
   ( FederalTaxResults(..)
   , TaxCalculator
   , makeCalculator
+  , taxDueForFutureYear
   , taxDueForKnownYear
   , taxDueForKnownYearDebug
   , taxResultsForFutureYear
@@ -71,34 +72,17 @@ taxResultsForKnownYear year birthDate filingStatus personalExemptions socSec ord
   let boundRegime = boundRegimeForKnownYear year birthDate filingStatus personalExemptions
       calculator = makeCalculator boundRegime
    in calculator socSec ordinaryIncome qualifiedIncome itemized
-
-taxResultsForFutureYear ::
-  Regime ->
-  InflationEstimate ->
-  BirthDate ->
-  FilingStatus ->
-  PersonalExemptions ->
-  SocSec ->
-  OrdinaryIncome ->
-  QualifiedIncome ->
-  ItemizedDeductions ->
-  FederalTaxResults
-taxResultsForFutureYear reg estimate birthDate filingStatus personalExemptions socSec ordinaryIncome qualifiedIncome itemized =
-  let boundRegime = boundRegimeForFutureYear reg estimate birthDate filingStatus personalExemptions
-      calculator = makeCalculator boundRegime
-   in calculator socSec ordinaryIncome qualifiedIncome itemized
-
 taxDueForKnownYear ::
   Year ->
-  FilingStatus ->
   BirthDate ->
+  FilingStatus ->
   PersonalExemptions ->
   SocSec ->
   OrdinaryIncome ->
   QualifiedIncome ->
   ItemizedDeductions ->
   TaxPayable
-taxDueForKnownYear year filingStatus birthDate personalExemptions socSec ordinaryIncome qualifiedIncome itemized =
+taxDueForKnownYear year birthDate filingStatus personalExemptions socSec ordinaryIncome qualifiedIncome itemized =
   let FederalTaxResults results = taxResultsForKnownYear year birthDate filingStatus personalExemptions socSec ordinaryIncome qualifiedIncome itemized
    in results.taxOnOrdinaryIncome <> results.taxOnQualifiedIncome 
 
@@ -130,3 +114,34 @@ taxDueForKnownYearDebug year birthDate filingStatus personalExemptions socSec or
         log $ "  taxOnOrdinaryIncome: " <> show r.taxOnOrdinaryIncome
         log $ "  taxOnQualifiedIncome: " <> show r.taxOnQualifiedIncome
         log $ "  result: " <> show (r.taxOnOrdinaryIncome <> r.taxOnQualifiedIncome)
+
+taxResultsForFutureYear ::
+  Regime ->
+  InflationEstimate ->
+  BirthDate ->
+  FilingStatus ->
+  PersonalExemptions ->
+  SocSec ->
+  OrdinaryIncome ->
+  QualifiedIncome ->
+  ItemizedDeductions ->
+  FederalTaxResults
+taxResultsForFutureYear reg estimate birthDate filingStatus personalExemptions socSec ordinaryIncome qualifiedIncome itemized =
+  let boundRegime = boundRegimeForFutureYear reg estimate birthDate filingStatus personalExemptions
+      calculator = makeCalculator boundRegime
+   in calculator socSec ordinaryIncome qualifiedIncome itemized
+
+taxDueForFutureYear ::
+  Regime ->
+  InflationEstimate ->
+  BirthDate ->
+  FilingStatus ->
+  PersonalExemptions ->
+  SocSec ->
+  OrdinaryIncome ->
+  QualifiedIncome ->
+  ItemizedDeductions ->
+  TaxPayable
+taxDueForFutureYear regime inflationEstimate birthDate filingStatus personalExemptions socSec ordinaryIncome qualifiedIncome itemized =
+  let FederalTaxResults results = taxResultsForFutureYear regime inflationEstimate birthDate filingStatus personalExemptions socSec ordinaryIncome qualifiedIncome itemized
+   in results.taxOnOrdinaryIncome <> results.taxOnQualifiedIncome 
