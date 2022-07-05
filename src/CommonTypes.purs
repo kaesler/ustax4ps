@@ -6,6 +6,7 @@ module CommonTypes
   , InflationEstimate(..)
   , inflationFactor
   , isUnmarried
+  , mkInflationEstimate
   , unsafeReadFilingStatus
   )
   where
@@ -55,6 +56,10 @@ type AnnualGrowthRatePercentage = Number
 
 -- target year, growth rate as a percentage
 data InflationEstimate = InflationEstimate Year AnnualGrowthRatePercentage
+
+-- Needed for calls from JS?
+mkInflationEstimate :: Year -> AnnualGrowthRatePercentage -> InflationEstimate
+mkInflationEstimate = InflationEstimate
 
 inflationFactor :: InflationEstimate -> Year -> Number
 inflationFactor (InflationEstimate targetYear annualGrowthRate) baseYear
