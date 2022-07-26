@@ -1,5 +1,5 @@
-module Federal.QualifiedBrackets(
-  QualifiedBrackets
+module Federal.QualifiedBrackets
+  ( QualifiedBrackets
   , fromPairs
   , fromRPairs
   , inflateThresholds
@@ -10,7 +10,9 @@ module Federal.QualifiedBrackets(
   , taxFunctionFor
   , taxToEndOfOrdinaryBracket
   , taxableIncomeToEndOfOrdinaryBracket
-) where
+  , toPairs
+  )
+  where
   
 import Brackets as Brackets
 import Data.List ((!!))
@@ -30,6 +32,9 @@ derive newtype instance Show QualifiedBrackets
 
 fromPairs :: Array (Tuple Number Int) -> QualifiedBrackets
 fromPairs pairs = coerce $ Brackets.fromPairs pairs mkFederalTaxRate
+
+toPairs :: QualifiedBrackets -> Array (Tuple FederalTaxRate IncomeThreshold)
+toPairs (QualifiedBrackets brackets) = Brackets.toPairs brackets
 
 --TODO delete
 fromRPairs :: Array (Tuple Int Number) -> QualifiedBrackets

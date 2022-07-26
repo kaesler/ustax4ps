@@ -9,14 +9,17 @@ module Federal.OrdinaryBrackets
   , taxFunctionFor
   , taxToEndOfOrdinaryBracket
   , taxableIncomeToEndOfOrdinaryBracket
-  ) where
+  , toPairs
+  )
+  where
   
+import Prelude
+
 import Brackets as Brackets
 import Data.Maybe (Maybe)
 import Data.Tuple (Tuple)
 import Federal.FederalTaxRate (FederalTaxRate, mkFederalTaxRate)
-import Moneys (TaxPayable, TaxableIncome)
-import Prelude
+import Moneys (IncomeThreshold, TaxPayable, TaxableIncome)
 import Safe.Coerce (coerce)
 import TaxFunction (TaxFunction, bracketsTaxFunction)
 
@@ -25,6 +28,9 @@ derive newtype instance Show OrdinaryBrackets
 
 fromPairs :: Array (Tuple Number Int) -> OrdinaryBrackets
 fromPairs pairs = coerce $ Brackets.fromPairs pairs mkFederalTaxRate
+
+toPairs :: OrdinaryBrackets -> Array (Tuple FederalTaxRate IncomeThreshold)
+toPairs (OrdinaryBrackets brackets) = Brackets.toPairs brackets
 
 --TODO delete
 fromRPairs :: Array (Tuple Int Number) -> OrdinaryBrackets
