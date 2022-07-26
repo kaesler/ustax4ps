@@ -2,6 +2,7 @@ module Federal.Yearly.YearlyValues
   ( averageThresholdChange
   , haveCongruentOrdinaryBrackets
   , haveCongruentQualifiedBrackets
+  , memoizedAverageThresholdChanges
   , mostRecent
   , mostRecentForRegime
   , mostRecentYearForRegime
@@ -137,3 +138,14 @@ averageThresholdChange left right =
     averageChange = changesSum / toNumber (List.length changes)
   in
     averageChange
+
+memoizedAverageThresholdChanges :: Map.Map Year Number
+memoizedAverageThresholdChanges =
+  let
+    yvs = Map.values forYear
+
+    yvPairs = List.zip yvs $ unsafePartial $ fromJust (List.tail yvs)
+
+    mapPairs = map (\(Tuple left right) -> (Tuple right.year (averageThresholdChange left right))) yvPairs
+  in
+    Map.fromFoldable mapPairs
