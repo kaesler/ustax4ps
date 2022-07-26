@@ -14,35 +14,42 @@ module Moneys
   , class HasMakeFromInt
   , class HasMul
   , class HasNoMoney
+  , class HasNonZero
   , class HasTimes
   , closeEnoughTo
-  , closeEnoughToImpl
   , divInt
   , inflateThreshold
   , isBelow
   , makeFromInt
   , mul
   , noMoney
+  , nonZero
   , reduceBy
   , roundTaxPayable
   , taxableAsIncome
   , thresholdAsTaxableIncome
   , thresholdDifference
   , times
-  ) where
+  )
+  where
   
 import TaxRate
 import Data.Int (round, toNumber)
 import Data.Monoid.Additive (Additive(..))
 import Effect.Exception.Unsafe (unsafeThrow)
 import Math (abs)
-import Prelude (class Eq, class Monoid, class Ord, class Semigroup, class Show, mempty, otherwise, ($), (/), (*), (-), (<), (<=), (>), (<<<))
+import Prelude (class Eq, class Monoid, class Ord, class Semigroup, class Show, mempty, otherwise, ($), (/), (*), (-), (<), (<=), (>), (<<<), (==))
 import Safe.Coerce (class Coercible, coerce)
 
 class Monoid m <= HasNoMoney m where
   noMoney :: m
 noMoneyImpl :: forall m. Monoid m => m
 noMoneyImpl = mempty
+
+class Coercible Number m <= HasNonZero m where
+  nonZero :: m -> Boolean
+nonZeroImpl :: forall m. Coercible Number m => m -> Boolean
+nonZeroImpl m = (coerce m) == 0.0
 
 class Coercible Number m <= HasMakeFromInt m where
   makeFromInt :: Int -> m
@@ -131,6 +138,8 @@ derive newtype instance Semigroup IncomeThreshold
 derive newtype instance Show IncomeThreshold
 instance HasMakeFromInt IncomeThreshold where
   makeFromInt = makeFromIntImpl
+instance HasNonZero IncomeThreshold where
+  nonZero = nonZeroImpl
 
 thresholdDifference :: IncomeThreshold -> IncomeThreshold -> TaxableIncome
 thresholdDifference it1 it2 = coerce $ diff (coerce it1) (coerce it2)
