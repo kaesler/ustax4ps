@@ -1,5 +1,8 @@
 module Federal.Yearly.YearlyValues
-  ( mostRecent
+  ( averageThresholdChange
+  , haveCongruentOrdinaryBrackets
+  , haveCongruentQualifiedBrackets
+  , mostRecent
   , mostRecentForRegime
   , mostRecentYearForRegime
   , ordinaryNonZeroThresholdsMap
@@ -16,6 +19,8 @@ import CommonTypes (FilingStatus(..))
 import Data.Array as Array
 import Data.Date (Year)
 import Data.Enum (pred)
+import Data.Int (toNumber)
+import Data.List as List
 import Data.Map as Map
 import Data.Maybe (Maybe, fromJust)
 import Data.Tuple (Tuple(..))
@@ -31,7 +36,7 @@ import Federal.Yearly.Year2019 as Year2019
 import Federal.Yearly.Year2020 as Year2020
 import Federal.Yearly.Year2021 as Year2021
 import Federal.Yearly.Year2022 as Year2022
-import Moneys (IncomeThreshold, nonZero)
+import Moneys (IncomeThreshold, divide, nonZero)
 import Partial.Unsafe (unsafePartial)
 import UnsafeDates (unsafeMakeYear)
 
@@ -105,3 +110,30 @@ qualifiedNonZeroThresholdsMap yv =
 
 hasNonZeroThreshold :: Tuple FederalTaxRate IncomeThreshold -> Boolean
 hasNonZeroThreshold (Tuple _ t) = nonZero t
+
+haveCongruentOrdinaryBrackets :: YearlyValues -> YearlyValues -> Boolean
+haveCongruentOrdinaryBrackets left right = (Map.keys $ ordinaryNonZeroThresholdsMap left) == (Map.keys $ ordinaryNonZeroThresholdsMap right)
+
+haveCongruentQualifiedBrackets :: YearlyValues -> YearlyValues -> Boolean
+haveCongruentQualifiedBrackets left right = (Map.keys $ qualifiedNonZeroThresholdsMap left) == (Map.keys $ qualifiedNonZeroThresholdsMap right)
+
+averageThresholdChange :: YearlyValues -> YearlyValues -> Number
+averageThresholdChange left right =
+  let -- Note: these lists are sorted ascending by associated key order.
+    ordPairs
+      | (haveCongruentOrdinaryBrackets left right) = List.zip (Map.values (ordinaryNonZeroThresholdsMap left)) (Map.values (ordinaryNonZeroThresholdsMap right))
+      | otherwise = List.Nil
+
+    qualPairs
+      | (haveCongruentQualifiedBrackets left right) = List.zip (Map.values (qualifiedNonZeroThresholdsMap left)) (Map.values (qualifiedNonZeroThresholdsMap right))
+      | otherwise = List.Nil
+
+    pairs = ordPairs <> qualPairs
+
+    changes = map (\(Tuple l r) -> r `divide` l) pairs
+
+    changesSum = List.foldl (\x y -> x + y) 1.0 changes
+
+    averageChange = changesSum / toNumber (List.length changes)
+  in
+    averageChange
