@@ -8,7 +8,9 @@ module Brackets
   , ratesExceptTop
   , taxToEndOfBracket
   , taxableIncomeToEndOfBracket
-  ) where
+  , toPairs
+  )
+  where
 
 import Data.Array as Array
 import Data.Foldable as Foldable
@@ -33,6 +35,9 @@ fromPairs tuples mkRate =
     f (Tuple rateAsPercentage threshold) = Tuple (mkRate (rateAsPercentage / 100.00)) (makeFromInt threshold)
   in
     Map.fromFoldable $ map f tuples
+
+toPairs :: forall r. (TaxRate r) => Brackets r -> Array (Tuple r IncomeThreshold)
+toPairs brackets = Map.toUnfoldable brackets
 
 --TODO delete
 fromRPairs :: forall r. (TaxRate r) => Array (Tuple Int Number) -> (Number -> r) -> Brackets r
