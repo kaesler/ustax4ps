@@ -1,5 +1,6 @@
 module Federal.Yearly.YearlyValues
   ( averageThresholdChange
+  , averageThresholdChangeOverPrevious
   , haveCongruentOrdinaryBrackets
   , haveCongruentQualifiedBrackets
   , memoizedAverageThresholdChanges
@@ -13,7 +14,8 @@ module Federal.Yearly.YearlyValues
   , valuesAscendingByYear
   , valuesAscendingByYearForRegime
   , valuesForYear
-  ) where
+  )
+  where
 
 import Prelude
 import CommonTypes (FilingStatus(..))
@@ -149,3 +151,6 @@ memoizedAverageThresholdChanges =
     mapPairs = map (\(Tuple left right) -> (Tuple right.year (averageThresholdChange left right))) yvPairs
   in
     Map.fromFoldable mapPairs
+
+averageThresholdChangeOverPrevious :: Year -> Maybe Number
+averageThresholdChangeOverPrevious y = Map.lookup y memoizedAverageThresholdChanges
