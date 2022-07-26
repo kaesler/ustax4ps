@@ -11,12 +11,14 @@ module Moneys
   , asTaxable
   , class HasAmountOverThreshold
   , class HasCloseEnoughTo
+  , class HasDivide
   , class HasMakeFromInt
   , class HasMul
   , class HasNoMoney
   , class HasNonZero
   , class HasTimes
   , closeEnoughTo
+  , divide
   , divInt
   , inflateThreshold
   , isBelow
@@ -62,6 +64,11 @@ class Coercible Number m <= HasMul m where
 -- TODO: require non-negative
 mulImpl :: forall m. Coercible Number m => m -> Number -> m
 mulImpl m n = coerce $ n * coerce m
+
+class Coercible Number m <= HasDivide m where
+  divide :: m -> m -> Number
+divideImpl :: forall m. Coercible Number m =>  m -> m -> Number
+divideImpl left right = (coerce left) / (coerce right)
 
 class Coercible Number m <= HasCloseEnoughTo m where
   closeEnoughTo :: m -> m -> Boolean
@@ -140,6 +147,8 @@ instance HasMakeFromInt IncomeThreshold where
   makeFromInt = makeFromIntImpl
 instance HasNonZero IncomeThreshold where
   nonZero = nonZeroImpl
+instance HasDivide IncomeThreshold where
+  divide = divideImpl
 
 thresholdDifference :: IncomeThreshold -> IncomeThreshold -> TaxableIncome
 thresholdDifference it1 it2 = coerce $ diff (coerce it1) (coerce it2)
