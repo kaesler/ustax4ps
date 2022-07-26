@@ -15,7 +15,7 @@ module Federal.QualifiedBrackets
   where
   
 import Brackets as Brackets
-import Data.List ((!!))
+import Data.List as List
 import Data.Map as Map
 import Data.Maybe (Maybe, fromJust)
 import Data.Tuple (Tuple)
@@ -63,4 +63,4 @@ taxToEndOfOrdinaryBracket brackets = Brackets.taxToEndOfBracket (coerce brackets
 
 startOfNonZeroQualifiedRateBracket :: QualifiedBrackets -> IncomeThreshold
 startOfNonZeroQualifiedRateBracket (QualifiedBrackets brs) =
-  unsafePartial (fromJust (Map.values brs !! 1))
+  unsafePartial (fromJust (Map.values brs List.!! 1))
