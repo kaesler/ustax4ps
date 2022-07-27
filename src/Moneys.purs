@@ -18,8 +18,8 @@ module Moneys
   , class HasNonZero
   , class HasTimes
   , closeEnoughTo
-  , divide
   , divInt
+  , divide
   , inflateThreshold
   , isBelow
   , makeFromInt
@@ -27,6 +27,7 @@ module Moneys
   , noMoney
   , nonZero
   , reduceBy
+  , roundHalfUp
   , roundTaxPayable
   , taxableAsIncome
   , thresholdAsTaxableIncome
@@ -40,7 +41,7 @@ import Data.Int (round, toNumber)
 import Data.Monoid.Additive (Additive(..))
 import Effect.Exception.Unsafe (unsafeThrow)
 import Math (abs)
-import Prelude (class Eq, class Monoid, class Ord, class Semigroup, class Show, mempty, otherwise, ($), (/), (*), (-), (<), (<=), (>), (<<<), (==))
+import Prelude (class Eq, class Monoid, class Ord, class Semigroup, class Show, mempty, otherwise, ($), (/), (*), (-), (<), (<=), (>), (<<<), (/=))
 import Safe.Coerce (class Coercible, coerce)
 
 class Monoid m <= HasNoMoney m where
@@ -51,7 +52,7 @@ noMoneyImpl = mempty
 class Coercible Number m <= HasNonZero m where
   nonZero :: m -> Boolean
 nonZeroImpl :: forall m. Coercible Number m => m -> Boolean
-nonZeroImpl m = (coerce m) == 0.0
+nonZeroImpl m = (coerce m) /= 0.0
 
 class Coercible Number m <= HasMakeFromInt m where
   makeFromInt :: Int -> m
@@ -74,7 +75,7 @@ class Coercible Number m <= HasCloseEnoughTo m where
   closeEnoughTo :: m -> m -> Boolean
 
 closeEnoughToImpl :: forall m. Coercible Number m => m -> m -> Boolean
-closeEnoughToImpl x y = abs ((coerce x :: Number) - (coerce y :: Number)) <= 2.0
+closeEnoughToImpl x y = abs (coerce x - coerce y) <= 2.0
 
 class Coercible Number m <= HasTimes m where
   times :: Int -> m -> m
