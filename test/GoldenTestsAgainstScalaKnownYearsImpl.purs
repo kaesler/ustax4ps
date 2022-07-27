@@ -1,4 +1,4 @@
-module GoldenTestsAgainstScalaImpl
+module GoldenTestsAgainstScalaKnownYearsImpl
   ( runAllTests
   , logInAff
   ) where
@@ -12,7 +12,7 @@ import Effect.Class (liftEffect)
 import Effect.Console (log)
 import Federal.Calculator (FederalTaxResults(..))
 import Federal.Calculator as FC
-import GoldenTestCasesFromScala as GTC
+import GoldenTestCasesFromScalaKnownYears as GTC
 import Moneys (closeEnoughTo)
 import StateMA.Calculator as MA
 import Test.Spec (Spec, it, describe)
@@ -27,7 +27,7 @@ runAllTests = do
         config = defaultConfig { exit = false }
       in
         runSpec' config [ consoleReporter ]
-          testsAgainstScala
+          testsAgainstScalaForKnownYears
 
 type Expectation
   = Aff Unit
@@ -35,8 +35,8 @@ type Expectation
 logInAff :: String -> Aff Unit
 logInAff msg = liftEffect $ log msg
 
-testsAgainstScala :: Spec Unit
-testsAgainstScala =
+testsAgainstScalaForKnownYears :: Spec Unit
+testsAgainstScalaForKnownYears =
   let
     makeFederalExpectation :: GTC.TestCase -> Expectation
     makeFederalExpectation (GTC.TestCase tc) =
@@ -80,8 +80,8 @@ testsAgainstScala =
     combinedStateExpectations :: Expectation
     combinedStateExpectations = (sequence stateExpectations) *> (pure unit)
   in
-    describe "Taxes" do
-      it ".federalTaxDue matches outputs sampled from Scala implementation" do
+    describe "" do
+      it "Federal.Calculator.taxResultsForKnownYear matches the Scala implementation" do
         combinedFederalExpectations
-      it ".stateTaxDue matches outputs sampled from Scala implementation" do
+      it "StateMA.Calculator.taxDue matches the Scala implementation for known years" do
         combinedStateExpectations

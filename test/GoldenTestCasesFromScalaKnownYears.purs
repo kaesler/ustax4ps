@@ -1,4 +1,4 @@
-module GoldenTestCasesFromScala
+module GoldenTestCasesFromScalaKnownYears
   ( TestCase(..)
   , cases
   ) where
