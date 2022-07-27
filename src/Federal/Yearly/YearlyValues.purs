@@ -18,6 +18,7 @@ module Federal.Yearly.YearlyValues
   where
 
 import Prelude
+
 import CommonTypes (FilingStatus(..))
 import Data.Array as Array
 import Data.Date (Year)
@@ -122,20 +123,29 @@ haveCongruentQualifiedBrackets left right = (Map.keys $ qualifiedNonZeroThreshol
 
 averageThresholdChange :: YearlyValues -> YearlyValues -> Number
 averageThresholdChange left right =
-  let -- Note: these lists are sorted ascending by associated key order.
+  let -- Note: make sure these lists are sorted ascending by associated key order.
+    valuesByAscendingKey :: Map.Map (Tuple FilingStatus FederalTaxRate) IncomeThreshold -> List.List IncomeThreshold
+    valuesByAscendingKey m = 
+      let orderedEntries = Map.toUnfoldable m
+      in map (\(Tuple _ value) -> value) orderedEntries
+                        
     ordPairs
-      | (haveCongruentOrdinaryBrackets left right) = List.zip (Map.values (ordinaryNonZeroThresholdsMap left)) (Map.values (ordinaryNonZeroThresholdsMap right))
+      | (haveCongruentOrdinaryBrackets left right) = List.zip 
+                                                       (valuesByAscendingKey (ordinaryNonZeroThresholdsMap left)) 
+                                                       (valuesByAscendingKey (ordinaryNonZeroThresholdsMap right))
       | otherwise = List.Nil
 
     qualPairs
-      | (haveCongruentQualifiedBrackets left right) = List.zip (Map.values (qualifiedNonZeroThresholdsMap left)) (Map.values (qualifiedNonZeroThresholdsMap right))
+      | (haveCongruentQualifiedBrackets left right) = List.zip 
+                                                        (valuesByAscendingKey (qualifiedNonZeroThresholdsMap left)) 
+                                                        (valuesByAscendingKey (qualifiedNonZeroThresholdsMap right))
       | otherwise = List.Nil
 
     pairs = ordPairs <> qualPairs
 
     changes = map (\(Tuple l r) -> r `divide` l) pairs
 
-    changesSum = List.foldl (\x y -> x + y) 1.0 changes
+    changesSum = List.foldl (\x y -> x + y) 0.0 changes
 
     averageChange = changesSum / toNumber (List.length changes)
   in
