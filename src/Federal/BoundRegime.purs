@@ -11,9 +11,9 @@ module Federal.BoundRegime
 import Federal.Yearly.Type
 
 import Age (isAge65OrOlder)
-import CommonTypes (BirthDate, FilingStatus, InflationEstimate(..), inflationFactor, isUnmarried)
+import CommonTypes (BirthDate, FilingStatus, isUnmarried)
 import Data.Date (Year)
-import Data.Enum (fromEnum, succ)
+import Data.Enum (fromEnum)
 import Data.List ((..), foldl)
 import Data.Maybe (fromMaybe)
 import Federal.OrdinaryBrackets (OrdinaryBrackets, inflateThresholds) as OB
@@ -22,7 +22,7 @@ import Federal.Regime (Regime)
 import Federal.Types (ItemizedDeductions, PersonalExemptions, StandardDeduction)
 import Federal.Yearly.YearlyValues as YV
 import Moneys (Deduction, noMoney, times, mul)
-import Prelude (class Show, max, (<>), (+), ($), (*), bind, pure)
+import Prelude (class Show, bind, max, pure, ($), (*), (+), (<>))
 import UnsafeDates (unsafeMakeYear)
 
 newtype BoundRegime
