@@ -3,23 +3,16 @@ module CommonTypes
   , AnnualGrowthRatePercentage
   , BirthDate(..)
   , FilingStatus(..)
-  , InflationEstimate(..)
-  , inflationFactor
   , isUnmarried
-  , mkInflationEstimate
   , unsafeReadFilingStatus
   )
   where
 
 import Prelude
 
-import Data.Date (Date, Year)
-import Data.Enum (fromEnum)
-import Data.Int (toNumber)
+import Data.Date (Date)
 import Data.Maybe (Maybe(..), fromJust)
 import Data.String.Read (class Read, read)
-import Effect.Exception.Unsafe (unsafeThrow)
-import Math (pow)
 import Partial.Unsafe (unsafePartial)
 
 type BirthDate = Date
@@ -54,16 +47,3 @@ isUnmarried _ = true
 
 type AnnualGrowthRatePercentage = Number
 
--- target year, growth rate as a percentage
-data InflationEstimate = InflationEstimate Year AnnualGrowthRatePercentage
-
--- Needed for calls from JS?
-mkInflationEstimate :: Year -> AnnualGrowthRatePercentage -> InflationEstimate
-mkInflationEstimate = InflationEstimate
-
-inflationFactor :: InflationEstimate -> Year -> Number
-inflationFactor (InflationEstimate targetYear annualGrowthRate) baseYear
-  | targetYear <= baseYear = unsafeThrow "Inflation goes forward"
-  | otherwise = pow
-      (1.0 + annualGrowthRate)
-      (toNumber ((fromEnum targetYear) - (fromEnum baseYear)))

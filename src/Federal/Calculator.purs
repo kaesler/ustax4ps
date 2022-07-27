@@ -10,7 +10,7 @@ module Federal.Calculator
   )
   where
 
-import CommonTypes (BirthDate, FilingStatus, InflationEstimate)
+import CommonTypes (BirthDate, FilingStatus)
 import Data.Date (Year)
 import Effect (Effect)
 import Effect.Console (log)
