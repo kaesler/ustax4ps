@@ -1,4 +1,4 @@
-module GoldenTestsAgainstScalaKnownYearsImpl
+module FutureYearsGoldenTestsAgainstScalaImpl
   ( runAllTests
   , logInAff
   ) where
@@ -12,7 +12,7 @@ import Effect.Class (liftEffect)
 import Effect.Console (log)
 import Federal.Calculator (FederalTaxResults(..))
 import Federal.Calculator as FC
-import GoldenTestCasesFromScalaKnownYears as GTC
+import FutureYearsGoldenTestCasesFromScala as GTC
 import Moneys (closeEnoughTo)
 import StateMA.Calculator as MA
 import Test.Spec (Spec, it, describe)
@@ -27,7 +27,7 @@ runAllTests = do
         config = defaultConfig { exit = false }
       in
         runSpec' config [ consoleReporter ]
-          testsAgainstScalaForKnownYears
+          testsAgainstScalaForFutureYears
 
 type Expectation
   = Aff Unit
@@ -35,15 +35,17 @@ type Expectation
 logInAff :: String -> Aff Unit
 logInAff msg = liftEffect $ log msg
 
-testsAgainstScalaForKnownYears :: Spec Unit
-testsAgainstScalaForKnownYears =
+testsAgainstScalaForFutureYears :: Spec Unit
+testsAgainstScalaForFutureYears =
   let
     makeFederalExpectation :: GTC.TestCase -> Expectation
     makeFederalExpectation (GTC.TestCase tc) =
       let
         FederalTaxResults results =
-          FC.taxResultsForKnownYear
+          FC.taxResultsForFutureYear
+            tc.regime
             tc.year
+            tc.estimatedAnnualInflationFactor
             tc.birthDate
             tc.filingStatus
             tc.personalExemptions
@@ -81,7 +83,7 @@ testsAgainstScalaForKnownYears =
     combinedStateExpectations = (sequence stateExpectations) *> (pure unit)
   in
     describe "" do
-      it "Federal.Calculator.taxResultsForKnownYear matches the Scala implementation" do
+      it "Federal.Calculator.taxResultsForFutureYear matches the Scala implementation" do
         combinedFederalExpectations
-      it "StateMA.Calculator.taxDue matches the Scala implementation for known years" do
+      it "StateMA.Calculator.taxDue matches the Scala implementation for future years" do
         combinedStateExpectations
