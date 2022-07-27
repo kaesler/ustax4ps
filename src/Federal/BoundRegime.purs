@@ -8,16 +8,22 @@ module Federal.BoundRegime
   )
   where
 
+import Federal.Yearly.Type
+
 import Age (isAge65OrOlder)
 import CommonTypes (BirthDate, FilingStatus, InflationEstimate(..), inflationFactor, isUnmarried)
 import Data.Date (Year)
+import Data.Enum (fromEnum, succ)
+import Data.List ((..), foldl)
+import Data.Maybe (fromMaybe)
 import Federal.OrdinaryBrackets (OrdinaryBrackets, inflateThresholds) as OB
 import Federal.QualifiedBrackets (QualifiedBrackets, inflateThresholds) as QB
 import Federal.Regime (Regime)
 import Federal.Types (ItemizedDeductions, PersonalExemptions, StandardDeduction)
 import Federal.Yearly.YearlyValues as YV
 import Moneys (Deduction, noMoney, times, mul)
-import Prelude (class Show, max, (<>))
+import Prelude (class Show, max, (<>), (+), ($), (*), bind, pure)
+import UnsafeDates (unsafeMakeYear)
 
 newtype BoundRegime
   = BoundRegime
@@ -104,24 +110,31 @@ boundRegimeForKnownYear y bd fs pe =
      qualifiedBrackets: yvs.qualifiedBrackets fs
    }
 
-boundRegimeForFutureYear :: Regime -> InflationEstimate -> BirthDate -> FilingStatus -> PersonalExemptions -> BoundRegime
-boundRegimeForFutureYear reg estimate bd fs pe =
-  let baseYear = YV.mostRecentYearForRegime reg
-   in futureEstimated (boundRegimeForKnownYear baseYear bd fs pe) estimate
+boundRegimeForFutureYear :: Regime -> Year -> Number -> BirthDate -> FilingStatus -> PersonalExemptions -> BoundRegime
+boundRegimeForFutureYear r y annualInflationFactor bd fs pe =
+  let baseValues = YV.mostRecentForRegime r :: YearlyValues
+      baseYear = fromEnum baseValues.year
+      yearsWithInflation = (baseYear + 1) .. fromEnum y
+      baseRegime = boundRegimeForKnownYear baseValues.year bd fs pe 
+      inflationFactors = 
+        do ywi <- yearsWithInflation
+           let factor = fromMaybe annualInflationFactor $ YV.averageThresholdChangeOverPrevious $ unsafeMakeYear ywi
+           pure factor
+      netInflationFactor = foldl  (\a b -> a * b) 1.0 inflationFactors
+  in 
+    withEstimatedNetInflationFactor y netInflationFactor baseRegime      
 
-futureEstimated :: BoundRegime -> InflationEstimate -> BoundRegime
-futureEstimated (BoundRegime br) inflationEstimate =
-  let InflationEstimate futureYear _ = inflationEstimate
-      factor = inflationFactor inflationEstimate br.year
-   in mkBoundRegime
-        br.regime
-        futureYear
-        br.birthDate
-        br.filingStatus
-        br.personalExemptions
-        (br.perPersonExemption `mul` factor)
-        (br.unadjustedStandardDeduction `mul` factor)
-        (br.adjustmentWhenOver65 `mul` factor)
-        (br.adjustmentWhenOver65AndSingle `mul` factor)
-        (OB.inflateThresholds factor br.ordinaryBrackets)
-        (QB.inflateThresholds factor br.qualifiedBrackets)
+withEstimatedNetInflationFactor :: Year -> Number -> BoundRegime -> BoundRegime
+withEstimatedNetInflationFactor futureYear netInflationFactor (BoundRegime br) =
+  mkBoundRegime
+    br.regime
+    futureYear
+    br.birthDate
+    br.filingStatus
+    br.personalExemptions
+    (br.perPersonExemption `mul` netInflationFactor)
+    (br.unadjustedStandardDeduction `mul` netInflationFactor)
+    (br.adjustmentWhenOver65 `mul` netInflationFactor)
+    (br.adjustmentWhenOver65AndSingle `mul` netInflationFactor)
+    (OB.inflateThresholds netInflationFactor br.ordinaryBrackets)
+    (QB.inflateThresholds netInflationFactor br.qualifiedBrackets)

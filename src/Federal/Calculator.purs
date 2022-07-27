@@ -117,7 +117,8 @@ taxDueForKnownYearDebug year birthDate filingStatus personalExemptions socSec or
 
 taxResultsForFutureYear ::
   Regime ->
-  InflationEstimate ->
+  Year -> 
+  Number ->
   BirthDate ->
   FilingStatus ->
   PersonalExemptions ->
@@ -126,14 +127,22 @@ taxResultsForFutureYear ::
   QualifiedIncome ->
   ItemizedDeductions ->
   FederalTaxResults
-taxResultsForFutureYear reg estimate birthDate filingStatus personalExemptions socSec ordinaryIncome qualifiedIncome itemized =
-  let boundRegime = boundRegimeForFutureYear reg estimate birthDate filingStatus personalExemptions
+taxResultsForFutureYear reg futureYear estimate birthDate filingStatus personalExemptions socSec ordinaryIncome qualifiedIncome itemized =
+  let boundRegime = boundRegimeForFutureYear 
+                      reg 
+                      futureYear 
+                      estimate 
+                      birthDate 
+                      filingStatus 
+                      personalExemptions
       calculator = makeCalculator boundRegime
-   in calculator socSec ordinaryIncome qualifiedIncome itemized
+   in calculator socSec ordinaryIncome qualifiedIncome itemized  
+
 
 taxDueForFutureYear ::
   Regime ->
-  InflationEstimate ->
+  Year ->
+  Number ->
   BirthDate ->
   FilingStatus ->
   PersonalExemptions ->
@@ -142,6 +151,16 @@ taxDueForFutureYear ::
   QualifiedIncome ->
   ItemizedDeductions ->
   TaxPayable
-taxDueForFutureYear regime inflationEstimate birthDate filingStatus personalExemptions socSec ordinaryIncome qualifiedIncome itemized =
-  let FederalTaxResults results = taxResultsForFutureYear regime inflationEstimate birthDate filingStatus personalExemptions socSec ordinaryIncome qualifiedIncome itemized
-   in results.taxOnOrdinaryIncome <> results.taxOnQualifiedIncome 
+taxDueForFutureYear regime futureYear inflationEstimate birthDate filingStatus personalExemptions socSec ordinaryIncome qualifiedIncome itemized =
+  let FederalTaxResults results = taxResultsForFutureYear 
+                                    regime 
+                                    futureYear 
+                                    inflationEstimate 
+                                    birthDate 
+                                    filingStatus 
+                                    personalExemptions 
+                                    socSec 
+                                    ordinaryIncome 
+                                    qualifiedIncome 
+                                    itemized
+   in results.taxOnOrdinaryIncome <> results.taxOnQualifiedIncome
