@@ -40,7 +40,7 @@ import TaxRate
 import Data.Int (round, toNumber)
 import Data.Monoid.Additive (Additive(..))
 import Effect.Exception.Unsafe (unsafeThrow)
-import Math (abs)
+import Data.Number (abs)
 import Prelude (class Eq, class Monoid, class Ord, class Semigroup, class Show, mempty, otherwise, ($), (/), (*), (-), (<), (<=), (>), (<<<), (/=))
 import Safe.Coerce (class Coercible, coerce)
 
