@@ -14,10 +14,10 @@ module GoogleSheetModule
 
 -- Import here what we want accessbible from GoogleSheetInterface
 
-import CommonTypes (BirthDate, FilingStatus(..), unsafeReadFilingStatus)
+import CommonTypes (BirthDate, FilingStatus(Married, HeadOfHousehold, Single), unsafeReadFilingStatus)
 import Data.Date (Year)
-import Federal.BoundRegime (BoundRegime(..), boundRegimeForKnownYear, netDeduction, personalExemptionDeduction, standardDeduction)
-import Federal.Calculator (taxDueForKnownYear)
+import Federal.BoundRegime (BoundRegime(..), boundRegimeForKnownYear, boundRegimeForFutureYear, netDeduction, personalExemptionDeduction, standardDeduction)
+import Federal.Calculator (taxDueForKnownYear, taxDueForFutureYear)
 import Federal.OrdinaryBrackets (ordinaryIncomeBracketWidth)
 import Federal.QualifiedBrackets (startOfNonZeroQualifiedRateBracket)
 import Federal.RMDs (unsafeRmdFractionForAge)

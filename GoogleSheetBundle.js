@@ -88,6 +88,8 @@ var bind = function(dict) {
 };
 
 // output/Data.Bounded/foreign.js
+var topInt = 2147483647;
+var bottomInt = -2147483648;
 var topChar = String.fromCharCode(65535);
 var bottomChar = String.fromCharCode(0);
 var topNumber = Number.POSITIVE_INFINITY;
@@ -95,11 +97,11 @@ var bottomNumber = Number.NEGATIVE_INFINITY;
 
 // output/Data.Ord/foreign.js
 var unsafeCompareImpl = function(lt) {
-  return function(eq5) {
+  return function(eq7) {
     return function(gt) {
       return function(x) {
         return function(y) {
-          return x < y ? lt : x === y ? eq5 : gt;
+          return x < y ? lt : x === y ? eq7 : gt;
         };
       };
     };
@@ -114,6 +116,7 @@ var refEq = function(r1) {
     return r1 === r2;
   };
 };
+var eqBooleanImpl = refEq;
 var eqIntImpl = refEq;
 var eqNumberImpl = refEq;
 
@@ -124,8 +127,20 @@ var eqNumber = {
 var eqInt = {
   eq: eqIntImpl
 };
+var eqBoolean = {
+  eq: eqBooleanImpl
+};
 var eq = function(dict) {
   return dict.eq;
+};
+var eq2 = /* @__PURE__ */ eq(eqBoolean);
+var notEq = function(dictEq) {
+  var eq32 = eq(dictEq);
+  return function(x) {
+    return function(y) {
+      return eq2(eq32(x)(y))(false);
+    };
+  };
 };
 
 // output/Data.Ordering/index.js
@@ -150,6 +165,25 @@ var EQ = /* @__PURE__ */ function() {
   EQ2.value = new EQ2();
   return EQ2;
 }();
+var eqOrdering = {
+  eq: function(v) {
+    return function(v1) {
+      if (v instanceof LT && v1 instanceof LT) {
+        return true;
+      }
+      ;
+      if (v instanceof GT && v1 instanceof GT) {
+        return true;
+      }
+      ;
+      if (v instanceof EQ && v1 instanceof EQ) {
+        return true;
+      }
+      ;
+      return false;
+    };
+  }
+};
 
 // output/Data.Semiring/foreign.js
 var numAdd = function(n1) {
@@ -280,6 +314,16 @@ var min = function(dictOrd) {
 };
 
 // output/Data.Bounded/index.js
+var top = function(dict) {
+  return dict.top;
+};
+var boundedInt = {
+  top: topInt,
+  bottom: bottomInt,
+  Ord0: function() {
+    return ordInt;
+  }
+};
 var bottom = function(dict) {
   return dict.bottom;
 };
@@ -299,6 +343,7 @@ var show = function(dict) {
 };
 
 // output/Data.Maybe/index.js
+var identity2 = /* @__PURE__ */ identity(categoryFn);
 var Nothing = /* @__PURE__ */ function() {
   function Nothing2() {
   }
@@ -316,6 +361,21 @@ var Just = /* @__PURE__ */ function() {
   };
   return Just2;
 }();
+var maybe = function(v) {
+  return function(v1) {
+    return function(v2) {
+      if (v2 instanceof Nothing) {
+        return v;
+      }
+      ;
+      if (v2 instanceof Just) {
+        return v1(v2.value0);
+      }
+      ;
+      throw new Error("Failed pattern match at Data.Maybe (line 237, column 1 - line 237, column 51): " + [v.constructor.name, v1.constructor.name, v2.constructor.name]);
+    };
+  };
+};
 var functorMaybe = {
   map: function(v) {
     return function(v1) {
@@ -328,6 +388,9 @@ var functorMaybe = {
   }
 };
 var map2 = /* @__PURE__ */ map(functorMaybe);
+var fromMaybe = function(a) {
+  return maybe(a)(identity2);
+};
 var fromJust = function() {
   return function(v) {
     if (v instanceof Just) {
@@ -444,8 +507,8 @@ var traverseArrayImpl = function() {
       return function(pure2) {
         return function(f) {
           return function(array) {
-            function go(bot, top2) {
-              switch (top2 - bot) {
+            function go(bot, top3) {
+              switch (top3 - bot) {
                 case 0:
                   return pure2([]);
                 case 1:
@@ -455,8 +518,8 @@ var traverseArrayImpl = function() {
                 case 3:
                   return apply2(apply2(map5(array3)(f(array[bot])))(f(array[bot + 1])))(f(array[bot + 2]));
                 default:
-                  var pivot = bot + Math.floor((top2 - bot) / 4) * 2;
-                  return apply2(map5(concat2)(go(bot, pivot)))(go(pivot, top2));
+                  var pivot = bot + Math.floor((top3 - bot) / 4) * 2;
+                  return apply2(map5(concat2)(go(bot, pivot)))(go(pivot, top3));
               }
             }
             return go(0, array.length);
@@ -504,7 +567,7 @@ var coerce = function() {
 };
 
 // output/Data.Foldable/index.js
-var identity2 = /* @__PURE__ */ identity(categoryFn);
+var identity3 = /* @__PURE__ */ identity(categoryFn);
 var foldr = function(dict) {
   return dict.foldr;
 };
@@ -538,7 +601,7 @@ var foldMap = function(dict) {
 var fold = function(dictFoldable) {
   var foldMap2 = foldMap(dictFoldable);
   return function(dictMonoid) {
-    return foldMap2(dictMonoid)(identity2);
+    return foldMap2(dictMonoid)(identity3);
   };
 };
 var find = function(dictFoldable) {
@@ -1160,12 +1223,55 @@ var $lazy_enumDay = /* @__PURE__ */ $runtime_lazy("enumDay", "Data.Date.Componen
 });
 
 // output/Data.Int/foreign.js
+var fromNumberImpl = function(just) {
+  return function(nothing) {
+    return function(n) {
+      return (n | 0) === n ? just(n) : nothing;
+    };
+  };
+};
 var toNumber = function(n) {
   return n;
 };
 
 // output/Data.Number/foreign.js
+var isFiniteImpl = isFinite;
 var abs = Math.abs;
+var pow = function(n) {
+  return function(p) {
+    return Math.pow(n, p);
+  };
+};
+var round = Math.round;
+
+// output/Data.Int/index.js
+var top2 = /* @__PURE__ */ top(boundedInt);
+var bottom2 = /* @__PURE__ */ bottom(boundedInt);
+var fromNumber = /* @__PURE__ */ function() {
+  return fromNumberImpl(Just.create)(Nothing.value);
+}();
+var unsafeClamp = function(x) {
+  if (!isFiniteImpl(x)) {
+    return 0;
+  }
+  ;
+  if (x >= toNumber(top2)) {
+    return top2;
+  }
+  ;
+  if (x <= toNumber(bottom2)) {
+    return bottom2;
+  }
+  ;
+  if (otherwise) {
+    return fromMaybe(0)(fromNumber(x));
+  }
+  ;
+  throw new Error("Failed pattern match at Data.Int (line 72, column 1 - line 72, column 29): " + [x.constructor.name]);
+};
+var round2 = function($37) {
+  return unsafeClamp(round($37));
+};
 
 // output/Data.String.Read/index.js
 var read = function(dict) {
@@ -1198,6 +1304,8 @@ var unsafeThrow = function($2) {
 // output/CommonTypes/index.js
 var compare2 = /* @__PURE__ */ compare(ordInt);
 var fromJust2 = /* @__PURE__ */ fromJust();
+var lessThanOrEq2 = /* @__PURE__ */ lessThanOrEq(ordYear);
+var fromEnum2 = /* @__PURE__ */ fromEnum(boundedEnumYear);
 var Married = /* @__PURE__ */ function() {
   function Married2() {
   }
@@ -1268,6 +1376,19 @@ var isUnmarried = function(v) {
   ;
   return true;
 };
+var inflationFactor = function(v) {
+  return function(baseYear) {
+    if (lessThanOrEq2(v.value0)(baseYear)) {
+      return unsafeThrow("Inflation goes forward");
+    }
+    ;
+    if (otherwise) {
+      return pow(1 + v.value1)(toNumber(fromEnum2(v.value0) - fromEnum2(baseYear) | 0));
+    }
+    ;
+    throw new Error("Failed pattern match at CommonTypes (line 59, column 1 - line 59, column 55): " + [v.constructor.name, baseYear.constructor.name]);
+  };
+};
 
 // output/Data.Date/foreign.js
 var createDate = function(y, m, d) {
@@ -1283,10 +1404,10 @@ function canonicalDateImpl(ctor, y, m, d) {
 }
 
 // output/Data.Date/index.js
-var fromEnum2 = /* @__PURE__ */ fromEnum(boundedEnumMonth);
+var fromEnum3 = /* @__PURE__ */ fromEnum(boundedEnumMonth);
 var fromJust3 = /* @__PURE__ */ fromJust();
 var eq12 = /* @__PURE__ */ eq(eqYear);
-var eq2 = /* @__PURE__ */ eq(eqMonth);
+var eq22 = /* @__PURE__ */ eq(eqMonth);
 var eq3 = /* @__PURE__ */ eq(eqDay);
 var compare3 = /* @__PURE__ */ compare(ordYear);
 var compare12 = /* @__PURE__ */ compare(ordMonth);
@@ -1311,7 +1432,7 @@ var $$Date = /* @__PURE__ */ function() {
 var eqDate = {
   eq: function(x) {
     return function(y) {
-      return eq12(x.value0)(y.value0) && eq2(x.value1)(y.value1) && eq3(x.value2)(y.value2);
+      return eq12(x.value0)(y.value0) && eq22(x.value1)(y.value1) && eq3(x.value2)(y.value2);
     };
   }
 };
@@ -1353,24 +1474,24 @@ var canonicalDate = function(y) {
           };
         };
       };
-      return canonicalDateImpl(mkDate, y, fromEnum2(m), d);
+      return canonicalDateImpl(mkDate, y, fromEnum3(m), d);
     };
   };
 };
 
 // output/Age/index.js
-var fromEnum3 = /* @__PURE__ */ fromEnum(boundedEnumYear);
+var fromEnum4 = /* @__PURE__ */ fromEnum(boundedEnumYear);
 var fromJust4 = /* @__PURE__ */ fromJust();
 var toEnum3 = /* @__PURE__ */ toEnum(boundedEnumYear);
-var bottom2 = /* @__PURE__ */ bottom(boundedMonth);
+var bottom3 = /* @__PURE__ */ bottom(boundedMonth);
 var bottom1 = /* @__PURE__ */ bottom(boundedDay);
-var lessThanOrEq2 = /* @__PURE__ */ lessThanOrEq(ordDate);
+var lessThanOrEq3 = /* @__PURE__ */ lessThanOrEq(ordDate);
 var isAge65OrOlder = function(bd) {
   return function(y) {
-    var nextYear = fromEnum3(y) + 1 | 0;
+    var nextYear = fromEnum4(y) + 1 | 0;
     var nextYearMinus65 = fromJust4(toEnum3(nextYear - 65 | 0));
-    var firstDayOfYear65DaysPrior = canonicalDate(nextYearMinus65)(bottom2)(bottom1);
-    return lessThanOrEq2(bd)(firstDayOfYear65DaysPrior);
+    var firstDayOfYear65DaysPrior = canonicalDate(nextYearMinus65)(bottom3)(bottom1);
+    return lessThanOrEq3(bd)(firstDayOfYear65DaysPrior);
   };
 };
 
@@ -1423,7 +1544,7 @@ var fromFoldableImpl = function() {
   };
 }();
 var sortByImpl = function() {
-  function mergeFromTo(compare5, fromOrdering, xs1, xs2, from, to) {
+  function mergeFromTo(compare6, fromOrdering, xs1, xs2, from, to) {
     var mid;
     var i4;
     var j;
@@ -1433,16 +1554,16 @@ var sortByImpl = function() {
     var c;
     mid = from + (to - from >> 1);
     if (mid - from > 1)
-      mergeFromTo(compare5, fromOrdering, xs2, xs1, from, mid);
+      mergeFromTo(compare6, fromOrdering, xs2, xs1, from, mid);
     if (to - mid > 1)
-      mergeFromTo(compare5, fromOrdering, xs2, xs1, mid, to);
+      mergeFromTo(compare6, fromOrdering, xs2, xs1, mid, to);
     i4 = from;
     j = mid;
     k = from;
     while (i4 < mid && j < to) {
       x = xs2[i4];
       y = xs2[j];
-      c = fromOrdering(compare5(x)(y));
+      c = fromOrdering(compare6(x)(y));
       if (c > 0) {
         xs1[k++] = y;
         ++j;
@@ -1458,14 +1579,14 @@ var sortByImpl = function() {
       xs1[k++] = xs2[j++];
     }
   }
-  return function(compare5) {
+  return function(compare6) {
     return function(fromOrdering) {
       return function(xs) {
         var out;
         if (xs.length < 2)
           return xs;
         out = xs.slice(0);
-        mergeFromTo(compare5, fromOrdering, out, xs.slice(0), 0, xs.length);
+        mergeFromTo(compare6, fromOrdering, out, xs.slice(0), 0, xs.length);
         return out;
       };
     };
@@ -1474,7 +1595,7 @@ var sortByImpl = function() {
 
 // output/Data.Array.ST/foreign.js
 var sortByImpl2 = function() {
-  function mergeFromTo(compare5, fromOrdering, xs1, xs2, from, to) {
+  function mergeFromTo(compare6, fromOrdering, xs1, xs2, from, to) {
     var mid;
     var i4;
     var j;
@@ -1484,16 +1605,16 @@ var sortByImpl2 = function() {
     var c;
     mid = from + (to - from >> 1);
     if (mid - from > 1)
-      mergeFromTo(compare5, fromOrdering, xs2, xs1, from, mid);
+      mergeFromTo(compare6, fromOrdering, xs2, xs1, from, mid);
     if (to - mid > 1)
-      mergeFromTo(compare5, fromOrdering, xs2, xs1, mid, to);
+      mergeFromTo(compare6, fromOrdering, xs2, xs1, mid, to);
     i4 = from;
     j = mid;
     k = from;
     while (i4 < mid && j < to) {
       x = xs2[i4];
       y = xs2[j];
-      c = fromOrdering(compare5(x)(y));
+      c = fromOrdering(compare6(x)(y));
       if (c > 0) {
         xs1[k++] = y;
         ++j;
@@ -1509,13 +1630,13 @@ var sortByImpl2 = function() {
       xs1[k++] = xs2[j++];
     }
   }
-  return function(compare5) {
+  return function(compare6) {
     return function(fromOrdering) {
       return function(xs) {
         return function() {
           if (xs.length < 2)
             return xs;
-          mergeFromTo(compare5, fromOrdering, xs, xs.slice(0), 0, xs.length);
+          mergeFromTo(compare6, fromOrdering, xs, xs.slice(0), 0, xs.length);
           return xs;
         };
       };
@@ -1783,6 +1904,8 @@ var unfoldableList = {
 
 // output/Data.List/index.js
 var map3 = /* @__PURE__ */ map(functorMaybe);
+var eq4 = /* @__PURE__ */ eq(eqOrdering);
+var notEq2 = /* @__PURE__ */ notEq(eqOrdering);
 var uncons = function(v) {
   if (v instanceof Nil) {
     return Nothing.value;
@@ -1814,6 +1937,136 @@ var tail = function(v) {
   }
   ;
   throw new Error("Failed pattern match at Data.List (line 245, column 1 - line 245, column 43): " + [v.constructor.name]);
+};
+var singleton4 = function(a) {
+  return new Cons(a, Nil.value);
+};
+var sortBy = function(cmp) {
+  var merge = function(v) {
+    return function(v1) {
+      if (v instanceof Cons && v1 instanceof Cons) {
+        if (eq4(cmp(v.value0)(v1.value0))(GT.value)) {
+          return new Cons(v1.value0, merge(v)(v1.value1));
+        }
+        ;
+        if (otherwise) {
+          return new Cons(v.value0, merge(v.value1)(v1));
+        }
+        ;
+      }
+      ;
+      if (v instanceof Nil) {
+        return v1;
+      }
+      ;
+      if (v1 instanceof Nil) {
+        return v;
+      }
+      ;
+      throw new Error("Failed pattern match at Data.List (line 466, column 3 - line 466, column 38): " + [v.constructor.name, v1.constructor.name]);
+    };
+  };
+  var mergePairs = function(v) {
+    if (v instanceof Cons && v.value1 instanceof Cons) {
+      return new Cons(merge(v.value0)(v.value1.value0), mergePairs(v.value1.value1));
+    }
+    ;
+    return v;
+  };
+  var mergeAll = function($copy_v) {
+    var $tco_done = false;
+    var $tco_result;
+    function $tco_loop(v) {
+      if (v instanceof Cons && v.value1 instanceof Nil) {
+        $tco_done = true;
+        return v.value0;
+      }
+      ;
+      $copy_v = mergePairs(v);
+      return;
+    }
+    ;
+    while (!$tco_done) {
+      $tco_result = $tco_loop($copy_v);
+    }
+    ;
+    return $tco_result;
+  };
+  var sequences = function(v) {
+    if (v instanceof Cons && v.value1 instanceof Cons) {
+      if (eq4(cmp(v.value0)(v.value1.value0))(GT.value)) {
+        return descending(v.value1.value0)(singleton4(v.value0))(v.value1.value1);
+      }
+      ;
+      if (otherwise) {
+        return ascending(v.value1.value0)(function(v1) {
+          return new Cons(v.value0, v1);
+        })(v.value1.value1);
+      }
+      ;
+    }
+    ;
+    return singleton4(v);
+  };
+  var descending = function($copy_a) {
+    return function($copy_as) {
+      return function($copy_v) {
+        var $tco_var_a = $copy_a;
+        var $tco_var_as = $copy_as;
+        var $tco_done1 = false;
+        var $tco_result;
+        function $tco_loop(a, as, v) {
+          if (v instanceof Cons && eq4(cmp(a)(v.value0))(GT.value)) {
+            $tco_var_a = v.value0;
+            $tco_var_as = new Cons(a, as);
+            $copy_v = v.value1;
+            return;
+          }
+          ;
+          $tco_done1 = true;
+          return new Cons(new Cons(a, as), sequences(v));
+        }
+        ;
+        while (!$tco_done1) {
+          $tco_result = $tco_loop($tco_var_a, $tco_var_as, $copy_v);
+        }
+        ;
+        return $tco_result;
+      };
+    };
+  };
+  var ascending = function($copy_a) {
+    return function($copy_as) {
+      return function($copy_v) {
+        var $tco_var_a = $copy_a;
+        var $tco_var_as = $copy_as;
+        var $tco_done2 = false;
+        var $tco_result;
+        function $tco_loop(a, as, v) {
+          if (v instanceof Cons && notEq2(cmp(a)(v.value0))(GT.value)) {
+            $tco_var_a = v.value0;
+            $tco_var_as = function(ys) {
+              return as(new Cons(a, ys));
+            };
+            $copy_v = v.value1;
+            return;
+          }
+          ;
+          $tco_done2 = true;
+          return new Cons(as(singleton4(a)), sequences(v));
+        }
+        ;
+        while (!$tco_done2) {
+          $tco_result = $tco_loop($tco_var_a, $tco_var_as, $copy_v);
+        }
+        ;
+        return $tco_result;
+      };
+    };
+  };
+  return function($431) {
+    return mergeAll(sequences($431));
+  };
 };
 var reverse2 = /* @__PURE__ */ function() {
   var go = function($copy_acc) {
@@ -1891,6 +2144,30 @@ var zipWith2 = function(f) {
 var zip = /* @__PURE__ */ function() {
   return zipWith2(Tuple.create);
 }();
+var last = function($copy_v) {
+  var $tco_done = false;
+  var $tco_result;
+  function $tco_loop(v) {
+    if (v instanceof Cons && v.value1 instanceof Nil) {
+      $tco_done = true;
+      return new Just(v.value0);
+    }
+    ;
+    if (v instanceof Cons) {
+      $copy_v = v.value1;
+      return;
+    }
+    ;
+    $tco_done = true;
+    return Nothing.value;
+  }
+  ;
+  while (!$tco_done) {
+    $tco_result = $tco_loop($copy_v);
+  }
+  ;
+  return $tco_result;
+};
 var index = function($copy_v) {
   return function($copy_v1) {
     var $tco_var_v = $copy_v;
@@ -1922,6 +2199,45 @@ var index = function($copy_v) {
     ;
     return $tco_result;
   };
+};
+var filter2 = function(p) {
+  var go = function($copy_acc) {
+    return function($copy_v) {
+      var $tco_var_acc = $copy_acc;
+      var $tco_done = false;
+      var $tco_result;
+      function $tco_loop(acc, v) {
+        if (v instanceof Nil) {
+          $tco_done = true;
+          return reverse2(acc);
+        }
+        ;
+        if (v instanceof Cons) {
+          if (p(v.value0)) {
+            $tco_var_acc = new Cons(v.value0, acc);
+            $copy_v = v.value1;
+            return;
+          }
+          ;
+          if (otherwise) {
+            $tco_var_acc = acc;
+            $copy_v = v.value1;
+            return;
+          }
+          ;
+        }
+        ;
+        throw new Error("Failed pattern match at Data.List (line 390, column 3 - line 390, column 27): " + [acc.constructor.name, v.constructor.name]);
+      }
+      ;
+      while (!$tco_done) {
+        $tco_result = $tco_loop($tco_var_acc, $copy_v);
+      }
+      ;
+      return $tco_result;
+    };
+  };
+  return go(Nil.value);
 };
 
 // output/Data.Map.Internal/index.js
@@ -2105,7 +2421,7 @@ var KickUp = /* @__PURE__ */ function() {
   };
   return KickUp2;
 }();
-var singleton4 = function(k) {
+var singleton5 = function(k) {
   return function(v) {
     return new Two(Leaf.value, k, v, Leaf.value);
   };
@@ -2139,12 +2455,12 @@ var toUnfoldable2 = function(dictUnfoldable) {
           }
           ;
           if (v.value0 instanceof Two) {
-            $copy_v = new Cons(v.value0.value0, new Cons(singleton4(v.value0.value1)(v.value0.value2), new Cons(v.value0.value3, v.value1)));
+            $copy_v = new Cons(v.value0.value0, new Cons(singleton5(v.value0.value1)(v.value0.value2), new Cons(v.value0.value3, v.value1)));
             return;
           }
           ;
           if (v.value0 instanceof Three) {
-            $copy_v = new Cons(v.value0.value0, new Cons(singleton4(v.value0.value1)(v.value0.value2), new Cons(v.value0.value3, new Cons(singleton4(v.value0.value4)(v.value0.value5), new Cons(v.value0.value6, v.value1)))));
+            $copy_v = new Cons(v.value0.value0, new Cons(singleton5(v.value0.value1)(v.value0.value2), new Cons(v.value0.value3, new Cons(singleton5(v.value0.value4)(v.value0.value5), new Cons(v.value0.value6, v.value1)))));
             return;
           }
           ;
@@ -2164,7 +2480,7 @@ var toUnfoldable2 = function(dictUnfoldable) {
   };
 };
 var lookup = function(dictOrd) {
-  var compare5 = compare(dictOrd);
+  var compare6 = compare(dictOrd);
   return function(k) {
     var go = function($copy_v) {
       var $tco_done = false;
@@ -2176,7 +2492,7 @@ var lookup = function(dictOrd) {
         }
         ;
         if (v instanceof Two) {
-          var v2 = compare5(k)(v.value1);
+          var v2 = compare6(k)(v.value1);
           if (v2 instanceof EQ) {
             $tco_done = true;
             return new Just(v.value2);
@@ -2192,13 +2508,13 @@ var lookup = function(dictOrd) {
         }
         ;
         if (v instanceof Three) {
-          var v3 = compare5(k)(v.value1);
+          var v3 = compare6(k)(v.value1);
           if (v3 instanceof EQ) {
             $tco_done = true;
             return new Just(v.value2);
           }
           ;
-          var v4 = compare5(k)(v.value4);
+          var v4 = compare6(k)(v.value4);
           if (v4 instanceof EQ) {
             $tco_done = true;
             return new Just(v.value5);
@@ -2314,7 +2630,7 @@ var fromZipper = function($copy_dictOrd) {
 };
 var insert = function(dictOrd) {
   var fromZipper1 = fromZipper(dictOrd);
-  var compare5 = compare(dictOrd);
+  var compare6 = compare(dictOrd);
   return function(k) {
     return function(v) {
       var up = function($copy_v1) {
@@ -2382,7 +2698,7 @@ var insert = function(dictOrd) {
             }
             ;
             if (v1 instanceof Two) {
-              var v2 = compare5(k)(v1.value1);
+              var v2 = compare6(k)(v1.value1);
               if (v2 instanceof EQ) {
                 $tco_done1 = true;
                 return fromZipper1(ctx)(new Two(v1.value0, k, v, v1.value3));
@@ -2400,13 +2716,13 @@ var insert = function(dictOrd) {
             }
             ;
             if (v1 instanceof Three) {
-              var v3 = compare5(k)(v1.value1);
+              var v3 = compare6(k)(v1.value1);
               if (v3 instanceof EQ) {
                 $tco_done1 = true;
                 return fromZipper1(ctx)(new Three(v1.value0, k, v, v1.value3, v1.value4, v1.value5, v1.value6));
               }
               ;
-              var v4 = compare5(k)(v1.value4);
+              var v4 = compare6(k)(v1.value4);
               if (v4 instanceof EQ) {
                 $tco_done1 = true;
                 return fromZipper1(ctx)(new Three(v1.value0, v1.value1, v1.value2, v1.value3, k, v, v1.value6));
@@ -2632,7 +2948,7 @@ var absoluteDifference = function(dict) {
 // output/Moneys/index.js
 var semigroupAdditive2 = /* @__PURE__ */ semigroupAdditive(semiringNumber);
 var monoidAdditive2 = /* @__PURE__ */ monoidAdditive(semiringNumber);
-var eq4 = /* @__PURE__ */ eq(/* @__PURE__ */ eqAdditive(eqNumber));
+var eq5 = /* @__PURE__ */ eq(/* @__PURE__ */ eqAdditive(eqNumber));
 var ordAdditive2 = /* @__PURE__ */ ordAdditive(ordNumber);
 var compare4 = /* @__PURE__ */ compare(ordAdditive2);
 var coerce2 = /* @__PURE__ */ coerce();
@@ -2648,7 +2964,7 @@ var monoidDeduction = monoidAdditive2;
 var eqIncome = {
   eq: function(x) {
     return function(y) {
-      return eq4(x)(y);
+      return eq5(x)(y);
     };
   }
 };
@@ -2665,7 +2981,7 @@ var ordIncome = {
 var eqDeduction = {
   eq: function(x) {
     return function(y) {
-      return eq4(x)(y);
+      return eq5(x)(y);
     };
   }
 };
@@ -2696,6 +3012,9 @@ var times = function(dict) {
   return dict.times;
 };
 var taxableAsIncome = coerce2;
+var roundHalfUp = function($127) {
+  return toNumber(round2($127));
+};
 var noMoneyImpl = function(dictMonoid) {
   return mempty(dictMonoid);
 };
@@ -2716,6 +3035,12 @@ var mulImpl = function() {
   };
 };
 var mulImpl1 = /* @__PURE__ */ mulImpl();
+var hasMulDeduction = {
+  mul: mulImpl1,
+  Coercible0: function() {
+    return void 0;
+  }
+};
 var hasMulIncome = {
   mul: mulImpl1,
   Coercible0: function() {
@@ -2786,6 +3111,11 @@ var isBelow = function(i4) {
     return lessThan1(coerce2(i4))(coerce2(it));
   };
 };
+var inflateThreshold = function(factor) {
+  return function(threshold) {
+    return coerce2(roundHalfUp(coerce2(threshold) * factor));
+  };
+};
 var divInt = function(ti) {
   return function(i4) {
     return coerce2(coerce2(ti) / toNumber(i4));
@@ -2844,11 +3174,12 @@ var toUnfoldable4 = /* @__PURE__ */ toUnfoldable3(unfoldableList);
 var bind2 = /* @__PURE__ */ bind(bindMaybe);
 var find3 = /* @__PURE__ */ find(foldableList);
 var fromJust5 = /* @__PURE__ */ fromJust();
+var map1 = /* @__PURE__ */ map(functorMap);
 var makeFromInt2 = /* @__PURE__ */ makeFromInt(hasMakeFromIntIncomeThres);
 var map22 = /* @__PURE__ */ map(functorArray);
 var safeBracketWidth = function(dictTaxRate) {
   var Ord0 = dictTaxRate.Ord0();
-  var eq5 = eq(Ord0.Eq0());
+  var eq7 = eq(Ord0.Eq0());
   var lookup4 = lookup(Ord0);
   return function(brackets) {
     return function(rate) {
@@ -2856,7 +3187,7 @@ var safeBracketWidth = function(dictTaxRate) {
       return bind2(tail(rates))(function(ratesTail) {
         var pairs = zip(rates)(ratesTail);
         return bind2(find3(function(p) {
-          return eq5(fst(p))(rate);
+          return eq7(fst(p))(rate);
         })(pairs))(function(pair) {
           var successor = snd(pair);
           return bind2(lookup4(rate)(brackets))(function(rateStart) {
@@ -2867,6 +3198,11 @@ var safeBracketWidth = function(dictTaxRate) {
         });
       });
     };
+  };
+};
+var inflateThresholds = function(dictTaxRate) {
+  return function(factor) {
+    return map1(inflateThreshold(factor));
   };
 };
 var fromRPairs = function(dictTaxRate) {
@@ -2990,12 +3326,18 @@ var bracketsTaxFunction = function(dictTaxRate) {
 var coerce3 = /* @__PURE__ */ coerce();
 var bracketsTaxFunction2 = /* @__PURE__ */ bracketsTaxFunction(taxRateFederalTaxRate);
 var bracketWidth2 = /* @__PURE__ */ bracketWidth(taxRateFederalTaxRate);
+var inflateThresholds1 = /* @__PURE__ */ inflateThresholds(taxRateFederalTaxRate);
 var fromRPairs1 = /* @__PURE__ */ fromRPairs(taxRateFederalTaxRate);
 var taxFunctionFor = function(v) {
   return bracketsTaxFunction2(v);
 };
 var ordinaryIncomeBracketWidth = function(brackets) {
   return bracketWidth2(coerce3(brackets));
+};
+var inflateThresholds2 = function(factor) {
+  return function(v) {
+    return coerce3(inflateThresholds1(factor)(v));
+  };
 };
 var fromRPairs2 = function(pairs) {
   return coerce3(fromRPairs1(pairs)(mkFederalTaxRate));
@@ -3005,12 +3347,18 @@ var fromRPairs2 = function(pairs) {
 var coerce4 = /* @__PURE__ */ coerce();
 var bracketsTaxFunction3 = /* @__PURE__ */ bracketsTaxFunction(taxRateFederalTaxRate);
 var fromJust6 = /* @__PURE__ */ fromJust();
+var inflateThresholds12 = /* @__PURE__ */ inflateThresholds(taxRateFederalTaxRate);
 var fromRPairs12 = /* @__PURE__ */ fromRPairs(taxRateFederalTaxRate);
 var taxFunctionFor2 = function(v) {
   return bracketsTaxFunction3(v);
 };
 var startOfNonZeroQualifiedRateBracket = function(v) {
   return fromJust6(index(values(v))(1));
+};
+var inflateThresholds3 = function(factor) {
+  return function(v) {
+    return coerce4(inflateThresholds12(factor)(v));
+  };
 };
 var fromRPairs3 = function(pairs) {
   return coerce4(fromRPairs12(pairs)(mkFederalTaxRate));
@@ -3046,6 +3394,21 @@ var readRegime = {
   }
 };
 var read5 = /* @__PURE__ */ read(readRegime);
+var eqRegime = {
+  eq: function(x) {
+    return function(y) {
+      if (x instanceof Trump && y instanceof Trump) {
+        return true;
+      }
+      ;
+      if (x instanceof PreTrump && y instanceof PreTrump) {
+        return true;
+      }
+      ;
+      return false;
+    };
+  }
+};
 var unsafeReadRegime = function(s) {
   return fromJust7(read5(s));
 };
@@ -3474,6 +3837,8 @@ var values8 = /* @__PURE__ */ function() {
 // output/Federal.Yearly.YearlyValues/index.js
 var fromJust9 = /* @__PURE__ */ fromJust();
 var lookup2 = /* @__PURE__ */ lookup(ordYear);
+var compare5 = /* @__PURE__ */ compare(ordYear);
+var eq6 = /* @__PURE__ */ eq(eqRegime);
 var forYear = /* @__PURE__ */ function() {
   return fromFoldable(ordYear)(foldableArray)(map(functorArray)(function(v) {
     return new Tuple(unsafeMakeYear(v.value0), v.value1);
@@ -3482,12 +3847,32 @@ var forYear = /* @__PURE__ */ function() {
 var unsafeValuesForYear = function(y) {
   return fromJust9(lookup2(y)(forYear));
 };
+var valuesAscendingByYear = /* @__PURE__ */ function() {
+  var cmp = function(yv1) {
+    return function(yv2) {
+      return compare5(yv1.year)(yv2.year);
+    };
+  };
+  return sortBy(cmp)(values(forYear));
+}();
+var valuesAscendingByYearForRegime = function(reg) {
+  return filter2(function(yv) {
+    return eq6(yv.regime)(reg);
+  })(valuesAscendingByYear);
+};
+var mostRecentForRegime = function(reg) {
+  return fromJust9(last(valuesAscendingByYearForRegime(reg)));
+};
+var mostRecentYearForRegime = function(reg) {
+  return mostRecentForRegime(reg).year;
+};
 
 // output/Federal.BoundRegime/index.js
 var append2 = /* @__PURE__ */ append(semigroupDeduction);
 var noMoney2 = /* @__PURE__ */ noMoney(hasNoMoneyDeduction);
 var times2 = /* @__PURE__ */ times(hasTimesDeduction);
 var max3 = /* @__PURE__ */ max(ordDeduction);
+var mul3 = /* @__PURE__ */ mul2(hasMulDeduction);
 var BoundRegime = function(x) {
   return x;
 };
@@ -3516,6 +3901,47 @@ var netDeduction = function(br) {
     return append2(personalExemptionDeduction(br))(max3(itemized)(standardDeduction(br)));
   };
 };
+var mkBoundRegime = function(r) {
+  return function(y) {
+    return function(bd) {
+      return function(fs) {
+        return function(pes) {
+          return function(ppe) {
+            return function(uasd) {
+              return function(a65) {
+                return function(a65s) {
+                  return function(ob) {
+                    return function(qb) {
+                      return {
+                        regime: r,
+                        year: y,
+                        birthDate: bd,
+                        filingStatus: fs,
+                        personalExemptions: pes,
+                        perPersonExemption: ppe,
+                        unadjustedStandardDeduction: uasd,
+                        adjustmentWhenOver65: a65,
+                        adjustmentWhenOver65AndSingle: a65s,
+                        ordinaryBrackets: ob,
+                        qualifiedBrackets: qb
+                      };
+                    };
+                  };
+                };
+              };
+            };
+          };
+        };
+      };
+    };
+  };
+};
+var futureEstimated = function(v) {
+  return function(inflationEstimate) {
+    var factor = inflationFactor(inflationEstimate)(v.year);
+    return mkBoundRegime(v.regime)(inflationEstimate.value0)(v.birthDate)(v.filingStatus)(v.personalExemptions)(mul3(v.perPersonExemption)(factor))(mul3(v.unadjustedStandardDeduction)(factor))(mul3(v.adjustmentWhenOver65)(factor))(mul3(v.adjustmentWhenOver65AndSingle)(factor))(inflateThresholds2(factor)(v.ordinaryBrackets))(inflateThresholds3(factor)(v.qualifiedBrackets));
+  };
+};
 var boundRegimeForKnownYear = function(y) {
   return function(bd) {
     return function(fs) {
@@ -3538,6 +3964,18 @@ var boundRegimeForKnownYear = function(y) {
     };
   };
 };
+var boundRegimeForFutureYear = function(reg) {
+  return function(estimate) {
+    return function(bd) {
+      return function(fs) {
+        return function(pe) {
+          var baseYear = mostRecentYearForRegime(reg);
+          return futureEstimated(boundRegimeForKnownYear(baseYear)(bd)(fs)(pe))(estimate);
+        };
+      };
+    };
+  };
+};
 
 // output/Federal.TaxFunctions/index.js
 var append3 = /* @__PURE__ */ append(semigroupTaxableIncome);
@@ -3555,12 +3993,12 @@ var taxDueOnOrdinaryIncome = taxFunctionFor;
 
 // output/Federal.TaxableSocialSecurity/index.js
 var makeFromInt10 = /* @__PURE__ */ makeFromInt(hasMakeFromIntIncome);
-var mul3 = /* @__PURE__ */ mul2(hasMulIncome);
+var mul4 = /* @__PURE__ */ mul2(hasMulIncome);
 var min3 = /* @__PURE__ */ min(ordIncome);
 var amountOverThreshold3 = /* @__PURE__ */ amountOverThreshold(hasAmountOverThresholdInc);
 var append4 = /* @__PURE__ */ append(semigroupIncome);
 var makeFromInt1 = /* @__PURE__ */ makeFromInt(hasMakeFromIntIncomeThres);
-var fromEnum4 = /* @__PURE__ */ fromEnum(boundedEnumYear);
+var fromEnum5 = /* @__PURE__ */ fromEnum(boundedEnumYear);
 var amountTaxable = function(filingStatus) {
   return function(ssBenefits) {
     return function(relevantIncome) {
@@ -3571,14 +4009,14 @@ var amountTaxable = function(filingStatus) {
           }
           ;
           if (isBelow(combinedIncome2)(v.value1)) {
-            var maxSocSecTaxable = mul3(ssBenefits)(0.5);
-            return min3(mul3(amountOverThreshold3(combinedIncome2)(v.value0))(0.5))(maxSocSecTaxable);
+            var maxSocSecTaxable = mul4(ssBenefits)(0.5);
+            return min3(mul4(amountOverThreshold3(combinedIncome2)(v.value0))(0.5))(maxSocSecTaxable);
           }
           ;
           if (true) {
             var halfMiddleBracketWidth = divInt(thresholdDifference(v.value1)(v.value0))(2);
-            var maxSocSecTaxable = mul3(ssBenefits)(0.85);
-            return min3(append4(taxableAsIncome(halfMiddleBracketWidth))(mul3(amountOverThreshold3(combinedIncome2)(v.value1))(0.85)))(maxSocSecTaxable);
+            var maxSocSecTaxable = mul4(ssBenefits)(0.85);
+            return min3(append4(taxableAsIncome(halfMiddleBracketWidth))(mul4(amountOverThreshold3(combinedIncome2)(v.value1))(0.85)))(maxSocSecTaxable);
           }
           ;
           throw new Error("Failed pattern match at Federal.TaxableSocialSecurity (line 49, column 3 - line 49, column 73): " + [combinedIncome2.constructor.name, v.constructor.name]);
@@ -3614,7 +4052,7 @@ var amountTaxable = function(filingStatus) {
         ;
         throw new Error("Failed pattern match at Federal.TaxableSocialSecurity (line 38, column 9 - line 41, column 26): " + [filingStatus.constructor.name]);
       }());
-      var combinedIncome = append4(relevantIncome)(mul3(ssBenefits)(0.5));
+      var combinedIncome = append4(relevantIncome)(mul4(ssBenefits)(0.5));
       return f(combinedIncome)(new Tuple(lowThreshold, highThreshold));
     };
   };
@@ -3624,9 +4062,9 @@ var amountTaxableInflationAdjusted = function(year) {
     return function(ssBenefits) {
       return function(relevantIncome) {
         var unadjusted = amountTaxable(filingStatus)(ssBenefits)(relevantIncome);
-        var adjustmentFactor = 1 + 0.03 * toNumber(fromEnum4(year) - 2021 | 0);
-        var adjusted = mul3(unadjusted)(adjustmentFactor);
-        return min3(adjusted)(mul3(ssBenefits)(0.85));
+        var adjustmentFactor = 1 + 0.03 * toNumber(fromEnum5(year) - 2021 | 0);
+        var adjusted = mul4(unadjusted)(adjustmentFactor);
+        return min3(adjusted)(mul4(ssBenefits)(0.85));
       };
     };
   };
@@ -3661,6 +4099,47 @@ var makeCalculator = function(br) {
     };
   };
 };
+var taxResultsForFutureYear = function(reg) {
+  return function(estimate) {
+    return function(birthDate) {
+      return function(filingStatus) {
+        return function(personalExemptions) {
+          return function(socSec) {
+            return function(ordinaryIncome) {
+              return function(qualifiedIncome) {
+                return function(itemized) {
+                  var boundRegime = boundRegimeForFutureYear(reg)(estimate)(birthDate)(filingStatus)(personalExemptions);
+                  var calculator = makeCalculator(boundRegime);
+                  return calculator(socSec)(ordinaryIncome)(qualifiedIncome)(itemized);
+                };
+              };
+            };
+          };
+        };
+      };
+    };
+  };
+};
+var taxDueForFutureYear = function(regime) {
+  return function(inflationEstimate) {
+    return function(birthDate) {
+      return function(filingStatus) {
+        return function(personalExemptions) {
+          return function(socSec) {
+            return function(ordinaryIncome) {
+              return function(qualifiedIncome) {
+                return function(itemized) {
+                  var v = taxResultsForFutureYear(regime)(inflationEstimate)(birthDate)(filingStatus)(personalExemptions)(socSec)(ordinaryIncome)(qualifiedIncome)(itemized);
+                  return append1(v.taxOnOrdinaryIncome)(v.taxOnQualifiedIncome);
+                };
+              };
+            };
+          };
+        };
+      };
+    };
+  };
+};
 var taxResultsForKnownYear = function(year) {
   return function(birthDate) {
     return function(filingStatus) {
@@ -3681,8 +4160,8 @@ var taxResultsForKnownYear = function(year) {
   };
 };
 var taxDueForKnownYear = function(year) {
-  return function(filingStatus) {
-    return function(birthDate) {
+  return function(birthDate) {
+    return function(filingStatus) {
       return function(personalExemptions) {
         return function(socSec) {
           return function(ordinaryIncome) {
@@ -3750,7 +4229,7 @@ var taxRateStateMATaxRate = {
 };
 
 // output/StateMA.Calculator/index.js
-var fromEnum5 = /* @__PURE__ */ fromEnum(boundedEnumYear);
+var fromEnum6 = /* @__PURE__ */ fromEnum(boundedEnumYear);
 var makeFromInt11 = /* @__PURE__ */ makeFromInt(hasMakeFromIntDeduction);
 var fold4 = /* @__PURE__ */ fold2(monoidDeduction);
 var taxRate = function(year) {
@@ -3777,7 +4256,7 @@ var taxRate = function(year) {
     ;
     throw new Error("Failed pattern match at StateMA.Calculator (line 19, column 3 - line 24, column 23): " + [i4.constructor.name]);
   };
-  return mkStateMATaxRate(selectRate(fromEnum5(year)));
+  return mkStateMATaxRate(selectRate(fromEnum6(year)));
 };
 var taxFunction = /* @__PURE__ */ function() {
   var $14 = flatTaxFunction(taxRateStateMATaxRate);
