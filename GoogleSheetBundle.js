@@ -3613,20 +3613,20 @@ var values5 = /* @__PURE__ */ function() {
     regime: Trump.value,
     year: unsafeMakeYear(2019),
     perPersonExemption: makeFromInt6(0),
-    unadjustedStandardDeduction: function(v) {
-      if (v instanceof Married) {
+    unadjustedStandardDeduction: function(fs) {
+      if (fs instanceof Married) {
         return makeFromInt6(24400);
       }
       ;
-      if (v instanceof HeadOfHousehold) {
+      if (fs instanceof HeadOfHousehold) {
         return makeFromInt6(18350);
       }
       ;
-      if (v instanceof Single) {
+      if (fs instanceof Single) {
         return makeFromInt6(12200);
       }
       ;
-      throw new Error("Failed pattern match at Federal.Yearly.Year2019 (line 20, column 7 - line 23, column 36): " + [v.constructor.name]);
+      throw new Error("Failed pattern match at Federal.Yearly.Year2019 (line 22, column 9 - line 25, column 38): " + [fs.constructor.name]);
     },
     adjustmentWhenOver65: makeFromInt6(1300),
     adjustmentWhenOver65AndSingle: makeFromInt6(350),
@@ -3643,7 +3643,7 @@ var values5 = /* @__PURE__ */ function() {
         return fromRPairs2([new Tuple(0, 10), new Tuple(9700, 12), new Tuple(39475, 22), new Tuple(84200, 24), new Tuple(160725, 32), new Tuple(204100, 35), new Tuple(510300, 37)]);
       }
       ;
-      throw new Error("Failed pattern match at Federal.Yearly.Year2019 (line 27, column 7 - line 57, column 14): " + [v.constructor.name]);
+      throw new Error("Failed pattern match at Federal.Yearly.Year2019 (line 29, column 7 - line 59, column 14): " + [v.constructor.name]);
     },
     qualifiedBrackets: function(v) {
       if (v instanceof Married) {
@@ -3658,7 +3658,7 @@ var values5 = /* @__PURE__ */ function() {
         return fromRPairs3([new Tuple(0, 0), new Tuple(39375, 15), new Tuple(434550, 20)]);
       }
       ;
-      throw new Error("Failed pattern match at Federal.Yearly.Year2019 (line 59, column 7 - line 77, column 14): " + [v.constructor.name]);
+      throw new Error("Failed pattern match at Federal.Yearly.Year2019 (line 61, column 7 - line 79, column 14): " + [v.constructor.name]);
     }
   };
 }();

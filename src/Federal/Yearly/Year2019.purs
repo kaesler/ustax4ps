@@ -17,10 +17,12 @@ values =
   , year: unsafeMakeYear 2019
   , perPersonExemption: makeFromInt 0
   , unadjustedStandardDeduction:
-      case _ of
-        Married -> makeFromInt 24400
-        HeadOfHousehold -> makeFromInt 18350
-        Single -> makeFromInt 12200
+      -- TODO:
+      \fs ->
+        case fs of
+          Married -> makeFromInt 24400
+          HeadOfHousehold -> makeFromInt 18350
+          Single -> makeFromInt 12200
   , adjustmentWhenOver65: makeFromInt 1300
   , adjustmentWhenOver65AndSingle: makeFromInt 350
   , ordinaryBrackets:
