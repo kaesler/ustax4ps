@@ -47,8 +47,8 @@ function FEDERAL_TAX_DUE(yearAsNumber, filingStatusName, socSec, ordinaryIncomeN
  
   return taxDueForKnownYear(
     use2022after2022(yearAsNumber))(
-    filingStatus)(
     TheBirthDate)(
+    filingStatus)(
     ThePersonalExemptions)(
     socSec)(
     ordinaryIncomeNonSS)(
