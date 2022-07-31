@@ -8,7 +8,7 @@ import Prelude
 import TaxRate (class TaxRate )
 import Effect.Exception.Unsafe (unsafeThrow)
 import Data.Interpolate (i)
-import Math (abs)
+import Data.Number (abs)
 newtype FederalTaxRate = FederalTaxRate Number
 derive newtype instance Eq FederalTaxRate
 derive newtype instance Ord FederalTaxRate

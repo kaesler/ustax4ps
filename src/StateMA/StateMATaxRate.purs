@@ -6,7 +6,7 @@ module StateMA.StateMATaxRate(
 import TaxRate ( class TaxRate )
 import Effect.Exception.Unsafe (unsafeThrow)
 import Data.Interpolate (i)
-import Math (abs)
+import Data.Number (abs)
 import Prelude
 newtype StateMATaxRate = StateMATaxRate Number 
 derive newtype instance Eq StateMATaxRate

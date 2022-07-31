@@ -35,7 +35,7 @@ import Prelude (class Eq, class Monoid, class Ord, class Semigroup, class Show, 
 import Safe.Coerce (class Coercible, coerce)
 import TaxRate
 import Effect.Exception.Unsafe (unsafeThrow)
-import Math (abs)
+import Data.Number (abs)
 
 class Monoid m <= HasNoMoney m where
   noMoney :: m

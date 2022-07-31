@@ -18,7 +18,7 @@ import Data.Int (toNumber)
 import Data.Maybe (Maybe(..), fromJust)
 import Data.String.Read (class Read, read)
 import Effect.Exception.Unsafe (unsafeThrow)
-import Math (pow)
+import Data.Number (pow)
 import Partial.Unsafe (unsafePartial)
 
 type BirthDate = Date
