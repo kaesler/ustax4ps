@@ -2695,6 +2695,7 @@ var hasTimesDeduction = {
 var times = function(dict) {
   return dict.times;
 };
+var taxableAsIncome = coerce2;
 var noMoneyImpl = function(dictMonoid) {
   return mempty(dictMonoid);
 };
@@ -2733,7 +2734,7 @@ var mkMoney = function(d) {
     return coerce2(d);
   }
   ;
-  throw new Error("Failed pattern match at Moneys (line 77, column 1 - line 77, column 27): " + [d.constructor.name]);
+  throw new Error("Failed pattern match at Moneys (line 79, column 1 - line 79, column 27): " + [d.constructor.name]);
 };
 var monus = function(m1) {
   return function(m2) {
@@ -2745,7 +2746,7 @@ var monus = function(m1) {
       return mkMoney(0);
     }
     ;
-    throw new Error("Failed pattern match at Moneys (line 82, column 1 - line 82, column 33): " + [m1.constructor.name, m2.constructor.name]);
+    throw new Error("Failed pattern match at Moneys (line 84, column 1 - line 84, column 33): " + [m1.constructor.name, m2.constructor.name]);
   };
 };
 var reduceBy = function(x) {
@@ -2783,6 +2784,11 @@ var makeFromInt = function(dict) {
 var isBelow = function(i4) {
   return function(it) {
     return lessThan1(coerce2(i4))(coerce2(it));
+  };
+};
+var divInt = function(ti) {
+  return function(i4) {
+    return coerce2(coerce2(ti) / toNumber(i4));
   };
 };
 var diff = function(m1) {
@@ -3570,14 +3576,15 @@ var amountTaxable = function(filingStatus) {
           }
           ;
           if (true) {
+            var halfMiddleBracketWidth = divInt(thresholdDifference(v.value1)(v.value0))(2);
             var maxSocSecTaxable = mul3(ssBenefits)(0.85);
-            return min3(append4(makeFromInt10(4500))(mul3(amountOverThreshold3(combinedIncome2)(v.value1))(0.85)))(maxSocSecTaxable);
+            return min3(append4(taxableAsIncome(halfMiddleBracketWidth))(mul3(amountOverThreshold3(combinedIncome2)(v.value1))(0.85)))(maxSocSecTaxable);
           }
           ;
           throw new Error("Failed pattern match at Federal.TaxableSocialSecurity (line 49, column 3 - line 49, column 73): " + [combinedIncome2.constructor.name, v.constructor.name]);
         };
       };
-      var lowBase = makeFromInt1(function() {
+      var lowThreshold = makeFromInt1(function() {
         if (filingStatus instanceof Married) {
           return 32e3;
         }
@@ -3592,7 +3599,7 @@ var amountTaxable = function(filingStatus) {
         ;
         throw new Error("Failed pattern match at Federal.TaxableSocialSecurity (line 30, column 9 - line 33, column 26): " + [filingStatus.constructor.name]);
       }());
-      var highBase = makeFromInt1(function() {
+      var highThreshold = makeFromInt1(function() {
         if (filingStatus instanceof Married) {
           return 44e3;
         }
@@ -3608,7 +3615,7 @@ var amountTaxable = function(filingStatus) {
         throw new Error("Failed pattern match at Federal.TaxableSocialSecurity (line 38, column 9 - line 41, column 26): " + [filingStatus.constructor.name]);
       }());
       var combinedIncome = append4(relevantIncome)(mul3(ssBenefits)(0.5));
-      return f(combinedIncome)(new Tuple(lowBase, highBase));
+      return f(combinedIncome)(new Tuple(lowThreshold, highThreshold));
     };
   };
 };

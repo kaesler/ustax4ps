@@ -17,6 +17,7 @@ module Moneys
   , class HasTimes
   , closeEnoughTo
   , closeEnoughToImpl
+  , divInt
   , inflateThreshold
   , isBelow
   , makeFromInt
@@ -24,18 +25,19 @@ module Moneys
   , noMoney
   , reduceBy
   , roundTaxPayable
+  , taxableAsIncome
   , thresholdAsTaxableIncome
   , thresholdDifference
   , times
   ) where
   
+import TaxRate
 import Data.Int (round, toNumber)
 import Data.Monoid.Additive (Additive(..))
-import Prelude (class Eq, class Monoid, class Ord, class Semigroup, class Show, mempty, otherwise, ($), (*), (-), (<), (<=), (>), (<<<))
-import Safe.Coerce (class Coercible, coerce)
-import TaxRate
 import Effect.Exception.Unsafe (unsafeThrow)
 import Data.Number (abs)
+import Prelude (class Eq, class Monoid, class Ord, class Semigroup, class Show, mempty, otherwise, ($), (/), (*), (-), (<), (<=), (>), (<<<))
+import Safe.Coerce (class Coercible, coerce)
 
 class Monoid m <= HasNoMoney m where
   noMoney :: m
@@ -151,6 +153,12 @@ instance HasNoMoney TaxableIncome where
   noMoney = noMoneyImpl
 instance HasAmountOverThreshold TaxableIncome where
   amountOverThreshold = amountOverThresholdImpl
+
+divInt :: TaxableIncome -> Int -> TaxableIncome
+divInt ti i = coerce $ (coerce ti :: Number) / (toNumber i)
+
+taxableAsIncome :: TaxableIncome -> Income
+taxableAsIncome = coerce
 
 applyDeductions :: Income -> Deduction -> TaxableIncome
 applyDeductions income deductions = coerce $ coerce income `monus` coerce deductions
