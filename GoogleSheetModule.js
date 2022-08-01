@@ -3830,3 +3830,29 @@ var taxDue = function(year) {
 // output/GoogleSheetModule/index.js
 var maStateTaxRate = taxRate;
 var maStateTaxDue = taxDue;
+export {
+  BoundRegime,
+  HeadOfHousehold,
+  Married,
+  PreTrump,
+  Single,
+  Trump,
+  amountTaxable,
+  amountTaxableInflationAdjusted,
+  boundRegimeForKnownYear,
+  maStateTaxDue,
+  maStateTaxRate,
+  netDeduction,
+  ordinaryIncomeBracketWidth,
+  personalExemptionDeduction,
+  standardDeduction,
+  startOfNonZeroQualifiedRateBracket,
+  taxDueForKnownYear,
+  unsafeMakeDate,
+  unsafeMakeDay,
+  unsafeMakeMonth,
+  unsafeMakeYear,
+  unsafeReadFilingStatus,
+  unsafeReadRegime,
+  unsafeRmdFractionForAge
+};
