@@ -31,8 +31,8 @@ personalExemptionFor _ Married = makeFromInt 8800
 personalExemptionFor _ HeadOfHousehold = makeFromInt 6800
 personalExemptionFor _ Single = makeFromInt 4400
 
-taxDue :: Year -> BirthDate -> Int -> FilingStatus -> Income -> TaxPayable
-taxDue year bd dependents filingStatus maGrossIncome =
+taxDue :: Year -> FilingStatus -> BirthDate -> Int -> Income -> TaxPayable
+taxDue year filingStatus bd dependents maGrossIncome =
   let
     personalExemption = personalExemptionFor year filingStatus
 

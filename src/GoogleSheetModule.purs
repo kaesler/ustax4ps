@@ -29,7 +29,7 @@ import StateMA.StateMATaxRate (StateMATaxRate)
 import StateMA.Types (MassachusettsGrossIncome)
 import UnsafeDates (unsafeDateFromGoogleSheetRep, unsafeMakeDate, unsafeMakeDay, unsafeMakeMonth, unsafeMakeYear)
 
-maStateTaxDue :: Year -> BirthDate -> Int -> FilingStatus -> MassachusettsGrossIncome -> TaxPayable
+maStateTaxDue :: Year -> FilingStatus -> BirthDate -> Int -> MassachusettsGrossIncome -> TaxPayable
 maStateTaxDue = StateCalc.taxDue
 
 maStateTaxRate :: Year -> StateMATaxRate

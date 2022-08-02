@@ -71,7 +71,7 @@ testsAgainstScalaForFutureYears =
       let
         dependents = if tc.personalExemptions <= 0 then 0 else tc.personalExemptions - 1
 
-        calculated = MA.taxDue tc.year tc.birthDate dependents tc.filingStatus (tc.ordinaryIncomeNonSS <> tc.qualifiedIncome)
+        calculated = MA.taxDue tc.year tc.filingStatus tc.birthDate dependents (tc.ordinaryIncomeNonSS <> tc.qualifiedIncome)
       in
         do
           calculated `shouldSatisfy` closeEnoughTo tc.stateTaxDue
