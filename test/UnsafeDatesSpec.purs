@@ -10,7 +10,7 @@ import Test.Spec (Spec, it, describe)
 import Test.Spec.Assertions (shouldEqual)
 import Test.Spec.Reporter (consoleReporter)
 import Test.Spec.Runner (defaultConfig, runSpec')
-import UnsafeDates (makeDateFromGoogleSheetRep, unsafeMakeDate)
+import UnsafeDates (unsafeDateFromGoogleSheetRep, unsafeMakeDate)
 
 runAllTests :: Effect Unit
 runAllTests = do
@@ -26,6 +26,6 @@ unsafeDatesSpec :: Spec Unit
 unsafeDatesSpec =
   describe "UnsafeDates.makeDateFromGoogleSheetRep" do
     it "works as expected" do
-      makeDateFromGoogleSheetRep 0.0 `shouldEqual` (Just $ unsafeMakeDate 1899 12 30)
-      makeDateFromGoogleSheetRep 20364.0 `shouldEqual` (Just $ unsafeMakeDate 1955 10 2)
+      unsafeDateFromGoogleSheetRep 0.0 `shouldEqual` (unsafeMakeDate 1899 12 30)
+      unsafeDateFromGoogleSheetRep 20364.0 `shouldEqual` (unsafeMakeDate 1955 10 2)
 
