@@ -1,6 +1,5 @@
 module UnsafeDates
-  ( unsafeDateFromGoogleSheetRep
-  , unsafeMakeDate
+  ( unsafeMakeDate
   , unsafeMakeDay
   , unsafeMakeMonth
   , unsafeMakeYear
@@ -26,16 +25,3 @@ unsafeMakeDay i = unsafePartial $ fromJust $ toEnum i
 
 unsafeMakeDate :: Int -> Int -> Int -> Date
 unsafeMakeDate y m d = canonicalDate (unsafeMakeYear y) (unsafeMakeMonth m) (unsafeMakeDay d)
-
--- TODO: make a test
--- See https://www.ablebits.com/office-addins-blog/google-sheets-change-date-format/
-dateFromGoogleSheetRep :: Number -> Maybe Date
-dateFromGoogleSheetRep daysOffSet = 
-  do baseYear <- toEnum 1899
-     baseMonth <- toEnum 12
-     baseDayOfMonth <- toEnum 30
-     googleBaseDate <- pure $ canonicalDate baseYear baseMonth baseDayOfMonth
-     adjust (Days daysOffSet) googleBaseDate
-
-unsafeDateFromGoogleSheetRep :: Number -> Date
-unsafeDateFromGoogleSheetRep n = unsafePartial $ fromJust $ dateFromGoogleSheetRep n

@@ -5,7 +5,7 @@ module Federal.OrdinaryBracketSpec
 import CommonTypes (FilingStatus(..))
 import Data.Array as Array
 import Data.Array.NonEmpty.Internal (NonEmptyArray(..))
-import Data.Date (Date, Year)
+import Data.Date (Year)
 import Data.Traversable (sequence)
 import Data.Tuple (Tuple(..), curry)
 import Effect (Effect)
@@ -23,7 +23,7 @@ import Test.Spec (Spec, it, describe)
 import Test.Spec.Assertions (shouldEqual)
 import Test.Spec.Reporter.Console (consoleReporter)
 import Test.Spec.Runner (defaultConfig, runSpec')
-import UnsafeDates (unsafeMakeDate, unsafeMakeYear)
+import UnsafeDates (unsafeMakeYear)
 
 runAllTests :: Effect Unit
 runAllTests = do

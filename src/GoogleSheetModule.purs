@@ -27,7 +27,7 @@ import Moneys (TaxPayable)
 import StateMA.Calculator as StateCalc
 import StateMA.StateMATaxRate (StateMATaxRate)
 import StateMA.Types (MassachusettsGrossIncome)
-import UnsafeDates (unsafeDateFromGoogleSheetRep, unsafeMakeDate, unsafeMakeDay, unsafeMakeMonth, unsafeMakeYear)
+import UnsafeDates (unsafeMakeDate, unsafeMakeDay, unsafeMakeMonth, unsafeMakeYear)
 
 maStateTaxDue :: Year -> FilingStatus -> BirthDate -> Int -> MassachusettsGrossIncome -> TaxPayable
 maStateTaxDue = StateCalc.taxDue

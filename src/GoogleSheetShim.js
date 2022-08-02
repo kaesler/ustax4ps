@@ -1,7 +1,5 @@
-// Note: This file must be loaded AFTER the PS bundle.
+// Note: This file must be loaded AFTER the code compiled from Purescript.
 
-// TODO: Abstract these. Will need a date parser.
-const TheBirthDate = unsafeMakeDate(1955)(10)(2);
 const ThePersonalExemptions = 1;
 const TheItemizedDeductions = 0;
 
@@ -16,12 +14,19 @@ function use2022after2022(yearAsNumber) {
 
 function bindRegime(yearAsNumber, filingStatusName) {
   const filingStatus = unsafeReadFilingStatus(filingStatusName);
-  return boundRegimeForKnownYear(
-    use2022after2022(yearAsNumber))(
-    TheBirthDate)(
-    filingStatus)(
-    ThePersonalExemptions
-  );
+
+  return boundRegimeForKnownYear(use2022after2022(yearAsNumber))(filingStatus);
+}
+
+function toPurescriptDate(dateObject) {
+  if (typeof(dateObject) != "object")
+    throw "Date object required";
+  if (! dateObject instanceof Date)
+    throw "Date object required";
+  const year = 1900 + dateObject.getYear();
+  const month = 1 + dateObject.getMonth();
+  const dayOfMonth = dateObject.getDate();
+  return unsafeMakeDate(year)(month)(dayOfMonth);
 }
 
 /**
@@ -30,12 +35,15 @@ function bindRegime(yearAsNumber, filingStatusName) {
  *
  * @param {number} yearAsNumber 
  * @param {string} filingStatusName 
+ * @param {number} birthDateAsObject
  * @returns The standard deduction
  * @customfunction
  */
-function STD_DEDUCTION(yearAsNumber, filingStatusName) {
+function STD_DEDUCTION(yearAsNumber, filingStatusName, birthDateAsObject) {
   const br = bindRegime(yearAsNumber, filingStatusName); 
-  return standardDeduction(br);
+  const birthDate = toPurescriptDate(birthDateAsObject);
+
+  return standardDeduction(br)(birthDate);
 }
 
 /**
@@ -87,19 +95,21 @@ function RMD_FRACTION_FOR_AGE(age) {
  * 
  * @param {number} yearAsNumber 
  * @param {string} filingStatusName 
+ * @param {number} birthDateAsObject
  * @param {number} socSec 
  * @param {number} ordinaryIncomeNonSS 
  * @param {number} qualifiedIncome 
  * @returns the Federal tax due
  * @customfunction
  */
-function FEDERAL_TAX_DUE(yearAsNumber, filingStatusName, socSec, ordinaryIncomeNonSS, qualifiedIncome) {
+function FEDERAL_TAX_DUE(yearAsNumber, filingStatusName, birthDateAsObject, socSec, ordinaryIncomeNonSS, qualifiedIncome) {
   const filingStatus = unsafeReadFilingStatus(filingStatusName);
- 
+  const birthDate = toPurescriptDate(birthDateAsObject);
+
   return taxDueForKnownYear(
     use2022after2022(yearAsNumber))(
-    TheBirthDate)(
     filingStatus)(
+    birthDate)(
     ThePersonalExemptions)(
     socSec)(
     ordinaryIncomeNonSS)(
@@ -112,41 +122,52 @@ function FEDERAL_TAX_DUE(yearAsNumber, filingStatusName, socSec, ordinaryIncomeN
  * Example: MA_STATE_TAX_DUE(2022, 1, 'Married', 130000)
  * 
  * @param {number} yearAsNumber 
- * @param {number} dependents 
  * @param {string} filingStatusName 
+ * @param {number} birthDateAsObject
+ * @param {number} dependents 
  * @param {number} massachusettsGrossIncome 
  * @returns the MA state income tax due.
  * @customfunction
  */
-function MA_STATE_TAX_DUE(yearAsNumber, dependents, filingStatusName, massachusettsGrossIncome) {
+function MA_STATE_TAX_DUE(
+  yearAsNumber, 
+  filingStatusName, 
+  birthDateAsObject, 
+  dependents, 
+  massachusettsGrossIncome
+  ) {
   const filingStatus = unsafeReadFilingStatus(filingStatusName);
- 
+  const birthDate = toPurescriptDate(birthDateAsObject);
+
   return maStateTaxDue(
     use2022after2022(yearAsNumber))(
-    TheBirthDate)(
-    dependents)(
     filingStatus)(
+    birthDate)(
+    dependents)(
     massachusettsGrossIncome);
 }
 
+// TODO: eliminate?
 /**
  * The marginal tax rate.
  * Example: TAX_SLOPE(2022, 'Single', 10000, 40000, 5000)
  * 
  * @param {number} yearAsNumber 
  * @param {string} filingStatusName 
+ * @param {number} birthDateAsObject
  * @param {number} socSec 
  * @param {number} ordinaryIncomeNonSS 
  * @param {number} qualifiedIncome 
  * @returns the marginal tax rate.
  * @customfunction
  */
-function TAX_SLOPE(yearAsNumber, filingStatusName, socSec, ordinaryIncomeNonSS, qualifiedIncome) {
+function TAX_SLOPE(yearAsNumber, filingStatusName, birthDateAsObject, socSec, ordinaryIncomeNonSS, qualifiedIncome) {
     const deltaX = 1000.0
 
   const federalTaxAtStart = FEDERAL_TAX_DUE(
     yearAsNumber, 
     filingStatusName, 
+    birthDateAsObject,
     socSec, 
     ordinaryIncomeNonSS, 
     qualifiedIncome
@@ -154,6 +175,7 @@ function TAX_SLOPE(yearAsNumber, filingStatusName, socSec, ordinaryIncomeNonSS, 
   const federalTaxAtEnd = FEDERAL_TAX_DUE(
     yearAsNumber, 
     filingStatusName, 
+    birthDateAsObject,
     socSec, 
     ordinaryIncomeNonSS + deltaX, 
     qualifiedIncome
@@ -164,6 +186,7 @@ function TAX_SLOPE(yearAsNumber, filingStatusName, socSec, ordinaryIncomeNonSS, 
   return deltaY/deltaX;
 }
 
+// TODO: rename TAXABLE_SOCIAL_SECURITY
 /**
  * The amount of Social Security income that is taxable.
  * Example: TAXABLE_SS('HeadOfHousehold', 20000, 52000)
@@ -180,6 +203,7 @@ function TAXABLE_SS(filingStatusName, ssRelevantOtherIncome, socSec) {
   return amountTaxable(filingStatus)(socSec)(ssRelevantOtherIncome);
 }
 
+// TODO: eliminate
 /**
  * The amount of Social Security income that is taxable, adjusted for inflation.
  * Example: TAXABLE_SS_ADJUSTED(2030, 'HeadOfHousehold', 20000, 52000)

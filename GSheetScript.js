@@ -82,16 +82,6 @@ var semigroupFn = function(dictSemigroup) {
   };
 };
 
-// output/Control.Apply/index.js
-var apply = function(dict) {
-  return dict.apply;
-};
-
-// output/Control.Applicative/index.js
-var pure = function(dict) {
-  return dict.pure;
-};
-
 // output/Data.Bounded/foreign.js
 var topChar = String.fromCharCode(65535);
 var bottomChar = String.fromCharCode(0);
@@ -156,24 +146,7 @@ var EQ = /* @__PURE__ */ function() {
   return EQ2;
 }();
 
-// output/Data.Ring/foreign.js
-var intSub = function(x) {
-  return function(y) {
-    return x - y | 0;
-  };
-};
-
 // output/Data.Semiring/foreign.js
-var intAdd = function(x) {
-  return function(y) {
-    return x + y | 0;
-  };
-};
-var intMul = function(x) {
-  return function(y) {
-    return x * y | 0;
-  };
-};
 var numAdd = function(n1) {
   return function(n2) {
     return n1 + n2;
@@ -195,22 +168,8 @@ var semiringNumber = {
   mul: numMul,
   one: 1
 };
-var semiringInt = {
-  add: intAdd,
-  zero: 0,
-  mul: intMul,
-  one: 1
-};
 var add = function(dict) {
   return dict.add;
-};
-
-// output/Data.Ring/index.js
-var ringInt = {
-  sub: intSub,
-  Semiring0: function() {
-    return semiringInt;
-  }
 };
 
 // output/Data.Ord/index.js
@@ -335,7 +294,6 @@ var show = function(dict) {
 };
 
 // output/Data.Maybe/index.js
-var identity2 = /* @__PURE__ */ identity(categoryFn);
 var Nothing = /* @__PURE__ */ function() {
   function Nothing2() {
   }
@@ -353,22 +311,6 @@ var Just = /* @__PURE__ */ function() {
   };
   return Just2;
 }();
-var maybe = function(v) {
-  return function(v1) {
-    return function(v2) {
-      if (v2 instanceof Nothing) {
-        return v;
-      }
-      ;
-      if (v2 instanceof Just) {
-        return v1(v2.value0);
-      }
-      ;
-      throw new Error("Failed pattern match at Data.Maybe (line 237, column 1 - line 237, column 51): " + [v.constructor.name, v1.constructor.name, v2.constructor.name]);
-    };
-  };
-};
-var isNothing = /* @__PURE__ */ maybe(true)(/* @__PURE__ */ $$const(false));
 var functorMaybe = {
   map: function(v) {
     return function(v1) {
@@ -381,9 +323,6 @@ var functorMaybe = {
   }
 };
 var map2 = /* @__PURE__ */ map(functorMaybe);
-var fromMaybe = function(a) {
-  return maybe(a)(identity2);
-};
 var fromJust = function() {
   return function(v) {
     if (v instanceof Just) {
@@ -391,54 +330,6 @@ var fromJust = function() {
     }
     ;
     throw new Error("Failed pattern match at Data.Maybe (line 288, column 1 - line 288, column 46): " + [v.constructor.name]);
-  };
-};
-var eqMaybe = function(dictEq) {
-  var eq5 = eq(dictEq);
-  return {
-    eq: function(x) {
-      return function(y) {
-        if (x instanceof Nothing && y instanceof Nothing) {
-          return true;
-        }
-        ;
-        if (x instanceof Just && y instanceof Just) {
-          return eq5(x.value0)(y.value0);
-        }
-        ;
-        return false;
-      };
-    }
-  };
-};
-var ordMaybe = function(dictOrd) {
-  var compare5 = compare(dictOrd);
-  var eqMaybe1 = eqMaybe(dictOrd.Eq0());
-  return {
-    compare: function(x) {
-      return function(y) {
-        if (x instanceof Nothing && y instanceof Nothing) {
-          return EQ.value;
-        }
-        ;
-        if (x instanceof Nothing) {
-          return LT.value;
-        }
-        ;
-        if (y instanceof Nothing) {
-          return GT.value;
-        }
-        ;
-        if (x instanceof Just && y instanceof Just) {
-          return compare5(x.value0)(y.value0);
-        }
-        ;
-        throw new Error("Failed pattern match at Data.Maybe (line 0, column 0 - line 0, column 0): " + [x.constructor.name, y.constructor.name]);
-      };
-    },
-    Eq0: function() {
-      return eqMaybe1;
-    }
   };
 };
 var applyMaybe = {
@@ -477,14 +368,6 @@ var bindMaybe = {
     return applyMaybe;
   }
 };
-var applicativeMaybe = /* @__PURE__ */ function() {
-  return {
-    pure: Just.create,
-    Apply0: function() {
-      return applyMaybe;
-    }
-  };
-}();
 
 // output/Data.String.Read/index.js
 var read = function(dict) {
@@ -582,49 +465,6 @@ function canonicalDateImpl(ctor, y, m, d) {
 var bind = function(dict) {
   return dict.bind;
 };
-var bindFlipped = function(dictBind) {
-  return flip(bind(dictBind));
-};
-
-// output/Data.EuclideanRing/foreign.js
-var intDegree = function(x) {
-  return Math.min(Math.abs(x), 2147483647);
-};
-var intDiv = function(x) {
-  return function(y) {
-    if (y === 0)
-      return 0;
-    return y > 0 ? Math.floor(x / y) : -Math.floor(x / -y);
-  };
-};
-var intMod = function(x) {
-  return function(y) {
-    if (y === 0)
-      return 0;
-    var yy = Math.abs(y);
-    return (x % yy + yy) % yy;
-  };
-};
-
-// output/Data.CommutativeRing/index.js
-var commutativeRingInt = {
-  Ring0: function() {
-    return ringInt;
-  }
-};
-
-// output/Data.EuclideanRing/index.js
-var mod = function(dict) {
-  return dict.mod;
-};
-var euclideanRingInt = {
-  degree: intDegree,
-  div: intDiv,
-  mod: intMod,
-  CommutativeRing0: function() {
-    return commutativeRingInt;
-  }
-};
 
 // output/Data.Monoid/index.js
 var mempty = function(dict) {
@@ -691,24 +531,24 @@ var traverseArrayImpl = function() {
       return xs.concat(ys);
     };
   }
-  return function(apply3) {
-    return function(map6) {
-      return function(pure4) {
+  return function(apply2) {
+    return function(map5) {
+      return function(pure2) {
         return function(f) {
           return function(array) {
             function go(bot, top2) {
               switch (top2 - bot) {
                 case 0:
-                  return pure4([]);
+                  return pure2([]);
                 case 1:
-                  return map6(array1)(f(array[bot]));
+                  return map5(array1)(f(array[bot]));
                 case 2:
-                  return apply3(map6(array2)(f(array[bot])))(f(array[bot + 1]));
+                  return apply2(map5(array2)(f(array[bot])))(f(array[bot + 1]));
                 case 3:
-                  return apply3(apply3(map6(array3)(f(array[bot])))(f(array[bot + 1])))(f(array[bot + 2]));
+                  return apply2(apply2(map5(array3)(f(array[bot])))(f(array[bot + 1])))(f(array[bot + 2]));
                 default:
                   var pivot = bot + Math.floor((top2 - bot) / 4) * 2;
-                  return apply3(map6(concat2)(go(bot, pivot)))(go(pivot, top2));
+                  return apply2(map5(concat2)(go(bot, pivot)))(go(pivot, top2));
               }
             }
             return go(0, array.length);
@@ -756,7 +596,7 @@ var coerce = function() {
 };
 
 // output/Data.Foldable/index.js
-var identity3 = /* @__PURE__ */ identity(categoryFn);
+var identity2 = /* @__PURE__ */ identity(categoryFn);
 var foldr = function(dict) {
   return dict.foldr;
 };
@@ -790,7 +630,7 @@ var foldMap = function(dict) {
 var fold = function(dictFoldable) {
   var foldMap2 = foldMap(dictFoldable);
   return function(dictMonoid) {
-    return foldMap2(dictMonoid)(identity3);
+    return foldMap2(dictMonoid)(identity2);
   };
 };
 var find = function(dictFoldable) {
@@ -844,12 +684,6 @@ var unfoldr = function(dict) {
 // output/Data.Enum/index.js
 var toEnum = function(dict) {
   return dict.toEnum;
-};
-var succ = function(dict) {
-  return dict.succ;
-};
-var pred = function(dict) {
-  return dict.pred;
 };
 var fromEnum = function(dict) {
   return dict.fromEnum;
@@ -1225,7 +1059,6 @@ var $lazy_enumYear = /* @__PURE__ */ $runtime_lazy("enumYear", "Data.Date.Compon
     }
   };
 });
-var enumYear = /* @__PURE__ */ $lazy_enumYear(31);
 var boundedEnumMonth = {
   cardinality: 12,
   toEnum: function(v) {
@@ -1362,7 +1195,6 @@ var $lazy_enumMonth = /* @__PURE__ */ $runtime_lazy("enumMonth", "Data.Date.Comp
     }
   };
 });
-var enumMonth = /* @__PURE__ */ $lazy_enumMonth(67);
 var boundedDay = {
   bottom: 1,
   top: 31,
@@ -1418,16 +1250,8 @@ var $lazy_enumDay = /* @__PURE__ */ $runtime_lazy("enumDay", "Data.Date.Componen
     }
   };
 });
-var enumDay = /* @__PURE__ */ $lazy_enumDay(129);
 
 // output/Data.Int/foreign.js
-var fromNumberImpl = function(just) {
-  return function(nothing) {
-    return function(n) {
-      return (n | 0) === n ? just(n) : nothing;
-    };
-  };
-};
 var toNumber = function(n) {
   return n;
 };
@@ -1435,37 +1259,16 @@ var toNumber = function(n) {
 // output/Data.Number/foreign.js
 var abs = Math.abs;
 
-// output/Data.Int/index.js
-var fromNumber = /* @__PURE__ */ function() {
-  return fromNumberImpl(Just.create)(Nothing.value);
-}();
-
 // output/Data.Date/index.js
 var fromEnum2 = /* @__PURE__ */ fromEnum(boundedEnumMonth);
 var fromJust3 = /* @__PURE__ */ fromJust();
-var fromEnum1 = /* @__PURE__ */ fromEnum(boundedEnumYear);
-var mod2 = /* @__PURE__ */ mod(euclideanRingInt);
-var toEnum1 = /* @__PURE__ */ toEnum(boundedEnumDay);
 var eq12 = /* @__PURE__ */ eq(eqYear);
 var eq2 = /* @__PURE__ */ eq(eqMonth);
 var eq3 = /* @__PURE__ */ eq(eqDay);
 var compare3 = /* @__PURE__ */ compare(ordYear);
 var compare12 = /* @__PURE__ */ compare(ordMonth);
 var compare22 = /* @__PURE__ */ compare(ordDay);
-var succ2 = /* @__PURE__ */ succ(enumMonth);
-var succ1 = /* @__PURE__ */ succ(enumDay);
-var greaterThan2 = /* @__PURE__ */ greaterThan(/* @__PURE__ */ ordMaybe(ordDay));
-var succ22 = /* @__PURE__ */ succ(enumYear);
-var apply2 = /* @__PURE__ */ apply(applyMaybe);
-var map3 = /* @__PURE__ */ map(functorMaybe);
-var pure2 = /* @__PURE__ */ pure(applicativeMaybe);
-var pred2 = /* @__PURE__ */ pred(enumMonth);
-var pred1 = /* @__PURE__ */ pred(enumDay);
-var pred22 = /* @__PURE__ */ pred(enumYear);
 var toEnum2 = /* @__PURE__ */ toEnum(boundedEnumMonth);
-var fromEnum22 = /* @__PURE__ */ fromEnum(boundedEnumDay);
-var bindFlipped2 = /* @__PURE__ */ bindFlipped(bindMaybe);
-var bind2 = /* @__PURE__ */ bind(bindMaybe);
 var $$Date = /* @__PURE__ */ function() {
   function $$Date2(value0, value1, value2) {
     this.value0 = value0;
@@ -1482,73 +1285,6 @@ var $$Date = /* @__PURE__ */ function() {
   };
   return $$Date2;
 }();
-var isLeapYear = function(y) {
-  var y$prime = fromEnum1(y);
-  return mod2(y$prime)(4) === 0 && (mod2(y$prime)(400) === 0 || !(mod2(y$prime)(100) === 0));
-};
-var lastDayOfMonth = function(y) {
-  return function(m) {
-    var unsafeDay = function($154) {
-      return fromJust3(toEnum1($154));
-    };
-    if (m instanceof January) {
-      return unsafeDay(31);
-    }
-    ;
-    if (m instanceof February) {
-      if (isLeapYear(y)) {
-        return unsafeDay(29);
-      }
-      ;
-      if (otherwise) {
-        return unsafeDay(28);
-      }
-      ;
-    }
-    ;
-    if (m instanceof March) {
-      return unsafeDay(31);
-    }
-    ;
-    if (m instanceof April) {
-      return unsafeDay(30);
-    }
-    ;
-    if (m instanceof May) {
-      return unsafeDay(31);
-    }
-    ;
-    if (m instanceof June) {
-      return unsafeDay(30);
-    }
-    ;
-    if (m instanceof July) {
-      return unsafeDay(31);
-    }
-    ;
-    if (m instanceof August) {
-      return unsafeDay(31);
-    }
-    ;
-    if (m instanceof September) {
-      return unsafeDay(30);
-    }
-    ;
-    if (m instanceof October) {
-      return unsafeDay(31);
-    }
-    ;
-    if (m instanceof November) {
-      return unsafeDay(30);
-    }
-    ;
-    if (m instanceof December) {
-      return unsafeDay(31);
-    }
-    ;
-    throw new Error("Failed pattern match at Data.Date (line 127, column 22 - line 141, column 27): " + [m.constructor.name]);
-  };
-};
 var eqDate = {
   eq: function(x) {
     return function(y) {
@@ -1584,81 +1320,6 @@ var ordDate = {
     return eqDate;
   }
 };
-var enumDate = {
-  succ: function(v) {
-    var sm = succ2(v.value1);
-    var l = lastDayOfMonth(v.value0)(v.value1);
-    var sd = function() {
-      var v1 = succ1(v.value2);
-      var $118 = greaterThan2(v1)(new Just(l));
-      if ($118) {
-        return Nothing.value;
-      }
-      ;
-      return v1;
-    }();
-    var m$prime = function() {
-      var $119 = isNothing(sd);
-      if ($119) {
-        return fromMaybe(January.value)(sm);
-      }
-      ;
-      return v.value1;
-    }();
-    var y$prime = function() {
-      var $120 = isNothing(sd) && isNothing(sm);
-      if ($120) {
-        return succ22(v.value0);
-      }
-      ;
-      return new Just(v.value0);
-    }();
-    var d$prime = function() {
-      var $121 = isNothing(sd);
-      if ($121) {
-        return toEnum1(1);
-      }
-      ;
-      return sd;
-    }();
-    return apply2(apply2(map3($$Date.create)(y$prime))(pure2(m$prime)))(d$prime);
-  },
-  pred: function(v) {
-    var pm = pred2(v.value1);
-    var pd = pred1(v.value2);
-    var y$prime = function() {
-      var $126 = isNothing(pd) && isNothing(pm);
-      if ($126) {
-        return pred22(v.value0);
-      }
-      ;
-      return new Just(v.value0);
-    }();
-    var m$prime = function() {
-      var $127 = isNothing(pd);
-      if ($127) {
-        return fromMaybe(December.value)(pm);
-      }
-      ;
-      return v.value1;
-    }();
-    var l = lastDayOfMonth(v.value0)(m$prime);
-    var d$prime = function() {
-      var $128 = isNothing(pd);
-      if ($128) {
-        return new Just(l);
-      }
-      ;
-      return pd;
-    }();
-    return apply2(apply2(map3($$Date.create)(y$prime))(pure2(m$prime)))(d$prime);
-  },
-  Ord0: function() {
-    return ordDate;
-  }
-};
-var pred3 = /* @__PURE__ */ pred(enumDate);
-var succ3 = /* @__PURE__ */ succ(enumDate);
 var canonicalDate = function(y) {
   return function(m) {
     return function(d) {
@@ -1671,60 +1332,6 @@ var canonicalDate = function(y) {
       };
       return canonicalDateImpl(mkDate, y, fromEnum2(m), d);
     };
-  };
-};
-var adjust = function(v) {
-  return function(date) {
-    var adj = function(v1) {
-      return function(v2) {
-        if (v1 === 0) {
-          return new Just(v2);
-        }
-        ;
-        var j = v1 + fromEnum22(v2.value2) | 0;
-        var low = j < 1;
-        var l = lastDayOfMonth(v2.value0)(function() {
-          if (low) {
-            return fromMaybe(December.value)(pred2(v2.value1));
-          }
-          ;
-          return v2.value1;
-        }());
-        var hi = j > fromEnum22(l);
-        var i$prime = function() {
-          if (low) {
-            return j;
-          }
-          ;
-          if (hi) {
-            return (j - fromEnum22(l) | 0) - 1 | 0;
-          }
-          ;
-          if (otherwise) {
-            return 0;
-          }
-          ;
-          throw new Error("Failed pattern match at Data.Date (line 101, column 9 - line 103, column 28): " + []);
-        }();
-        var dt$prime = function() {
-          if (low) {
-            return bindFlipped2(pred3)(map3($$Date.create(v2.value0)(v2.value1))(toEnum1(1)));
-          }
-          ;
-          if (hi) {
-            return succ3(new $$Date(v2.value0, v2.value1, l));
-          }
-          ;
-          if (otherwise) {
-            return map3($$Date.create(v2.value0)(v2.value1))(toEnum1(j));
-          }
-          ;
-          throw new Error("Failed pattern match at Data.Date (line 104, column 9 - line 106, column 48): " + []);
-        }();
-        return bindFlipped2(adj(i$prime))(dt$prime);
-      };
-    };
-    return bind2(fromNumber(v))(flip(adj)(date));
   };
 };
 
@@ -1997,7 +1604,7 @@ var unfoldableList = {
 };
 
 // output/Data.List/index.js
-var map4 = /* @__PURE__ */ map(functorMaybe);
+var map3 = /* @__PURE__ */ map(functorMaybe);
 var uncons = function(v) {
   if (v instanceof Nil) {
     return Nothing.value;
@@ -2014,7 +1621,7 @@ var uncons = function(v) {
 };
 var toUnfoldable = function(dictUnfoldable) {
   return unfoldr(dictUnfoldable)(function(xs) {
-    return map4(function(rec) {
+    return map3(function(rec) {
       return new Tuple(rec.head, rec.tail);
     })(uncons(xs));
   });
@@ -3029,7 +2636,7 @@ var eq4 = /* @__PURE__ */ eq(/* @__PURE__ */ eqAdditive(eqNumber));
 var ordAdditive2 = /* @__PURE__ */ ordAdditive(ordNumber);
 var compare4 = /* @__PURE__ */ compare(ordAdditive2);
 var coerce2 = /* @__PURE__ */ coerce();
-var greaterThan3 = /* @__PURE__ */ greaterThan(ordAdditive2);
+var greaterThan2 = /* @__PURE__ */ greaterThan(ordAdditive2);
 var lessThan1 = /* @__PURE__ */ lessThan(ordAdditive2);
 var semigroupTaxableIncome = semigroupAdditive2;
 var semigroupTaxPayable = semigroupAdditive2;
@@ -3131,7 +2738,7 @@ var mkMoney = function(d) {
 };
 var monus = function(m1) {
   return function(m2) {
-    if (greaterThan3(m1)(m2)) {
+    if (greaterThan2(m1)(m2)) {
       return coerce2(coerce2(m1) - coerce2(m2));
     }
     ;
@@ -3234,7 +2841,7 @@ var amountOverThreshold = function(dict) {
 
 // output/Brackets/index.js
 var toUnfoldable1 = /* @__PURE__ */ toUnfoldable3(unfoldableList);
-var bind3 = /* @__PURE__ */ bind(bindMaybe);
+var bind2 = /* @__PURE__ */ bind(bindMaybe);
 var find3 = /* @__PURE__ */ find(foldableList);
 var fromJust5 = /* @__PURE__ */ fromJust();
 var makeFromInt2 = /* @__PURE__ */ makeFromInt(hasMakeFromIntIncomeThres);
@@ -3246,14 +2853,14 @@ var safeBracketWidth = function(dictTaxRate) {
   return function(brackets) {
     return function(rate) {
       var rates = toUnfoldable1(keys2(brackets));
-      return bind3(tail(rates))(function(ratesTail) {
+      return bind2(tail(rates))(function(ratesTail) {
         var pairs = zip(rates)(ratesTail);
-        return bind3(find3(function(p) {
+        return bind2(find3(function(p) {
           return eq5(fst(p))(rate);
         })(pairs))(function(pair) {
           var successor = snd(pair);
-          return bind3(lookup4(rate)(brackets))(function(rateStart) {
-            return bind3(lookup4(successor)(brackets))(function(successorStart) {
+          return bind2(lookup4(rate)(brackets))(function(rateStart) {
+            return bind2(lookup4(successor)(brackets))(function(successorStart) {
               return new Just(thresholdDifference(successorStart)(rateStart));
             });
           });
@@ -3342,7 +2949,7 @@ var taxRateFederalTaxRate = {
 // output/TaxFunction/index.js
 var amountOverThreshold2 = /* @__PURE__ */ amountOverThreshold(hasAmountOverThresholdTax);
 var toUnfoldable4 = /* @__PURE__ */ toUnfoldable2(unfoldableList);
-var map5 = /* @__PURE__ */ map(functorList);
+var map4 = /* @__PURE__ */ map(functorList);
 var mempty2 = /* @__PURE__ */ mempty(monoidIncomeThreshold);
 var fold3 = /* @__PURE__ */ fold(foldableList)(/* @__PURE__ */ monoidFn(monoidTaxPayable));
 var thresholdTaxFunction = function(dictTaxRate) {
@@ -3360,8 +2967,8 @@ var rateDeltasForBrackets = function(dictTaxRate) {
   var zeroRate2 = zeroRate(dictTaxRate);
   return function(brackets) {
     var pairs = toUnfoldable4(brackets);
-    var rates = map5(fst)(pairs);
-    var thresholds = map5(snd)(pairs);
+    var rates = map4(fst)(pairs);
+    var thresholds = map4(snd)(pairs);
     var deltas = zipWith(absoluteDifference2)(new Cons(zeroRate2, rates))(rates);
     return zip(thresholds)(deltas);
   };
@@ -3374,7 +2981,7 @@ var bracketsTaxFunction = function(dictTaxRate) {
   var thresholdTaxFunction1 = thresholdTaxFunction(dictTaxRate);
   return function(brackets) {
     var pairs = rateDeltasForBrackets1(brackets);
-    var taxFuncs = map5(uncurry(thresholdTaxFunction1))(pairs);
+    var taxFuncs = map4(uncurry(thresholdTaxFunction1))(pairs);
     return fold3(taxFuncs);
   };
 };
@@ -3446,15 +3053,13 @@ var unsafeReadRegime = function(s) {
 // output/UnsafeDates/index.js
 var fromJust8 = /* @__PURE__ */ fromJust();
 var toEnum4 = /* @__PURE__ */ toEnum(boundedEnumYear);
-var toEnum12 = /* @__PURE__ */ toEnum(boundedEnumMonth);
+var toEnum1 = /* @__PURE__ */ toEnum(boundedEnumMonth);
 var toEnum22 = /* @__PURE__ */ toEnum(boundedEnumDay);
-var bind4 = /* @__PURE__ */ bind(bindMaybe);
-var pure3 = /* @__PURE__ */ pure(applicativeMaybe);
 var unsafeMakeYear = function(i4) {
   return fromJust8(toEnum4(i4));
 };
 var unsafeMakeMonth = function(i4) {
-  return fromJust8(toEnum12(i4));
+  return fromJust8(toEnum1(i4));
 };
 var unsafeMakeDay = function(i4) {
   return fromJust8(toEnum22(i4));
@@ -3465,17 +3070,6 @@ var unsafeMakeDate = function(y) {
       return canonicalDate(unsafeMakeYear(y))(unsafeMakeMonth(m))(unsafeMakeDay(d));
     };
   };
-};
-var makeDateFromGoogleSheetRep = function(daysOffSet) {
-  return bind4(toEnum4(1899))(function(baseYear) {
-    return bind4(toEnum12(12))(function(baseMonth) {
-      return bind4(toEnum22(30))(function(baseDayOfMonth) {
-        return bind4(pure3(canonicalDate(baseYear)(baseMonth)(baseDayOfMonth)))(function(googleBaseDate) {
-          return adjust(daysOffSet)(googleBaseDate);
-        });
-      });
-    });
-  });
 };
 
 // output/Federal.Yearly.Year2016/index.js
@@ -3899,49 +3493,51 @@ var BoundRegime = function(x) {
   return x;
 };
 var standardDeduction = function(v) {
-  return append2(v.unadjustedStandardDeduction)(function() {
-    var $63 = isAge65OrOlder(v.birthDate)(v.year);
-    if ($63) {
-      return append2(v.adjustmentWhenOver65)(function() {
-        var $64 = isUnmarried(v.filingStatus);
-        if ($64) {
-          return v.adjustmentWhenOver65AndSingle;
-        }
-        ;
-        return noMoney2;
-      }());
-    }
-    ;
-    return noMoney2;
-  }());
+  return function(birthDate) {
+    return append2(v.unadjustedStandardDeduction)(function() {
+      var $56 = isAge65OrOlder(birthDate)(v.year);
+      if ($56) {
+        return append2(v.adjustmentWhenOver65)(function() {
+          var $57 = isUnmarried(v.filingStatus);
+          if ($57) {
+            return v.adjustmentWhenOver65AndSingle;
+          }
+          ;
+          return noMoney2;
+        }());
+      }
+      ;
+      return noMoney2;
+    }());
+  };
 };
 var personalExemptionDeduction = function(v) {
-  return times2(v.personalExemptions)(v.perPersonExemption);
+  return function(personalExemptions) {
+    return times2(personalExemptions)(v.perPersonExemption);
+  };
 };
 var netDeduction = function(br) {
-  return function(itemized) {
-    return append2(personalExemptionDeduction(br))(max3(itemized)(standardDeduction(br)));
+  return function(birthDate) {
+    return function(personalExemptions) {
+      return function(itemized) {
+        return append2(personalExemptionDeduction(br)(personalExemptions))(max3(itemized)(standardDeduction(br)(birthDate)));
+      };
+    };
   };
 };
 var boundRegimeForKnownYear = function(y) {
-  return function(bd) {
-    return function(fs) {
-      return function(pe) {
-        var yvs = unsafeValuesForYear(y);
-        return {
-          regime: yvs.regime,
-          year: y,
-          birthDate: bd,
-          filingStatus: fs,
-          personalExemptions: pe,
-          perPersonExemption: yvs.perPersonExemption,
-          unadjustedStandardDeduction: yvs.unadjustedStandardDeduction(fs),
-          adjustmentWhenOver65: yvs.adjustmentWhenOver65,
-          adjustmentWhenOver65AndSingle: yvs.adjustmentWhenOver65AndSingle,
-          ordinaryBrackets: yvs.ordinaryBrackets(fs),
-          qualifiedBrackets: yvs.qualifiedBrackets(fs)
-        };
-      };
+  return function(fs) {
+    var yvs = unsafeValuesForYear(y);
+    return {
+      regime: yvs.regime,
+      year: y,
+      filingStatus: fs,
+      perPersonExemption: yvs.perPersonExemption,
+      unadjustedStandardDeduction: yvs.unadjustedStandardDeduction(fs),
+      adjustmentWhenOver65: yvs.adjustmentWhenOver65,
+      adjustmentWhenOver65AndSingle: yvs.adjustmentWhenOver65AndSingle,
+      ordinaryBrackets: yvs.ordinaryBrackets(fs),
+      qualifiedBrackets: yvs.qualifiedBrackets(fs)
     };
   };
 };
@@ -4043,25 +3639,30 @@ var amountTaxableInflationAdjusted = function(year) {
 var append5 = /* @__PURE__ */ append(semigroupIncome);
 var append1 = /* @__PURE__ */ append(semigroupTaxPayable);
 var makeCalculator = function(br) {
-  return function(socSec) {
-    return function(ordinaryIncome) {
-      return function(qualifiedIncome) {
-        return function(itemized) {
-          var ssRelevantOtherIncome = append5(ordinaryIncome)(qualifiedIncome);
-          var taxableSocSec = amountTaxable(br.filingStatus)(socSec)(ssRelevantOtherIncome);
-          var taxableOrdinaryIncome = applyDeductions(append5(taxableSocSec)(ordinaryIncome))(netDeduction(br)(itemized));
-          var taxOnOrdinaryIncome = taxDueOnOrdinaryIncome(br.ordinaryBrackets)(taxableOrdinaryIncome);
-          var taxOnQualifiedIncome = taxDueOnQualifiedIncome(br.qualifiedBrackets)(taxableOrdinaryIncome)(asTaxable(qualifiedIncome));
-          return {
-            boundRegime: br,
-            ssRelevantOtherIncome,
-            taxableSocSec,
-            finalStandardDeduction: standardDeduction(br),
-            finalPersonalExemptionDeduction: personalExemptionDeduction(br),
-            finalNetDeduction: netDeduction(br)(itemized),
-            taxableOrdinaryIncome,
-            taxOnOrdinaryIncome,
-            taxOnQualifiedIncome
+  return function(birthDate) {
+    return function(personalExemptions) {
+      return function(socSec) {
+        return function(ordinaryIncome) {
+          return function(qualifiedIncome) {
+            return function(itemized) {
+              var ssRelevantOtherIncome = append5(ordinaryIncome)(qualifiedIncome);
+              var taxableSocSec = amountTaxable(br.filingStatus)(socSec)(ssRelevantOtherIncome);
+              var netDeds = netDeduction(br)(birthDate)(personalExemptions)(itemized);
+              var taxableOrdinaryIncome = applyDeductions(append5(taxableSocSec)(ordinaryIncome))(netDeds);
+              var taxOnOrdinaryIncome = taxDueOnOrdinaryIncome(br.ordinaryBrackets)(taxableOrdinaryIncome);
+              var taxOnQualifiedIncome = taxDueOnQualifiedIncome(br.qualifiedBrackets)(taxableOrdinaryIncome)(asTaxable(qualifiedIncome));
+              return {
+                boundRegime: br,
+                ssRelevantOtherIncome,
+                taxableSocSec,
+                finalStandardDeduction: standardDeduction(br)(birthDate),
+                finalPersonalExemptionDeduction: personalExemptionDeduction(br)(personalExemptions),
+                finalNetDeduction: netDeds,
+                taxableOrdinaryIncome,
+                taxOnOrdinaryIncome,
+                taxOnQualifiedIncome
+              };
+            };
           };
         };
       };
@@ -4069,15 +3670,15 @@ var makeCalculator = function(br) {
   };
 };
 var taxResultsForKnownYear = function(year) {
-  return function(birthDate) {
-    return function(filingStatus) {
+  return function(filingStatus) {
+    return function(birthDate) {
       return function(personalExemptions) {
         return function(socSec) {
           return function(ordinaryIncome) {
             return function(qualifiedIncome) {
               return function(itemized) {
-                var boundRegime = boundRegimeForKnownYear(year)(birthDate)(filingStatus)(personalExemptions);
-                var calculator = makeCalculator(boundRegime);
+                var boundRegime = boundRegimeForKnownYear(year)(filingStatus);
+                var calculator = makeCalculator(boundRegime)(birthDate)(personalExemptions);
                 return calculator(socSec)(ordinaryIncome)(qualifiedIncome)(itemized);
               };
             };
@@ -4088,14 +3689,14 @@ var taxResultsForKnownYear = function(year) {
   };
 };
 var taxDueForKnownYear = function(year) {
-  return function(birthDate) {
-    return function(filingStatus) {
+  return function(filingStatus) {
+    return function(birthDate) {
       return function(personalExemptions) {
         return function(socSec) {
           return function(ordinaryIncome) {
             return function(qualifiedIncome) {
               return function(itemized) {
-                var v = taxResultsForKnownYear(year)(birthDate)(filingStatus)(personalExemptions)(socSec)(ordinaryIncome)(qualifiedIncome)(itemized);
+                var v = taxResultsForKnownYear(year)(filingStatus)(birthDate)(personalExemptions)(socSec)(ordinaryIncome)(qualifiedIncome)(itemized);
                 return append1(v.taxOnOrdinaryIncome)(v.taxOnQualifiedIncome);
               };
             };
@@ -4107,14 +3708,14 @@ var taxDueForKnownYear = function(year) {
 };
 
 // output/Federal.RMDs/index.js
-var bind5 = /* @__PURE__ */ bind(bindMaybe);
+var bind3 = /* @__PURE__ */ bind(bindMaybe);
 var lookup3 = /* @__PURE__ */ lookup(ordAge);
 var fromJust10 = /* @__PURE__ */ fromJust();
 var distributionPeriods = /* @__PURE__ */ function() {
   return fromFoldable(ordAge)(foldableArray)([new Tuple(70, 27.4), new Tuple(71, 26.5), new Tuple(72, 25.6), new Tuple(73, 24.7), new Tuple(74, 23.8), new Tuple(75, 22.9), new Tuple(76, 22), new Tuple(77, 21.2), new Tuple(78, 20.3), new Tuple(79, 19.5), new Tuple(80, 18.7), new Tuple(81, 17.9), new Tuple(82, 17.1), new Tuple(83, 16.3), new Tuple(84, 15.5), new Tuple(85, 14.8), new Tuple(86, 14.1), new Tuple(87, 13.4), new Tuple(88, 12.7), new Tuple(89, 12), new Tuple(90, 11.4), new Tuple(91, 10.8), new Tuple(92, 10.2), new Tuple(93, 9.6), new Tuple(94, 9.1), new Tuple(95, 8.6), new Tuple(96, 8.1), new Tuple(97, 7.6), new Tuple(98, 7.1), new Tuple(99, 6.7), new Tuple(100, 6.3), new Tuple(101, 5.9), new Tuple(102, 5.5), new Tuple(103, 5.2), new Tuple(104, 4.9), new Tuple(105, 4.5), new Tuple(106, 4.2), new Tuple(107, 3.9), new Tuple(108, 3.7), new Tuple(109, 3.4), new Tuple(110, 3.1), new Tuple(111, 2.9), new Tuple(112, 2.6), new Tuple(113, 2.4), new Tuple(114, 2.1)]);
 }();
 var rmdFractionForAge = function(age) {
-  return bind5(lookup3(age)(distributionPeriods))(function(distributionPeriod) {
+  return bind3(lookup3(age)(distributionPeriods))(function(distributionPeriod) {
     return new Just(1 / distributionPeriod);
   });
 };
@@ -4210,9 +3811,9 @@ var personalExemptionFor = function(v) {
   };
 };
 var taxDue = function(year) {
-  return function(bd) {
-    return function(dependents) {
-      return function(filingStatus) {
+  return function(filingStatus) {
+    return function(bd) {
+      return function(dependents) {
         return function(maGrossIncome) {
           var personalExemption = personalExemptionFor(year)(filingStatus);
           var dependentsExemption = makeFromInt11(1e3 * dependents | 0);
@@ -4236,10 +3837,8 @@ var taxDue = function(year) {
 // output/GoogleSheetModule/index.js
 var maStateTaxRate = taxRate;
 var maStateTaxDue = taxDue;
-// Note: This file must be loaded AFTER the PS bundle.
+// Note: This file must be loaded AFTER the code compiled from Purescript.
 
-// TODO: Abstract these. Will need a date parser.
-const TheBirthDate = unsafeMakeDate(1955)(10)(2);
 const ThePersonalExemptions = 1;
 const TheItemizedDeductions = 0;
 
@@ -4254,12 +3853,19 @@ function use2022after2022(yearAsNumber) {
 
 function bindRegime(yearAsNumber, filingStatusName) {
   const filingStatus = unsafeReadFilingStatus(filingStatusName);
-  return boundRegimeForKnownYear(
-    use2022after2022(yearAsNumber))(
-    TheBirthDate)(
-    filingStatus)(
-    ThePersonalExemptions
-  );
+
+  return boundRegimeForKnownYear(use2022after2022(yearAsNumber))(filingStatus);
+}
+
+function toPurescriptDate(dateObject) {
+  if (typeof(dateObject) != "object")
+    throw "Date object required";
+  if (! dateObject instanceof Date)
+    throw "Date object required";
+  const year = 1900 + dateObject.getYear();
+  const month = 1 + dateObject.getMonth();
+  const dayOfMonth = dateObject.getDate();
+  return unsafeMakeDate(year)(month)(dayOfMonth);
 }
 
 /**
@@ -4268,12 +3874,15 @@ function bindRegime(yearAsNumber, filingStatusName) {
  *
  * @param {number} yearAsNumber 
  * @param {string} filingStatusName 
+ * @param {number} birthDateAsObject
  * @returns The standard deduction
  * @customfunction
  */
-function STD_DEDUCTION(yearAsNumber, filingStatusName) {
+function STD_DEDUCTION(yearAsNumber, filingStatusName, birthDateAsObject) {
   const br = bindRegime(yearAsNumber, filingStatusName); 
-  return standardDeduction(br);
+  const birthDate = toPurescriptDate(birthDateAsObject);
+
+  return standardDeduction(br)(birthDate);
 }
 
 /**
@@ -4325,19 +3934,21 @@ function RMD_FRACTION_FOR_AGE(age) {
  * 
  * @param {number} yearAsNumber 
  * @param {string} filingStatusName 
+ * @param {number} birthDateAsObject
  * @param {number} socSec 
  * @param {number} ordinaryIncomeNonSS 
  * @param {number} qualifiedIncome 
  * @returns the Federal tax due
  * @customfunction
  */
-function FEDERAL_TAX_DUE(yearAsNumber, filingStatusName, socSec, ordinaryIncomeNonSS, qualifiedIncome) {
+function FEDERAL_TAX_DUE(yearAsNumber, filingStatusName, birthDateAsObject, socSec, ordinaryIncomeNonSS, qualifiedIncome) {
   const filingStatus = unsafeReadFilingStatus(filingStatusName);
- 
+  const birthDate = toPurescriptDate(birthDateAsObject);
+
   return taxDueForKnownYear(
     use2022after2022(yearAsNumber))(
-    TheBirthDate)(
     filingStatus)(
+    birthDate)(
     ThePersonalExemptions)(
     socSec)(
     ordinaryIncomeNonSS)(
@@ -4350,41 +3961,52 @@ function FEDERAL_TAX_DUE(yearAsNumber, filingStatusName, socSec, ordinaryIncomeN
  * Example: MA_STATE_TAX_DUE(2022, 1, 'Married', 130000)
  * 
  * @param {number} yearAsNumber 
- * @param {number} dependents 
  * @param {string} filingStatusName 
+ * @param {number} birthDateAsObject
+ * @param {number} dependents 
  * @param {number} massachusettsGrossIncome 
  * @returns the MA state income tax due.
  * @customfunction
  */
-function MA_STATE_TAX_DUE(yearAsNumber, dependents, filingStatusName, massachusettsGrossIncome) {
+function MA_STATE_TAX_DUE(
+  yearAsNumber, 
+  filingStatusName, 
+  birthDateAsObject, 
+  dependents, 
+  massachusettsGrossIncome
+  ) {
   const filingStatus = unsafeReadFilingStatus(filingStatusName);
- 
+  const birthDate = toPurescriptDate(birthDateAsObject);
+
   return maStateTaxDue(
     use2022after2022(yearAsNumber))(
-    TheBirthDate)(
-    dependents)(
     filingStatus)(
+    birthDate)(
+    dependents)(
     massachusettsGrossIncome);
 }
 
+// TODO: eliminate?
 /**
  * The marginal tax rate.
  * Example: TAX_SLOPE(2022, 'Single', 10000, 40000, 5000)
  * 
  * @param {number} yearAsNumber 
  * @param {string} filingStatusName 
+ * @param {number} birthDateAsObject
  * @param {number} socSec 
  * @param {number} ordinaryIncomeNonSS 
  * @param {number} qualifiedIncome 
  * @returns the marginal tax rate.
  * @customfunction
  */
-function TAX_SLOPE(yearAsNumber, filingStatusName, socSec, ordinaryIncomeNonSS, qualifiedIncome) {
+function TAX_SLOPE(yearAsNumber, filingStatusName, birthDateAsObject, socSec, ordinaryIncomeNonSS, qualifiedIncome) {
     const deltaX = 1000.0
 
   const federalTaxAtStart = FEDERAL_TAX_DUE(
     yearAsNumber, 
     filingStatusName, 
+    birthDateAsObject,
     socSec, 
     ordinaryIncomeNonSS, 
     qualifiedIncome
@@ -4392,6 +4014,7 @@ function TAX_SLOPE(yearAsNumber, filingStatusName, socSec, ordinaryIncomeNonSS, 
   const federalTaxAtEnd = FEDERAL_TAX_DUE(
     yearAsNumber, 
     filingStatusName, 
+    birthDateAsObject,
     socSec, 
     ordinaryIncomeNonSS + deltaX, 
     qualifiedIncome
@@ -4402,6 +4025,7 @@ function TAX_SLOPE(yearAsNumber, filingStatusName, socSec, ordinaryIncomeNonSS, 
   return deltaY/deltaX;
 }
 
+// TODO: rename TAXABLE_SOCIAL_SECURITY
 /**
  * The amount of Social Security income that is taxable.
  * Example: TAXABLE_SS('HeadOfHousehold', 20000, 52000)
@@ -4418,6 +4042,7 @@ function TAXABLE_SS(filingStatusName, ssRelevantOtherIncome, socSec) {
   return amountTaxable(filingStatus)(socSec)(ssRelevantOtherIncome);
 }
 
+// TODO: eliminate
 /**
  * The amount of Social Security income that is taxable, adjusted for inflation.
  * Example: TAXABLE_SS_ADJUSTED(2030, 'HeadOfHousehold', 20000, 52000)
