@@ -44,8 +44,8 @@ testsAgainstScalaForKnownYears =
         FederalTaxResults results =
           FC.taxResultsForKnownYear
             tc.year
-            tc.birthDate
             tc.filingStatus
+            tc.birthDate
             tc.personalExemptions
             tc.socSec
             tc.ordinaryIncomeNonSS

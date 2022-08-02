@@ -24,12 +24,13 @@ import Prelude (class Show, Unit, discard, show, ($), (<>))
 
 type TaxCalculator = SocSec -> OrdinaryIncome -> QualifiedIncome -> ItemizedDeductions -> FederalTaxResults
 
-makeCalculator :: BoundRegime -> TaxCalculator
-makeCalculator br socSec ordinaryIncome qualifiedIncome itemized =
+makeCalculator :: BoundRegime -> BirthDate -> PersonalExemptions -> TaxCalculator
+makeCalculator br birthDate personalExemptions socSec ordinaryIncome qualifiedIncome itemized =
   let BoundRegime brRec = br
       ssRelevantOtherIncome = ordinaryIncome <> qualifiedIncome
       taxableSocSec = TSS.amountTaxable brRec.filingStatus socSec ssRelevantOtherIncome
-      taxableOrdinaryIncome = (taxableSocSec <> ordinaryIncome) `applyDeductions` netDeduction br itemized
+      netDeds = netDeduction br birthDate personalExemptions itemized
+      taxableOrdinaryIncome = (taxableSocSec <> ordinaryIncome) `applyDeductions` netDeds
       taxOnOrdinaryIncome = TFS.taxDueOnOrdinaryIncome brRec.ordinaryBrackets taxableOrdinaryIncome
       taxOnQualifiedIncome =
         TFS.taxDueOnQualifiedIncome brRec.qualifiedBrackets taxableOrdinaryIncome (asTaxable qualifiedIncome)
@@ -37,9 +38,9 @@ makeCalculator br socSec ordinaryIncome qualifiedIncome itemized =
         { boundRegime: br,
           ssRelevantOtherIncome: ssRelevantOtherIncome,
           taxableSocSec: taxableSocSec,
-          finalStandardDeduction: standardDeduction br,
-          finalPersonalExemptionDeduction: personalExemptionDeduction br,
-          finalNetDeduction: netDeduction br itemized,
+          finalStandardDeduction: standardDeduction br birthDate,
+          finalPersonalExemptionDeduction: personalExemptionDeduction br personalExemptions,
+          finalNetDeduction: netDeds,
           taxableOrdinaryIncome: taxableOrdinaryIncome,
           taxOnOrdinaryIncome: taxOnOrdinaryIncome,
           taxOnQualifiedIncome: taxOnQualifiedIncome
@@ -60,44 +61,44 @@ derive newtype instance Show FederalTaxResults
 
 taxResultsForKnownYear ::
   Year ->
-  BirthDate ->
   FilingStatus ->
+  BirthDate ->
   PersonalExemptions ->
   SocSec ->
   OrdinaryIncome ->
   QualifiedIncome ->
   ItemizedDeductions ->
   FederalTaxResults
-taxResultsForKnownYear year birthDate filingStatus personalExemptions socSec ordinaryIncome qualifiedIncome itemized =
-  let boundRegime = boundRegimeForKnownYear year birthDate filingStatus personalExemptions
-      calculator = makeCalculator boundRegime
+taxResultsForKnownYear year filingStatus birthDate personalExemptions socSec ordinaryIncome qualifiedIncome itemized =
+  let boundRegime = boundRegimeForKnownYear year filingStatus
+      calculator = makeCalculator boundRegime birthDate personalExemptions
    in calculator socSec ordinaryIncome qualifiedIncome itemized
 taxDueForKnownYear ::
   Year ->
-  BirthDate ->
   FilingStatus ->
+  BirthDate ->
   PersonalExemptions ->
   SocSec ->
   OrdinaryIncome ->
   QualifiedIncome ->
   ItemizedDeductions ->
   TaxPayable
-taxDueForKnownYear year birthDate filingStatus personalExemptions socSec ordinaryIncome qualifiedIncome itemized =
-  let FederalTaxResults results = taxResultsForKnownYear year birthDate filingStatus personalExemptions socSec ordinaryIncome qualifiedIncome itemized
+taxDueForKnownYear year filingStatus birthDate  personalExemptions socSec ordinaryIncome qualifiedIncome itemized =
+  let FederalTaxResults results = taxResultsForKnownYear year filingStatus birthDate personalExemptions socSec ordinaryIncome qualifiedIncome itemized
    in results.taxOnOrdinaryIncome <> results.taxOnQualifiedIncome 
 
 taxDueForKnownYearDebug ::
   Year ->
-  BirthDate ->
   FilingStatus ->
+  BirthDate ->
   PersonalExemptions ->
   SocSec ->
   OrdinaryIncome ->
   QualifiedIncome ->
   ItemizedDeductions ->
   Effect Unit
-taxDueForKnownYearDebug year birthDate filingStatus personalExemptions socSec ordinaryIncome qualifiedIncome itemized =
-  let FederalTaxResults r = taxResultsForKnownYear year birthDate filingStatus personalExemptions socSec ordinaryIncome qualifiedIncome itemized
+taxDueForKnownYearDebug year filingStatus birthDate personalExemptions socSec ordinaryIncome qualifiedIncome itemized =
+  let FederalTaxResults r = taxResultsForKnownYear year filingStatus birthDate personalExemptions socSec ordinaryIncome qualifiedIncome itemized
    in do
         log "Inputs"
         log $ " fs: " <> show filingStatus
@@ -119,23 +120,21 @@ taxResultsForFutureYear ::
   Regime ->
   Year -> 
   Number ->
-  BirthDate ->
   FilingStatus ->
+  BirthDate ->
   PersonalExemptions ->
   SocSec ->
   OrdinaryIncome ->
   QualifiedIncome ->
   ItemizedDeductions ->
   FederalTaxResults
-taxResultsForFutureYear reg futureYear estimate birthDate filingStatus personalExemptions socSec ordinaryIncome qualifiedIncome itemized =
+taxResultsForFutureYear reg futureYear estimate filingStatus birthDate personalExemptions socSec ordinaryIncome qualifiedIncome itemized =
   let boundRegime = boundRegimeForFutureYear 
                       reg 
                       futureYear 
                       estimate 
-                      birthDate 
                       filingStatus 
-                      personalExemptions
-      calculator = makeCalculator boundRegime
+      calculator = makeCalculator boundRegime birthDate personalExemptions
    in calculator socSec ordinaryIncome qualifiedIncome itemized  
 
 
@@ -143,21 +142,21 @@ taxDueForFutureYear ::
   Regime ->
   Year ->
   Number ->
-  BirthDate ->
   FilingStatus ->
+  BirthDate ->
   PersonalExemptions ->
   SocSec ->
   OrdinaryIncome ->
   QualifiedIncome ->
   ItemizedDeductions ->
   TaxPayable
-taxDueForFutureYear regime futureYear inflationEstimate birthDate filingStatus personalExemptions socSec ordinaryIncome qualifiedIncome itemized =
+taxDueForFutureYear regime futureYear inflationEstimate filingStatus birthDate personalExemptions socSec ordinaryIncome qualifiedIncome itemized =
   let FederalTaxResults results = taxResultsForFutureYear 
                                     regime 
                                     futureYear 
                                     inflationEstimate 
-                                    birthDate 
                                     filingStatus 
+                                    birthDate 
                                     personalExemptions 
                                     socSec 
                                     ordinaryIncome 

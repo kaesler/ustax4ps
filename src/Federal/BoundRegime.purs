@@ -29,9 +29,7 @@ newtype BoundRegime
   = BoundRegime
     { regime :: Regime
     , year :: Year
-    , birthDate :: BirthDate
     , filingStatus :: FilingStatus
-    , personalExemptions :: Int
       --
       -- The following are inflatable. They may get adjusted to estimate the
       -- the tax regime for a future year, based on estimated inflation.
@@ -47,9 +45,7 @@ derive newtype instance Show BoundRegime
 mkBoundRegime ::
   Regime ->
   Year ->
-  BirthDate ->
   FilingStatus ->
-  Int ->
   Deduction ->
   Deduction ->
   Deduction ->
@@ -58,13 +54,11 @@ mkBoundRegime ::
   QB.QualifiedBrackets ->
   BoundRegime
  
-mkBoundRegime r y bd fs pes ppe uasd a65 a65s ob qb = 
+mkBoundRegime r y fs ppe uasd a65 a65s ob qb = 
    BoundRegime {
      regime: r,
      year: y,
-     birthDate: bd,
      filingStatus: fs,
-     personalExemptions: pes,
      perPersonExemption: ppe,
      unadjustedStandardDeduction: uasd,
      adjustmentWhenOver65: a65,
@@ -73,10 +67,10 @@ mkBoundRegime r y bd fs pes ppe uasd a65 a65s ob qb =
      qualifiedBrackets: qb
    }
 
-standardDeduction :: BoundRegime -> StandardDeduction
-standardDeduction (BoundRegime br) =
+standardDeduction :: BoundRegime -> BirthDate -> StandardDeduction
+standardDeduction (BoundRegime br) birthDate =
   br.unadjustedStandardDeduction <>
-     ( if isAge65OrOlder br.birthDate br.year
+     ( if isAge65OrOlder birthDate br.year
           then
             br.adjustmentWhenOver65
               <> ( if isUnmarried br.filingStatus
@@ -85,23 +79,21 @@ standardDeduction (BoundRegime br) =
                 )
           else noMoney
       )
-personalExemptionDeduction :: BoundRegime -> Deduction
-personalExemptionDeduction (BoundRegime br) =
-  br.personalExemptions `times` br.perPersonExemption
+personalExemptionDeduction :: BoundRegime -> PersonalExemptions -> Deduction
+personalExemptionDeduction (BoundRegime br) personalExemptions  =
+  personalExemptions `times` br.perPersonExemption
 
-netDeduction :: BoundRegime -> ItemizedDeductions -> Deduction
-netDeduction br itemized =
-  personalExemptionDeduction br <> max itemized (standardDeduction br)
+netDeduction :: BoundRegime -> BirthDate -> PersonalExemptions -> ItemizedDeductions -> Deduction
+netDeduction br birthDate personalExemptions itemized =
+  personalExemptionDeduction br personalExemptions <> max itemized (standardDeduction br birthDate)
 
-boundRegimeForKnownYear :: Year -> BirthDate -> FilingStatus -> PersonalExemptions -> BoundRegime
-boundRegimeForKnownYear y bd fs pe =
+boundRegimeForKnownYear :: Year -> FilingStatus -> BoundRegime
+boundRegimeForKnownYear y fs =
   let yvs = YV.unsafeValuesForYear y
    in BoundRegime {
      regime: yvs.regime,
      year: y,
-     birthDate: bd,
      filingStatus: fs,
-     personalExemptions: pe,
      perPersonExemption: yvs.perPersonExemption,
      unadjustedStandardDeduction: yvs.unadjustedStandardDeduction fs,
      adjustmentWhenOver65: yvs.adjustmentWhenOver65,
@@ -110,12 +102,12 @@ boundRegimeForKnownYear y bd fs pe =
      qualifiedBrackets: yvs.qualifiedBrackets fs
    }
 
-boundRegimeForFutureYear :: Regime -> Year -> Number -> BirthDate -> FilingStatus -> PersonalExemptions -> BoundRegime
-boundRegimeForFutureYear r y annualInflationFactor bd fs pe =
+boundRegimeForFutureYear :: Regime -> Year -> Number -> FilingStatus -> BoundRegime
+boundRegimeForFutureYear r y annualInflationFactor fs =
   let baseValues = YV.mostRecentForRegime r :: YearlyValues
       baseYear = fromEnum baseValues.year
       yearsWithInflation = (baseYear + 1) .. fromEnum y
-      baseRegime = boundRegimeForKnownYear baseValues.year bd fs pe 
+      baseRegime = boundRegimeForKnownYear baseValues.year fs
       inflationFactors = 
         do ywi <- yearsWithInflation
            let factor = fromMaybe annualInflationFactor $ YV.averageThresholdChangeOverPrevious $ unsafeMakeYear ywi
@@ -129,9 +121,7 @@ withEstimatedNetInflationFactor futureYear netInflationFactor (BoundRegime br) =
   mkBoundRegime
     br.regime
     futureYear
-    br.birthDate
     br.filingStatus
-    br.personalExemptions
     (br.perPersonExemption `mul` netInflationFactor)
     (br.unadjustedStandardDeduction `mul` netInflationFactor)
     (br.adjustmentWhenOver65 `mul` netInflationFactor)

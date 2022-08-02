@@ -46,8 +46,8 @@ testsAgainstScalaForFutureYears =
             tc.regime
             tc.year
             tc.estimatedAnnualInflationFactor
-            tc.birthDate
             tc.filingStatus
+            tc.birthDate
             tc.personalExemptions
             tc.socSec
             tc.ordinaryIncomeNonSS

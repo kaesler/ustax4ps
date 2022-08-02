@@ -46,4 +46,3 @@ isUnmarried Married = false
 isUnmarried _ = true
 
 type AnnualGrowthRatePercentage = Number
-

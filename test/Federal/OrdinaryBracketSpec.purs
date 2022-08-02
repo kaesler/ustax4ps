@@ -48,7 +48,7 @@ runAllTests = do
 
 
 boundRegimeFor :: FilingStatus -> BoundRegime
-boundRegimeFor fs = boundRegimeForKnownYear theYear theBirthDate fs (if fs == Single then 1 else 2)
+boundRegimeFor fs = boundRegimeForKnownYear theYear fs
 
 ordinaryBracketsFor :: FilingStatus -> OrdinaryBrackets
 ordinaryBracketsFor fs =
@@ -115,9 +115,6 @@ assertCorrectTaxDueAtBracketBoundaries filingStatus =
 
 theYear :: Year
 theYear = unsafeMakeYear 2021
-
-theBirthDate :: Date
-theBirthDate = unsafeMakeDate 2021 10 2
 
 --logInAff :: String -> Aff Unit
 --logInAff msg = liftEffect $ log msg
