@@ -1,7 +1,5 @@
 // Note: This file must be loaded AFTER the code compiled from Purescript.
 
-const ThePersonalExemptions = 1;
-
 // For now use 2022 for future years.
 // TODO: this will have to go.
 function use2022after2022(yearAsNumber) {
@@ -94,7 +92,8 @@ function RMD_FRACTION_FOR_AGE(age) {
  * 
  * @param {number} yearAsNumber 
  * @param {string} filingStatusName 
- * @param {number} birthDateAsObject
+ * @param {object} birthDateAsObject
+ * @param {number} personalExemptions
  * @param {number} socSec 
  * @param {number} ordinaryIncomeNonSS 
  * @param {number} qualifiedIncome 
@@ -105,7 +104,8 @@ function RMD_FRACTION_FOR_AGE(age) {
 function FEDERAL_TAX_DUE(
   yearAsNumber, 
   filingStatusName, 
-  birthDateAsObject, 
+  birthDateAsObject,
+  personalExemptions, 
   socSec, 
   ordinaryIncomeNonSS, 
   qualifiedIncome,
@@ -118,7 +118,7 @@ function FEDERAL_TAX_DUE(
     use2022after2022(yearAsNumber))(
     filingStatus)(
     birthDate)(
-    ThePersonalExemptions)(
+    personalExemptions)(
     socSec)(
     ordinaryIncomeNonSS)(
     qualifiedIncome)(
@@ -131,7 +131,7 @@ function FEDERAL_TAX_DUE(
  * 
  * @param {number} yearAsNumber 
  * @param {string} filingStatusName 
- * @param {number} birthDateAsObject
+ * @param {object} birthDateAsObject
  * @param {number} dependents 
  * @param {number} massachusettsGrossIncome 
  * @returns the MA state income tax due.
@@ -162,7 +162,8 @@ function MA_STATE_TAX_DUE(
  * 
  * @param {number} yearAsNumber 
  * @param {string} filingStatusName 
- * @param {number} birthDateAsObject
+ * @param {object} birthDateAsObject
+ * @param {number} personalExemptions
  * @param {number} socSec 
  * @param {number} ordinaryIncomeNonSS 
  * @param {number} qualifiedIncome 
@@ -174,6 +175,7 @@ function TAX_SLOPE(
   yearAsNumber, 
   filingStatusName, 
   birthDateAsObject, 
+  personalExemptions,
   socSec, 
   ordinaryIncomeNonSS, 
   qualifiedIncome,
@@ -185,6 +187,7 @@ function TAX_SLOPE(
     yearAsNumber, 
     filingStatusName, 
     birthDateAsObject,
+    personalExemptions,
     socSec, 
     ordinaryIncomeNonSS, 
     qualifiedIncome,
@@ -194,6 +197,7 @@ function TAX_SLOPE(
     yearAsNumber, 
     filingStatusName, 
     birthDateAsObject,
+    personalExemptions,
     socSec, 
     ordinaryIncomeNonSS + deltaX, 
     qualifiedIncome,
