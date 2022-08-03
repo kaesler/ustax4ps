@@ -1,7 +1,6 @@
 // Note: This file must be loaded AFTER the code compiled from Purescript.
 
 const ThePersonalExemptions = 1;
-const TheItemizedDeductions = 0;
 
 // For now use 2022 for future years.
 // TODO: this will have to go.
@@ -99,10 +98,19 @@ function RMD_FRACTION_FOR_AGE(age) {
  * @param {number} socSec 
  * @param {number} ordinaryIncomeNonSS 
  * @param {number} qualifiedIncome 
+ * @param {number} itemizedDeductions 
  * @returns the Federal tax due
  * @customfunction
  */
-function FEDERAL_TAX_DUE(yearAsNumber, filingStatusName, birthDateAsObject, socSec, ordinaryIncomeNonSS, qualifiedIncome) {
+function FEDERAL_TAX_DUE(
+  yearAsNumber, 
+  filingStatusName, 
+  birthDateAsObject, 
+  socSec, 
+  ordinaryIncomeNonSS, 
+  qualifiedIncome,
+  itemizedDeductions
+  ) {
   const filingStatus = unsafeReadFilingStatus(filingStatusName);
   const birthDate = toPurescriptDate(birthDateAsObject);
 
@@ -114,7 +122,7 @@ function FEDERAL_TAX_DUE(yearAsNumber, filingStatusName, birthDateAsObject, socS
     socSec)(
     ordinaryIncomeNonSS)(
     qualifiedIncome)(
-    TheItemizedDeductions);
+    itemizedDeductions);
 }
 
 /**
@@ -158,10 +166,19 @@ function MA_STATE_TAX_DUE(
  * @param {number} socSec 
  * @param {number} ordinaryIncomeNonSS 
  * @param {number} qualifiedIncome 
+ * @param {number} itemizedDeductions 
  * @returns the marginal tax rate.
  * @customfunction
  */
-function TAX_SLOPE(yearAsNumber, filingStatusName, birthDateAsObject, socSec, ordinaryIncomeNonSS, qualifiedIncome) {
+function TAX_SLOPE(
+  yearAsNumber, 
+  filingStatusName, 
+  birthDateAsObject, 
+  socSec, 
+  ordinaryIncomeNonSS, 
+  qualifiedIncome,
+  itemizedDeductions
+  ) {
     const deltaX = 1000.0
 
   const federalTaxAtStart = FEDERAL_TAX_DUE(
@@ -170,7 +187,8 @@ function TAX_SLOPE(yearAsNumber, filingStatusName, birthDateAsObject, socSec, or
     birthDateAsObject,
     socSec, 
     ordinaryIncomeNonSS, 
-    qualifiedIncome
+    qualifiedIncome,
+    itemizedDeductions
   );
   const federalTaxAtEnd = FEDERAL_TAX_DUE(
     yearAsNumber, 
@@ -178,7 +196,8 @@ function TAX_SLOPE(yearAsNumber, filingStatusName, birthDateAsObject, socSec, or
     birthDateAsObject,
     socSec, 
     ordinaryIncomeNonSS + deltaX, 
-    qualifiedIncome
+    qualifiedIncome,
+    itemizedDeductions
   );
   const deltaY = (federalTaxAtEnd - federalTaxAtStart) + 
     (deltaX * maStateTaxRate(unsafeMakeYear(yearAsNumber)));
