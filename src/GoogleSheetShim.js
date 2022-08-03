@@ -186,7 +186,6 @@ function TAX_SLOPE(yearAsNumber, filingStatusName, birthDateAsObject, socSec, or
   return deltaY/deltaX;
 }
 
-// TODO: rename TAXABLE_SOCIAL_SECURITY
 /**
  * The amount of Social Security income that is taxable.
  * Example: TAXABLE_SS('HeadOfHousehold', 20000, 52000)
@@ -197,7 +196,7 @@ function TAX_SLOPE(yearAsNumber, filingStatusName, birthDateAsObject, socSec, or
  * @returns the amount of Social Security income that is taxable
  * @customfunction
  */
-function TAXABLE_SS(filingStatusName, ssRelevantOtherIncome, socSec) {
+function TAXABLE_SOCIAL_SECURITY(filingStatusName, ssRelevantOtherIncome, socSec) {
   const filingStatus = unsafeReadFilingStatus(filingStatusName);
 
   return amountTaxable(filingStatus)(socSec)(ssRelevantOtherIncome);
