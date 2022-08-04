@@ -21,7 +21,7 @@ function KTL_STD_DEDUCTION(yearAsNumber, filingStatusName, birthDateAsObject) {
 
 /**
  * Standard deduction for a future year and filing status.
- * Example: KTL_FUTURE_STD_DEDUCTION('Trump', 3%, 2030, 'HeadOfHousehold')
+ * Example: KTL_FUTURE_STD_DEDUCTION('Trump', 3%, 2030, 'HeadOfHousehold', 1955-10-02)
  *
  * @param {string} regimeName 
  * @param {number} yearAsNumber 
