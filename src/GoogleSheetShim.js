@@ -1,8 +1,8 @@
 // Note: This file must be loaded AFTER the code compiled from Purescript.
 
 /**
- * Standard deduction for a given year and filing status.
- * Example: KTL_STD_DEDUCTION(2022, 'HeadOfHousehold')
+ * Standard deduction for a known year and filing status.
+ * Example: KTL_STD_DEDUCTION(2022, 'HeadOfHousehold', 1955-10-02)
  *
  * @param {number} yearAsNumber 
  * @param {string} filingStatusName 
@@ -11,9 +11,34 @@
  * @customfunction
  */
 function KTL_STD_DEDUCTION(yearAsNumber, filingStatusName, birthDateAsObject) {
-  const br = bindRegime(yearAsNumber, filingStatusName); 
+  const year = unsafeMakeYear(yearAsNumber);
+  const filingStatus = unsafeReadFilingStatus(filingStatusName);
   const birthDate = toPurescriptDate(birthDateAsObject);
 
+  const br = boundRegimeForKnownYear(year)(filingStatus);  
+  return standardDeduction(br)(birthDate);
+}
+
+/**
+ * Standard deduction for a future year and filing status.
+ * Example: KTL_FUTURE_STD_DEDUCTION('Trump', 3%, 2030, 'HeadOfHousehold')
+ *
+ * @param {string} regimeName 
+ * @param {number} yearAsNumber 
+ * @param {number} inflationDeltaEstimate
+ * @param {string} filingStatusName 
+ * @param {number} birthDateAsObject
+ * @returns The standard deduction
+ * @customfunction
+ */
+ function KTL_FUTURE_STD_DEDUCTION(regimeName, yearAsNumber, inflationDeltaEstimate, filingStatusName, birthDateAsObject) {
+  const regime = unsafeReadRegime(regimeName);
+  const year = unsafeMakeYear(yearAsNumber);
+  const inflationFactorEstimate = 1.0 + inflationDeltaEstimate;
+  const filingStatus = unsafeReadFilingStatus(filingStatusName);
+  const birthDate = toPurescriptDate(birthDateAsObject);
+
+  const br = boundRegimeForFutureYear(regime)(year)(inflationFactorEstimate)(filingStatus);  
   return standardDeduction(br)(birthDate);
 }
 
@@ -31,6 +56,7 @@ function KTL_BRACKET_WIDTH(yearAsNumber, filingStatusName, ordinaryRatePercentag
   const br = bindRegime(yearAsNumber, filingStatusName);
   const brackets = br.ordinaryBrackets;
   const rate = ordinaryRatePercentage / 100.0;
+
   return ordinaryIncomeBracketWidth(brackets)(rate);
 }
 
@@ -62,7 +88,7 @@ function KTL_RMD_FRACTION_FOR_AGE(age) {
 
 /**
  * The Federal tax due.
- * Example: KTL_FEDERAL_TAX_DUE(2022, 'Single', 10000, 40000, 5000)
+ * Example: KTL_FEDERAL_TAX_DUE(2022, 'Single', 1955-10-02, 0, 10000, 40000, 5000, 0)
  * 
  * @param {number} yearAsNumber 
  * @param {string} filingStatusName 
@@ -101,7 +127,7 @@ function KTL_FEDERAL_TAX_DUE(
 
 /**
  * The marginal tax rate.
- * Example: KTL_FEDERAL_TAX_SLOPE(2022, 'Single', 10000, 40000, 5000)
+ * Example: KTL_FEDERAL_TAX_SLOPE(2022, 'Single', 1955-10-02, 0, 10000, 40000, 5000, 0)
  * 
  * @param {number} yearAsNumber 
  * @param {string} filingStatusName 
@@ -169,7 +195,7 @@ function KTL_TAXABLE_SOCIAL_SECURITY(filingStatusName, ssRelevantOtherIncome, so
 
 /**
  * The MA state income tax due.
- * Example: KTL_MA_STATE_TAX_DUE(2022, 1, 'Married', 130000)
+ * Example: KTL_MA_STATE_TAX_DUE(2022, 'Married', 1955-10-02, 0, 130000)
  * 
  * @param {number} yearAsNumber 
  * @param {string} filingStatusName 
@@ -197,6 +223,7 @@ function KTL_TAXABLE_SOCIAL_SECURITY(filingStatusName, ssRelevantOtherIncome, so
     massachusettsGrossIncome);
 }
 
+// TODO: flush
 // For now use 2022 for future years.
 // TODO: this will have to go.
 function use2022after2022(yearAsNumber) {
@@ -206,6 +233,7 @@ function use2022after2022(yearAsNumber) {
     return unsafeMakeYear(2022);
 }
 
+// TODO: flush
 function bindRegime(yearAsNumber, filingStatusName) {
   const filingStatus = unsafeReadFilingStatus(filingStatusName);
 

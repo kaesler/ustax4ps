@@ -3,17 +3,18 @@ module Federal.Yearly.YearlyValuesSpec(
 ) where
 
 import Federal.Yearly.YearlyValues
+
 import Data.Maybe (fromJust)
 import Effect (Effect)
 import Effect.Aff (launchAff_)
 import Moneys (roundHalfUp)
 import Partial.Unsafe (unsafePartial)
+import Prelude (Unit, discard, ($), (*), (-), (/))
 import Test.Spec (Spec, it, describe)
 import Test.Spec.Assertions (shouldEqual)
 import Test.Spec.Reporter (consoleReporter)
 import Test.Spec.Runner (defaultConfig, runSpec')
 import UnsafeDates (unsafeMakeYear)
-import Prelude (Unit, discard, ($), (*), (-), (/))
 
 runAllTests :: Effect Unit
 runAllTests = do
@@ -24,7 +25,12 @@ runAllTests = do
         runSpec' config [ consoleReporter ]
           yearlyValuesSpec
 yearlyValuesSpec :: Spec Unit
-yearlyValuesSpec =
+yearlyValuesSpec = do
+  describe "YearlyValues.yearIsFuture produces expected values" do
+    it "" do
+      yearIsFuture (unsafeMakeYear 2023) `shouldEqual` true
+      yearIsFuture (unsafeMakeYear 2030) `shouldEqual` true
+      yearIsFuture (unsafeMakeYear 2022) `shouldEqual` false
   describe "YearlyValues.averageThresholdChangeOverPrevious produces expected values" do
     it "for 2018-2022" do
       asPercentage (unsafePartial $ fromJust (averageThresholdChangeOverPrevious $ unsafeMakeYear 2017)) `shouldEqual` 0.78

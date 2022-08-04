@@ -14,6 +14,7 @@ module Federal.Yearly.YearlyValues
   , valuesAscendingByYear
   , valuesAscendingByYearForRegime
   , valuesForYear
+  , yearIsFuture
   )
   where
 
@@ -64,6 +65,9 @@ unsafeValuesForYear y = unsafePartial $ fromJust $ Map.lookup y forYear
 
 valuesForYear :: Year -> Maybe YearlyValues
 valuesForYear y = Map.lookup y forYear
+
+yearIsFuture :: Year -> Boolean
+yearIsFuture y = mostRecent.year < y
 
 mostRecent :: YearlyValues
 mostRecent = unsafePartial $ fromJust $ Array.last valuesAscendingByYear

@@ -70,19 +70,62 @@ var append = function(dict) {
   return dict.append;
 };
 var semigroupFn = function(dictSemigroup) {
-  var append12 = append(dictSemigroup);
+  var append13 = append(dictSemigroup);
   return {
     append: function(f) {
       return function(g) {
         return function(x) {
-          return append12(f(x))(g(x));
+          return append13(f(x))(g(x));
         };
       };
     }
   };
 };
 
+// output/Control.Apply/foreign.js
+var arrayApply = function(fs) {
+  return function(xs) {
+    var l = fs.length;
+    var k = xs.length;
+    var result = new Array(l * k);
+    var n = 0;
+    for (var i4 = 0; i4 < l; i4++) {
+      var f = fs[i4];
+      for (var j = 0; j < k; j++) {
+        result[n++] = f(xs[j]);
+      }
+    }
+    return result;
+  };
+};
+
+// output/Control.Apply/index.js
+var applyArray = {
+  apply: arrayApply,
+  Functor0: function() {
+    return functorArray;
+  }
+};
+var apply = function(dict) {
+  return dict.apply;
+};
+
+// output/Control.Applicative/index.js
+var pure = function(dict) {
+  return dict.pure;
+};
+var applicativeArray = {
+  pure: function(x) {
+    return [x];
+  },
+  Apply0: function() {
+    return applyArray;
+  }
+};
+
 // output/Data.Bounded/foreign.js
+var topInt = 2147483647;
+var bottomInt = -2147483648;
 var topChar = String.fromCharCode(65535);
 var bottomChar = String.fromCharCode(0);
 var topNumber = Number.POSITIVE_INFINITY;
@@ -90,11 +133,11 @@ var bottomNumber = Number.NEGATIVE_INFINITY;
 
 // output/Data.Ord/foreign.js
 var unsafeCompareImpl = function(lt) {
-  return function(eq5) {
+  return function(eq6) {
     return function(gt) {
       return function(x) {
         return function(y) {
-          return x < y ? lt : x === y ? eq5 : gt;
+          return x < y ? lt : x === y ? eq6 : gt;
         };
       };
     };
@@ -111,8 +154,28 @@ var refEq = function(r1) {
 };
 var eqIntImpl = refEq;
 var eqNumberImpl = refEq;
+var eqArrayImpl = function(f) {
+  return function(xs) {
+    return function(ys) {
+      if (xs.length !== ys.length)
+        return false;
+      for (var i4 = 0; i4 < xs.length; i4++) {
+        if (!f(xs[i4])(ys[i4]))
+          return false;
+      }
+      return true;
+    };
+  };
+};
 
 // output/Data.Eq/index.js
+var eqUnit = {
+  eq: function(v) {
+    return function(v1) {
+      return true;
+    };
+  }
+};
 var eqNumber = {
   eq: eqNumberImpl
 };
@@ -121,6 +184,11 @@ var eqInt = {
 };
 var eq = function(dict) {
   return dict.eq;
+};
+var eqArray = function(dictEq) {
+  return {
+    eq: eqArrayImpl(eq(dictEq))
+  };
 };
 
 // output/Data.Ordering/index.js
@@ -275,11 +343,24 @@ var min = function(dictOrd) {
 };
 
 // output/Data.Bounded/index.js
+var top = function(dict) {
+  return dict.top;
+};
+var boundedInt = {
+  top: topInt,
+  bottom: bottomInt,
+  Ord0: function() {
+    return ordInt;
+  }
+};
 var bottom = function(dict) {
   return dict.bottom;
 };
 
 // output/Data.Show/foreign.js
+var showIntImpl = function(n) {
+  return n.toString();
+};
 var showNumberImpl = function(n) {
   var str = n.toString();
   return isNaN(str + ".0") ? str : str + ".0";
@@ -289,11 +370,15 @@ var showNumberImpl = function(n) {
 var showNumber = {
   show: showNumberImpl
 };
+var showInt = {
+  show: showIntImpl
+};
 var show = function(dict) {
   return dict.show;
 };
 
 // output/Data.Maybe/index.js
+var identity2 = /* @__PURE__ */ identity(categoryFn);
 var Nothing = /* @__PURE__ */ function() {
   function Nothing2() {
   }
@@ -311,6 +396,22 @@ var Just = /* @__PURE__ */ function() {
   };
   return Just2;
 }();
+var maybe = function(v) {
+  return function(v1) {
+    return function(v2) {
+      if (v2 instanceof Nothing) {
+        return v;
+      }
+      ;
+      if (v2 instanceof Just) {
+        return v1(v2.value0);
+      }
+      ;
+      throw new Error("Failed pattern match at Data.Maybe (line 237, column 1 - line 237, column 51): " + [v.constructor.name, v1.constructor.name, v2.constructor.name]);
+    };
+  };
+};
+var isNothing = /* @__PURE__ */ maybe(true)(/* @__PURE__ */ $$const(false));
 var functorMaybe = {
   map: function(v) {
     return function(v1) {
@@ -323,6 +424,9 @@ var functorMaybe = {
   }
 };
 var map2 = /* @__PURE__ */ map(functorMaybe);
+var fromMaybe = function(a) {
+  return maybe(a)(identity2);
+};
 var fromJust = function() {
   return function(v) {
     if (v instanceof Just) {
@@ -420,6 +524,63 @@ var readFilingStatus = {
   }
 };
 var read2 = /* @__PURE__ */ read(readFilingStatus);
+var eqFilingStatus = {
+  eq: function(x) {
+    return function(y) {
+      if (x instanceof Married && y instanceof Married) {
+        return true;
+      }
+      ;
+      if (x instanceof HeadOfHousehold && y instanceof HeadOfHousehold) {
+        return true;
+      }
+      ;
+      if (x instanceof Single && y instanceof Single) {
+        return true;
+      }
+      ;
+      return false;
+    };
+  }
+};
+var ordFilingStatus = {
+  compare: function(x) {
+    return function(y) {
+      if (x instanceof Married && y instanceof Married) {
+        return EQ.value;
+      }
+      ;
+      if (x instanceof Married) {
+        return LT.value;
+      }
+      ;
+      if (y instanceof Married) {
+        return GT.value;
+      }
+      ;
+      if (x instanceof HeadOfHousehold && y instanceof HeadOfHousehold) {
+        return EQ.value;
+      }
+      ;
+      if (x instanceof HeadOfHousehold) {
+        return LT.value;
+      }
+      ;
+      if (y instanceof HeadOfHousehold) {
+        return GT.value;
+      }
+      ;
+      if (x instanceof Single && y instanceof Single) {
+        return EQ.value;
+      }
+      ;
+      throw new Error("Failed pattern match at CommonTypes (line 0, column 0 - line 0, column 0): " + [x.constructor.name, y.constructor.name]);
+    };
+  },
+  Eq0: function() {
+    return eqFilingStatus;
+  }
+};
 var eqAge = {
   eq: function(x) {
     return function(y) {
@@ -461,7 +622,24 @@ function canonicalDateImpl(ctor, y, m, d) {
   return ctor(date.getUTCFullYear())(date.getUTCMonth() + 1)(date.getUTCDate());
 }
 
+// output/Control.Bind/foreign.js
+var arrayBind = function(arr) {
+  return function(f) {
+    var result = [];
+    for (var i4 = 0, l = arr.length; i4 < l; i4++) {
+      Array.prototype.push.apply(result, f(arr[i4]));
+    }
+    return result;
+  };
+};
+
 // output/Control.Bind/index.js
+var bindArray = {
+  bind: arrayBind,
+  Apply0: function() {
+    return applyArray;
+  }
+};
 var bind = function(dict) {
   return dict.bind;
 };
@@ -508,6 +686,70 @@ var snd = function(v) {
 var fst = function(v) {
   return v.value0;
 };
+var eqTuple = function(dictEq) {
+  var eq6 = eq(dictEq);
+  return function(dictEq1) {
+    var eq14 = eq(dictEq1);
+    return {
+      eq: function(x) {
+        return function(y) {
+          return eq6(x.value0)(y.value0) && eq14(x.value1)(y.value1);
+        };
+      }
+    };
+  };
+};
+var ordTuple = function(dictOrd) {
+  var compare6 = compare(dictOrd);
+  var eqTuple1 = eqTuple(dictOrd.Eq0());
+  return function(dictOrd1) {
+    var compare13 = compare(dictOrd1);
+    var eqTuple2 = eqTuple1(dictOrd1.Eq0());
+    return {
+      compare: function(x) {
+        return function(y) {
+          var v = compare6(x.value0)(y.value0);
+          if (v instanceof LT) {
+            return LT.value;
+          }
+          ;
+          if (v instanceof GT) {
+            return GT.value;
+          }
+          ;
+          return compare13(x.value1)(y.value1);
+        };
+      },
+      Eq0: function() {
+        return eqTuple2;
+      }
+    };
+  };
+};
+
+// output/Data.Unfoldable/foreign.js
+var unfoldrArrayImpl = function(isNothing2) {
+  return function(fromJust13) {
+    return function(fst2) {
+      return function(snd2) {
+        return function(f) {
+          return function(b) {
+            var result = [];
+            var value = b;
+            while (true) {
+              var maybe2 = f(value);
+              if (isNothing2(maybe2))
+                return result;
+              var tuple = fromJust13(maybe2);
+              result.push(fst2(tuple));
+              value = snd2(tuple);
+            }
+          };
+        };
+      };
+    };
+  };
+};
 
 // output/Data.Traversable/foreign.js
 var traverseArrayImpl = function() {
@@ -532,23 +774,23 @@ var traverseArrayImpl = function() {
     };
   }
   return function(apply2) {
-    return function(map5) {
-      return function(pure2) {
+    return function(map7) {
+      return function(pure4) {
         return function(f) {
           return function(array) {
-            function go(bot, top2) {
-              switch (top2 - bot) {
+            function go(bot, top3) {
+              switch (top3 - bot) {
                 case 0:
-                  return pure2([]);
+                  return pure4([]);
                 case 1:
-                  return map5(array1)(f(array[bot]));
+                  return map7(array1)(f(array[bot]));
                 case 2:
-                  return apply2(map5(array2)(f(array[bot])))(f(array[bot + 1]));
+                  return apply2(map7(array2)(f(array[bot])))(f(array[bot + 1]));
                 case 3:
-                  return apply2(apply2(map5(array3)(f(array[bot])))(f(array[bot + 1])))(f(array[bot + 2]));
+                  return apply2(apply2(map7(array3)(f(array[bot])))(f(array[bot + 1])))(f(array[bot + 2]));
                 default:
-                  var pivot = bot + Math.floor((top2 - bot) / 4) * 2;
-                  return apply2(map5(concat2)(go(bot, pivot)))(go(pivot, top2));
+                  var pivot = bot + Math.floor((top3 - bot) / 4) * 2;
+                  return apply2(map7(concat2)(go(bot, pivot)))(go(pivot, top3));
               }
             }
             return go(0, array.length);
@@ -596,7 +838,7 @@ var coerce = function() {
 };
 
 // output/Data.Foldable/index.js
-var identity2 = /* @__PURE__ */ identity(categoryFn);
+var identity3 = /* @__PURE__ */ identity(categoryFn);
 var foldr = function(dict) {
   return dict.foldr;
 };
@@ -604,14 +846,14 @@ var foldl = function(dict) {
   return dict.foldl;
 };
 var foldMapDefaultR = function(dictFoldable) {
-  var foldr2 = foldr(dictFoldable);
+  var foldr22 = foldr(dictFoldable);
   return function(dictMonoid) {
-    var append6 = append(dictMonoid.Semigroup0());
+    var append7 = append(dictMonoid.Semigroup0());
     var mempty3 = mempty(dictMonoid);
     return function(f) {
-      return foldr2(function(x) {
+      return foldr22(function(x) {
         return function(acc) {
-          return append6(f(x))(acc);
+          return append7(f(x))(acc);
         };
       })(mempty3);
     };
@@ -630,7 +872,7 @@ var foldMap = function(dict) {
 var fold = function(dictFoldable) {
   var foldMap2 = foldMap(dictFoldable);
   return function(dictMonoid) {
-    return foldMap2(dictMonoid)(identity2);
+    return foldMap2(dictMonoid)(identity3);
   };
 };
 var find = function(dictFoldable) {
@@ -676,9 +918,46 @@ var eqAdditive = function(dictEq) {
   return dictEq;
 };
 
+// output/Data.Unfoldable1/foreign.js
+var unfoldr1ArrayImpl = function(isNothing2) {
+  return function(fromJust13) {
+    return function(fst2) {
+      return function(snd2) {
+        return function(f) {
+          return function(b) {
+            var result = [];
+            var value = b;
+            while (true) {
+              var tuple = f(value);
+              result.push(fst2(tuple));
+              var maybe2 = snd2(tuple);
+              if (isNothing2(maybe2))
+                return result;
+              value = fromJust13(maybe2);
+            }
+          };
+        };
+      };
+    };
+  };
+};
+
+// output/Data.Unfoldable1/index.js
+var fromJust3 = /* @__PURE__ */ fromJust();
+var unfoldable1Array = {
+  unfoldr1: /* @__PURE__ */ unfoldr1ArrayImpl(isNothing)(fromJust3)(fst)(snd)
+};
+
 // output/Data.Unfoldable/index.js
+var fromJust4 = /* @__PURE__ */ fromJust();
 var unfoldr = function(dict) {
   return dict.unfoldr;
+};
+var unfoldableArray = {
+  unfoldr: /* @__PURE__ */ unfoldrArrayImpl(isNothing)(fromJust4)(fst)(snd),
+  Unfoldable10: function() {
+    return unfoldable1Array;
+  }
 };
 
 // output/Data.Enum/index.js
@@ -704,6 +983,7 @@ var $runtime_lazy = function(name2, moduleName, init) {
     return val;
   };
 };
+var show2 = /* @__PURE__ */ show(showInt);
 var January = /* @__PURE__ */ function() {
   function January2() {
   }
@@ -788,6 +1068,11 @@ var December = /* @__PURE__ */ function() {
   December2.value = new December2();
   return December2;
 }();
+var showYear = {
+  show: function(v) {
+    return "(Year " + (show2(v) + ")");
+  }
+};
 var ordYear = ordInt;
 var ordDay = ordInt;
 var eqYear = eqInt;
@@ -1252,16 +1537,54 @@ var $lazy_enumDay = /* @__PURE__ */ $runtime_lazy("enumDay", "Data.Date.Componen
 });
 
 // output/Data.Int/foreign.js
+var fromNumberImpl = function(just) {
+  return function(nothing) {
+    return function(n) {
+      return (n | 0) === n ? just(n) : nothing;
+    };
+  };
+};
 var toNumber = function(n) {
   return n;
 };
 
 // output/Data.Number/foreign.js
+var isFiniteImpl = isFinite;
 var abs = Math.abs;
+var round = Math.round;
+
+// output/Data.Int/index.js
+var top2 = /* @__PURE__ */ top(boundedInt);
+var bottom2 = /* @__PURE__ */ bottom(boundedInt);
+var fromNumber = /* @__PURE__ */ function() {
+  return fromNumberImpl(Just.create)(Nothing.value);
+}();
+var unsafeClamp = function(x) {
+  if (!isFiniteImpl(x)) {
+    return 0;
+  }
+  ;
+  if (x >= toNumber(top2)) {
+    return top2;
+  }
+  ;
+  if (x <= toNumber(bottom2)) {
+    return bottom2;
+  }
+  ;
+  if (otherwise) {
+    return fromMaybe(0)(fromNumber(x));
+  }
+  ;
+  throw new Error("Failed pattern match at Data.Int (line 72, column 1 - line 72, column 29): " + [x.constructor.name]);
+};
+var round2 = function($37) {
+  return unsafeClamp(round($37));
+};
 
 // output/Data.Date/index.js
 var fromEnum2 = /* @__PURE__ */ fromEnum(boundedEnumMonth);
-var fromJust3 = /* @__PURE__ */ fromJust();
+var fromJust5 = /* @__PURE__ */ fromJust();
 var eq12 = /* @__PURE__ */ eq(eqYear);
 var eq2 = /* @__PURE__ */ eq(eqMonth);
 var eq3 = /* @__PURE__ */ eq(eqDay);
@@ -1326,7 +1649,7 @@ var canonicalDate = function(y) {
       var mkDate = function(y$prime) {
         return function(m$prime) {
           return function(d$prime) {
-            return new $$Date(y$prime, fromJust3(toEnum2(m$prime)), d$prime);
+            return new $$Date(y$prime, fromJust5(toEnum2(m$prime)), d$prime);
           };
         };
       };
@@ -1337,16 +1660,16 @@ var canonicalDate = function(y) {
 
 // output/Age/index.js
 var fromEnum3 = /* @__PURE__ */ fromEnum(boundedEnumYear);
-var fromJust4 = /* @__PURE__ */ fromJust();
+var fromJust6 = /* @__PURE__ */ fromJust();
 var toEnum3 = /* @__PURE__ */ toEnum(boundedEnumYear);
-var bottom2 = /* @__PURE__ */ bottom(boundedMonth);
+var bottom3 = /* @__PURE__ */ bottom(boundedMonth);
 var bottom1 = /* @__PURE__ */ bottom(boundedDay);
 var lessThanOrEq2 = /* @__PURE__ */ lessThanOrEq(ordDate);
 var isAge65OrOlder = function(bd) {
   return function(y) {
     var nextYear = fromEnum3(y) + 1 | 0;
-    var nextYearMinus65 = fromJust4(toEnum3(nextYear - 65 | 0));
-    var firstDayOfYear65DaysPrior = canonicalDate(nextYearMinus65)(bottom2)(bottom1);
+    var nextYearMinus65 = fromJust6(toEnum3(nextYear - 65 | 0));
+    var firstDayOfYear65DaysPrior = canonicalDate(nextYearMinus65)(bottom3)(bottom1);
     return lessThanOrEq2(bd)(firstDayOfYear65DaysPrior);
   };
 };
@@ -1446,6 +1769,7 @@ var listMap = function(f) {
 var functorList = {
   map: listMap
 };
+var map3 = /* @__PURE__ */ map(functorList);
 var foldableList = {
   foldr: function(f) {
     return function(b) {
@@ -1529,6 +1853,15 @@ var foldableList = {
   }
 };
 var foldl2 = /* @__PURE__ */ foldl(foldableList);
+var foldr2 = /* @__PURE__ */ foldr(foldableList);
+var semigroupList = {
+  append: function(xs) {
+    return function(ys) {
+      return foldr2(Cons.create)(ys)(xs);
+    };
+  }
+};
+var append1 = /* @__PURE__ */ append(semigroupList);
 var unfoldable1List = {
   unfoldr1: function(f) {
     return function(b) {
@@ -1602,9 +1935,54 @@ var unfoldableList = {
     return unfoldable1List;
   }
 };
+var applyList = {
+  apply: function(v) {
+    return function(v1) {
+      if (v instanceof Nil) {
+        return Nil.value;
+      }
+      ;
+      if (v instanceof Cons) {
+        return append1(map3(v.value0)(v1))(apply(applyList)(v.value1)(v1));
+      }
+      ;
+      throw new Error("Failed pattern match at Data.List.Types (line 157, column 1 - line 159, column 48): " + [v.constructor.name, v1.constructor.name]);
+    };
+  },
+  Functor0: function() {
+    return functorList;
+  }
+};
+var bindList = {
+  bind: function(v) {
+    return function(v1) {
+      if (v instanceof Nil) {
+        return Nil.value;
+      }
+      ;
+      if (v instanceof Cons) {
+        return append1(v1(v.value0))(bind(bindList)(v.value1)(v1));
+      }
+      ;
+      throw new Error("Failed pattern match at Data.List.Types (line 164, column 1 - line 166, column 37): " + [v.constructor.name, v1.constructor.name]);
+    };
+  },
+  Apply0: function() {
+    return applyList;
+  }
+};
+var applicativeList = {
+  pure: function(a) {
+    return new Cons(a, Nil.value);
+  },
+  Apply0: function() {
+    return applyList;
+  }
+};
 
 // output/Data.List/index.js
-var map3 = /* @__PURE__ */ map(functorMaybe);
+var map4 = /* @__PURE__ */ map(functorMaybe);
+var foldl3 = /* @__PURE__ */ foldl(foldableList);
 var uncons = function(v) {
   if (v instanceof Nil) {
     return Nothing.value;
@@ -1621,7 +1999,7 @@ var uncons = function(v) {
 };
 var toUnfoldable = function(dictUnfoldable) {
   return unfoldr(dictUnfoldable)(function(xs) {
-    return map3(function(rec) {
+    return map4(function(rec) {
       return new Tuple(rec.head, rec.tail);
     })(uncons(xs));
   });
@@ -1636,6 +2014,9 @@ var tail = function(v) {
   }
   ;
   throw new Error("Failed pattern match at Data.List (line 245, column 1 - line 245, column 43): " + [v.constructor.name]);
+};
+var singleton4 = function(a) {
+  return new Cons(a, Nil.value);
 };
 var reverse = /* @__PURE__ */ function() {
   var go = function($copy_acc) {
@@ -1713,6 +2094,66 @@ var zipWith = function(f) {
 var zip = /* @__PURE__ */ function() {
   return zipWith(Tuple.create);
 }();
+var range2 = function(start) {
+  return function(end) {
+    if (start === end) {
+      return singleton4(start);
+    }
+    ;
+    if (otherwise) {
+      var go = function($copy_s) {
+        return function($copy_e) {
+          return function($copy_step) {
+            return function($copy_rest) {
+              var $tco_var_s = $copy_s;
+              var $tco_var_e = $copy_e;
+              var $tco_var_step = $copy_step;
+              var $tco_done = false;
+              var $tco_result;
+              function $tco_loop(s, e, step2, rest) {
+                if (s === e) {
+                  $tco_done = true;
+                  return new Cons(s, rest);
+                }
+                ;
+                if (otherwise) {
+                  $tco_var_s = s + step2 | 0;
+                  $tco_var_e = e;
+                  $tco_var_step = step2;
+                  $copy_rest = new Cons(s, rest);
+                  return;
+                }
+                ;
+                throw new Error("Failed pattern match at Data.List (line 148, column 3 - line 149, column 65): " + [s.constructor.name, e.constructor.name, step2.constructor.name, rest.constructor.name]);
+              }
+              ;
+              while (!$tco_done) {
+                $tco_result = $tco_loop($tco_var_s, $tco_var_e, $tco_var_step, $copy_rest);
+              }
+              ;
+              return $tco_result;
+            };
+          };
+        };
+      };
+      return go(end)(start)(function() {
+        var $312 = start > end;
+        if ($312) {
+          return 1;
+        }
+        ;
+        return -1 | 0;
+      }())(Nil.value);
+    }
+    ;
+    throw new Error("Failed pattern match at Data.List (line 144, column 1 - line 144, column 32): " + [start.constructor.name, end.constructor.name]);
+  };
+};
+var length2 = /* @__PURE__ */ foldl3(function(acc) {
+  return function(v) {
+    return acc + 1 | 0;
+  };
+})(0);
 var index = function($copy_v) {
   return function($copy_v1) {
     var $tco_var_v = $copy_v;
@@ -1744,6 +2185,29 @@ var index = function($copy_v) {
     ;
     return $tco_result;
   };
+};
+
+// output/Effect.Exception/foreign.js
+function error(msg) {
+  return new Error(msg);
+}
+function throwException(e) {
+  return function() {
+    throw e;
+  };
+}
+
+// output/Effect.Unsafe/foreign.js
+var unsafePerformEffect = function(f) {
+  return f();
+};
+
+// output/Effect.Exception.Unsafe/index.js
+var unsafeThrowException = function($1) {
+  return unsafePerformEffect(throwException($1));
+};
+var unsafeThrow = function($2) {
+  return unsafeThrowException(error($2));
 };
 
 // output/Data.Array/foreign.js
@@ -1788,14 +2252,31 @@ var fromFoldableImpl = function() {
     }
     return result;
   }
-  return function(foldr2) {
+  return function(foldr3) {
     return function(xs) {
-      return listToArray(foldr2(curryCons)(emptyList)(xs));
+      return listToArray(foldr3(curryCons)(emptyList)(xs));
     };
   };
 }();
+var length3 = function(xs) {
+  return xs.length;
+};
+var indexImpl = function(just) {
+  return function(nothing) {
+    return function(xs) {
+      return function(i4) {
+        return i4 < 0 || i4 >= xs.length ? nothing : just(xs[i4]);
+      };
+    };
+  };
+};
+var filter = function(f) {
+  return function(xs) {
+    return xs.filter(f);
+  };
+};
 var sortByImpl = function() {
-  function mergeFromTo(compare5, fromOrdering, xs1, xs2, from, to) {
+  function mergeFromTo(compare6, fromOrdering, xs1, xs2, from, to) {
     var mid;
     var i4;
     var j;
@@ -1805,16 +2286,16 @@ var sortByImpl = function() {
     var c;
     mid = from + (to - from >> 1);
     if (mid - from > 1)
-      mergeFromTo(compare5, fromOrdering, xs2, xs1, from, mid);
+      mergeFromTo(compare6, fromOrdering, xs2, xs1, from, mid);
     if (to - mid > 1)
-      mergeFromTo(compare5, fromOrdering, xs2, xs1, mid, to);
+      mergeFromTo(compare6, fromOrdering, xs2, xs1, mid, to);
     i4 = from;
     j = mid;
     k = from;
     while (i4 < mid && j < to) {
       x = xs2[i4];
       y = xs2[j];
-      c = fromOrdering(compare5(x)(y));
+      c = fromOrdering(compare6(x)(y));
       if (c > 0) {
         xs1[k++] = y;
         ++j;
@@ -1830,14 +2311,14 @@ var sortByImpl = function() {
       xs1[k++] = xs2[j++];
     }
   }
-  return function(compare5) {
+  return function(compare6) {
     return function(fromOrdering) {
       return function(xs) {
         var out;
         if (xs.length < 2)
           return xs;
         out = xs.slice(0);
-        mergeFromTo(compare5, fromOrdering, out, xs.slice(0), 0, xs.length);
+        mergeFromTo(compare6, fromOrdering, out, xs.slice(0), 0, xs.length);
         return out;
       };
     };
@@ -1846,7 +2327,7 @@ var sortByImpl = function() {
 
 // output/Data.Array.ST/foreign.js
 var sortByImpl2 = function() {
-  function mergeFromTo(compare5, fromOrdering, xs1, xs2, from, to) {
+  function mergeFromTo(compare6, fromOrdering, xs1, xs2, from, to) {
     var mid;
     var i4;
     var j;
@@ -1856,16 +2337,16 @@ var sortByImpl2 = function() {
     var c;
     mid = from + (to - from >> 1);
     if (mid - from > 1)
-      mergeFromTo(compare5, fromOrdering, xs2, xs1, from, mid);
+      mergeFromTo(compare6, fromOrdering, xs2, xs1, from, mid);
     if (to - mid > 1)
-      mergeFromTo(compare5, fromOrdering, xs2, xs1, mid, to);
+      mergeFromTo(compare6, fromOrdering, xs2, xs1, mid, to);
     i4 = from;
     j = mid;
     k = from;
     while (i4 < mid && j < to) {
       x = xs2[i4];
       y = xs2[j];
-      c = fromOrdering(compare5(x)(y));
+      c = fromOrdering(compare6(x)(y));
       if (c > 0) {
         xs1[k++] = y;
         ++j;
@@ -1881,13 +2362,13 @@ var sortByImpl2 = function() {
       xs1[k++] = xs2[j++];
     }
   }
-  return function(compare5) {
+  return function(compare6) {
     return function(fromOrdering) {
       return function(xs) {
         return function() {
           if (xs.length < 2)
             return xs;
-          mergeFromTo(compare5, fromOrdering, xs, xs.slice(0), 0, xs.length);
+          mergeFromTo(compare6, fromOrdering, xs, xs.slice(0), 0, xs.length);
           return xs;
         };
       };
@@ -1897,6 +2378,32 @@ var sortByImpl2 = function() {
 
 // output/Data.Array/index.js
 var fold1 = /* @__PURE__ */ fold(foldableArray);
+var sortBy = function(comp) {
+  return sortByImpl(comp)(function(v) {
+    if (v instanceof GT) {
+      return 1;
+    }
+    ;
+    if (v instanceof EQ) {
+      return 0;
+    }
+    ;
+    if (v instanceof LT) {
+      return -1 | 0;
+    }
+    ;
+    throw new Error("Failed pattern match at Data.Array (line 829, column 31 - line 832, column 11): " + [v.constructor.name]);
+  });
+};
+var index2 = /* @__PURE__ */ function() {
+  return indexImpl(Just.create)(Nothing.value);
+}();
+var last = function(xs) {
+  return index2(xs)(length3(xs) - 1 | 0);
+};
+var fromFoldable = function(dictFoldable) {
+  return fromFoldableImpl(foldr(dictFoldable));
+};
 var fold2 = function(dictMonoid) {
   return fold1(dictMonoid);
 };
@@ -2082,7 +2589,7 @@ var KickUp = /* @__PURE__ */ function() {
   };
   return KickUp2;
 }();
-var singleton4 = function(k) {
+var singleton5 = function(k) {
   return function(v) {
     return new Two(Leaf.value, k, v, Leaf.value);
   };
@@ -2116,12 +2623,12 @@ var toUnfoldable2 = function(dictUnfoldable) {
           }
           ;
           if (v.value0 instanceof Two) {
-            $copy_v = new Cons(v.value0.value0, new Cons(singleton4(v.value0.value1)(v.value0.value2), new Cons(v.value0.value3, v.value1)));
+            $copy_v = new Cons(v.value0.value0, new Cons(singleton5(v.value0.value1)(v.value0.value2), new Cons(v.value0.value3, v.value1)));
             return;
           }
           ;
           if (v.value0 instanceof Three) {
-            $copy_v = new Cons(v.value0.value0, new Cons(singleton4(v.value0.value1)(v.value0.value2), new Cons(v.value0.value3, new Cons(singleton4(v.value0.value4)(v.value0.value5), new Cons(v.value0.value6, v.value1)))));
+            $copy_v = new Cons(v.value0.value0, new Cons(singleton5(v.value0.value1)(v.value0.value2), new Cons(v.value0.value3, new Cons(singleton5(v.value0.value4)(v.value0.value5), new Cons(v.value0.value6, v.value1)))));
             return;
           }
           ;
@@ -2140,8 +2647,9 @@ var toUnfoldable2 = function(dictUnfoldable) {
     return unfoldr2(go)(new Cons(m, Nil.value));
   };
 };
+var toAscArray = /* @__PURE__ */ toUnfoldable2(unfoldableArray);
 var lookup = function(dictOrd) {
-  var compare5 = compare(dictOrd);
+  var compare6 = compare(dictOrd);
   return function(k) {
     var go = function($copy_v) {
       var $tco_done = false;
@@ -2153,7 +2661,7 @@ var lookup = function(dictOrd) {
         }
         ;
         if (v instanceof Two) {
-          var v2 = compare5(k)(v.value1);
+          var v2 = compare6(k)(v.value1);
           if (v2 instanceof EQ) {
             $tco_done = true;
             return new Just(v.value2);
@@ -2169,13 +2677,13 @@ var lookup = function(dictOrd) {
         }
         ;
         if (v instanceof Three) {
-          var v3 = compare5(k)(v.value1);
+          var v3 = compare6(k)(v.value1);
           if (v3 instanceof EQ) {
             $tco_done = true;
             return new Just(v.value2);
           }
           ;
-          var v4 = compare5(k)(v.value4);
+          var v4 = compare6(k)(v.value4);
           if (v4 instanceof EQ) {
             $tco_done = true;
             return new Just(v.value5);
@@ -2291,7 +2799,7 @@ var fromZipper = function($copy_dictOrd) {
 };
 var insert = function(dictOrd) {
   var fromZipper1 = fromZipper(dictOrd);
-  var compare5 = compare(dictOrd);
+  var compare6 = compare(dictOrd);
   return function(k) {
     return function(v) {
       var up = function($copy_v1) {
@@ -2359,7 +2867,7 @@ var insert = function(dictOrd) {
             }
             ;
             if (v1 instanceof Two) {
-              var v2 = compare5(k)(v1.value1);
+              var v2 = compare6(k)(v1.value1);
               if (v2 instanceof EQ) {
                 $tco_done1 = true;
                 return fromZipper1(ctx)(new Two(v1.value0, k, v, v1.value3));
@@ -2377,13 +2885,13 @@ var insert = function(dictOrd) {
             }
             ;
             if (v1 instanceof Three) {
-              var v3 = compare5(k)(v1.value1);
+              var v3 = compare6(k)(v1.value1);
               if (v3 instanceof EQ) {
                 $tco_done1 = true;
                 return fromZipper1(ctx)(new Three(v1.value0, k, v, v1.value3, v1.value4, v1.value5, v1.value6));
               }
               ;
-              var v4 = compare5(k)(v1.value4);
+              var v4 = compare6(k)(v1.value4);
               if (v4 instanceof EQ) {
                 $tco_done1 = true;
                 return fromZipper1(ctx)(new Three(v1.value0, v1.value1, v1.value2, v1.value3, k, v, v1.value6));
@@ -2558,10 +3066,23 @@ var keys = /* @__PURE__ */ function() {
 var values = /* @__PURE__ */ function() {
   return foldr(foldableMap)(Cons.create)(Nil.value);
 }();
+var eqMap = function(dictEq) {
+  var eqTuple2 = eqTuple(dictEq);
+  return function(dictEq1) {
+    var eq14 = eq(eqArray(eqTuple2(dictEq1)));
+    return {
+      eq: function(m1) {
+        return function(m2) {
+          return eq14(toAscArray(m1))(toAscArray(m2));
+        };
+      }
+    };
+  };
+};
 var empty2 = /* @__PURE__ */ function() {
   return Leaf.value;
 }();
-var fromFoldable = function(dictOrd) {
+var fromFoldable2 = function(dictOrd) {
   var insert1 = insert(dictOrd);
   return function(dictFoldable) {
     return foldl(dictFoldable)(function(m) {
@@ -2586,6 +3107,16 @@ var toUnfoldable3 = function(dictUnfoldable) {
   };
 };
 var fromMap = $$Set;
+var eqSet = function(dictEq) {
+  var eq6 = eq(eqMap(dictEq)(eqUnit));
+  return {
+    eq: function(v) {
+      return function(v1) {
+        return eq6(v)(v1);
+      };
+    }
+  };
+};
 
 // output/Data.Map/index.js
 var keys2 = /* @__PURE__ */ function() {
@@ -2594,29 +3125,6 @@ var keys2 = /* @__PURE__ */ function() {
     return fromMap($38($39));
   };
 }();
-
-// output/Effect.Exception/foreign.js
-function error(msg) {
-  return new Error(msg);
-}
-function throwException(e) {
-  return function() {
-    throw e;
-  };
-}
-
-// output/Effect.Unsafe/foreign.js
-var unsafePerformEffect = function(f) {
-  return f();
-};
-
-// output/Effect.Exception.Unsafe/index.js
-var unsafeThrowException = function($1) {
-  return unsafePerformEffect(throwException($1));
-};
-var unsafeThrow = function($2) {
-  return unsafeThrowException(error($2));
-};
 
 // output/TaxRate/index.js
 var zeroRate = function(dict) {
@@ -2696,6 +3204,23 @@ var times = function(dict) {
   return dict.times;
 };
 var taxableAsIncome = coerce2;
+var roundHalfUp = function($134) {
+  return toNumber(round2($134));
+};
+var nonZeroImpl = function() {
+  return function(m) {
+    return coerce2(m) !== 0;
+  };
+};
+var hasNonZeroIncomeThreshold = {
+  nonZero: /* @__PURE__ */ nonZeroImpl(),
+  Coercible0: function() {
+    return void 0;
+  }
+};
+var nonZero = function(dict) {
+  return dict.nonZero;
+};
 var noMoneyImpl = function(dictMonoid) {
   return mempty(dictMonoid);
 };
@@ -2716,6 +3241,12 @@ var mulImpl = function() {
   };
 };
 var mulImpl1 = /* @__PURE__ */ mulImpl();
+var hasMulDeduction = {
+  mul: mulImpl1,
+  Coercible0: function() {
+    return void 0;
+  }
+};
 var hasMulIncome = {
   mul: mulImpl1,
   Coercible0: function() {
@@ -2786,6 +3317,27 @@ var isBelow = function(i4) {
     return lessThan1(coerce2(i4))(coerce2(it));
   };
 };
+var inflateThreshold = function(factor) {
+  return function(threshold) {
+    return coerce2(roundHalfUp(coerce2(threshold) * factor));
+  };
+};
+var divideImpl = function() {
+  return function(left) {
+    return function(right) {
+      return coerce2(left) / coerce2(right);
+    };
+  };
+};
+var hasDivideIncomeThreshold = {
+  divide: /* @__PURE__ */ divideImpl(),
+  Coercible0: function() {
+    return void 0;
+  }
+};
+var divide = function(dict) {
+  return dict.divide;
+};
 var divInt = function(ti) {
   return function(i4) {
     return coerce2(coerce2(ti) / toNumber(i4));
@@ -2840,15 +3392,22 @@ var amountOverThreshold = function(dict) {
 };
 
 // output/Brackets/index.js
+var toUnfoldable4 = /* @__PURE__ */ toUnfoldable2(unfoldableArray);
 var toUnfoldable1 = /* @__PURE__ */ toUnfoldable3(unfoldableList);
 var bind2 = /* @__PURE__ */ bind(bindMaybe);
 var find3 = /* @__PURE__ */ find(foldableList);
-var fromJust5 = /* @__PURE__ */ fromJust();
+var fromJust7 = /* @__PURE__ */ fromJust();
+var map1 = /* @__PURE__ */ map(functorMap);
 var makeFromInt2 = /* @__PURE__ */ makeFromInt(hasMakeFromIntIncomeThres);
 var map22 = /* @__PURE__ */ map(functorArray);
+var toPairs = function(dictTaxRate) {
+  return function(brackets) {
+    return toUnfoldable4(brackets);
+  };
+};
 var safeBracketWidth = function(dictTaxRate) {
   var Ord0 = dictTaxRate.Ord0();
-  var eq5 = eq(Ord0.Eq0());
+  var eq6 = eq(Ord0.Eq0());
   var lookup4 = lookup(Ord0);
   return function(brackets) {
     return function(rate) {
@@ -2856,7 +3415,7 @@ var safeBracketWidth = function(dictTaxRate) {
       return bind2(tail(rates))(function(ratesTail) {
         var pairs = zip(rates)(ratesTail);
         return bind2(find3(function(p) {
-          return eq5(fst(p))(rate);
+          return eq6(fst(p))(rate);
         })(pairs))(function(pair) {
           var successor = snd(pair);
           return bind2(lookup4(rate)(brackets))(function(rateStart) {
@@ -2869,8 +3428,13 @@ var safeBracketWidth = function(dictTaxRate) {
     };
   };
 };
+var inflateThresholds = function(dictTaxRate) {
+  return function(factor) {
+    return map1(inflateThreshold(factor));
+  };
+};
 var fromRPairs = function(dictTaxRate) {
-  var fromFoldable12 = fromFoldable(dictTaxRate.Ord0())(foldableArray);
+  var fromFoldable12 = fromFoldable2(dictTaxRate.Ord0())(foldableArray);
   return function(tuples) {
     return function(mkRate) {
       var f = function(v) {
@@ -2884,7 +3448,7 @@ var bracketWidth = function(dictTaxRate) {
   var safeBracketWidth1 = safeBracketWidth(dictTaxRate);
   return function(brackets) {
     return function(rate) {
-      return fromJust5(safeBracketWidth1(brackets)(rate));
+      return fromJust7(safeBracketWidth1(brackets)(rate));
     };
   };
 };
@@ -2914,15 +3478,16 @@ var i = function(dictInterp) {
 
 // output/Federal.FederalTaxRate/index.js
 var i2 = /* @__PURE__ */ i(/* @__PURE__ */ interpStringFunction(/* @__PURE__ */ interpStringFunction(interpString)));
-var show2 = /* @__PURE__ */ show(showNumber);
+var show3 = /* @__PURE__ */ show(showNumber);
 var ordFederalTaxRate = ordNumber;
+var eqFederalTaxRate = eqNumber;
 var mkFederalTaxRate = function(d) {
   if (d < 0) {
-    return unsafeThrow(i2("Invalid FederalTaxRate ")(show2(d)));
+    return unsafeThrow(i2("Invalid FederalTaxRate ")(show3(d)));
   }
   ;
   if (d > 0.9) {
-    return unsafeThrow(i2("Invalid FederalTaxRate ")(show2(d)));
+    return unsafeThrow(i2("Invalid FederalTaxRate ")(show3(d)));
   }
   ;
   if (otherwise) {
@@ -2948,8 +3513,8 @@ var taxRateFederalTaxRate = {
 
 // output/TaxFunction/index.js
 var amountOverThreshold2 = /* @__PURE__ */ amountOverThreshold(hasAmountOverThresholdTax);
-var toUnfoldable4 = /* @__PURE__ */ toUnfoldable2(unfoldableList);
-var map4 = /* @__PURE__ */ map(functorList);
+var toUnfoldable5 = /* @__PURE__ */ toUnfoldable2(unfoldableList);
+var map5 = /* @__PURE__ */ map(functorList);
 var mempty2 = /* @__PURE__ */ mempty(monoidIncomeThreshold);
 var fold3 = /* @__PURE__ */ fold(foldableList)(/* @__PURE__ */ monoidFn(monoidTaxPayable));
 var thresholdTaxFunction = function(dictTaxRate) {
@@ -2966,9 +3531,9 @@ var rateDeltasForBrackets = function(dictTaxRate) {
   var absoluteDifference2 = absoluteDifference(dictTaxRate);
   var zeroRate2 = zeroRate(dictTaxRate);
   return function(brackets) {
-    var pairs = toUnfoldable4(brackets);
-    var rates = map4(fst)(pairs);
-    var thresholds = map4(snd)(pairs);
+    var pairs = toUnfoldable5(brackets);
+    var rates = map5(fst)(pairs);
+    var thresholds = map5(snd)(pairs);
     var deltas = zipWith(absoluteDifference2)(new Cons(zeroRate2, rates))(rates);
     return zip(thresholds)(deltas);
   };
@@ -2981,43 +3546,63 @@ var bracketsTaxFunction = function(dictTaxRate) {
   var thresholdTaxFunction1 = thresholdTaxFunction(dictTaxRate);
   return function(brackets) {
     var pairs = rateDeltasForBrackets1(brackets);
-    var taxFuncs = map4(uncurry(thresholdTaxFunction1))(pairs);
+    var taxFuncs = map5(uncurry(thresholdTaxFunction1))(pairs);
     return fold3(taxFuncs);
   };
 };
 
 // output/Federal.OrdinaryBrackets/index.js
+var toPairs1 = /* @__PURE__ */ toPairs(taxRateFederalTaxRate);
 var coerce3 = /* @__PURE__ */ coerce();
 var bracketsTaxFunction2 = /* @__PURE__ */ bracketsTaxFunction(taxRateFederalTaxRate);
 var bracketWidth2 = /* @__PURE__ */ bracketWidth(taxRateFederalTaxRate);
+var inflateThresholds1 = /* @__PURE__ */ inflateThresholds(taxRateFederalTaxRate);
 var fromRPairs1 = /* @__PURE__ */ fromRPairs(taxRateFederalTaxRate);
+var toPairs2 = function(v) {
+  return toPairs1(v);
+};
 var taxFunctionFor = function(v) {
   return bracketsTaxFunction2(v);
 };
 var ordinaryIncomeBracketWidth = function(brackets) {
   return bracketWidth2(coerce3(brackets));
 };
+var inflateThresholds2 = function(factor) {
+  return function(v) {
+    return coerce3(inflateThresholds1(factor)(v));
+  };
+};
 var fromRPairs2 = function(pairs) {
   return coerce3(fromRPairs1(pairs)(mkFederalTaxRate));
 };
 
 // output/Federal.QualifiedBrackets/index.js
+var toPairs12 = /* @__PURE__ */ toPairs(taxRateFederalTaxRate);
 var coerce4 = /* @__PURE__ */ coerce();
 var bracketsTaxFunction3 = /* @__PURE__ */ bracketsTaxFunction(taxRateFederalTaxRate);
-var fromJust6 = /* @__PURE__ */ fromJust();
+var fromJust8 = /* @__PURE__ */ fromJust();
+var inflateThresholds12 = /* @__PURE__ */ inflateThresholds(taxRateFederalTaxRate);
 var fromRPairs12 = /* @__PURE__ */ fromRPairs(taxRateFederalTaxRate);
+var toPairs3 = function(v) {
+  return toPairs12(v);
+};
 var taxFunctionFor2 = function(v) {
   return bracketsTaxFunction3(v);
 };
 var startOfNonZeroQualifiedRateBracket = function(v) {
-  return fromJust6(index(values(v))(1));
+  return fromJust8(index(values(v))(1));
+};
+var inflateThresholds3 = function(factor) {
+  return function(v) {
+    return coerce4(inflateThresholds12(factor)(v));
+  };
 };
 var fromRPairs3 = function(pairs) {
   return coerce4(fromRPairs12(pairs)(mkFederalTaxRate));
 };
 
 // output/Federal.Regime/index.js
-var fromJust7 = /* @__PURE__ */ fromJust();
+var fromJust9 = /* @__PURE__ */ fromJust();
 var Trump = /* @__PURE__ */ function() {
   function Trump2() {
   }
@@ -3046,23 +3631,38 @@ var readRegime = {
   }
 };
 var read5 = /* @__PURE__ */ read(readRegime);
+var eqRegime = {
+  eq: function(x) {
+    return function(y) {
+      if (x instanceof Trump && y instanceof Trump) {
+        return true;
+      }
+      ;
+      if (x instanceof PreTrump && y instanceof PreTrump) {
+        return true;
+      }
+      ;
+      return false;
+    };
+  }
+};
 var unsafeReadRegime = function(s) {
-  return fromJust7(read5(s));
+  return fromJust9(read5(s));
 };
 
 // output/UnsafeDates/index.js
-var fromJust8 = /* @__PURE__ */ fromJust();
+var fromJust10 = /* @__PURE__ */ fromJust();
 var toEnum4 = /* @__PURE__ */ toEnum(boundedEnumYear);
 var toEnum1 = /* @__PURE__ */ toEnum(boundedEnumMonth);
 var toEnum22 = /* @__PURE__ */ toEnum(boundedEnumDay);
 var unsafeMakeYear = function(i4) {
-  return fromJust8(toEnum4(i4));
+  return fromJust10(toEnum4(i4));
 };
 var unsafeMakeMonth = function(i4) {
-  return fromJust8(toEnum1(i4));
+  return fromJust10(toEnum1(i4));
 };
 var unsafeMakeDay = function(i4) {
-  return fromJust8(toEnum22(i4));
+  return fromJust10(toEnum22(i4));
 };
 var unsafeMakeDate = function(y) {
   return function(m) {
@@ -3472,34 +4072,158 @@ var values8 = /* @__PURE__ */ function() {
 }();
 
 // output/Federal.Yearly.YearlyValues/index.js
-var fromFoldable1 = /* @__PURE__ */ fromFoldable(ordYear);
-var fromJust9 = /* @__PURE__ */ fromJust();
+var nonZero2 = /* @__PURE__ */ nonZero(hasNonZeroIncomeThreshold);
+var bind3 = /* @__PURE__ */ bind(bindArray);
+var pure2 = /* @__PURE__ */ pure(applicativeArray);
+var fromFoldable3 = /* @__PURE__ */ fromFoldable2(/* @__PURE__ */ ordTuple(ordFilingStatus)(ordFederalTaxRate))(foldableArray);
+var eq5 = /* @__PURE__ */ eq(/* @__PURE__ */ eqSet(/* @__PURE__ */ eqTuple(eqFilingStatus)(eqFederalTaxRate)));
+var fromFoldable1 = /* @__PURE__ */ fromFoldable2(ordYear);
+var fromJust11 = /* @__PURE__ */ fromJust();
 var lookup2 = /* @__PURE__ */ lookup(ordYear);
+var compare5 = /* @__PURE__ */ compare(ordYear);
+var lessThan2 = /* @__PURE__ */ lessThan(ordYear);
+var eq13 = /* @__PURE__ */ eq(eqRegime);
+var toUnfoldable6 = /* @__PURE__ */ toUnfoldable2(unfoldableList);
+var map6 = /* @__PURE__ */ map(functorList);
+var append2 = /* @__PURE__ */ append(semigroupList);
+var divide2 = /* @__PURE__ */ divide(hasDivideIncomeThreshold);
+var foldl4 = /* @__PURE__ */ foldl(foldableList);
+var hasNonZeroThreshold = function(v) {
+  return nonZero2(v.value1);
+};
+var ordinaryNonZeroThresholdsMap = function(yv) {
+  var pairs = bind3([Single.value, HeadOfHousehold.value, Married.value])(function(fs) {
+    var obs = yv.ordinaryBrackets(fs);
+    return bind3(filter(hasNonZeroThreshold)(toPairs2(obs)))(function(v) {
+      return pure2(new Tuple(new Tuple(fs, v.value0), v.value1));
+    });
+  });
+  return fromFoldable3(pairs);
+};
+var haveCongruentOrdinaryBrackets = function(left) {
+  return function(right) {
+    return eq5(keys2(ordinaryNonZeroThresholdsMap(left)))(keys2(ordinaryNonZeroThresholdsMap(right)));
+  };
+};
+var qualifiedNonZeroThresholdsMap = function(yv) {
+  var pairs = bind3([Single.value, HeadOfHousehold.value, Married.value])(function(fs) {
+    var qbs = yv.qualifiedBrackets(fs);
+    return bind3(filter(hasNonZeroThreshold)(toPairs3(qbs)))(function(v) {
+      return pure2(new Tuple(new Tuple(fs, v.value0), v.value1));
+    });
+  });
+  return fromFoldable3(pairs);
+};
+var haveCongruentQualifiedBrackets = function(left) {
+  return function(right) {
+    return eq5(keys2(qualifiedNonZeroThresholdsMap(left)))(keys2(qualifiedNonZeroThresholdsMap(right)));
+  };
+};
 var forYear = /* @__PURE__ */ function() {
   return fromFoldable1(foldableArray)(map(functorArray)(function(v) {
     return new Tuple(unsafeMakeYear(v.value0), v.value1);
   })([new Tuple(2016, values2), new Tuple(2017, values3), new Tuple(2018, values4), new Tuple(2019, values5), new Tuple(2020, values6), new Tuple(2021, values7), new Tuple(2022, values8)]));
 }();
 var unsafeValuesForYear = function(y) {
-  return fromJust9(lookup2(y)(forYear));
+  return fromJust11(lookup2(y)(forYear));
+};
+var valuesAscendingByYear = /* @__PURE__ */ function() {
+  var cmp = function(yv1) {
+    return function(yv2) {
+      return compare5(yv1.year)(yv2.year);
+    };
+  };
+  return sortBy(cmp)(fromFoldable(foldableList)(values(forYear)));
+}();
+var mostRecent = /* @__PURE__ */ fromJust11(/* @__PURE__ */ last(valuesAscendingByYear));
+var yearIsFuture = function(y) {
+  return lessThan2(mostRecent.year)(y);
+};
+var valuesAscendingByYearForRegime = function(reg) {
+  return filter(function(yv) {
+    return eq13(yv.regime)(reg);
+  })(valuesAscendingByYear);
+};
+var mostRecentForRegime = function(reg) {
+  return fromJust11(last(valuesAscendingByYearForRegime(reg)));
+};
+var averageThresholdChange = function(left) {
+  return function(right) {
+    var valuesByAscendingKey = function(m) {
+      var orderedEntries = toUnfoldable6(m);
+      return map6(function(v) {
+        return v.value1;
+      })(orderedEntries);
+    };
+    var qualPairs = function() {
+      if (haveCongruentQualifiedBrackets(left)(right)) {
+        return zip(valuesByAscendingKey(qualifiedNonZeroThresholdsMap(left)))(valuesByAscendingKey(qualifiedNonZeroThresholdsMap(right)));
+      }
+      ;
+      if (otherwise) {
+        return Nil.value;
+      }
+      ;
+      throw new Error("Failed pattern match at Federal.Yearly.YearlyValues (line 142, column 5 - line 146, column 29): " + []);
+    }();
+    var ordPairs = function() {
+      if (haveCongruentOrdinaryBrackets(left)(right)) {
+        return zip(valuesByAscendingKey(ordinaryNonZeroThresholdsMap(left)))(valuesByAscendingKey(ordinaryNonZeroThresholdsMap(right)));
+      }
+      ;
+      if (otherwise) {
+        return Nil.value;
+      }
+      ;
+      throw new Error("Failed pattern match at Federal.Yearly.YearlyValues (line 136, column 5 - line 140, column 29): " + []);
+    }();
+    var pairs = append2(ordPairs)(qualPairs);
+    var changes = map6(function(v) {
+      return divide2(v.value1)(v.value0);
+    })(pairs);
+    var changesSum = foldl4(function(x) {
+      return function(y) {
+        return x + y;
+      };
+    })(0)(changes);
+    var averageChange = changesSum / toNumber(length2(changes));
+    return averageChange;
+  };
+};
+var memoizedAverageThresholdChanges = /* @__PURE__ */ function() {
+  var yvs = values(forYear);
+  var yvPairs = zip(yvs)(fromJust11(tail(yvs)));
+  var mapPairs = map6(function(v) {
+    return new Tuple(v.value1.year, averageThresholdChange(v.value0)(v.value1));
+  })(yvPairs);
+  return fromFoldable1(foldableList)(mapPairs);
+}();
+var averageThresholdChangeOverPrevious = function(y) {
+  return lookup2(y)(memoizedAverageThresholdChanges);
 };
 
 // output/Federal.BoundRegime/index.js
-var append2 = /* @__PURE__ */ append(semigroupDeduction);
+var append3 = /* @__PURE__ */ append(semigroupDeduction);
 var noMoney2 = /* @__PURE__ */ noMoney(hasNoMoneyDeduction);
 var times2 = /* @__PURE__ */ times(hasTimesDeduction);
 var max3 = /* @__PURE__ */ max(ordDeduction);
+var mul3 = /* @__PURE__ */ mul2(hasMulDeduction);
+var show4 = /* @__PURE__ */ show(showYear);
+var fromEnum4 = /* @__PURE__ */ fromEnum(boundedEnumYear);
+var bind4 = /* @__PURE__ */ bind(bindList);
+var pure3 = /* @__PURE__ */ pure(applicativeList);
+var foldl5 = /* @__PURE__ */ foldl(foldableList);
 var BoundRegime = function(x) {
   return x;
 };
 var standardDeduction = function(v) {
   return function(birthDate) {
-    return append2(v.unadjustedStandardDeduction)(function() {
-      var $56 = isAge65OrOlder(birthDate)(v.year);
-      if ($56) {
-        return append2(v.adjustmentWhenOver65)(function() {
-          var $57 = isUnmarried(v.filingStatus);
-          if ($57) {
+    return append3(v.unadjustedStandardDeduction)(function() {
+      var $59 = isAge65OrOlder(birthDate)(v.year);
+      if ($59) {
+        return append3(v.adjustmentWhenOver65)(function() {
+          var $60 = isUnmarried(v.filingStatus);
+          if ($60) {
             return v.adjustmentWhenOver65AndSingle;
           }
           ;
@@ -3520,8 +4244,44 @@ var netDeduction = function(br) {
   return function(birthDate) {
     return function(personalExemptions) {
       return function(itemized) {
-        return append2(personalExemptionDeduction(br)(personalExemptions))(max3(itemized)(standardDeduction(br)(birthDate)));
+        return append3(personalExemptionDeduction(br)(personalExemptions))(max3(itemized)(standardDeduction(br)(birthDate)));
       };
+    };
+  };
+};
+var mkBoundRegime = function(r) {
+  return function(y) {
+    return function(fs) {
+      return function(ppe) {
+        return function(uasd) {
+          return function(a65) {
+            return function(a65s) {
+              return function(ob) {
+                return function(qb) {
+                  return {
+                    regime: r,
+                    year: y,
+                    filingStatus: fs,
+                    perPersonExemption: ppe,
+                    unadjustedStandardDeduction: uasd,
+                    adjustmentWhenOver65: a65,
+                    adjustmentWhenOver65AndSingle: a65s,
+                    ordinaryBrackets: ob,
+                    qualifiedBrackets: qb
+                  };
+                };
+              };
+            };
+          };
+        };
+      };
+    };
+  };
+};
+var withEstimatedNetInflationFactor = function(futureYear) {
+  return function(netInflationFactor) {
+    return function(v) {
+      return mkBoundRegime(v.regime)(futureYear)(v.filingStatus)(mul3(v.perPersonExemption)(netInflationFactor))(mul3(v.unadjustedStandardDeduction)(netInflationFactor))(mul3(v.adjustmentWhenOver65)(netInflationFactor))(mul3(v.adjustmentWhenOver65AndSingle)(netInflationFactor))(inflateThresholds2(netInflationFactor)(v.ordinaryBrackets))(inflateThresholds3(netInflationFactor)(v.qualifiedBrackets));
     };
   };
 };
@@ -3541,14 +4301,44 @@ var boundRegimeForKnownYear = function(y) {
     };
   };
 };
+var boundRegimeForFutureYear = function(r) {
+  return function(y) {
+    return function(annualInflationFactor) {
+      return function(fs) {
+        var v = function() {
+          var $66 = yearIsFuture(y);
+          if ($66) {
+            return unit;
+          }
+          ;
+          return unsafeThrow("Year must be in the future: " + show4(y));
+        }();
+        var baseValues = mostRecentForRegime(r);
+        var baseYear = fromEnum4(baseValues.year);
+        var yearsWithInflation = range2(baseYear + 1 | 0)(fromEnum4(y));
+        var inflationFactors = bind4(yearsWithInflation)(function(ywi) {
+          var factor = fromMaybe(annualInflationFactor)(averageThresholdChangeOverPrevious(unsafeMakeYear(ywi)));
+          return pure3(factor);
+        });
+        var netInflationFactor = foldl5(function(a) {
+          return function(b) {
+            return a * b;
+          };
+        })(1)(inflationFactors);
+        var baseRegime = boundRegimeForKnownYear(baseValues.year)(fs);
+        return withEstimatedNetInflationFactor(y)(netInflationFactor)(baseRegime);
+      };
+    };
+  };
+};
 
 // output/Federal.TaxFunctions/index.js
-var append3 = /* @__PURE__ */ append(semigroupTaxableIncome);
+var append4 = /* @__PURE__ */ append(semigroupTaxableIncome);
 var taxDueOnQualifiedIncome = function(brackets) {
   return function(taxableOrdinaryIncome) {
     return function(qualifiedIncome) {
       var taxFunction2 = taxFunctionFor2(brackets);
-      var taxOnBoth = taxFunction2(append3(taxableOrdinaryIncome)(qualifiedIncome));
+      var taxOnBoth = taxFunction2(append4(taxableOrdinaryIncome)(qualifiedIncome));
       var taxOnOrdinary = taxFunction2(taxableOrdinaryIncome);
       return reduceBy(taxOnBoth)(taxOnOrdinary);
     };
@@ -3558,12 +4348,12 @@ var taxDueOnOrdinaryIncome = taxFunctionFor;
 
 // output/Federal.TaxableSocialSecurity/index.js
 var makeFromInt10 = /* @__PURE__ */ makeFromInt(hasMakeFromIntIncome);
-var mul3 = /* @__PURE__ */ mul2(hasMulIncome);
+var mul4 = /* @__PURE__ */ mul2(hasMulIncome);
 var min3 = /* @__PURE__ */ min(ordIncome);
 var amountOverThreshold3 = /* @__PURE__ */ amountOverThreshold(hasAmountOverThresholdInc);
-var append4 = /* @__PURE__ */ append(semigroupIncome);
+var append5 = /* @__PURE__ */ append(semigroupIncome);
 var makeFromInt1 = /* @__PURE__ */ makeFromInt(hasMakeFromIntIncomeThres);
-var fromEnum4 = /* @__PURE__ */ fromEnum(boundedEnumYear);
+var fromEnum5 = /* @__PURE__ */ fromEnum(boundedEnumYear);
 var amountTaxable = function(filingStatus) {
   return function(ssBenefits) {
     return function(relevantIncome) {
@@ -3574,14 +4364,14 @@ var amountTaxable = function(filingStatus) {
           }
           ;
           if (isBelow(combinedIncome2)(v.value1)) {
-            var maxSocSecTaxable = mul3(ssBenefits)(0.5);
-            return min3(mul3(amountOverThreshold3(combinedIncome2)(v.value0))(0.5))(maxSocSecTaxable);
+            var maxSocSecTaxable = mul4(ssBenefits)(0.5);
+            return min3(mul4(amountOverThreshold3(combinedIncome2)(v.value0))(0.5))(maxSocSecTaxable);
           }
           ;
           if (true) {
             var halfMiddleBracketWidth = divInt(thresholdDifference(v.value1)(v.value0))(2);
-            var maxSocSecTaxable = mul3(ssBenefits)(0.85);
-            return min3(append4(taxableAsIncome(halfMiddleBracketWidth))(mul3(amountOverThreshold3(combinedIncome2)(v.value1))(0.85)))(maxSocSecTaxable);
+            var maxSocSecTaxable = mul4(ssBenefits)(0.85);
+            return min3(append5(taxableAsIncome(halfMiddleBracketWidth))(mul4(amountOverThreshold3(combinedIncome2)(v.value1))(0.85)))(maxSocSecTaxable);
           }
           ;
           throw new Error("Failed pattern match at Federal.TaxableSocialSecurity (line 49, column 3 - line 49, column 73): " + [combinedIncome2.constructor.name, v.constructor.name]);
@@ -3617,7 +4407,7 @@ var amountTaxable = function(filingStatus) {
         ;
         throw new Error("Failed pattern match at Federal.TaxableSocialSecurity (line 38, column 9 - line 41, column 26): " + [filingStatus.constructor.name]);
       }());
-      var combinedIncome = append4(relevantIncome)(mul3(ssBenefits)(0.5));
+      var combinedIncome = append5(relevantIncome)(mul4(ssBenefits)(0.5));
       return f(combinedIncome)(new Tuple(lowThreshold, highThreshold));
     };
   };
@@ -3627,17 +4417,17 @@ var amountTaxableInflationAdjusted = function(year) {
     return function(ssBenefits) {
       return function(relevantIncome) {
         var unadjusted = amountTaxable(filingStatus)(ssBenefits)(relevantIncome);
-        var adjustmentFactor = 1 + 0.03 * toNumber(fromEnum4(year) - 2021 | 0);
-        var adjusted = mul3(unadjusted)(adjustmentFactor);
-        return min3(adjusted)(mul3(ssBenefits)(0.85));
+        var adjustmentFactor = 1 + 0.03 * toNumber(fromEnum5(year) - 2021 | 0);
+        var adjusted = mul4(unadjusted)(adjustmentFactor);
+        return min3(adjusted)(mul4(ssBenefits)(0.85));
       };
     };
   };
 };
 
 // output/Federal.Calculator/index.js
-var append5 = /* @__PURE__ */ append(semigroupIncome);
-var append1 = /* @__PURE__ */ append(semigroupTaxPayable);
+var append6 = /* @__PURE__ */ append(semigroupIncome);
+var append12 = /* @__PURE__ */ append(semigroupTaxPayable);
 var makeCalculator = function(br) {
   return function(birthDate) {
     return function(personalExemptions) {
@@ -3645,10 +4435,10 @@ var makeCalculator = function(br) {
         return function(ordinaryIncome) {
           return function(qualifiedIncome) {
             return function(itemized) {
-              var ssRelevantOtherIncome = append5(ordinaryIncome)(qualifiedIncome);
+              var ssRelevantOtherIncome = append6(ordinaryIncome)(qualifiedIncome);
               var taxableSocSec = amountTaxable(br.filingStatus)(socSec)(ssRelevantOtherIncome);
               var netDeds = netDeduction(br)(birthDate)(personalExemptions)(itemized);
-              var taxableOrdinaryIncome = applyDeductions(append5(taxableSocSec)(ordinaryIncome))(netDeds);
+              var taxableOrdinaryIncome = applyDeductions(append6(taxableSocSec)(ordinaryIncome))(netDeds);
               var taxOnOrdinaryIncome = taxDueOnOrdinaryIncome(br.ordinaryBrackets)(taxableOrdinaryIncome);
               var taxOnQualifiedIncome = taxDueOnQualifiedIncome(br.qualifiedBrackets)(taxableOrdinaryIncome)(asTaxable(qualifiedIncome));
               return {
@@ -3697,7 +4487,7 @@ var taxDueForKnownYear = function(year) {
             return function(qualifiedIncome) {
               return function(itemized) {
                 var v = taxResultsForKnownYear(year)(filingStatus)(birthDate)(personalExemptions)(socSec)(ordinaryIncome)(qualifiedIncome)(itemized);
-                return append1(v.taxOnOrdinaryIncome)(v.taxOnQualifiedIncome);
+                return append12(v.taxOnOrdinaryIncome)(v.taxOnQualifiedIncome);
               };
             };
           };
@@ -3708,32 +4498,32 @@ var taxDueForKnownYear = function(year) {
 };
 
 // output/Federal.RMDs/index.js
-var bind3 = /* @__PURE__ */ bind(bindMaybe);
+var bind5 = /* @__PURE__ */ bind(bindMaybe);
 var lookup3 = /* @__PURE__ */ lookup(ordAge);
-var fromJust10 = /* @__PURE__ */ fromJust();
+var fromJust12 = /* @__PURE__ */ fromJust();
 var distributionPeriods = /* @__PURE__ */ function() {
-  return fromFoldable(ordAge)(foldableArray)([new Tuple(70, 27.4), new Tuple(71, 26.5), new Tuple(72, 25.6), new Tuple(73, 24.7), new Tuple(74, 23.8), new Tuple(75, 22.9), new Tuple(76, 22), new Tuple(77, 21.2), new Tuple(78, 20.3), new Tuple(79, 19.5), new Tuple(80, 18.7), new Tuple(81, 17.9), new Tuple(82, 17.1), new Tuple(83, 16.3), new Tuple(84, 15.5), new Tuple(85, 14.8), new Tuple(86, 14.1), new Tuple(87, 13.4), new Tuple(88, 12.7), new Tuple(89, 12), new Tuple(90, 11.4), new Tuple(91, 10.8), new Tuple(92, 10.2), new Tuple(93, 9.6), new Tuple(94, 9.1), new Tuple(95, 8.6), new Tuple(96, 8.1), new Tuple(97, 7.6), new Tuple(98, 7.1), new Tuple(99, 6.7), new Tuple(100, 6.3), new Tuple(101, 5.9), new Tuple(102, 5.5), new Tuple(103, 5.2), new Tuple(104, 4.9), new Tuple(105, 4.5), new Tuple(106, 4.2), new Tuple(107, 3.9), new Tuple(108, 3.7), new Tuple(109, 3.4), new Tuple(110, 3.1), new Tuple(111, 2.9), new Tuple(112, 2.6), new Tuple(113, 2.4), new Tuple(114, 2.1)]);
+  return fromFoldable2(ordAge)(foldableArray)([new Tuple(70, 27.4), new Tuple(71, 26.5), new Tuple(72, 25.6), new Tuple(73, 24.7), new Tuple(74, 23.8), new Tuple(75, 22.9), new Tuple(76, 22), new Tuple(77, 21.2), new Tuple(78, 20.3), new Tuple(79, 19.5), new Tuple(80, 18.7), new Tuple(81, 17.9), new Tuple(82, 17.1), new Tuple(83, 16.3), new Tuple(84, 15.5), new Tuple(85, 14.8), new Tuple(86, 14.1), new Tuple(87, 13.4), new Tuple(88, 12.7), new Tuple(89, 12), new Tuple(90, 11.4), new Tuple(91, 10.8), new Tuple(92, 10.2), new Tuple(93, 9.6), new Tuple(94, 9.1), new Tuple(95, 8.6), new Tuple(96, 8.1), new Tuple(97, 7.6), new Tuple(98, 7.1), new Tuple(99, 6.7), new Tuple(100, 6.3), new Tuple(101, 5.9), new Tuple(102, 5.5), new Tuple(103, 5.2), new Tuple(104, 4.9), new Tuple(105, 4.5), new Tuple(106, 4.2), new Tuple(107, 3.9), new Tuple(108, 3.7), new Tuple(109, 3.4), new Tuple(110, 3.1), new Tuple(111, 2.9), new Tuple(112, 2.6), new Tuple(113, 2.4), new Tuple(114, 2.1)]);
 }();
 var rmdFractionForAge = function(age) {
-  return bind3(lookup3(age)(distributionPeriods))(function(distributionPeriod) {
+  return bind5(lookup3(age)(distributionPeriods))(function(distributionPeriod) {
     return new Just(1 / distributionPeriod);
   });
 };
 var unsafeRmdFractionForAge = function(age) {
-  return fromJust10(rmdFractionForAge(age));
+  return fromJust12(rmdFractionForAge(age));
 };
 
 // output/StateMA.StateMATaxRate/index.js
 var i3 = /* @__PURE__ */ i(/* @__PURE__ */ interpStringFunction(/* @__PURE__ */ interpStringFunction(interpString)));
-var show3 = /* @__PURE__ */ show(showNumber);
+var show5 = /* @__PURE__ */ show(showNumber);
 var ordStateMATaxRate = ordNumber;
 var mkStateMATaxRate = function(d) {
   if (d < 0) {
-    return unsafeThrow(i3("Invalid StaateMARaxRate ")(show3(d)));
+    return unsafeThrow(i3("Invalid StaateMARaxRate ")(show5(d)));
   }
   ;
   if (d > 0.9) {
-    return unsafeThrow(i3("Invalid StaateMARaxRate ")(show3(d)));
+    return unsafeThrow(i3("Invalid StaateMARaxRate ")(show5(d)));
   }
   ;
   if (otherwise) {
@@ -3758,7 +4548,7 @@ var taxRateStateMATaxRate = {
 };
 
 // output/StateMA.Calculator/index.js
-var fromEnum5 = /* @__PURE__ */ fromEnum(boundedEnumYear);
+var fromEnum6 = /* @__PURE__ */ fromEnum(boundedEnumYear);
 var makeFromInt11 = /* @__PURE__ */ makeFromInt(hasMakeFromIntDeduction);
 var fold4 = /* @__PURE__ */ fold2(monoidDeduction);
 var taxRate = function(year) {
@@ -3785,7 +4575,7 @@ var taxRate = function(year) {
     ;
     throw new Error("Failed pattern match at StateMA.Calculator (line 19, column 3 - line 24, column 23): " + [i4.constructor.name]);
   };
-  return mkStateMATaxRate(selectRate(fromEnum5(year)));
+  return mkStateMATaxRate(selectRate(fromEnum6(year)));
 };
 var taxFunction = /* @__PURE__ */ function() {
   var $14 = flatTaxFunction(taxRateStateMATaxRate);
@@ -3840,8 +4630,8 @@ var maStateTaxDue = taxDue;
 // Note: This file must be loaded AFTER the code compiled from Purescript.
 
 /**
- * Standard deduction for a given year and filing status.
- * Example: KTL_STD_DEDUCTION(2022, 'HeadOfHousehold')
+ * Standard deduction for a known year and filing status.
+ * Example: KTL_STD_DEDUCTION(2022, 'HeadOfHousehold', 1955-10-02)
  *
  * @param {number} yearAsNumber 
  * @param {string} filingStatusName 
@@ -3850,9 +4640,34 @@ var maStateTaxDue = taxDue;
  * @customfunction
  */
 function KTL_STD_DEDUCTION(yearAsNumber, filingStatusName, birthDateAsObject) {
-  const br = bindRegime(yearAsNumber, filingStatusName); 
+  const year = unsafeMakeYear(yearAsNumber);
+  const filingStatus = unsafeReadFilingStatus(filingStatusName);
   const birthDate = toPurescriptDate(birthDateAsObject);
 
+  const br = boundRegimeForKnownYear(year)(filingStatus);  
+  return standardDeduction(br)(birthDate);
+}
+
+/**
+ * Standard deduction for a future year and filing status.
+ * Example: KTL_FUTURE_STD_DEDUCTION('Trump', 3%, 2030, 'HeadOfHousehold')
+ *
+ * @param {string} regimeName 
+ * @param {number} yearAsNumber 
+ * @param {number} inflationDeltaEstimate
+ * @param {string} filingStatusName 
+ * @param {number} birthDateAsObject
+ * @returns The standard deduction
+ * @customfunction
+ */
+ function KTL_FUTURE_STD_DEDUCTION(regimeName, yearAsNumber, inflationDeltaEstimate, filingStatusName, birthDateAsObject) {
+  const regime = unsafeReadRegime(regimeName);
+  const year = unsafeMakeYear(yearAsNumber);
+  const inflationFactorEstimate = 1.0 + inflationDeltaEstimate;
+  const filingStatus = unsafeReadFilingStatus(filingStatusName);
+  const birthDate = toPurescriptDate(birthDateAsObject);
+
+  const br = boundRegimeForFutureYear(regime)(year)(inflationFactorEstimate)(filingStatus);  
   return standardDeduction(br)(birthDate);
 }
 
@@ -3870,6 +4685,7 @@ function KTL_BRACKET_WIDTH(yearAsNumber, filingStatusName, ordinaryRatePercentag
   const br = bindRegime(yearAsNumber, filingStatusName);
   const brackets = br.ordinaryBrackets;
   const rate = ordinaryRatePercentage / 100.0;
+
   return ordinaryIncomeBracketWidth(brackets)(rate);
 }
 
@@ -3901,7 +4717,7 @@ function KTL_RMD_FRACTION_FOR_AGE(age) {
 
 /**
  * The Federal tax due.
- * Example: KTL_FEDERAL_TAX_DUE(2022, 'Single', 10000, 40000, 5000)
+ * Example: KTL_FEDERAL_TAX_DUE(2022, 'Single', 1955-10-02, 0, 10000, 40000, 5000, 0)
  * 
  * @param {number} yearAsNumber 
  * @param {string} filingStatusName 
@@ -3940,7 +4756,7 @@ function KTL_FEDERAL_TAX_DUE(
 
 /**
  * The marginal tax rate.
- * Example: KTL_FEDERAL_TAX_SLOPE(2022, 'Single', 10000, 40000, 5000)
+ * Example: KTL_FEDERAL_TAX_SLOPE(2022, 'Single', 1955-10-02, 0, 10000, 40000, 5000, 0)
  * 
  * @param {number} yearAsNumber 
  * @param {string} filingStatusName 
@@ -4008,7 +4824,7 @@ function KTL_TAXABLE_SOCIAL_SECURITY(filingStatusName, ssRelevantOtherIncome, so
 
 /**
  * The MA state income tax due.
- * Example: KTL_MA_STATE_TAX_DUE(2022, 1, 'Married', 130000)
+ * Example: KTL_MA_STATE_TAX_DUE(2022, 'Married', 1955-10-02, 0, 130000)
  * 
  * @param {number} yearAsNumber 
  * @param {string} filingStatusName 
@@ -4036,6 +4852,7 @@ function KTL_TAXABLE_SOCIAL_SECURITY(filingStatusName, ssRelevantOtherIncome, so
     massachusettsGrossIncome);
 }
 
+// TODO: flush
 // For now use 2022 for future years.
 // TODO: this will have to go.
 function use2022after2022(yearAsNumber) {
@@ -4045,6 +4862,7 @@ function use2022after2022(yearAsNumber) {
     return unsafeMakeYear(2022);
 }
 
+// TODO: flush
 function bindRegime(yearAsNumber, filingStatusName) {
   const filingStatus = unsafeReadFilingStatus(filingStatusName);
 
