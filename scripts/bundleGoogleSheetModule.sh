@@ -1,1 +1,1 @@
-spago bundle-module --main GoogleSheetModule --to GoogleSheetModule.js
+spago bundle-module --main GoogleSheetModule --to dist/GoogleSheetModule.js
