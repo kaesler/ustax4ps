@@ -11,11 +11,9 @@
  * @customfunction
  */
 function KTL_STD_DEDUCTION(yearAsNumber, filingStatusName, birthDateAsObject) {
-  const year = unsafeMakeYear(yearAsNumber);
-  const filingStatus = unsafeReadFilingStatus(filingStatusName);
+  const br = bindRegimeForKnownYear(yearAsNumber, filingStatusName);  
   const birthDate = toPurescriptDate(birthDateAsObject);
 
-  const br = boundRegimeForKnownYear(year)(filingStatus);  
   return standardDeduction(br)(birthDate);
 }
 
@@ -32,13 +30,9 @@ function KTL_STD_DEDUCTION(yearAsNumber, filingStatusName, birthDateAsObject) {
  * @customfunction
  */
  function KTL_FUTURE_STD_DEDUCTION(regimeName, yearAsNumber, inflationDeltaEstimate, filingStatusName, birthDateAsObject) {
-  const regime = unsafeReadRegime(regimeName);
-  const year = unsafeMakeYear(yearAsNumber);
-  const inflationFactorEstimate = 1.0 + inflationDeltaEstimate;
-  const filingStatus = unsafeReadFilingStatus(filingStatusName);
+  const br = bindRegimeForFutureYear(regimeName, yearAsNumber, inflationDeltaEstimate, filingStatusName);  
   const birthDate = toPurescriptDate(birthDateAsObject);
 
-  const br = boundRegimeForFutureYear(regime)(year)(inflationFactorEstimate)(filingStatus);  
   return standardDeduction(br)(birthDate);
 }
 
@@ -53,24 +47,57 @@ function KTL_STD_DEDUCTION(yearAsNumber, filingStatusName, birthDateAsObject) {
  * @customfunction
  */
 function KTL_BRACKET_WIDTH(yearAsNumber, filingStatusName, ordinaryRatePercentage) {
-  const br = bindRegime(yearAsNumber, filingStatusName);
-  const brackets = br.ordinaryBrackets;
+  const br = bindRegimeForKnownYear(yearAsNumber, filingStatusName);  
   const rate = ordinaryRatePercentage / 100.0;
 
-  return ordinaryIncomeBracketWidth(brackets)(rate);
+  return ordinaryIncomeBracketWidth(br.ordinaryBrackets)(rate);
 }
+
+/**
+ * Width of a future ordinary income tax bracket.
+ * Example: KTL_FUTURE_BRACKET_WIDTH('PreTrump', 2030, 'HeadOfHousehold', 10)
+ * 
+ * @param {string} regimeName 
+ * @param {number} yearAsNumber 
+ * @param {number} inflationDeltaEstimate
+ * @param {string} filingStatusName 
+ * @param {number} ordinaryRatePercentage 
+ * @returns The width of the specified bracket.
+ * @customfunction
+ */
+ function KTL_FUTURE_BRACKET_WIDTH(regimeName, yearAsNumber, inflationDeltaEstimate, filingStatusName, ordinaryRatePercentage) {
+  const br = bindRegimeForFutureYear(regimeName, yearAsNumber, inflationDeltaEstimate, filingStatusName);  
+  const rate = ordinaryRatePercentage / 100.0;
+
+  return ordinaryIncomeBracketWidth(br.ordinaryBrackets)(rate);
+}
+
 
 /**
  * Threshold above which long term capital gains are taxed.
  * Example: KTL_LTCG_TAX_START(2022, 'HeadOfHousehold')
  * 
  * @param {number} yearAsNumber 
+
+ */
+function KTL_LTCG_TAX_START(yearAsNumber, filingStatusName) {
+  const br = bindRegimeForKnownYear(yearAsNumber, filingStatusName);  
+  return startOfNonZeroQualifiedRateBracket(br.qualifiedBrackets);
+}
+
+/**
+ * Threshold above which long term capital gains are taxed, for a future year
+ * Example: KTL_LTCG_TAX_START(2022, 'HeadOfHousehold')
+ * 
+ * @param {string} regimeName 
+ * @param {number} yearAsNumber 
+ * @param {number} inflationDeltaEstimate
  * @param {string} filingStatusName 
  * @returns the taxable income threshold.
  * @customfunction
  */
-function KTL_LTCG_TAX_START(yearAsNumber, filingStatusName) {
-  const br = bindRegime(yearAsNumber, filingStatusName);
+ function KTL_FUTURE_LTCG_TAX_START(regimeName, yearAsNumber, inflationDeltaEstimate, filingStatusName) {
+  const br = bindRegimeForFutureYear(regimeName, yearAsNumber, inflationDeltaEstimate, filingStatusName);  
   return startOfNonZeroQualifiedRateBracket(br.qualifiedBrackets);
 }
 
@@ -111,11 +138,12 @@ function KTL_FEDERAL_TAX_DUE(
   qualifiedIncome,
   itemizedDeductions
   ) {
+  const year = unsafeMakeYear(yearAsNumber);
   const filingStatus = unsafeReadFilingStatus(filingStatusName);
   const birthDate = toPurescriptDate(birthDateAsObject);
 
   return taxDueForKnownYear(
-    use2022after2022(yearAsNumber))(
+    year)(
     filingStatus)(
     birthDate)(
     personalExemptions)(
@@ -124,6 +152,55 @@ function KTL_FEDERAL_TAX_DUE(
     qualifiedIncome)(
     itemizedDeductions);
 }
+
+/**
+ * The Federal tax due.
+ * Example: KTL_FUTURE_FEDERAL_TAX_DUE("Trump", 2023, 0.034, 'Single', 1955-10-02, 0, 10000, 40000, 5000, 0)
+ * 
+ * @param {string} regimeName 
+ * @param {number} yearAsNumber 
+ * @param {number} inflationDeltaEstimate
+ * @param {string} filingStatusName 
+ * @param {object} birthDateAsObject
+ * @param {number} personalExemptions
+ * @param {number} socSec 
+ * @param {number} ordinaryIncomeNonSS 
+ * @param {number} qualifiedIncome 
+ * @param {number} itemizedDeductions 
+ * @returns the Federal tax due
+ * @customfunction
+ */
+ function KTL_FUTURE_FEDERAL_TAX_DUE(
+  regimeName,
+  yearAsNumber, 
+  inflationDeltaEstimate,
+  filingStatusName, 
+  birthDateAsObject,
+  personalExemptions, 
+  socSec, 
+  ordinaryIncomeNonSS, 
+  qualifiedIncome,
+  itemizedDeductions
+  ) {
+  const regime = unsafeReadRegime(regimeName);
+  const year = unsafeMakeYear(yearAsNumber);
+  const inflationFactorEstimate = 1.0 + inflationDeltaEstimate;
+  const filingStatus = unsafeReadFilingStatus(filingStatusName);
+  const birthDate = toPurescriptDate(birthDateAsObject);
+
+  return taxDueForFutureYear(
+    regime)(
+    year)(
+    inflationFactorEstimate)(
+    filingStatus)(
+    birthDate)(
+    personalExemptions)(
+    socSec)(
+    ordinaryIncomeNonSS)(
+    qualifiedIncome)(
+    itemizedDeductions);
+}
+
 
 /**
  * The marginal tax rate.
@@ -233,7 +310,22 @@ function use2022after2022(yearAsNumber) {
     return unsafeMakeYear(2022);
 }
 
-// TODO: flush
+function bindRegimeForKnownYear(yearAsNumber, filingStatusName) {
+  const filingStatus = unsafeReadFilingStatus(filingStatusName);
+  const year = unsafeMakeYear(yearAsNumber);
+
+  return boundRegimeForKnownYear(year)(filingStatus);
+}
+
+function bindRegimeForFutureYear(regimeName, yearAsNumber, inflationDeltaEstimate, filingStatusName) {
+  const regime = unsafeReadRegime(regimeName);
+  const year = unsafeMakeYear(yearAsNumber);
+  const inflationFactorEstimate = 1.0 + inflationDeltaEstimate;
+  const filingStatus = unsafeReadFilingStatus(filingStatusName);
+  
+  return boundRegimeForFutureYear(regime)(year)(inflationFactorEstimate)(filingStatus);  
+}
+
 function bindRegime(yearAsNumber, filingStatusName) {
   const filingStatus = unsafeReadFilingStatus(filingStatusName);
 
