@@ -4929,6 +4929,66 @@ function KTL_FEDERAL_TAX_SLOPE(
 }
 
 /**
+ * The marginal tax rate.
+ * Example: KTL_FUTURE_FEDERAL_TAX_SLOPE("Trump", 2023, 0.034, 'Single', 1955-10-02, 0, 10000, 40000, 5000, 0)
+ * 
+ * @param {string} regimeName 
+ * @param {number} yearAsNumber 
+ * @param {number} inflationDeltaEstimate
+ * @param {string} filingStatusName 
+ * @param {object} birthDateAsObject
+ * @param {number} personalExemptions
+ * @param {number} socSec 
+ * @param {number} ordinaryIncomeNonSS 
+ * @param {number} qualifiedIncome 
+ * @param {number} itemizedDeductions 
+ * @returns the marginal tax rate.
+ * @customfunction
+ */
+ function KTL_FUTURE_FEDERAL_TAX_SLOPE(
+  regimeName,
+  yearAsNumber, 
+  inflationDeltaEstimate,
+  filingStatusName, 
+  birthDateAsObject, 
+  personalExemptions,
+  socSec, 
+  ordinaryIncomeNonSS, 
+  qualifiedIncome,
+  itemizedDeductions
+  ) {
+    const deltaX = 1000.0
+
+  const federalTaxAtStart = KTL_FUTURE_FEDERAL_TAX_DUE(
+    regimeName,
+    yearAsNumber, 
+    inflationDeltaEstimate,
+    filingStatusName, 
+    birthDateAsObject,
+    personalExemptions,
+    socSec, 
+    ordinaryIncomeNonSS, 
+    qualifiedIncome,
+    itemizedDeductions
+  );
+  const federalTaxAtEnd = KTL_FUTURE_FEDERAL_TAX_DUE(
+    regimeName,
+    yearAsNumber, 
+    inflationDeltaEstimate,
+    filingStatusName, 
+    birthDateAsObject,
+    personalExemptions,
+    socSec, 
+    ordinaryIncomeNonSS + deltaX, 
+    qualifiedIncome,
+    itemizedDeductions
+  );
+  const deltaY = (federalTaxAtEnd - federalTaxAtStart);
+
+  return deltaY/deltaX;
+}
+
+/**
  * The amount of Social Security income that is taxable.
  * Example: KTL_TAXABLE_SOCIAL_SECURITY('HeadOfHousehold', 20000, 52000)
  * 
