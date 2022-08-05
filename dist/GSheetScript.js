@@ -5023,25 +5023,16 @@ function KTL_TAXABLE_SOCIAL_SECURITY(filingStatusName, ssRelevantOtherIncome, so
   dependents, 
   massachusettsGrossIncome
   ) {
+  const year = unsafeMakeYear(yearAsNumber);
   const filingStatus = unsafeReadFilingStatus(filingStatusName);
   const birthDate = toPurescriptDate(birthDateAsObject);
 
   return maStateTaxDue(
-    use2022after2022(yearAsNumber))(
+    year)(
     filingStatus)(
     birthDate)(
     dependents)(
     massachusettsGrossIncome);
-}
-
-// TODO: flush
-// For now use 2022 for future years.
-// TODO: this will have to go.
-function use2022after2022(yearAsNumber) {
-  if (yearAsNumber <= 2022)
-    return unsafeMakeYear(yearAsNumber);
-  else
-    return unsafeMakeYear(2022);
 }
 
 function bindRegimeForKnownYear(yearAsNumber, filingStatusName) {
@@ -5058,12 +5049,6 @@ function bindRegimeForFutureYear(regimeName, yearAsNumber, inflationDeltaEstimat
   const filingStatus = unsafeReadFilingStatus(filingStatusName);
   
   return boundRegimeForFutureYear(regime)(year)(inflationFactorEstimate)(filingStatus);  
-}
-
-function bindRegime(yearAsNumber, filingStatusName) {
-  const filingStatus = unsafeReadFilingStatus(filingStatusName);
-
-  return boundRegimeForKnownYear(use2022after2022(yearAsNumber))(filingStatus);
 }
 
 function toPurescriptDate(dateObject) {
