@@ -1,8 +1,9 @@
+// JavaScript shim for Purescript code for Taxes In Retirement library.
 // Note: This file must be loaded AFTER the code compiled from Purescript.
 
 /**
  * Standard deduction for a known year and filing status.
- * Example: KTL_STD_DEDUCTION(2022, 'HeadOfHousehold', 1955-10-02)
+ * Example: TIR_STD_DEDUCTION(2022, 'HeadOfHousehold', 1955-10-02)
  *
  * @param {number} yearAsNumber 
  * @param {string} filingStatusName 
@@ -10,7 +11,7 @@
  * @returns The standard deduction
  * @customfunction
  */
-function KTL_STD_DEDUCTION(yearAsNumber, filingStatusName, birthDateAsObject) {
+function TIR_STD_DEDUCTION(yearAsNumber, filingStatusName, birthDateAsObject) {
   const br = bindRegimeForKnownYear(yearAsNumber, filingStatusName);  
   const birthDate = toPurescriptDate(birthDateAsObject);
 
@@ -19,7 +20,7 @@ function KTL_STD_DEDUCTION(yearAsNumber, filingStatusName, birthDateAsObject) {
 
 /**
  * Standard deduction for a future year and filing status.
- * Example: KTL_FUTURE_STD_DEDUCTION('Trump', 3%, 2030, 'HeadOfHousehold', 1955-10-02)
+ * Example: TIR_FUTURE_STD_DEDUCTION('Trump', 3%, 2030, 'HeadOfHousehold', 1955-10-02)
  *
  * @param {string} regimeName 
  * @param {number} yearAsNumber 
@@ -29,7 +30,7 @@ function KTL_STD_DEDUCTION(yearAsNumber, filingStatusName, birthDateAsObject) {
  * @returns The standard deduction
  * @customfunction
  */
-function KTL_FUTURE_STD_DEDUCTION(regimeName, yearAsNumber, inflationDeltaEstimate, filingStatusName, birthDateAsObject) {
+function TIR_FUTURE_STD_DEDUCTION(regimeName, yearAsNumber, inflationDeltaEstimate, filingStatusName, birthDateAsObject) {
   const br = bindRegimeForFutureYear(regimeName, yearAsNumber, inflationDeltaEstimate, filingStatusName);  
   const birthDate = toPurescriptDate(birthDateAsObject);
 
@@ -38,7 +39,7 @@ function KTL_FUTURE_STD_DEDUCTION(regimeName, yearAsNumber, inflationDeltaEstima
 
 /**
  * Width of an ordinary income tax bracket.
- * Example: KTL_BRACKET_WIDTH(2022, 'Single', 10)
+ * Example: TIR_BRACKET_WIDTH(2022, 'Single', 10)
  * 
  * @param {number} yearAsNumber 
  * @param {string} filingStatusName 
@@ -46,7 +47,7 @@ function KTL_FUTURE_STD_DEDUCTION(regimeName, yearAsNumber, inflationDeltaEstima
  * @returns The width of the specified bracket.
  * @customfunction
  */
-function KTL_BRACKET_WIDTH(yearAsNumber, filingStatusName, ordinaryRatePercentage) {
+function TIR_BRACKET_WIDTH(yearAsNumber, filingStatusName, ordinaryRatePercentage) {
   const br = bindRegimeForKnownYear(yearAsNumber, filingStatusName);  
   const rate = ordinaryRatePercentage / 100.0;
 
@@ -55,7 +56,7 @@ function KTL_BRACKET_WIDTH(yearAsNumber, filingStatusName, ordinaryRatePercentag
 
 /**
  * Width of a future ordinary income tax bracket.
- * Example: KTL_FUTURE_BRACKET_WIDTH('PreTrump', 2030, 'HeadOfHousehold', 10)
+ * Example: TIR_FUTURE_BRACKET_WIDTH('PreTrump', 2030, 'HeadOfHousehold', 10)
  * 
  * @param {string} regimeName 
  * @param {number} yearAsNumber 
@@ -65,7 +66,7 @@ function KTL_BRACKET_WIDTH(yearAsNumber, filingStatusName, ordinaryRatePercentag
  * @returns The width of the specified bracket.
  * @customfunction
  */
-function KTL_FUTURE_BRACKET_WIDTH(regimeName, yearAsNumber, inflationDeltaEstimate, filingStatusName, ordinaryRatePercentage) {
+function TIR_FUTURE_BRACKET_WIDTH(regimeName, yearAsNumber, inflationDeltaEstimate, filingStatusName, ordinaryRatePercentage) {
   const br = bindRegimeForFutureYear(regimeName, yearAsNumber, inflationDeltaEstimate, filingStatusName);  
   const rate = ordinaryRatePercentage / 100.0;
 
@@ -75,19 +76,19 @@ function KTL_FUTURE_BRACKET_WIDTH(regimeName, yearAsNumber, inflationDeltaEstima
 
 /**
  * Threshold above which long term capital gains are taxed.
- * Example: KTL_LTCG_TAX_START(2022, 'HeadOfHousehold')
+ * Example: TIR_LTCG_TAX_START(2022, 'HeadOfHousehold')
  * 
  * @param {number} yearAsNumber 
 
  */
-function KTL_LTCG_TAX_START(yearAsNumber, filingStatusName) {
+function TIR_LTCG_TAX_START(yearAsNumber, filingStatusName) {
   const br = bindRegimeForKnownYear(yearAsNumber, filingStatusName);  
   return startOfNonZeroQualifiedRateBracket(br.qualifiedBrackets);
 }
 
 /**
  * Threshold above which long term capital gains are taxed, for a future year
- * Example: KTL_LTCG_TAX_START(2022, 'HeadOfHousehold')
+ * Example: TIR_LTCG_TAX_START(2022, 'HeadOfHousehold')
  * 
  * @param {string} regimeName 
  * @param {number} yearAsNumber 
@@ -96,26 +97,26 @@ function KTL_LTCG_TAX_START(yearAsNumber, filingStatusName) {
  * @returns the taxable income threshold.
  * @customfunction
  */
-function KTL_FUTURE_LTCG_TAX_START(regimeName, yearAsNumber, inflationDeltaEstimate, filingStatusName) {
+function TIR_FUTURE_LTCG_TAX_START(regimeName, yearAsNumber, inflationDeltaEstimate, filingStatusName) {
   const br = bindRegimeForFutureYear(regimeName, yearAsNumber, inflationDeltaEstimate, filingStatusName);  
   return startOfNonZeroQualifiedRateBracket(br.qualifiedBrackets);
 }
 
 /**
  * The RMD fraction for a given age.
- * Example: KTL_RMD_FRACTION_FOR_AGE(76)
+ * Example: TIR_RMD_FRACTION_FOR_AGE(76)
  * 
  * @param {number} age
  * @returns the RMD fraction
  * @customfunction
  */
-function KTL_RMD_FRACTION_FOR_AGE(age) {
+function TIR_RMD_FRACTION_FOR_AGE(age) {
   return unsafeRmdFractionForAge(age);
 }
 
 /**
  * The Federal tax due.
- * Example: KTL_FEDERAL_TAX_DUE(2022, 'Single', 1955-10-02, 0, 10000, 40000, 5000, 0)
+ * Example: TIR_FEDERAL_TAX_DUE(2022, 'Single', 1955-10-02, 0, 10000, 40000, 5000, 0)
  * 
  * @param {number} yearAsNumber 
  * @param {string} filingStatusName 
@@ -128,7 +129,7 @@ function KTL_RMD_FRACTION_FOR_AGE(age) {
  * @returns the Federal tax due
  * @customfunction
  */
-function KTL_FEDERAL_TAX_DUE(
+function TIR_FEDERAL_TAX_DUE(
   yearAsNumber, 
   filingStatusName, 
   birthDateAsObject,
@@ -155,7 +156,7 @@ function KTL_FEDERAL_TAX_DUE(
 
 /**
  * The Federal tax due.
- * Example: KTL_FUTURE_FEDERAL_TAX_DUE("Trump", 2023, 0.034, 'Single', 1955-10-02, 0, 10000, 40000, 5000, 0)
+ * Example: TIR_FUTURE_FEDERAL_TAX_DUE("Trump", 2023, 0.034, 'Single', 1955-10-02, 0, 10000, 40000, 5000, 0)
  * 
  * @param {string} regimeName 
  * @param {number} yearAsNumber 
@@ -170,7 +171,7 @@ function KTL_FEDERAL_TAX_DUE(
  * @returns the Federal tax due
  * @customfunction
  */
-function KTL_FUTURE_FEDERAL_TAX_DUE(
+function TIR_FUTURE_FEDERAL_TAX_DUE(
   regimeName,
   yearAsNumber, 
   inflationDeltaEstimate,
@@ -204,7 +205,7 @@ function KTL_FUTURE_FEDERAL_TAX_DUE(
 
 /**
  * The marginal tax rate.
- * Example: KTL_FEDERAL_TAX_SLOPE(2022, 'Single', 1955-10-02, 0, 10000, 40000, 5000, 0)
+ * Example: TIR_FEDERAL_TAX_SLOPE(2022, 'Single', 1955-10-02, 0, 10000, 40000, 5000, 0)
  * 
  * @param {number} yearAsNumber 
  * @param {string} filingStatusName 
@@ -217,7 +218,7 @@ function KTL_FUTURE_FEDERAL_TAX_DUE(
  * @returns the marginal tax rate.
  * @customfunction
  */
-function KTL_FEDERAL_TAX_SLOPE(
+function TIR_FEDERAL_TAX_SLOPE(
   yearAsNumber, 
   filingStatusName, 
   birthDateAsObject, 
@@ -229,7 +230,7 @@ function KTL_FEDERAL_TAX_SLOPE(
   ) {
     const deltaX = 1000.0
 
-  const federalTaxAtStart = KTL_FEDERAL_TAX_DUE(
+  const federalTaxAtStart = TIR_FEDERAL_TAX_DUE(
     yearAsNumber, 
     filingStatusName, 
     birthDateAsObject,
@@ -239,7 +240,7 @@ function KTL_FEDERAL_TAX_SLOPE(
     qualifiedIncome,
     itemizedDeductions
   );
-  const federalTaxAtEnd = KTL_FEDERAL_TAX_DUE(
+  const federalTaxAtEnd = TIR_FEDERAL_TAX_DUE(
     yearAsNumber, 
     filingStatusName, 
     birthDateAsObject,
@@ -256,7 +257,7 @@ function KTL_FEDERAL_TAX_SLOPE(
 
 /**
  * The marginal tax rate.
- * Example: KTL_FUTURE_FEDERAL_TAX_SLOPE("Trump", 2023, 0.034, 'Single', 1955-10-02, 0, 10000, 40000, 5000, 0)
+ * Example: TIR_FUTURE_FEDERAL_TAX_SLOPE("Trump", 2023, 0.034, 'Single', 1955-10-02, 0, 10000, 40000, 5000, 0)
  * 
  * @param {string} regimeName 
  * @param {number} yearAsNumber 
@@ -271,7 +272,7 @@ function KTL_FEDERAL_TAX_SLOPE(
  * @returns the marginal tax rate.
  * @customfunction
  */
-function KTL_FUTURE_FEDERAL_TAX_SLOPE(
+function TIR_FUTURE_FEDERAL_TAX_SLOPE(
   regimeName,
   yearAsNumber, 
   inflationDeltaEstimate,
@@ -285,7 +286,7 @@ function KTL_FUTURE_FEDERAL_TAX_SLOPE(
   ) {
   const deltaX = 1000.0;
 
-  const federalTaxAtStart = KTL_FUTURE_FEDERAL_TAX_DUE(
+  const federalTaxAtStart = TIR_FUTURE_FEDERAL_TAX_DUE(
     regimeName,
     yearAsNumber, 
     inflationDeltaEstimate,
@@ -297,7 +298,7 @@ function KTL_FUTURE_FEDERAL_TAX_SLOPE(
     qualifiedIncome,
     itemizedDeductions
   );
-  const federalTaxAtEnd = KTL_FUTURE_FEDERAL_TAX_DUE(
+  const federalTaxAtEnd = TIR_FUTURE_FEDERAL_TAX_DUE(
     regimeName,
     yearAsNumber, 
     inflationDeltaEstimate,
@@ -316,7 +317,7 @@ function KTL_FUTURE_FEDERAL_TAX_SLOPE(
 
 /**
  * The amount of Social Security income that is taxable.
- * Example: KTL_TAXABLE_SOCIAL_SECURITY('HeadOfHousehold', 20000, 52000)
+ * Example: TIR_TAXABLE_SOCIAL_SECURITY('HeadOfHousehold', 20000, 52000)
  * 
  * @param {string} filingStatusName 
  * @param {number} ssRelevantOtherIncome 
@@ -324,7 +325,7 @@ function KTL_FUTURE_FEDERAL_TAX_SLOPE(
  * @returns the amount of Social Security income that is taxable
  * @customfunction
  */
-function KTL_TAXABLE_SOCIAL_SECURITY(filingStatusName, ssRelevantOtherIncome, socSec) {
+function TIR_TAXABLE_SOCIAL_SECURITY(filingStatusName, ssRelevantOtherIncome, socSec) {
   const filingStatus = unsafeReadFilingStatus(filingStatusName);
 
   return amountTaxable(filingStatus)(socSec)(ssRelevantOtherIncome);
@@ -332,7 +333,7 @@ function KTL_TAXABLE_SOCIAL_SECURITY(filingStatusName, ssRelevantOtherIncome, so
 
 /**
  * The MA state income tax due.
- * Example: KTL_MA_STATE_TAX_DUE(2022, 'Married', 1955-10-02, 0, 130000)
+ * Example: TIR_MA_STATE_TAX_DUE(2022, 'Married', 1955-10-02, 0, 130000)
  * 
  * @param {number} yearAsNumber 
  * @param {string} filingStatusName 
@@ -342,7 +343,7 @@ function KTL_TAXABLE_SOCIAL_SECURITY(filingStatusName, ssRelevantOtherIncome, so
  * @returns the MA state income tax due.
  * @customfunction
  */
-function KTL_MA_STATE_TAX_DUE(
+function TIR_MA_STATE_TAX_DUE(
   yearAsNumber, 
   filingStatusName, 
   birthDateAsObject, 
