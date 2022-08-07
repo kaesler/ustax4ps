@@ -29,7 +29,7 @@ function KTL_STD_DEDUCTION(yearAsNumber, filingStatusName, birthDateAsObject) {
  * @returns The standard deduction
  * @customfunction
  */
- function KTL_FUTURE_STD_DEDUCTION(regimeName, yearAsNumber, inflationDeltaEstimate, filingStatusName, birthDateAsObject) {
+function KTL_FUTURE_STD_DEDUCTION(regimeName, yearAsNumber, inflationDeltaEstimate, filingStatusName, birthDateAsObject) {
   const br = bindRegimeForFutureYear(regimeName, yearAsNumber, inflationDeltaEstimate, filingStatusName);  
   const birthDate = toPurescriptDate(birthDateAsObject);
 
@@ -65,7 +65,7 @@ function KTL_BRACKET_WIDTH(yearAsNumber, filingStatusName, ordinaryRatePercentag
  * @returns The width of the specified bracket.
  * @customfunction
  */
- function KTL_FUTURE_BRACKET_WIDTH(regimeName, yearAsNumber, inflationDeltaEstimate, filingStatusName, ordinaryRatePercentage) {
+function KTL_FUTURE_BRACKET_WIDTH(regimeName, yearAsNumber, inflationDeltaEstimate, filingStatusName, ordinaryRatePercentage) {
   const br = bindRegimeForFutureYear(regimeName, yearAsNumber, inflationDeltaEstimate, filingStatusName);  
   const rate = ordinaryRatePercentage / 100.0;
 
@@ -96,7 +96,7 @@ function KTL_LTCG_TAX_START(yearAsNumber, filingStatusName) {
  * @returns the taxable income threshold.
  * @customfunction
  */
- function KTL_FUTURE_LTCG_TAX_START(regimeName, yearAsNumber, inflationDeltaEstimate, filingStatusName) {
+function KTL_FUTURE_LTCG_TAX_START(regimeName, yearAsNumber, inflationDeltaEstimate, filingStatusName) {
   const br = bindRegimeForFutureYear(regimeName, yearAsNumber, inflationDeltaEstimate, filingStatusName);  
   return startOfNonZeroQualifiedRateBracket(br.qualifiedBrackets);
 }
@@ -170,7 +170,7 @@ function KTL_FEDERAL_TAX_DUE(
  * @returns the Federal tax due
  * @customfunction
  */
- function KTL_FUTURE_FEDERAL_TAX_DUE(
+function KTL_FUTURE_FEDERAL_TAX_DUE(
   regimeName,
   yearAsNumber, 
   inflationDeltaEstimate,
@@ -271,7 +271,7 @@ function KTL_FEDERAL_TAX_SLOPE(
  * @returns the marginal tax rate.
  * @customfunction
  */
- function KTL_FUTURE_FEDERAL_TAX_SLOPE(
+function KTL_FUTURE_FEDERAL_TAX_SLOPE(
   regimeName,
   yearAsNumber, 
   inflationDeltaEstimate,
@@ -283,7 +283,7 @@ function KTL_FEDERAL_TAX_SLOPE(
   qualifiedIncome,
   itemizedDeductions
   ) {
-    const deltaX = 1000.0
+  const deltaX = 1000.0;
 
   const federalTaxAtStart = KTL_FUTURE_FEDERAL_TAX_DUE(
     regimeName,
@@ -342,7 +342,7 @@ function KTL_TAXABLE_SOCIAL_SECURITY(filingStatusName, ssRelevantOtherIncome, so
  * @returns the MA state income tax due.
  * @customfunction
  */
- function KTL_MA_STATE_TAX_DUE(
+function KTL_MA_STATE_TAX_DUE(
   yearAsNumber, 
   filingStatusName, 
   birthDateAsObject, 
