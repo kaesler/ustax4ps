@@ -2,6 +2,7 @@
 // Note: This file must be loaded AFTER the code compiled from Purescript.
 
 // TODO: validate params in the shim and provide better error messages when invalid.
+// TODO: provide a way to return the results record.
 
 /**
  * Standard deduction for a known year and filing status.
@@ -157,6 +158,49 @@ function TIR_FEDERAL_TAX_DUE(
     qualifiedIncome)(
     itemizedDeductions);
 }
+
+/**
+ * The Federal tax due.
+ * Example: TIR_FEDERAL_TAX_RESULTS(2022, "Single", 1955-10-02, 0, 10000, 40000, 5000, 0)
+ * 
+ * @param {number} year 
+ * @param {string} filingStatus
+ * @param {object} birthDate
+ * @param {number} personalExemptions
+ * @param {number} socSec 
+ * @param {number} ordinaryIncomeNonSS 
+ * @param {number} qualifiedIncome 
+ * @param {number} itemizedDeductions 
+ * @returns {array} the Federal tax results tabulated
+ * @customfunction
+ */
+ function TIR_FEDERAL_TAX_RESULTS(
+  year, 
+  filingStatus, 
+  birthDate,
+  personalExemptions, 
+  socSec, 
+  ordinaryIncomeNonSS, 
+  qualifiedIncome,
+  itemizedDeductions
+  ) {
+  const psYear = unsafeMakeYear(year);
+  const psFilingStatus = unsafeReadFilingStatus(filingStatus);
+  const psBirthDate = toPurescriptDate(birthDate);
+
+  const res = taxResultsForKnownYearAsTable(
+    psYear)(
+    psFilingStatus)(
+    psBirthDate)(
+    personalExemptions)(
+    socSec)(
+    ordinaryIncomeNonSS)(
+    qualifiedIncome)(
+    itemizedDeductions);
+
+  return res;
+}
+
 
 /**
  * The Federal tax due.

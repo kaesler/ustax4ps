@@ -17,7 +17,7 @@ module GoogleSheetModule
 import CommonTypes (BirthDate, FilingStatus(..), unsafeReadFilingStatus)
 import Data.Date (Year)
 import Federal.BoundRegime (BoundRegime(..), boundRegimeForFutureYear, boundRegimeForKnownYear, netDeduction, personalExemptionDeduction, standardDeduction)
-import Federal.Calculator (taxDueForFutureYear, taxDueForKnownYear)
+import Federal.Calculator (taxDueForFutureYear, taxDueForKnownYear, taxResultsForFutureYear, taxResultsForFutureYearAsTable, taxResultsForKnownYearAsTable)
 import Federal.OrdinaryBrackets (ordinaryIncomeBracketWidth)
 import Federal.QualifiedBrackets (startOfNonZeroQualifiedRateBracket)
 import Federal.RMDs (unsafeRmdFractionForAge)

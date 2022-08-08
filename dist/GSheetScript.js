@@ -892,6 +892,14 @@ var find = function(dictFoldable) {
 };
 
 // output/Data.Monoid.Additive/index.js
+var showAdditive = function(dictShow) {
+  var show7 = show(dictShow);
+  return {
+    show: function(v) {
+      return "(Additive " + (show7(v) + ")");
+    }
+  };
+};
 var semigroupAdditive = function(dictSemiring) {
   var add2 = add(dictSemiring);
   return {
@@ -3138,6 +3146,7 @@ var absoluteDifference = function(dict) {
 };
 
 // output/Moneys/index.js
+var showAdditive2 = /* @__PURE__ */ showAdditive(showNumber);
 var semigroupAdditive2 = /* @__PURE__ */ semigroupAdditive(semiringNumber);
 var monoidAdditive2 = /* @__PURE__ */ monoidAdditive(semiringNumber);
 var eq4 = /* @__PURE__ */ eq(/* @__PURE__ */ eqAdditive(eqNumber));
@@ -3146,6 +3155,10 @@ var compare4 = /* @__PURE__ */ compare(ordAdditive2);
 var coerce2 = /* @__PURE__ */ coerce();
 var greaterThan2 = /* @__PURE__ */ greaterThan(ordAdditive2);
 var lessThan1 = /* @__PURE__ */ lessThan(ordAdditive2);
+var showTaxableIncome = showAdditive2;
+var showTaxPayable = showAdditive2;
+var showIncome = showAdditive2;
+var showDeduction = showAdditive2;
 var semigroupTaxableIncome = semigroupAdditive2;
 var semigroupTaxPayable = semigroupAdditive2;
 var semigroupIncome = semigroupAdditive2;
@@ -4426,8 +4439,15 @@ var amountTaxableInflationAdjusted = function(year) {
 };
 
 // output/Federal.Calculator/index.js
-var append6 = /* @__PURE__ */ append(semigroupIncome);
-var append12 = /* @__PURE__ */ append(semigroupTaxPayable);
+var show5 = /* @__PURE__ */ show(showIncome);
+var show1 = /* @__PURE__ */ show(showDeduction);
+var show22 = /* @__PURE__ */ show(showTaxableIncome);
+var show32 = /* @__PURE__ */ show(showTaxPayable);
+var append6 = /* @__PURE__ */ append(semigroupTaxPayable);
+var append12 = /* @__PURE__ */ append(semigroupIncome);
+var resultsAsTable = function(v) {
+  return [["ssRelevantOtherIncome: ", show5(v.ssRelevantOtherIncome)], ["taxableSocSec: ", show5(v.taxableSocSec)], ["finalStandardDeduction: ", show1(v.finalStandardDeduction)], ["finalNetDeduction: ", show1(v.finalNetDeduction)], ["taxableOrdinaryIncome: ", show22(v.taxableOrdinaryIncome)], ["taxOnOrdinaryIncome: ", show32(v.taxOnOrdinaryIncome)], ["taxOnQualifiedIncome: ", show32(v.taxOnQualifiedIncome)], ["result: ", show32(append6(v.taxOnOrdinaryIncome)(v.taxOnQualifiedIncome))]];
+};
 var makeCalculator = function(br) {
   return function(birthDate) {
     return function(personalExemptions) {
@@ -4435,10 +4455,10 @@ var makeCalculator = function(br) {
         return function(ordinaryIncome) {
           return function(qualifiedIncome) {
             return function(itemized) {
-              var ssRelevantOtherIncome = append6(ordinaryIncome)(qualifiedIncome);
+              var ssRelevantOtherIncome = append12(ordinaryIncome)(qualifiedIncome);
               var taxableSocSec = amountTaxable(br.filingStatus)(socSec)(ssRelevantOtherIncome);
               var netDeds = netDeduction(br)(birthDate)(personalExemptions)(itemized);
-              var taxableOrdinaryIncome = applyDeductions(append6(taxableSocSec)(ordinaryIncome))(netDeds);
+              var taxableOrdinaryIncome = applyDeductions(append12(taxableSocSec)(ordinaryIncome))(netDeds);
               var taxOnOrdinaryIncome = taxDueOnOrdinaryIncome(br.ordinaryBrackets)(taxableOrdinaryIncome);
               var taxOnQualifiedIncome = taxDueOnQualifiedIncome(br.qualifiedBrackets)(taxableOrdinaryIncome)(asTaxable(qualifiedIncome));
               return {
@@ -4493,7 +4513,28 @@ var taxDueForFutureYear = function(regime) {
                 return function(qualifiedIncome) {
                   return function(itemized) {
                     var v = taxResultsForFutureYear(regime)(futureYear)(inflationEstimate)(filingStatus)(birthDate)(personalExemptions)(socSec)(ordinaryIncome)(qualifiedIncome)(itemized);
-                    return append12(v.taxOnOrdinaryIncome)(v.taxOnQualifiedIncome);
+                    return append6(v.taxOnOrdinaryIncome)(v.taxOnQualifiedIncome);
+                  };
+                };
+              };
+            };
+          };
+        };
+      };
+    };
+  };
+};
+var taxResultsForFutureYearAsTable = function(reg) {
+  return function(futureYear) {
+    return function(estimate) {
+      return function(filingStatus) {
+        return function(birthDate) {
+          return function(personalExemptions) {
+            return function(socSec) {
+              return function(ordinaryIncome) {
+                return function(qualifiedIncome) {
+                  return function(itemized) {
+                    return resultsAsTable(taxResultsForFutureYear(reg)(futureYear)(estimate)(filingStatus)(birthDate)(personalExemptions)(socSec)(ordinaryIncome)(qualifiedIncome)(itemized));
                   };
                 };
               };
@@ -4532,7 +4573,24 @@ var taxDueForKnownYear = function(year) {
             return function(qualifiedIncome) {
               return function(itemized) {
                 var v = taxResultsForKnownYear(year)(filingStatus)(birthDate)(personalExemptions)(socSec)(ordinaryIncome)(qualifiedIncome)(itemized);
-                return append12(v.taxOnOrdinaryIncome)(v.taxOnQualifiedIncome);
+                return append6(v.taxOnOrdinaryIncome)(v.taxOnQualifiedIncome);
+              };
+            };
+          };
+        };
+      };
+    };
+  };
+};
+var taxResultsForKnownYearAsTable = function(year) {
+  return function(filingStatus) {
+    return function(birthDate) {
+      return function(personalExemptions) {
+        return function(socSec) {
+          return function(ordinaryIncome) {
+            return function(qualifiedIncome) {
+              return function(itemized) {
+                return resultsAsTable(taxResultsForKnownYear(year)(filingStatus)(birthDate)(personalExemptions)(socSec)(ordinaryIncome)(qualifiedIncome)(itemized));
               };
             };
           };
@@ -4560,15 +4618,15 @@ var unsafeRmdFractionForAge = function(age) {
 
 // output/StateMA.StateMATaxRate/index.js
 var i3 = /* @__PURE__ */ i(/* @__PURE__ */ interpStringFunction(/* @__PURE__ */ interpStringFunction(interpString)));
-var show5 = /* @__PURE__ */ show(showNumber);
+var show6 = /* @__PURE__ */ show(showNumber);
 var ordStateMATaxRate = ordNumber;
 var mkStateMATaxRate = function(d) {
   if (d < 0) {
-    return unsafeThrow(i3("Invalid StaateMARaxRate ")(show5(d)));
+    return unsafeThrow(i3("Invalid StaateMARaxRate ")(show6(d)));
   }
   ;
   if (d > 0.9) {
-    return unsafeThrow(i3("Invalid StaateMARaxRate ")(show5(d)));
+    return unsafeThrow(i3("Invalid StaateMARaxRate ")(show6(d)));
   }
   ;
   if (otherwise) {
@@ -4676,6 +4734,7 @@ var maStateTaxDue = taxDue;
 // Note: This file must be loaded AFTER the code compiled from Purescript.
 
 // TODO: validate params in the shim and provide better error messages when invalid.
+// TODO: provide a way to return the results record.
 
 /**
  * Standard deduction for a known year and filing status.
@@ -4831,6 +4890,49 @@ function TIR_FEDERAL_TAX_DUE(
     qualifiedIncome)(
     itemizedDeductions);
 }
+
+/**
+ * The Federal tax due.
+ * Example: TIR_FEDERAL_TAX_RESULTS(2022, "Single", 1955-10-02, 0, 10000, 40000, 5000, 0)
+ * 
+ * @param {number} year 
+ * @param {string} filingStatus
+ * @param {object} birthDate
+ * @param {number} personalExemptions
+ * @param {number} socSec 
+ * @param {number} ordinaryIncomeNonSS 
+ * @param {number} qualifiedIncome 
+ * @param {number} itemizedDeductions 
+ * @returns {array} the Federal tax results tabulated
+ * @customfunction
+ */
+ function TIR_FEDERAL_TAX_RESULTS(
+  year, 
+  filingStatus, 
+  birthDate,
+  personalExemptions, 
+  socSec, 
+  ordinaryIncomeNonSS, 
+  qualifiedIncome,
+  itemizedDeductions
+  ) {
+  const psYear = unsafeMakeYear(year);
+  const psFilingStatus = unsafeReadFilingStatus(filingStatus);
+  const psBirthDate = toPurescriptDate(birthDate);
+
+  const res = taxResultsForKnownYearAsTable(
+    psYear)(
+    psFilingStatus)(
+    psBirthDate)(
+    personalExemptions)(
+    socSec)(
+    ordinaryIncomeNonSS)(
+    qualifiedIncome)(
+    itemizedDeductions);
+
+  return res;
+}
+
 
 /**
  * The Federal tax due.

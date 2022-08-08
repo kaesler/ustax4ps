@@ -6,7 +6,9 @@ module Federal.Calculator
   , taxDueForKnownYear
   , taxDueForKnownYearDebug
   , taxResultsForFutureYear
+  , taxResultsForFutureYearAsTable
   , taxResultsForKnownYear
+  , taxResultsForKnownYearAsTable
   )
   where
 
@@ -23,6 +25,7 @@ import Moneys (Deduction, Income, TaxPayable, TaxableIncome, applyDeductions, as
 import Prelude (class Show, Unit, discard, show, ($), (<>))
 
 type TaxCalculator = SocSec -> OrdinaryIncome -> QualifiedIncome -> ItemizedDeductions -> FederalTaxResults
+type Table = Array (Array String)
 
 makeCalculator :: BoundRegime -> BirthDate -> PersonalExemptions -> TaxCalculator
 makeCalculator br birthDate personalExemptions socSec ordinaryIncome qualifiedIncome itemized =
@@ -73,6 +76,20 @@ taxResultsForKnownYear year filingStatus birthDate personalExemptions socSec ord
   let boundRegime = boundRegimeForKnownYear year filingStatus
       calculator = makeCalculator boundRegime birthDate personalExemptions
    in calculator socSec ordinaryIncome qualifiedIncome itemized
+
+taxResultsForKnownYearAsTable :: 
+  Year ->
+  FilingStatus ->
+  BirthDate ->
+  PersonalExemptions ->
+  SocSec ->
+  OrdinaryIncome ->
+  QualifiedIncome ->
+  ItemizedDeductions ->
+  Table  
+taxResultsForKnownYearAsTable year filingStatus birthDate  personalExemptions socSec ordinaryIncome qualifiedIncome itemized =
+  resultsAsTable $ taxResultsForKnownYear year filingStatus birthDate  personalExemptions socSec ordinaryIncome qualifiedIncome itemized
+
 taxDueForKnownYear ::
   Year ->
   FilingStatus ->
@@ -115,6 +132,21 @@ taxDueForKnownYearDebug year filingStatus birthDate personalExemptions socSec or
         log $ "  taxOnOrdinaryIncome: " <> show r.taxOnOrdinaryIncome
         log $ "  taxOnQualifiedIncome: " <> show r.taxOnQualifiedIncome
         log $ "  result: " <> show (r.taxOnOrdinaryIncome <> r.taxOnQualifiedIncome)
+
+taxResultsForFutureYearAsTable ::
+  Regime ->
+  Year -> 
+  Number ->
+  FilingStatus ->
+  BirthDate ->
+  PersonalExemptions ->
+  SocSec ->
+  OrdinaryIncome ->
+  QualifiedIncome ->
+  ItemizedDeductions ->
+  Table
+taxResultsForFutureYearAsTable reg futureYear estimate filingStatus birthDate personalExemptions socSec ordinaryIncome qualifiedIncome itemized =
+  resultsAsTable $ taxResultsForFutureYear reg futureYear estimate filingStatus birthDate personalExemptions socSec ordinaryIncome qualifiedIncome itemized
 
 taxResultsForFutureYear ::
   Regime ->
@@ -163,3 +195,16 @@ taxDueForFutureYear regime futureYear inflationEstimate filingStatus birthDate p
                                     qualifiedIncome 
                                     itemized
    in results.taxOnOrdinaryIncome <> results.taxOnQualifiedIncome
+
+resultsAsTable :: FederalTaxResults -> Array (Array String)
+resultsAsTable (FederalTaxResults r) = 
+  [
+    ["ssRelevantOtherIncome: ", show r.ssRelevantOtherIncome],
+    ["taxableSocSec: ", show r.taxableSocSec],
+    ["finalStandardDeduction: ", show r.finalStandardDeduction],
+    ["finalNetDeduction: ", show r.finalNetDeduction],
+    ["taxableOrdinaryIncome: ", show r.taxableOrdinaryIncome],
+    ["taxOnOrdinaryIncome: ", show r.taxOnOrdinaryIncome],
+    ["taxOnQualifiedIncome: ", show r.taxOnQualifiedIncome],
+    ["result: ", show (r.taxOnOrdinaryIncome <> r.taxOnQualifiedIncome)]
+  ]
