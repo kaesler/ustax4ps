@@ -4675,54 +4675,56 @@ var maStateTaxDue = taxDue;
 // JavaScript shim for Purescript code for Taxes In Retirement library.
 // Note: This file must be loaded AFTER the code compiled from Purescript.
 
+// TODO: validate params in the shim and provide better error messages when invalid.
+
 /**
  * Standard deduction for a known year and filing status.
- * Example: TIR_STD_DEDUCTION(2022, 'HeadOfHousehold', 1955-10-02)
+ * Example: TIR_STD_DEDUCTION(2022, "HeadOfHousehold", 1955-10-02)
  *
- * @param {number} yearAsNumber 
- * @param {string} filingStatusName 
- * @param {number} birthDateAsObject
- * @returns The standard deduction
+ * @param {number} year
+ * @param {string} filingStatus
+ * @param {object} birthDate
+ * @returns {number} The standard deduction
  * @customfunction
  */
-function TIR_STD_DEDUCTION(yearAsNumber, filingStatusName, birthDateAsObject) {
-  const br = bindRegimeForKnownYear(yearAsNumber, filingStatusName);  
-  const birthDate = toPurescriptDate(birthDateAsObject);
+function TIR_STD_DEDUCTION(year, filingStatus, birthDate) {
+  const br = bindRegimeForKnownYear(year, filingStatus);  
+  const psBirthDate = toPurescriptDate(birthDate);
 
-  return standardDeduction(br)(birthDate);
+  return standardDeduction(br)(psBirthDate);
 }
 
 /**
  * Standard deduction for a future year and filing status.
- * Example: TIR_FUTURE_STD_DEDUCTION('Trump', 3%, 2030, 'HeadOfHousehold', 1955-10-02)
+ * Example: TIR_FUTURE_STD_DEDUCTION("Trump", 3%, 2030, "HeadOfHousehold", 1955-10-02)
  *
- * @param {string} regimeName 
- * @param {number} yearAsNumber 
- * @param {number} inflationDeltaEstimate
- * @param {string} filingStatusName 
- * @param {number} birthDateAsObject
- * @returns The standard deduction
+ * @param {string} regime 
+ * @param {number} year 
+ * @param {number} bracketInflationRate
+ * @param {string} filingStatus 
+ * @param {object} birthDate
+ * @returns {number} The standard deduction
  * @customfunction
  */
-function TIR_FUTURE_STD_DEDUCTION(regimeName, yearAsNumber, inflationDeltaEstimate, filingStatusName, birthDateAsObject) {
-  const br = bindRegimeForFutureYear(regimeName, yearAsNumber, inflationDeltaEstimate, filingStatusName);  
-  const birthDate = toPurescriptDate(birthDateAsObject);
+function TIR_FUTURE_STD_DEDUCTION(regime, year, bracketInflationRate, filingStatus, birthDate) {
+  const br = bindRegimeForFutureYear(regime, year, bracketInflationRate, filingStatus);  
+  const psBirthDate = toPurescriptDate(birthDate);
 
-  return standardDeduction(br)(birthDate);
+  return standardDeduction(br)(psBirthDate);
 }
 
 /**
  * Width of an ordinary income tax bracket.
- * Example: TIR_BRACKET_WIDTH(2022, 'Single', 10)
+ * Example: TIR_ORDINARY_BRACKET_WIDTH(2022, "Single", 10)
  * 
- * @param {number} yearAsNumber 
- * @param {string} filingStatusName 
+ * @param {number} year
+ * @param {string} filingStatus 
  * @param {number} ordinaryRatePercentage 
- * @returns The width of the specified bracket.
+ * @returns {number} The width of the specified ordinary income bracket.
  * @customfunction
  */
-function TIR_BRACKET_WIDTH(yearAsNumber, filingStatusName, ordinaryRatePercentage) {
-  const br = bindRegimeForKnownYear(yearAsNumber, filingStatusName);  
+function TIR_ORDINARY_BRACKET_WIDTH(year, filingStatus, ordinaryRatePercentage) {
+  const br = bindRegimeForKnownYear(year, filingStatus);  
   const rate = ordinaryRatePercentage / 100.0;
 
   return ordinaryIncomeBracketWidth(br.ordinaryBrackets)(rate);
@@ -4730,18 +4732,18 @@ function TIR_BRACKET_WIDTH(yearAsNumber, filingStatusName, ordinaryRatePercentag
 
 /**
  * Width of a future ordinary income tax bracket.
- * Example: TIR_FUTURE_BRACKET_WIDTH('PreTrump', 2030, 'HeadOfHousehold', 10)
+ * Example: TIR_FUTURE_ORDINARY_BRACKET_WIDTH("PreTrump", 2030, "HeadOfHousehold", 10)
  * 
- * @param {string} regimeName 
- * @param {number} yearAsNumber 
- * @param {number} inflationDeltaEstimate
- * @param {string} filingStatusName 
+ * @param {string} regime 
+ * @param {number} year
+ * @param {number} bracketInflationRate
+ * @param {string} filingStatus
  * @param {number} ordinaryRatePercentage 
- * @returns The width of the specified bracket.
+ * @returns {number} The width of the specified ordinary income bracket.
  * @customfunction
  */
-function TIR_FUTURE_BRACKET_WIDTH(regimeName, yearAsNumber, inflationDeltaEstimate, filingStatusName, ordinaryRatePercentage) {
-  const br = bindRegimeForFutureYear(regimeName, yearAsNumber, inflationDeltaEstimate, filingStatusName);  
+function TIR_FUTURE_ORDINARY_BRACKET_WIDTH(regime, year, bracketInflationRate, filingStatus, ordinaryRatePercentage) {
+  const br = bindRegimeForFutureYear(regime, year, bracketInflationRate, filingStatus);  
   const rate = ordinaryRatePercentage / 100.0;
 
   return ordinaryIncomeBracketWidth(br.ordinaryBrackets)(rate);
@@ -4750,29 +4752,31 @@ function TIR_FUTURE_BRACKET_WIDTH(regimeName, yearAsNumber, inflationDeltaEstima
 
 /**
  * Threshold above which long term capital gains are taxed.
- * Example: TIR_LTCG_TAX_START(2022, 'HeadOfHousehold')
+ * Example: TIR_LTCG_TAX_START(2022, "HeadOfHousehold")
  * 
- * @param {number} yearAsNumber 
-
+ * @param {number} year 
+ * @param {string} filingStatus
+ * @returns {number} the end of the zero tax rate on qualified investment income
+ * @customfunction
  */
-function TIR_LTCG_TAX_START(yearAsNumber, filingStatusName) {
-  const br = bindRegimeForKnownYear(yearAsNumber, filingStatusName);  
+function TIR_LTCG_TAX_START(year, filingStatus) {
+  const br = bindRegimeForKnownYear(year, filingStatus);  
   return startOfNonZeroQualifiedRateBracket(br.qualifiedBrackets);
 }
 
 /**
  * Threshold above which long term capital gains are taxed, for a future year
- * Example: TIR_LTCG_TAX_START(2022, 'HeadOfHousehold')
+ * Example: TIR_FUTURE_LTCG_TAX_START("PreTrump", 2027, 3.4%, "HeadOfHousehold")
  * 
- * @param {string} regimeName 
- * @param {number} yearAsNumber 
- * @param {number} inflationDeltaEstimate
- * @param {string} filingStatusName 
- * @returns the taxable income threshold.
+ * @param {string} regime 
+ * @param {number} year 
+ * @param {number} bracketInflationRate
+ * @param {string} filingStatus 
+ * @returns {number} the end of the zero tax rate on qualified investment income
  * @customfunction
  */
-function TIR_FUTURE_LTCG_TAX_START(regimeName, yearAsNumber, inflationDeltaEstimate, filingStatusName) {
-  const br = bindRegimeForFutureYear(regimeName, yearAsNumber, inflationDeltaEstimate, filingStatusName);  
+function TIR_FUTURE_LTCG_TAX_START(regime, year, bracketInflationRate, filingStatus) {
+  const br = bindRegimeForFutureYear(regime, year, bracketInflationRate, filingStatus);  
   return startOfNonZeroQualifiedRateBracket(br.qualifiedBrackets);
 }
 
@@ -4781,7 +4785,7 @@ function TIR_FUTURE_LTCG_TAX_START(regimeName, yearAsNumber, inflationDeltaEstim
  * Example: TIR_RMD_FRACTION_FOR_AGE(76)
  * 
  * @param {number} age
- * @returns the RMD fraction
+ * @returns {number} the RMD fraction
  * @customfunction
  */
 function TIR_RMD_FRACTION_FOR_AGE(age) {
@@ -4790,37 +4794,37 @@ function TIR_RMD_FRACTION_FOR_AGE(age) {
 
 /**
  * The Federal tax due.
- * Example: TIR_FEDERAL_TAX_DUE(2022, 'Single', 1955-10-02, 0, 10000, 40000, 5000, 0)
+ * Example: TIR_FEDERAL_TAX_DUE(2022, "Single", 1955-10-02, 0, 10000, 40000, 5000, 0)
  * 
- * @param {number} yearAsNumber 
- * @param {string} filingStatusName 
- * @param {object} birthDateAsObject
+ * @param {number} year 
+ * @param {string} filingStatus
+ * @param {object} birthDate
  * @param {number} personalExemptions
  * @param {number} socSec 
  * @param {number} ordinaryIncomeNonSS 
  * @param {number} qualifiedIncome 
  * @param {number} itemizedDeductions 
- * @returns the Federal tax due
+ * @returns {number} the Federal tax due
  * @customfunction
  */
 function TIR_FEDERAL_TAX_DUE(
-  yearAsNumber, 
-  filingStatusName, 
-  birthDateAsObject,
+  year, 
+  filingStatus, 
+  birthDate,
   personalExemptions, 
   socSec, 
   ordinaryIncomeNonSS, 
   qualifiedIncome,
   itemizedDeductions
   ) {
-  const year = unsafeMakeYear(yearAsNumber);
-  const filingStatus = unsafeReadFilingStatus(filingStatusName);
-  const birthDate = toPurescriptDate(birthDateAsObject);
+  const psYear = unsafeMakeYear(year);
+  const psFilingStatus = unsafeReadFilingStatus(filingStatus);
+  const psBirthDate = toPurescriptDate(birthDate);
 
   return taxDueForKnownYear(
-    year)(
-    filingStatus)(
-    birthDate)(
+    psYear)(
+    psFilingStatus)(
+    psBirthDate)(
     personalExemptions)(
     socSec)(
     ordinaryIncomeNonSS)(
@@ -4830,45 +4834,45 @@ function TIR_FEDERAL_TAX_DUE(
 
 /**
  * The Federal tax due.
- * Example: TIR_FUTURE_FEDERAL_TAX_DUE("Trump", 2023, 0.034, 'Single', 1955-10-02, 0, 10000, 40000, 5000, 0)
+ * Example: TIR_FUTURE_FEDERAL_TAX_DUE("Trump", 2023, 0.034, "Single", 1955-10-02, 0, 10000, 40000, 5000, 0)
  * 
- * @param {string} regimeName 
- * @param {number} yearAsNumber 
- * @param {number} inflationDeltaEstimate
- * @param {string} filingStatusName 
- * @param {object} birthDateAsObject
+ * @param {string} regime 
+ * @param {number} year 
+ * @param {number} bracketInflationRate
+ * @param {string} filingStatus 
+ * @param {object} birthDate
  * @param {number} personalExemptions
  * @param {number} socSec 
  * @param {number} ordinaryIncomeNonSS 
  * @param {number} qualifiedIncome 
  * @param {number} itemizedDeductions 
- * @returns the Federal tax due
+ * @returns {number} the Federal tax due
  * @customfunction
  */
 function TIR_FUTURE_FEDERAL_TAX_DUE(
-  regimeName,
-  yearAsNumber, 
-  inflationDeltaEstimate,
-  filingStatusName, 
-  birthDateAsObject,
+  regime,
+  year, 
+  bracketInflationRate,
+  filingStatus, 
+  birthDate,
   personalExemptions, 
   socSec, 
   ordinaryIncomeNonSS, 
   qualifiedIncome,
   itemizedDeductions
   ) {
-  const regime = unsafeReadRegime(regimeName);
-  const year = unsafeMakeYear(yearAsNumber);
-  const inflationFactorEstimate = 1.0 + inflationDeltaEstimate;
-  const filingStatus = unsafeReadFilingStatus(filingStatusName);
-  const birthDate = toPurescriptDate(birthDateAsObject);
+  const psRegime = unsafeReadRegime(regime);
+  const psYear = unsafeMakeYear(year);
+  const inflationFactorEstimate = 1.0 + bracketInflationRate;
+  const psFilingStatus = unsafeReadFilingStatus(filingStatus);
+  const psBirthDate = toPurescriptDate(birthDate);
 
   return taxDueForFutureYear(
-    regime)(
-    year)(
+    psRegime)(
+    psYear)(
     inflationFactorEstimate)(
-    filingStatus)(
-    birthDate)(
+    psFilingStatus)(
+    psBirthDate)(
     personalExemptions)(
     socSec)(
     ordinaryIncomeNonSS)(
@@ -4879,23 +4883,23 @@ function TIR_FUTURE_FEDERAL_TAX_DUE(
 
 /**
  * The marginal tax rate.
- * Example: TIR_FEDERAL_TAX_SLOPE(2022, 'Single', 1955-10-02, 0, 10000, 40000, 5000, 0)
+ * Example: TIR_FEDERAL_TAX_SLOPE(2022, "Single", 1955-10-02, 0, 10000, 40000, 5000, 0)
  * 
- * @param {number} yearAsNumber 
- * @param {string} filingStatusName 
- * @param {object} birthDateAsObject
+ * @param {number} year
+ * @param {string} filingStatus 
+ * @param {object} birthDate
  * @param {number} personalExemptions
  * @param {number} socSec 
  * @param {number} ordinaryIncomeNonSS 
  * @param {number} qualifiedIncome 
  * @param {number} itemizedDeductions 
- * @returns the marginal tax rate.
+ * @returns {number} the marginal tax rate.
  * @customfunction
  */
 function TIR_FEDERAL_TAX_SLOPE(
-  yearAsNumber, 
-  filingStatusName, 
-  birthDateAsObject, 
+  year, 
+  filingStatus, 
+  birthDate, 
   personalExemptions,
   socSec, 
   ordinaryIncomeNonSS, 
@@ -4905,9 +4909,9 @@ function TIR_FEDERAL_TAX_SLOPE(
     const deltaX = 1000.0
 
   const federalTaxAtStart = TIR_FEDERAL_TAX_DUE(
-    yearAsNumber, 
-    filingStatusName, 
-    birthDateAsObject,
+    year, 
+    filingStatus, 
+    birthDate,
     personalExemptions,
     socSec, 
     ordinaryIncomeNonSS, 
@@ -4915,9 +4919,9 @@ function TIR_FEDERAL_TAX_SLOPE(
     itemizedDeductions
   );
   const federalTaxAtEnd = TIR_FEDERAL_TAX_DUE(
-    yearAsNumber, 
-    filingStatusName, 
-    birthDateAsObject,
+    year, 
+    filingStatus, 
+    birthDate,
     personalExemptions,
     socSec, 
     ordinaryIncomeNonSS + deltaX, 
@@ -4931,13 +4935,13 @@ function TIR_FEDERAL_TAX_SLOPE(
 
 /**
  * The marginal tax rate.
- * Example: TIR_FUTURE_FEDERAL_TAX_SLOPE("Trump", 2023, 0.034, 'Single', 1955-10-02, 0, 10000, 40000, 5000, 0)
+ * Example: TIR_FUTURE_FEDERAL_TAX_SLOPE("Trump", 2023, 0.034, "Single", 1955-10-02, 0, 10000, 40000, 5000, 0)
  * 
- * @param {string} regimeName 
- * @param {number} yearAsNumber 
- * @param {number} inflationDeltaEstimate
- * @param {string} filingStatusName 
- * @param {object} birthDateAsObject
+ * @param {string} regime 
+ * @param {number} year 
+ * @param {number} bracketInflationRate
+ * @param {string} filingStatus
+ * @param {object} birthDate
  * @param {number} personalExemptions
  * @param {number} socSec 
  * @param {number} ordinaryIncomeNonSS 
@@ -4947,11 +4951,11 @@ function TIR_FEDERAL_TAX_SLOPE(
  * @customfunction
  */
 function TIR_FUTURE_FEDERAL_TAX_SLOPE(
-  regimeName,
-  yearAsNumber, 
-  inflationDeltaEstimate,
-  filingStatusName, 
-  birthDateAsObject, 
+  regime,
+  year, 
+  bracketInflationRate,
+  filingStatus, 
+  birthDate, 
   personalExemptions,
   socSec, 
   ordinaryIncomeNonSS, 
@@ -4961,11 +4965,11 @@ function TIR_FUTURE_FEDERAL_TAX_SLOPE(
   const deltaX = 1000.0;
 
   const federalTaxAtStart = TIR_FUTURE_FEDERAL_TAX_DUE(
-    regimeName,
-    yearAsNumber, 
-    inflationDeltaEstimate,
-    filingStatusName, 
-    birthDateAsObject,
+    regime,
+    year, 
+    bracketInflationRate,
+    filingStatus, 
+    birthDate,
     personalExemptions,
     socSec, 
     ordinaryIncomeNonSS, 
@@ -4973,11 +4977,11 @@ function TIR_FUTURE_FEDERAL_TAX_SLOPE(
     itemizedDeductions
   );
   const federalTaxAtEnd = TIR_FUTURE_FEDERAL_TAX_DUE(
-    regimeName,
-    yearAsNumber, 
-    inflationDeltaEstimate,
-    filingStatusName, 
-    birthDateAsObject,
+    regime,
+    year, 
+    bracketInflationRate,
+    filingStatus, 
+    birthDate,
     personalExemptions,
     socSec, 
     ordinaryIncomeNonSS + deltaX, 
@@ -4991,65 +4995,65 @@ function TIR_FUTURE_FEDERAL_TAX_SLOPE(
 
 /**
  * The amount of Social Security income that is taxable.
- * Example: TIR_TAXABLE_SOCIAL_SECURITY('HeadOfHousehold', 20000, 52000)
+ * Example: TIR_TAXABLE_SOCIAL_SECURITY("HeadOfHousehold", 20000, 52000)
  * 
- * @param {string} filingStatusName 
+ * @param {string} filingStatus 
  * @param {number} ssRelevantOtherIncome 
  * @param {number} socSec 
- * @returns the amount of Social Security income that is taxable
+ * @returns {number} the amount of Social Security income that is taxable
  * @customfunction
  */
-function TIR_TAXABLE_SOCIAL_SECURITY(filingStatusName, ssRelevantOtherIncome, socSec) {
-  const filingStatus = unsafeReadFilingStatus(filingStatusName);
+function TIR_TAXABLE_SOCIAL_SECURITY(filingStatus, ssRelevantOtherIncome, socSec) {
+  const psFilingStatus = unsafeReadFilingStatus(filingStatus);
 
-  return amountTaxable(filingStatus)(socSec)(ssRelevantOtherIncome);
+  return amountTaxable(psFilingStatus)(socSec)(ssRelevantOtherIncome);
 }
 
 /**
  * The MA state income tax due.
- * Example: TIR_MA_STATE_TAX_DUE(2022, 'Married', 1955-10-02, 0, 130000)
+ * Example: TIR_MA_STATE_TAX_DUE(2022, "Married", 1955-10-02, 0, 130000)
  * 
- * @param {number} yearAsNumber 
- * @param {string} filingStatusName 
- * @param {object} birthDateAsObject
+ * @param {number} year 
+ * @param {string} filingStatus 
+ * @param {object} birthDate
  * @param {number} dependents 
  * @param {number} massachusettsGrossIncome 
- * @returns the MA state income tax due.
+ * @returns {number} the MA state income tax due.
  * @customfunction
  */
 function TIR_MA_STATE_TAX_DUE(
-  yearAsNumber, 
-  filingStatusName, 
-  birthDateAsObject, 
+  year, 
+  filingStatus, 
+  birthDate, 
   dependents, 
   massachusettsGrossIncome
   ) {
-  const year = unsafeMakeYear(yearAsNumber);
-  const filingStatus = unsafeReadFilingStatus(filingStatusName);
-  const birthDate = toPurescriptDate(birthDateAsObject);
+  const psYear = unsafeMakeYear(year);
+  const psFilingStatus = unsafeReadFilingStatus(filingStatus);
+  const psBirthDate = toPurescriptDate(birthDate);
 
   return maStateTaxDue(
-    year)(
-    filingStatus)(
-    birthDate)(
+    psYear)(
+    psFilingStatus)(
+    psBirthDate)(
     dependents)(
     massachusettsGrossIncome);
 }
 
 function bindRegimeForKnownYear(yearAsNumber, filingStatusName) {
-  const filingStatus = unsafeReadFilingStatus(filingStatusName);
-  const year = unsafeMakeYear(yearAsNumber);
+  const psFilingStatus = unsafeReadFilingStatus(filingStatusName);
+  const psYear = unsafeMakeYear(yearAsNumber);
 
-  return boundRegimeForKnownYear(year)(filingStatus);
+  return boundRegimeForKnownYear(psYear)(psFilingStatus);
 }
 
-function bindRegimeForFutureYear(regimeName, yearAsNumber, inflationDeltaEstimate, filingStatusName) {
-  const regime = unsafeReadRegime(regimeName);
-  const year = unsafeMakeYear(yearAsNumber);
-  const inflationFactorEstimate = 1.0 + inflationDeltaEstimate;
-  const filingStatus = unsafeReadFilingStatus(filingStatusName);
+function bindRegimeForFutureYear(regimeName, yearAsNumber, bracketInflationRate, filingStatusName) {
+  const psRegime = unsafeReadRegime(regimeName);
+  const psYear = unsafeMakeYear(yearAsNumber);
+  const inflationFactorEstimate = 1.0 + bracketInflationRate;
+  const psFilingStatus = unsafeReadFilingStatus(filingStatusName);
   
-  return boundRegimeForFutureYear(regime)(year)(inflationFactorEstimate)(filingStatus);  
+  return boundRegimeForFutureYear(psRegime)(psYear)(inflationFactorEstimate)(psFilingStatus);  
 }
 
 function toPurescriptDate(dateObject) {
