@@ -14,3 +14,4 @@ src/dist/GSheetShim.dev.js
 .metals/metals.log
 .metals/metals.mv.db
 .metals/metals.lock.db
+/jsdoc_output/
