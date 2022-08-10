@@ -41,7 +41,7 @@ import Data.Int (round, toNumber)
 import Data.Monoid.Additive (Additive(..))
 import Effect.Exception.Unsafe (unsafeThrow)
 import Data.Number (abs)
-import Prelude (class Eq, class Monoid, class Ord, class Semigroup, class Show, mempty, otherwise, ($), (/), (*), (-), (<), (<=), (>), (<<<), (/=))
+import Prelude (class Eq, class Monoid, class Ord, class Semigroup, class Show, show, mempty, otherwise, ($), (/), (*), (-), (<), (<=), (>), (<<<), (/=))
 import Safe.Coerce (class Coercible, coerce)
 
 class Monoid m <= HasNoMoney m where
@@ -89,7 +89,13 @@ amountOverThresholdImpl m threshold = coerce $ monus (coerce m) (coerce threshol
 timesImpl :: forall m. Coercible Number m => Int -> m -> m
 timesImpl i m = coerce $ (toNumber i) * (coerce m)
 
-type Money = Additive Number
+newtype Money = Money (Additive Number)
+derive newtype instance Eq Money
+derive newtype instance Ord Money
+derive newtype instance Monoid Money
+derive newtype instance Semigroup Money
+instance Show Money where
+  show (Money (Additive n)) = show n
 
 mkMoney :: Number -> Money
 mkMoney d
