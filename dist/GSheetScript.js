@@ -892,14 +892,6 @@ var find = function(dictFoldable) {
 };
 
 // output/Data.Monoid.Additive/index.js
-var showAdditive = function(dictShow) {
-  var show7 = show(dictShow);
-  return {
-    show: function(v) {
-      return "(Additive " + (show7(v) + ")");
-    }
-  };
-};
 var semigroupAdditive = function(dictSemiring) {
   var add2 = add(dictSemiring);
   return {
@@ -3146,26 +3138,32 @@ var absoluteDifference = function(dict) {
 };
 
 // output/Moneys/index.js
-var showAdditive2 = /* @__PURE__ */ showAdditive(showNumber);
-var semigroupAdditive2 = /* @__PURE__ */ semigroupAdditive(semiringNumber);
-var monoidAdditive2 = /* @__PURE__ */ monoidAdditive(semiringNumber);
-var eq4 = /* @__PURE__ */ eq(/* @__PURE__ */ eqAdditive(eqNumber));
-var ordAdditive2 = /* @__PURE__ */ ordAdditive(ordNumber);
-var compare4 = /* @__PURE__ */ compare(ordAdditive2);
+var show3 = /* @__PURE__ */ show(showNumber);
 var coerce2 = /* @__PURE__ */ coerce();
-var greaterThan2 = /* @__PURE__ */ greaterThan(ordAdditive2);
-var lessThan1 = /* @__PURE__ */ lessThan(ordAdditive2);
-var showTaxableIncome = showAdditive2;
-var showTaxPayable = showAdditive2;
-var showIncome = showAdditive2;
-var showDeduction = showAdditive2;
-var semigroupTaxableIncome = semigroupAdditive2;
-var semigroupTaxPayable = semigroupAdditive2;
-var semigroupIncome = semigroupAdditive2;
-var semigroupDeduction = semigroupAdditive2;
-var monoidTaxPayable = monoidAdditive2;
-var monoidIncomeThreshold = monoidAdditive2;
-var monoidDeduction = monoidAdditive2;
+var showMoney = {
+  show: function(v) {
+    return show3(v);
+  }
+};
+var showTaxPayable = showMoney;
+var showTaxableIncome = showMoney;
+var showIncome = showMoney;
+var showDeduction = showMoney;
+var semigroupMoney = /* @__PURE__ */ semigroupAdditive(semiringNumber);
+var semigroupTaxPayable = semigroupMoney;
+var semigroupTaxableIncome = semigroupMoney;
+var semigroupIncome = semigroupMoney;
+var semigroupDeduction = semigroupMoney;
+var ordMoney = /* @__PURE__ */ ordAdditive(ordNumber);
+var compare4 = /* @__PURE__ */ compare(ordMoney);
+var greaterThan2 = /* @__PURE__ */ greaterThan(ordMoney);
+var lessThan1 = /* @__PURE__ */ lessThan(ordMoney);
+var monoidMoney = /* @__PURE__ */ monoidAdditive(semiringNumber);
+var monoidTaxPayable = monoidMoney;
+var monoidIncomeThreshold = monoidMoney;
+var monoidDeduction = monoidMoney;
+var eqMoney = /* @__PURE__ */ eqAdditive(eqNumber);
+var eq4 = /* @__PURE__ */ eq(eqMoney);
 var eqIncome = {
   eq: function(x) {
     return function(y) {
@@ -3217,8 +3215,8 @@ var times = function(dict) {
   return dict.times;
 };
 var taxableAsIncome = coerce2;
-var roundHalfUp = function($134) {
-  return toNumber(round2($134));
+var roundHalfUp = function($141) {
+  return toNumber(round2($141));
 };
 var nonZeroImpl = function() {
   return function(m) {
@@ -3278,7 +3276,7 @@ var mkMoney = function(d) {
     return coerce2(d);
   }
   ;
-  throw new Error("Failed pattern match at Moneys (line 94, column 1 - line 94, column 27): " + [d.constructor.name]);
+  throw new Error("Failed pattern match at Moneys (line 100, column 1 - line 100, column 27): " + [d.constructor.name]);
 };
 var monus = function(m1) {
   return function(m2) {
@@ -3290,7 +3288,7 @@ var monus = function(m1) {
       return mkMoney(0);
     }
     ;
-    throw new Error("Failed pattern match at Moneys (line 99, column 1 - line 99, column 33): " + [m1.constructor.name, m2.constructor.name]);
+    throw new Error("Failed pattern match at Moneys (line 105, column 1 - line 105, column 33): " + [m1.constructor.name, m2.constructor.name]);
   };
 };
 var reduceBy = function(x) {
@@ -3491,16 +3489,16 @@ var i = function(dictInterp) {
 
 // output/Federal.FederalTaxRate/index.js
 var i2 = /* @__PURE__ */ i(/* @__PURE__ */ interpStringFunction(/* @__PURE__ */ interpStringFunction(interpString)));
-var show3 = /* @__PURE__ */ show(showNumber);
+var show4 = /* @__PURE__ */ show(showNumber);
 var ordFederalTaxRate = ordNumber;
 var eqFederalTaxRate = eqNumber;
 var mkFederalTaxRate = function(d) {
   if (d < 0) {
-    return unsafeThrow(i2("Invalid FederalTaxRate ")(show3(d)));
+    return unsafeThrow(i2("Invalid FederalTaxRate ")(show4(d)));
   }
   ;
   if (d > 0.9) {
-    return unsafeThrow(i2("Invalid FederalTaxRate ")(show3(d)));
+    return unsafeThrow(i2("Invalid FederalTaxRate ")(show4(d)));
   }
   ;
   if (otherwise) {
@@ -4221,7 +4219,7 @@ var noMoney2 = /* @__PURE__ */ noMoney(hasNoMoneyDeduction);
 var times2 = /* @__PURE__ */ times(hasTimesDeduction);
 var max3 = /* @__PURE__ */ max(ordDeduction);
 var mul3 = /* @__PURE__ */ mul2(hasMulDeduction);
-var show4 = /* @__PURE__ */ show(showYear);
+var show5 = /* @__PURE__ */ show(showYear);
 var fromEnum4 = /* @__PURE__ */ fromEnum(boundedEnumYear);
 var bind4 = /* @__PURE__ */ bind(bindList);
 var pure3 = /* @__PURE__ */ pure(applicativeList);
@@ -4324,7 +4322,7 @@ var boundRegimeForFutureYear = function(r) {
             return unit;
           }
           ;
-          return unsafeThrow("Year must be in the future: " + show4(y));
+          return unsafeThrow("Year must be in the future: " + show5(y));
         }();
         var baseValues = mostRecentForRegime(r);
         var baseYear = fromEnum4(baseValues.year);
@@ -4439,14 +4437,14 @@ var amountTaxableInflationAdjusted = function(year) {
 };
 
 // output/Federal.Calculator/index.js
-var show5 = /* @__PURE__ */ show(showIncome);
+var show6 = /* @__PURE__ */ show(showIncome);
 var show1 = /* @__PURE__ */ show(showDeduction);
 var show22 = /* @__PURE__ */ show(showTaxableIncome);
 var show32 = /* @__PURE__ */ show(showTaxPayable);
 var append6 = /* @__PURE__ */ append(semigroupTaxPayable);
 var append12 = /* @__PURE__ */ append(semigroupIncome);
 var resultsAsTable = function(v) {
-  return [["ssRelevantOtherIncome: ", show5(v.ssRelevantOtherIncome)], ["taxableSocSec: ", show5(v.taxableSocSec)], ["finalStandardDeduction: ", show1(v.finalStandardDeduction)], ["finalNetDeduction: ", show1(v.finalNetDeduction)], ["taxableOrdinaryIncome: ", show22(v.taxableOrdinaryIncome)], ["taxOnOrdinaryIncome: ", show32(v.taxOnOrdinaryIncome)], ["taxOnQualifiedIncome: ", show32(v.taxOnQualifiedIncome)], ["result: ", show32(append6(v.taxOnOrdinaryIncome)(v.taxOnQualifiedIncome))]];
+  return [["ssRelevantOtherIncome: ", show6(v.ssRelevantOtherIncome)], ["taxableSocSec: ", show6(v.taxableSocSec)], ["finalStandardDeduction: ", show1(v.finalStandardDeduction)], ["finalNetDeduction: ", show1(v.finalNetDeduction)], ["taxableOrdinaryIncome: ", show22(v.taxableOrdinaryIncome)], ["taxOnOrdinaryIncome: ", show32(v.taxOnOrdinaryIncome)], ["taxOnQualifiedIncome: ", show32(v.taxOnQualifiedIncome)], ["totalTaxDue: ", show32(append6(v.taxOnOrdinaryIncome)(v.taxOnQualifiedIncome))]];
 };
 var makeCalculator = function(br) {
   return function(birthDate) {
@@ -4618,15 +4616,15 @@ var unsafeRmdFractionForAge = function(age) {
 
 // output/StateMA.StateMATaxRate/index.js
 var i3 = /* @__PURE__ */ i(/* @__PURE__ */ interpStringFunction(/* @__PURE__ */ interpStringFunction(interpString)));
-var show6 = /* @__PURE__ */ show(showNumber);
+var show7 = /* @__PURE__ */ show(showNumber);
 var ordStateMATaxRate = ordNumber;
 var mkStateMATaxRate = function(d) {
   if (d < 0) {
-    return unsafeThrow(i3("Invalid StaateMARaxRate ")(show6(d)));
+    return unsafeThrow(i3("Invalid StaateMARaxRate ")(show7(d)));
   }
   ;
   if (d > 0.9) {
-    return unsafeThrow(i3("Invalid StaateMARaxRate ")(show6(d)));
+    return unsafeThrow(i3("Invalid StaateMARaxRate ")(show7(d)));
   }
   ;
   if (otherwise) {

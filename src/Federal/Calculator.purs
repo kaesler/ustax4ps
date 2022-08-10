@@ -206,5 +206,5 @@ resultsAsTable (FederalTaxResults r) =
     ["taxableOrdinaryIncome: ", show r.taxableOrdinaryIncome],
     ["taxOnOrdinaryIncome: ", show r.taxOnOrdinaryIncome],
     ["taxOnQualifiedIncome: ", show r.taxOnQualifiedIncome],
-    ["result: ", show (r.taxOnOrdinaryIncome <> r.taxOnQualifiedIncome)]
+    ["totalTaxDue: ", show (r.taxOnOrdinaryIncome <> r.taxOnQualifiedIncome)]
   ]
