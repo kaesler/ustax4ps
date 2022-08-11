@@ -44,7 +44,7 @@ function TIR_FUTURE_STD_DEDUCTION(regime, year, bracketInflationRate, filingStat
  * Width of an ordinary income tax bracket for a known year.
  * Example: TIR_ORDINARY_BRACKET_WIDTH(2022, "Single", 10)
  * 
- * @param {number} year a year between 2016 and tthe current year
+ * @param {number} year a year between 2016 and the current year
  * @param {string} filingStatus one of "Single", "HeadOfHousehold", "Married"
  * @param {number} ordinaryRatePercentage rate for a tax bracket e.g. 22
  * @returns {number} The width of the specified ordinary income tax bracket.
@@ -81,7 +81,7 @@ function TIR_FUTURE_ORDINARY_BRACKET_WIDTH(regime, year, bracketInflationRate, f
  * Threshold above which long term capital gains are taxed, for a known year.
  * Example: TIR_LTCG_TAX_START(2022, "HeadOfHousehold")
  * 
- * @param {number} year a year between 2016 and tthe current year
+ * @param {number} year a year between 2016 and the current year
  * @param {string} filingStatus one of "Single", "HeadOfHousehold", "Married"
  * @returns {number} the end of the zero tax rate on qualified investment income
  * @customfunction
@@ -123,7 +123,7 @@ function TIR_RMD_FRACTION_FOR_AGE(age) {
  * The Federal tax due for a known year.
  * Example: TIR_FEDERAL_TAX_DUE(2022, "Single", 1955-10-02, 0, 10000, 40000, 5000, 0)
  * 
- * @param {number} year a year between 2016 and tthe current year
+ * @param {number} year a year between 2016 and the current year
  * @param {string} filingStatus one of "Single", "HeadOfHousehold", "Married"
  * @param {object} birthDate tax payer's date of birth
  * @param {number} personalExemptions self plus dependents, only relevant in a PreTrump year
@@ -240,7 +240,7 @@ function TIR_FUTURE_FEDERAL_TAX_DUE(
  * The marginal tax rate for a known year.
  * Example: TIR_FEDERAL_TAX_SLOPE(2022, "Single", 1955-10-02, 0, 10000, 40000, 5000, 0)
  * 
- * @param {number} year a year between 2016 and tthe current year
+ * @param {number} year a year between 2016 and the current year
  * @param {string} filingStatus one of "Single", "HeadOfHousehold", "Married"
  * @param {object} birthDate tax payer's date of birth
  * @param {number} personalExemptions self plus dependents, only relevant in a PreTrump year
@@ -248,7 +248,7 @@ function TIR_FUTURE_FEDERAL_TAX_DUE(
  * @param {number} ordinaryIncomeNonSS  ordinary income excluding Social Security
  * @param {number} qualifiedIncome qualified dividends and long term capital gains
  * @param {number} itemizedDeductions total of any itemized deductions
- * @returns {number} the marginal tax rate.
+ * @returns {number} the marginal tax rate as a percentage.
  * @customfunction
  */
 function TIR_FEDERAL_TAX_SLOPE(
@@ -302,7 +302,7 @@ function TIR_FEDERAL_TAX_SLOPE(
  * @param {number} ordinaryIncomeNonSS  ordinary income excluding Social Security
  * @param {number} qualifiedIncome qualified dividends and long term capital gains
  * @param {number} itemizedDeductions total of any itemized deductions
- * @returns the marginal tax rate.
+ * @returns {number} the marginal tax rate as a percentage.
  * @customfunction
  */
 function TIR_FUTURE_FEDERAL_TAX_SLOPE(
@@ -368,7 +368,7 @@ function TIR_TAXABLE_SOCIAL_SECURITY(filingStatus, ssRelevantOtherIncome, socSec
  * The MA state income tax due.
  * Example: TIR_MA_STATE_TAX_DUE(2022, "Married", 1955-10-02, 0, 130000)
  * 
- * @param {number} year a year between 2016 and tthe current year
+ * @param {number} year a year between 2016 and the current year
  * @param {string} filingStatus one of "Single", "HeadOfHousehold", "Married"
  * @param {object} birthDate tax payer's date of birth
  * @param {number} dependents 
