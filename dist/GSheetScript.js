@@ -5182,3 +5182,4 @@ function use() {
   var ui = SpreadsheetApp.getUi();
   ui.alert(title, message, ui.ButtonSet.OK);
 }
+const TIRVersion = 6cd9bcb;
