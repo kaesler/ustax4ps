@@ -20,6 +20,7 @@ distributionPeriods :: Map.Map Age DistributionPeriod
 distributionPeriods =
   Map.fromFoldable
     [ Tuple (Age 72) 27.4
+    , Tuple (Age 73) 26.5
     , Tuple (Age 74) 25.5
     , Tuple (Age 75) 24.6
     , Tuple (Age 76) 23.7
