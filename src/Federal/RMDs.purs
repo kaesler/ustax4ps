@@ -37,6 +37,7 @@ distributionPeriods =
     , Tuple (Age 87) 14.4
     , Tuple (Age 88) 13.7
     , Tuple (Age 89) 12.9
+    , Tuple (Age 90) 12.2
     , Tuple (Age 91) 11.5
     , Tuple (Age 92) 10.8
     , Tuple (Age 93) 10.1

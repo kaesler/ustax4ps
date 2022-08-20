@@ -4604,7 +4604,7 @@ var greaterThan3 = /* @__PURE__ */ greaterThan(ordAge);
 var fromJust12 = /* @__PURE__ */ fromJust();
 var lookup3 = /* @__PURE__ */ lookup(ordAge);
 var distributionPeriods = /* @__PURE__ */ function() {
-  return fromFoldable2(ordAge)(foldableArray)([new Tuple(72, 27.4), new Tuple(73, 26.5), new Tuple(74, 25.5), new Tuple(75, 24.6), new Tuple(76, 23.7), new Tuple(77, 22.9), new Tuple(78, 22), new Tuple(79, 21.1), new Tuple(80, 20.2), new Tuple(81, 19.4), new Tuple(82, 18.5), new Tuple(83, 17.7), new Tuple(84, 16.8), new Tuple(85, 16), new Tuple(86, 15.2), new Tuple(87, 14.4), new Tuple(88, 13.7), new Tuple(89, 12.9), new Tuple(91, 11.5), new Tuple(92, 10.8), new Tuple(93, 10.1), new Tuple(94, 9.5), new Tuple(95, 8.9), new Tuple(96, 8.4), new Tuple(97, 7.8), new Tuple(98, 7.3), new Tuple(99, 6.8), new Tuple(100, 6.4), new Tuple(101, 6), new Tuple(102, 5.6), new Tuple(103, 5.2), new Tuple(104, 4.9), new Tuple(105, 4.6), new Tuple(106, 4.3), new Tuple(107, 4.1), new Tuple(108, 3.9), new Tuple(109, 3.7), new Tuple(110, 3.5), new Tuple(111, 3.4), new Tuple(112, 3.3), new Tuple(113, 3.1), new Tuple(114, 3), new Tuple(115, 2.9), new Tuple(116, 2.8), new Tuple(117, 2.7), new Tuple(118, 2.5), new Tuple(119, 2.3), new Tuple(120, 2)]);
+  return fromFoldable2(ordAge)(foldableArray)([new Tuple(72, 27.4), new Tuple(73, 26.5), new Tuple(74, 25.5), new Tuple(75, 24.6), new Tuple(76, 23.7), new Tuple(77, 22.9), new Tuple(78, 22), new Tuple(79, 21.1), new Tuple(80, 20.2), new Tuple(81, 19.4), new Tuple(82, 18.5), new Tuple(83, 17.7), new Tuple(84, 16.8), new Tuple(85, 16), new Tuple(86, 15.2), new Tuple(87, 14.4), new Tuple(88, 13.7), new Tuple(89, 12.9), new Tuple(90, 12.2), new Tuple(91, 11.5), new Tuple(92, 10.8), new Tuple(93, 10.1), new Tuple(94, 9.5), new Tuple(95, 8.9), new Tuple(96, 8.4), new Tuple(97, 7.8), new Tuple(98, 7.3), new Tuple(99, 6.8), new Tuple(100, 6.4), new Tuple(101, 6), new Tuple(102, 5.6), new Tuple(103, 5.2), new Tuple(104, 4.9), new Tuple(105, 4.6), new Tuple(106, 4.3), new Tuple(107, 4.1), new Tuple(108, 3.9), new Tuple(109, 3.7), new Tuple(110, 3.5), new Tuple(111, 3.4), new Tuple(112, 3.3), new Tuple(113, 3.1), new Tuple(114, 3), new Tuple(115, 2.9), new Tuple(116, 2.8), new Tuple(117, 2.7), new Tuple(118, 2.5), new Tuple(119, 2.3), new Tuple(120, 2)]);
 }();
 var rmdFractionForAge = function(age) {
   if (lessThan3(age)(72)) {
@@ -5190,4 +5190,4 @@ function use() {
   var ui = SpreadsheetApp.getUi();
   ui.alert(title, message, ui.ButtonSet.OK);
 }
-const TIRVersion = 'fcc3de2';
+const TIRVersion = '20383c5';
