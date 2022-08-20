@@ -20,7 +20,7 @@ import Federal.BoundRegime (BoundRegime(..), boundRegimeForFutureYear, boundRegi
 import Federal.Calculator (taxDueForFutureYear, taxDueForKnownYear, taxResultsForFutureYear, taxResultsForFutureYearAsTable, taxResultsForKnownYearAsTable)
 import Federal.OrdinaryBrackets (ordinaryIncomeBracketWidth)
 import Federal.QualifiedBrackets (startOfNonZeroQualifiedRateBracket)
-import Federal.RMDs (unsafeRmdFractionForAge)
+import Federal.RMDs (rmdFractionForAge)
 import Federal.Regime (Regime(..), unsafeReadRegime)
 import Federal.TaxableSocialSecurity (amountTaxable, amountTaxableInflationAdjusted)
 import Moneys (TaxPayable)

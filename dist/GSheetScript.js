@@ -4599,19 +4599,27 @@ var taxResultsForKnownYearAsTable = function(year) {
 };
 
 // output/Federal.RMDs/index.js
-var bind5 = /* @__PURE__ */ bind(bindMaybe);
-var lookup3 = /* @__PURE__ */ lookup(ordAge);
+var lessThan3 = /* @__PURE__ */ lessThan(ordAge);
+var greaterThan3 = /* @__PURE__ */ greaterThan(ordAge);
 var fromJust12 = /* @__PURE__ */ fromJust();
+var lookup3 = /* @__PURE__ */ lookup(ordAge);
 var distributionPeriods = /* @__PURE__ */ function() {
-  return fromFoldable2(ordAge)(foldableArray)([new Tuple(70, 27.4), new Tuple(71, 26.5), new Tuple(72, 25.6), new Tuple(73, 24.7), new Tuple(74, 23.8), new Tuple(75, 22.9), new Tuple(76, 22), new Tuple(77, 21.2), new Tuple(78, 20.3), new Tuple(79, 19.5), new Tuple(80, 18.7), new Tuple(81, 17.9), new Tuple(82, 17.1), new Tuple(83, 16.3), new Tuple(84, 15.5), new Tuple(85, 14.8), new Tuple(86, 14.1), new Tuple(87, 13.4), new Tuple(88, 12.7), new Tuple(89, 12), new Tuple(90, 11.4), new Tuple(91, 10.8), new Tuple(92, 10.2), new Tuple(93, 9.6), new Tuple(94, 9.1), new Tuple(95, 8.6), new Tuple(96, 8.1), new Tuple(97, 7.6), new Tuple(98, 7.1), new Tuple(99, 6.7), new Tuple(100, 6.3), new Tuple(101, 5.9), new Tuple(102, 5.5), new Tuple(103, 5.2), new Tuple(104, 4.9), new Tuple(105, 4.5), new Tuple(106, 4.2), new Tuple(107, 3.9), new Tuple(108, 3.7), new Tuple(109, 3.4), new Tuple(110, 3.1), new Tuple(111, 2.9), new Tuple(112, 2.6), new Tuple(113, 2.4), new Tuple(114, 2.1)]);
+  return fromFoldable2(ordAge)(foldableArray)([new Tuple(72, 27.4), new Tuple(74, 25.5), new Tuple(75, 24.6), new Tuple(76, 23.7), new Tuple(77, 22.9), new Tuple(78, 22), new Tuple(79, 21.1), new Tuple(80, 20.2), new Tuple(81, 19.4), new Tuple(82, 18.5), new Tuple(83, 17.7), new Tuple(84, 16.8), new Tuple(85, 16), new Tuple(86, 15.2), new Tuple(87, 14.4), new Tuple(88, 13.7), new Tuple(89, 12.9), new Tuple(91, 11.5), new Tuple(92, 10.8), new Tuple(93, 10.1), new Tuple(94, 9.5), new Tuple(95, 8.9), new Tuple(96, 8.4), new Tuple(97, 7.8), new Tuple(98, 7.3), new Tuple(99, 6.8), new Tuple(100, 6.4), new Tuple(101, 6), new Tuple(102, 5.6), new Tuple(103, 5.2), new Tuple(104, 4.9), new Tuple(105, 4.6), new Tuple(106, 4.3), new Tuple(107, 4.1), new Tuple(108, 3.9), new Tuple(109, 3.7), new Tuple(110, 3.5), new Tuple(111, 3.4), new Tuple(112, 3.3), new Tuple(113, 3.1), new Tuple(114, 3), new Tuple(115, 2.9), new Tuple(116, 2.8), new Tuple(117, 2.7), new Tuple(118, 2.5), new Tuple(119, 2.3), new Tuple(120, 2)]);
 }();
 var rmdFractionForAge = function(age) {
-  return bind5(lookup3(age)(distributionPeriods))(function(distributionPeriod) {
-    return new Just(1 / distributionPeriod);
-  });
-};
-var unsafeRmdFractionForAge = function(age) {
-  return fromJust12(rmdFractionForAge(age));
+  if (lessThan3(age)(72)) {
+    return 0;
+  }
+  ;
+  if (greaterThan3(age)(120)) {
+    return 0.5;
+  }
+  ;
+  if (otherwise) {
+    return 1 / fromJust12(lookup3(age)(distributionPeriods));
+  }
+  ;
+  throw new Error("Failed pattern match at Federal.RMDs (line 13, column 1 - line 13, column 35): " + [age.constructor.name]);
 };
 
 // output/StateMA.StateMATaxRate/index.js
@@ -4846,7 +4854,7 @@ function TIR_FUTURE_LTCG_TAX_START(regime, year, bracketInflationRate, filingSta
  * @customfunction
  */
 function TIR_RMD_FRACTION_FOR_AGE(age) {
-  return unsafeRmdFractionForAge(age);
+  return rmdFractionForAge(age);
 }
 
 /**
@@ -5182,4 +5190,4 @@ function use() {
   var ui = SpreadsheetApp.getUi();
   ui.alert(title, message, ui.ButtonSet.OK);
 }
-const TIRVersion = 6cd9bcb;
+const TIRVersion = 'd87bb39';

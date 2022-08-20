@@ -116,7 +116,7 @@ function TIR_FUTURE_LTCG_TAX_START(regime, year, bracketInflationRate, filingSta
  * @customfunction
  */
 function TIR_RMD_FRACTION_FOR_AGE(age) {
-  return unsafeRmdFractionForAge(age);
+  return rmdFractionForAge(age);
 }
 
 /**
