@@ -9,17 +9,17 @@ import Data.String.Read (class Read, read)
 import Partial.Unsafe (unsafePartial)
 import Prelude (class Eq, class Ord, class Show, ($))
 
-data Regime = Trump | PreTrump
+data Regime = TCJA | PreTCJA
 derive instance Eq Regime
 derive instance Ord Regime
 instance Show Regime where
-  show Trump = "Trump"
-  show PreTrump = "PreTrump"
+  show TCJA = "TCJA"
+  show PreTCJA = "PreTCJA"
 instance Read Regime where
   read s = 
     case s of 
-      "Trump" -> Just Trump
-      "PreTrump" -> Just PreTrump
+      "TCJA" -> Just TCJA
+      "PreTCJA" -> Just PreTCJA
       _ -> Nothing
 
 unsafeReadRegime :: String -> Regime

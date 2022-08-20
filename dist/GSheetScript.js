@@ -3614,28 +3614,28 @@ var fromRPairs3 = function(pairs) {
 
 // output/Federal.Regime/index.js
 var fromJust9 = /* @__PURE__ */ fromJust();
-var Trump = /* @__PURE__ */ function() {
-  function Trump2() {
+var TCJA = /* @__PURE__ */ function() {
+  function TCJA2() {
   }
   ;
-  Trump2.value = new Trump2();
-  return Trump2;
+  TCJA2.value = new TCJA2();
+  return TCJA2;
 }();
-var PreTrump = /* @__PURE__ */ function() {
-  function PreTrump2() {
+var PreTCJA = /* @__PURE__ */ function() {
+  function PreTCJA2() {
   }
   ;
-  PreTrump2.value = new PreTrump2();
-  return PreTrump2;
+  PreTCJA2.value = new PreTCJA2();
+  return PreTCJA2;
 }();
 var readRegime = {
   read: function(s) {
-    if (s === "Trump") {
-      return new Just(Trump.value);
+    if (s === "TCJA") {
+      return new Just(TCJA.value);
     }
     ;
-    if (s === "PreTrump") {
-      return new Just(PreTrump.value);
+    if (s === "PreTCJA") {
+      return new Just(PreTCJA.value);
     }
     ;
     return Nothing.value;
@@ -3645,11 +3645,11 @@ var read5 = /* @__PURE__ */ read(readRegime);
 var eqRegime = {
   eq: function(x) {
     return function(y) {
-      if (x instanceof Trump && y instanceof Trump) {
+      if (x instanceof TCJA && y instanceof TCJA) {
         return true;
       }
       ;
-      if (x instanceof PreTrump && y instanceof PreTrump) {
+      if (x instanceof PreTCJA && y instanceof PreTCJA) {
         return true;
       }
       ;
@@ -3687,7 +3687,7 @@ var unsafeMakeDate = function(y) {
 var makeFromInt3 = /* @__PURE__ */ makeFromInt(hasMakeFromIntDeduction);
 var values2 = /* @__PURE__ */ function() {
   return {
-    regime: PreTrump.value,
+    regime: PreTCJA.value,
     year: unsafeMakeYear(2016),
     perPersonExemption: makeFromInt3(4050),
     unadjustedStandardDeduction: function(v) {
@@ -3744,7 +3744,7 @@ var values2 = /* @__PURE__ */ function() {
 var makeFromInt4 = /* @__PURE__ */ makeFromInt(hasMakeFromIntDeduction);
 var values3 = /* @__PURE__ */ function() {
   return {
-    regime: PreTrump.value,
+    regime: PreTCJA.value,
     year: unsafeMakeYear(2017),
     perPersonExemption: makeFromInt4(4050),
     unadjustedStandardDeduction: function(v) {
@@ -3801,7 +3801,7 @@ var values3 = /* @__PURE__ */ function() {
 var makeFromInt5 = /* @__PURE__ */ makeFromInt(hasMakeFromIntDeduction);
 var values4 = /* @__PURE__ */ function() {
   return {
-    regime: Trump.value,
+    regime: TCJA.value,
     year: unsafeMakeYear(2018),
     perPersonExemption: makeFromInt5(0),
     unadjustedStandardDeduction: function(v) {
@@ -3858,7 +3858,7 @@ var values4 = /* @__PURE__ */ function() {
 var makeFromInt6 = /* @__PURE__ */ makeFromInt(hasMakeFromIntDeduction);
 var values5 = /* @__PURE__ */ function() {
   return {
-    regime: Trump.value,
+    regime: TCJA.value,
     year: unsafeMakeYear(2019),
     perPersonExemption: makeFromInt6(0),
     unadjustedStandardDeduction: function(v) {
@@ -3915,7 +3915,7 @@ var values5 = /* @__PURE__ */ function() {
 var makeFromInt7 = /* @__PURE__ */ makeFromInt(hasMakeFromIntDeduction);
 var values6 = /* @__PURE__ */ function() {
   return {
-    regime: Trump.value,
+    regime: TCJA.value,
     year: unsafeMakeYear(2020),
     perPersonExemption: makeFromInt7(0),
     unadjustedStandardDeduction: function(v) {
@@ -3972,7 +3972,7 @@ var values6 = /* @__PURE__ */ function() {
 var makeFromInt8 = /* @__PURE__ */ makeFromInt(hasMakeFromIntDeduction);
 var values7 = /* @__PURE__ */ function() {
   return {
-    regime: Trump.value,
+    regime: TCJA.value,
     year: unsafeMakeYear(2021),
     perPersonExemption: makeFromInt8(0),
     unadjustedStandardDeduction: function(v) {
@@ -4029,7 +4029,7 @@ var values7 = /* @__PURE__ */ function() {
 var makeFromInt9 = /* @__PURE__ */ makeFromInt(hasMakeFromIntDeduction);
 var values8 = /* @__PURE__ */ function() {
   return {
-    regime: Trump.value,
+    regime: TCJA.value,
     year: unsafeMakeYear(2022),
     perPersonExemption: makeFromInt9(0),
     unadjustedStandardDeduction: function(v) {
@@ -4746,7 +4746,7 @@ var maStateTaxDue = taxDue;
  * Standard deduction for a known year.
  * Example: TIR_STD_DEDUCTION(2022, "HeadOfHousehold", 1955-10-02)
  *
- * @param {number} year the tax regime to use, one of "Trump", "PreTrump"
+ * @param {number} year the tax regime to use, one of "TCJA", "PreTCJA"
  * @param {string} filingStatus one of "Single", "HeadOfHousehold", "Married"
  * @param {object} birthDate tax payer's date of birth
  * @returns {number} The standard deduction
@@ -4761,9 +4761,9 @@ function TIR_STD_DEDUCTION(year, filingStatus, birthDate) {
 
 /**
  * Standard deduction for a future year.
- * Example: TIR_FUTURE_STD_DEDUCTION("Trump", 3%, 2030, "HeadOfHousehold", 1955-10-02)
+ * Example: TIR_FUTURE_STD_DEDUCTION("TCJA", 3%, 2030, "HeadOfHousehold", 1955-10-02)
  *
- * @param {string} regime  the tax regime to use, one of "Trump", "PreTrump"
+ * @param {string} regime  the tax regime to use, one of "TCJA", "PreTCJA"
  * @param {number} year a year in the future, after the current year
  * @param {number} bracketInflationRate estimate of future tax bracket inflation, e.g. 2%
  * @param {string} filingStatus one of "Single", "HeadOfHousehold", "Married"
@@ -4797,9 +4797,9 @@ function TIR_ORDINARY_BRACKET_WIDTH(year, filingStatus, ordinaryRatePercentage) 
 
 /**
  * Width of an ordinary income tax bracket for a future year.
- * Example: TIR_FUTURE_ORDINARY_BRACKET_WIDTH("PreTrump", 2030, "HeadOfHousehold", 10)
+ * Example: TIR_FUTURE_ORDINARY_BRACKET_WIDTH("PreTCJA", 2030, "HeadOfHousehold", 10)
  * 
- * @param {string} regime the tax regime to use, one of "Trump", "PreTrump"
+ * @param {string} regime the tax regime to use, one of "TCJA", "PreTCJA"
  * @param {number} year a year in the future, after the current year
  * @param {number} bracketInflationRate estimate of future tax bracket inflation, e.g. 2%
  * @param {string} filingStatus one of "Single", "HeadOfHousehold", "Married"
@@ -4831,9 +4831,9 @@ function TIR_LTCG_TAX_START(year, filingStatus) {
 
 /**
  * Threshold above which long term capital gains are taxed, for a future year
- * Example: TIR_FUTURE_LTCG_TAX_START("PreTrump", 2027, 3.4%, "HeadOfHousehold")
+ * Example: TIR_FUTURE_LTCG_TAX_START("PreTCJA", 2027, 3.4%, "HeadOfHousehold")
  * 
- * @param {string} regime the tax regime to use, one of "Trump", "PreTrump"
+ * @param {string} regime the tax regime to use, one of "TCJA", "PreTCJA"
  * @param {number} year a year in the future, after the current year
  * @param {number} bracketInflationRate estimate of future tax bracket inflation, e.g. 2%
  * @param {string} filingStatus one of "Single", "HeadOfHousehold", "Married"
@@ -4864,7 +4864,7 @@ function TIR_RMD_FRACTION_FOR_AGE(age) {
  * @param {number} year a year between 2016 and the current year
  * @param {string} filingStatus one of "Single", "HeadOfHousehold", "Married"
  * @param {object} birthDate tax payer's date of birth
- * @param {number} personalExemptions self plus dependents, only relevant in a PreTrump year
+ * @param {number} personalExemptions self plus dependents, only relevant in a PreTCJA year
  * @param {number} socSec Social Security benefits received
  * @param {number} ordinaryIncomeNonSS ordinary income excluding Social Security
  * @param {number} qualifiedIncome qualified dividends and long term capital gains
@@ -4927,14 +4927,14 @@ function TIR_FEDERAL_TAX_DUE(
 
 /**
  * The Federal tax due for a future year.
- * Example: TIR_FUTURE_FEDERAL_TAX_DUE("Trump", 2023, 0.034, "Single", 1955-10-02, 0, 10000, 40000, 5000, 0)
+ * Example: TIR_FUTURE_FEDERAL_TAX_DUE("TCJA", 2023, 0.034, "Single", 1955-10-02, 0, 10000, 40000, 5000, 0)
  * 
- * @param {string} regime the tax regime to use, one of "Trump", "PreTrump"
+ * @param {string} regime the tax regime to use, one of "TCJA", "PreTCJA"
  * @param {number} year a year in the future, after the current year
  * @param {number} bracketInflationRate estimate of future tax bracket inflation, e.g. 2%
  * @param {string} filingStatus one of "Single", "HeadOfHousehold", "Married"
  * @param {object} birthDate tax payer's date of birth
- * @param {number} personalExemptions self plus dependents, only relevant in a PreTrump year
+ * @param {number} personalExemptions self plus dependents, only relevant in a PreTCJA year
  * @param {number} socSec Social Security benefits received
  * @param {number} ordinaryIncomeNonSS  ordinary income excluding Social Security
  * @param {number} qualifiedIncome qualified dividends and long term capital gains
@@ -4981,7 +4981,7 @@ function TIR_FUTURE_FEDERAL_TAX_DUE(
  * @param {number} year a year between 2016 and the current year
  * @param {string} filingStatus one of "Single", "HeadOfHousehold", "Married"
  * @param {object} birthDate tax payer's date of birth
- * @param {number} personalExemptions self plus dependents, only relevant in a PreTrump year
+ * @param {number} personalExemptions self plus dependents, only relevant in a PreTCJA year
  * @param {number} socSec Social Security benefits received
  * @param {number} ordinaryIncomeNonSS  ordinary income excluding Social Security
  * @param {number} qualifiedIncome qualified dividends and long term capital gains
@@ -5028,14 +5028,14 @@ function TIR_FEDERAL_TAX_SLOPE(
 
 /**
  * The marginal tax rate for a future year.
- * Example: TIR_FUTURE_FEDERAL_TAX_SLOPE("Trump", 2023, 0.034, "Single", 1955-10-02, 0, 10000, 40000, 5000, 0)
+ * Example: TIR_FUTURE_FEDERAL_TAX_SLOPE("TCJA", 2023, 0.034, "Single", 1955-10-02, 0, 10000, 40000, 5000, 0)
  * 
- * @param {string} regime the tax regime to use, one of "Trump", "PreTrump"
+ * @param {string} regime the tax regime to use, one of "TCJA", "PreTCJA"
  * @param {number} year a year in the future, after the current year
  * @param {number} bracketInflationRate estimate of future tax bracket inflation, e.g. 2%
  * @param {string} filingStatus one of "Single", "HeadOfHousehold", "Married"
  * @param {object} birthDate tax payer's date of birth
- * @param {number} personalExemptions self plus dependents, only relevant in a PreTrump year
+ * @param {number} personalExemptions self plus dependents, only relevant in a PreTCJA year
  * @param {number} socSec Social Security benefits received
  * @param {number} ordinaryIncomeNonSS  ordinary income excluding Social Security
  * @param {number} qualifiedIncome qualified dividends and long term capital gains
@@ -5190,4 +5190,4 @@ function use() {
   var ui = SpreadsheetApp.getUi();
   ui.alert(title, message, ui.ButtonSet.OK);
 }
-const TIRVersion = 'd87bb39';
+const TIRVersion = '501f826';

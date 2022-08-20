@@ -8,7 +8,7 @@
  * Standard deduction for a known year.
  * Example: TIR_STD_DEDUCTION(2022, "HeadOfHousehold", 1955-10-02)
  *
- * @param {number} year the tax regime to use, one of "Trump", "PreTrump"
+ * @param {number} year the tax regime to use, one of "TCJA", "PreTCJA"
  * @param {string} filingStatus one of "Single", "HeadOfHousehold", "Married"
  * @param {object} birthDate tax payer's date of birth
  * @returns {number} The standard deduction
@@ -23,9 +23,9 @@ function TIR_STD_DEDUCTION(year, filingStatus, birthDate) {
 
 /**
  * Standard deduction for a future year.
- * Example: TIR_FUTURE_STD_DEDUCTION("Trump", 3%, 2030, "HeadOfHousehold", 1955-10-02)
+ * Example: TIR_FUTURE_STD_DEDUCTION("TCJA", 3%, 2030, "HeadOfHousehold", 1955-10-02)
  *
- * @param {string} regime  the tax regime to use, one of "Trump", "PreTrump"
+ * @param {string} regime  the tax regime to use, one of "TCJA", "PreTCJA"
  * @param {number} year a year in the future, after the current year
  * @param {number} bracketInflationRate estimate of future tax bracket inflation, e.g. 2%
  * @param {string} filingStatus one of "Single", "HeadOfHousehold", "Married"
@@ -59,9 +59,9 @@ function TIR_ORDINARY_BRACKET_WIDTH(year, filingStatus, ordinaryRatePercentage) 
 
 /**
  * Width of an ordinary income tax bracket for a future year.
- * Example: TIR_FUTURE_ORDINARY_BRACKET_WIDTH("PreTrump", 2030, "HeadOfHousehold", 10)
+ * Example: TIR_FUTURE_ORDINARY_BRACKET_WIDTH("PreTCJA", 2030, "HeadOfHousehold", 10)
  * 
- * @param {string} regime the tax regime to use, one of "Trump", "PreTrump"
+ * @param {string} regime the tax regime to use, one of "TCJA", "PreTCJA"
  * @param {number} year a year in the future, after the current year
  * @param {number} bracketInflationRate estimate of future tax bracket inflation, e.g. 2%
  * @param {string} filingStatus one of "Single", "HeadOfHousehold", "Married"
@@ -93,9 +93,9 @@ function TIR_LTCG_TAX_START(year, filingStatus) {
 
 /**
  * Threshold above which long term capital gains are taxed, for a future year
- * Example: TIR_FUTURE_LTCG_TAX_START("PreTrump", 2027, 3.4%, "HeadOfHousehold")
+ * Example: TIR_FUTURE_LTCG_TAX_START("PreTCJA", 2027, 3.4%, "HeadOfHousehold")
  * 
- * @param {string} regime the tax regime to use, one of "Trump", "PreTrump"
+ * @param {string} regime the tax regime to use, one of "TCJA", "PreTCJA"
  * @param {number} year a year in the future, after the current year
  * @param {number} bracketInflationRate estimate of future tax bracket inflation, e.g. 2%
  * @param {string} filingStatus one of "Single", "HeadOfHousehold", "Married"
@@ -126,7 +126,7 @@ function TIR_RMD_FRACTION_FOR_AGE(age) {
  * @param {number} year a year between 2016 and the current year
  * @param {string} filingStatus one of "Single", "HeadOfHousehold", "Married"
  * @param {object} birthDate tax payer's date of birth
- * @param {number} personalExemptions self plus dependents, only relevant in a PreTrump year
+ * @param {number} personalExemptions self plus dependents, only relevant in a PreTCJA year
  * @param {number} socSec Social Security benefits received
  * @param {number} ordinaryIncomeNonSS ordinary income excluding Social Security
  * @param {number} qualifiedIncome qualified dividends and long term capital gains
@@ -189,14 +189,14 @@ function TIR_FEDERAL_TAX_DUE(
 
 /**
  * The Federal tax due for a future year.
- * Example: TIR_FUTURE_FEDERAL_TAX_DUE("Trump", 2023, 0.034, "Single", 1955-10-02, 0, 10000, 40000, 5000, 0)
+ * Example: TIR_FUTURE_FEDERAL_TAX_DUE("TCJA", 2023, 0.034, "Single", 1955-10-02, 0, 10000, 40000, 5000, 0)
  * 
- * @param {string} regime the tax regime to use, one of "Trump", "PreTrump"
+ * @param {string} regime the tax regime to use, one of "TCJA", "PreTCJA"
  * @param {number} year a year in the future, after the current year
  * @param {number} bracketInflationRate estimate of future tax bracket inflation, e.g. 2%
  * @param {string} filingStatus one of "Single", "HeadOfHousehold", "Married"
  * @param {object} birthDate tax payer's date of birth
- * @param {number} personalExemptions self plus dependents, only relevant in a PreTrump year
+ * @param {number} personalExemptions self plus dependents, only relevant in a PreTCJA year
  * @param {number} socSec Social Security benefits received
  * @param {number} ordinaryIncomeNonSS  ordinary income excluding Social Security
  * @param {number} qualifiedIncome qualified dividends and long term capital gains
@@ -243,7 +243,7 @@ function TIR_FUTURE_FEDERAL_TAX_DUE(
  * @param {number} year a year between 2016 and the current year
  * @param {string} filingStatus one of "Single", "HeadOfHousehold", "Married"
  * @param {object} birthDate tax payer's date of birth
- * @param {number} personalExemptions self plus dependents, only relevant in a PreTrump year
+ * @param {number} personalExemptions self plus dependents, only relevant in a PreTCJA year
  * @param {number} socSec Social Security benefits received
  * @param {number} ordinaryIncomeNonSS  ordinary income excluding Social Security
  * @param {number} qualifiedIncome qualified dividends and long term capital gains
@@ -290,14 +290,14 @@ function TIR_FEDERAL_TAX_SLOPE(
 
 /**
  * The marginal tax rate for a future year.
- * Example: TIR_FUTURE_FEDERAL_TAX_SLOPE("Trump", 2023, 0.034, "Single", 1955-10-02, 0, 10000, 40000, 5000, 0)
+ * Example: TIR_FUTURE_FEDERAL_TAX_SLOPE("TCJA", 2023, 0.034, "Single", 1955-10-02, 0, 10000, 40000, 5000, 0)
  * 
- * @param {string} regime the tax regime to use, one of "Trump", "PreTrump"
+ * @param {string} regime the tax regime to use, one of "TCJA", "PreTCJA"
  * @param {number} year a year in the future, after the current year
  * @param {number} bracketInflationRate estimate of future tax bracket inflation, e.g. 2%
  * @param {string} filingStatus one of "Single", "HeadOfHousehold", "Married"
  * @param {object} birthDate tax payer's date of birth
- * @param {number} personalExemptions self plus dependents, only relevant in a PreTrump year
+ * @param {number} personalExemptions self plus dependents, only relevant in a PreTCJA year
  * @param {number} socSec Social Security benefits received
  * @param {number} ordinaryIncomeNonSS  ordinary income excluding Social Security
  * @param {number} qualifiedIncome qualified dividends and long term capital gains

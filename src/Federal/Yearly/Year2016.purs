@@ -13,7 +13,7 @@ import UnsafeDates (unsafeMakeYear)
 
 values :: YearlyValues
 values =
-  { regime: PreTrump
+  { regime: PreTCJA
   , year: unsafeMakeYear 2016
   , perPersonExemption: makeFromInt 4050
   , unadjustedStandardDeduction:
