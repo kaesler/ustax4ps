@@ -6,4 +6,4 @@ rm -f dist/GoogleSheetModule.js
 # Append the shim
 cat src/GoogleSheetShim.js >> dist/GSheetScript.js
 sha=`git rev-parse --short HEAD`
-echo "const TIRVersion = '$sha';" >> dist/GSheetScript.js
+echo "function TIR_VERSION() { return '$sha'; }" >> dist/GSheetScript.js

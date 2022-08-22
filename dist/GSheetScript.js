@@ -5190,4 +5190,4 @@ function use() {
   var ui = SpreadsheetApp.getUi();
   ui.alert(title, message, ui.ButtonSet.OK);
 }
-const TIRVersion = '20383c5';
+function TIR_VERSION() { return '7b0d9b5'; }
