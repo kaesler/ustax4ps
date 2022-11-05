@@ -28,7 +28,7 @@ yearlyValuesSpec :: Spec Unit
 yearlyValuesSpec = do
   describe "YearlyValues.yearIsFuture produces expected values" do
     it "" do
-      yearIsFuture (unsafeMakeYear 2023) `shouldEqual` true
+      yearIsFuture (unsafeMakeYear 2023) `shouldEqual` false
       yearIsFuture (unsafeMakeYear 2030) `shouldEqual` true
       yearIsFuture (unsafeMakeYear 2022) `shouldEqual` false
   describe "YearlyValues.averageThresholdChangeOverPrevious produces expected values" do
@@ -39,6 +39,7 @@ yearlyValuesSpec = do
       asPercentage (unsafePartial $ fromJust (averageThresholdChangeOverPrevious $ unsafeMakeYear 2020)) `shouldEqual` 1.63
       asPercentage (unsafePartial $ fromJust (averageThresholdChangeOverPrevious $ unsafeMakeYear 2021)) `shouldEqual` 0.95
       asPercentage (unsafePartial $ fromJust (averageThresholdChangeOverPrevious $ unsafeMakeYear 2022)) `shouldEqual` 3.13
+      asPercentage (unsafePartial $ fromJust (averageThresholdChangeOverPrevious $ unsafeMakeYear 2023)) `shouldEqual` 7.08
 
 asPercentage :: Number -> Number
 asPercentage factor = (roundHalfUp ((factor - 1.0) * 10000.0)) / 100.0
