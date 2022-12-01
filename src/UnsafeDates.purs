@@ -8,10 +8,9 @@ module UnsafeDates
 
 import Prelude
 
-import Data.Date (Date, Day, Month, Year, adjust, canonicalDate)
+import Data.Date (Date, Day, Month, Year, canonicalDate)
 import Data.Enum (toEnum)
-import Data.Maybe (Maybe, fromJust)
-import Data.Time.Duration (Days (..))
+import Data.Maybe (fromJust)
 import Partial.Unsafe (unsafePartial)
 
 unsafeMakeYear :: Int -> Year
