@@ -58,6 +58,23 @@ function TIR_ORDINARY_BRACKET_WIDTH(year, filingStatus, ordinaryRatePercentage) 
 }
 
 /**
+ * End of an ordinary income tax bracket for a known year.
+ * Example: TIR_ORDINARY_BRACKET_END(2022, "Single", 10)
+ * 
+ * @param {number} year a year between 2016 and the current year
+ * @param {string} filingStatus one of "Single", "HeadOfHousehold", "Married"
+ * @param {number} ordinaryRatePercentage rate for a tax bracket e.g. 22
+ * @returns {number} The end of the specified ordinary bracket
+ * @customfunction
+ */
+function TIR_ORDINARY_BRACKET_END(year, filingStatus, ordinaryRatePercentage) {
+  const br = bindRegimeForKnownYear(year, filingStatus);  
+  const rate = ordinaryRatePercentage / 100.0;
+
+  return taxableIncomeToEndOfOrdinaryBracket(br.ordinaryBrackets)(rate);
+}
+
+/**
  * Width of an ordinary income tax bracket for a future year.
  * Example: TIR_FUTURE_ORDINARY_BRACKET_WIDTH("PreTCJA", 2030, "HeadOfHousehold", 10)
  * 
@@ -76,6 +93,26 @@ function TIR_FUTURE_ORDINARY_BRACKET_WIDTH(regime, year, bracketInflationRate, f
   return ordinaryIncomeBracketWidth(br.ordinaryBrackets)(rate);
 }
 
+// TODO: expose taxableIncomeToEndOfOrdinaryBracket
+
+/**
+ * End of an ordinary income tax bracket for a future year.
+ * Example: TIR_FUTURE_ORDINARY_BRACKET_END("PreTCJA", 2030, "HeadOfHousehold", 10)
+ * 
+ * @param {string} regime the tax regime to use, one of "TCJA", "PreTCJA"
+ * @param {number} year a year in the future, after the current year
+ * @param {number} bracketInflationRate estimate of future tax bracket inflation, e.g. 2%
+ * @param {string} filingStatus one of "Single", "HeadOfHousehold", "Married"
+ * @param {number} ordinaryRatePercentage rate for a tax bracket e.g. 22
+ * @returns {number} The end of the specified ordinary income bracket.
+ * @customfunction
+ */
+function TIR_FUTURE_ORDINARY_BRACKET_END(regime, year, bracketInflationRate, filingStatus, ordinaryRatePercentage) {
+  const br = bindRegimeForFutureYear(regime, year, bracketInflationRate, filingStatus);  
+  const rate = ordinaryRatePercentage / 100.0;
+
+  return taxableIncomeToEndOfOrdinaryBracket(br.ordinaryBrackets)(rate);
+}
 
 /**
  * Threshold above which long term capital gains are taxed, for a known year.

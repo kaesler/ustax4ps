@@ -774,7 +774,7 @@ var traverseArrayImpl = function() {
     };
   }
   return function(apply2) {
-    return function(map7) {
+    return function(map8) {
       return function(pure4) {
         return function(f) {
           return function(array) {
@@ -783,14 +783,14 @@ var traverseArrayImpl = function() {
                 case 0:
                   return pure4([]);
                 case 1:
-                  return map7(array1)(f(array[bot]));
+                  return map8(array1)(f(array[bot]));
                 case 2:
-                  return apply2(map7(array2)(f(array[bot])))(f(array[bot + 1]));
+                  return apply2(map8(array2)(f(array[bot])))(f(array[bot + 1]));
                 case 3:
-                  return apply2(apply2(map7(array3)(f(array[bot])))(f(array[bot + 1])))(f(array[bot + 2]));
+                  return apply2(apply2(map8(array3)(f(array[bot])))(f(array[bot + 1])))(f(array[bot + 2]));
                 default:
                   var pivot = bot + Math.floor((top3 - bot) / 4) * 2;
-                  return apply2(map7(concat2)(go(bot, pivot)))(go(pivot, top3));
+                  return apply2(map8(concat2)(go(bot, pivot)))(go(pivot, top3));
               }
             }
             return go(0, array.length);
@@ -870,9 +870,9 @@ var foldMap = function(dict) {
   return dict.foldMap;
 };
 var fold = function(dictFoldable) {
-  var foldMap2 = foldMap(dictFoldable);
+  var foldMap22 = foldMap(dictFoldable);
   return function(dictMonoid) {
-    return foldMap2(dictMonoid)(identity3);
+    return foldMap22(dictMonoid)(identity3);
   };
 };
 var find = function(dictFoldable) {
@@ -2252,9 +2252,9 @@ var fromFoldableImpl = function() {
     }
     return result;
   }
-  return function(foldr3) {
+  return function(foldr4) {
     return function(xs) {
-      return listToArray(foldr3(curryCons)(emptyList)(xs));
+      return listToArray(foldr4(curryCons)(emptyList)(xs));
     };
   };
 }();
@@ -2266,6 +2266,19 @@ var indexImpl = function(just) {
     return function(xs) {
       return function(i4) {
         return i4 < 0 || i4 >= xs.length ? nothing : just(xs[i4]);
+      };
+    };
+  };
+};
+var findIndexImpl = function(just) {
+  return function(nothing) {
+    return function(f) {
+      return function(xs) {
+        for (var i4 = 0, l = xs.length; i4 < l; i4++) {
+          if (f(xs[i4]))
+            return just(i4);
+        }
+        return nothing;
       };
     };
   };
@@ -2324,6 +2337,30 @@ var sortByImpl = function() {
     };
   };
 }();
+var slice2 = function(s) {
+  return function(e) {
+    return function(l) {
+      return l.slice(s, e);
+    };
+  };
+};
+var zipWith2 = function(f) {
+  return function(xs) {
+    return function(ys) {
+      var l = xs.length < ys.length ? xs.length : ys.length;
+      var result = new Array(l);
+      for (var i4 = 0; i4 < l; i4++) {
+        result[i4] = f(xs[i4])(ys[i4]);
+      }
+      return result;
+    };
+  };
+};
+var unsafeIndexImpl = function(xs) {
+  return function(n) {
+    return xs[n];
+  };
+};
 
 // output/Data.Array.ST/foreign.js
 var sortByImpl2 = function() {
@@ -2377,7 +2414,15 @@ var sortByImpl2 = function() {
 }();
 
 // output/Data.Array/index.js
+var map1 = /* @__PURE__ */ map(functorMaybe);
 var fold1 = /* @__PURE__ */ fold(foldableArray);
+var zip2 = /* @__PURE__ */ function() {
+  return zipWith2(Tuple.create);
+}();
+var unsafeIndex = function() {
+  return unsafeIndexImpl;
+};
+var unsafeIndex1 = /* @__PURE__ */ unsafeIndex();
 var sortBy = function(comp) {
   return sortByImpl(comp)(function(v) {
     if (v instanceof GT) {
@@ -2406,6 +2451,24 @@ var fromFoldable = function(dictFoldable) {
 };
 var fold2 = function(dictMonoid) {
   return fold1(dictMonoid);
+};
+var findIndex = /* @__PURE__ */ function() {
+  return findIndexImpl(Just.create)(Nothing.value);
+}();
+var find2 = function(f) {
+  return function(xs) {
+    return map1(unsafeIndex1(xs))(findIndex(f)(xs));
+  };
+};
+var drop2 = function(n) {
+  return function(xs) {
+    var $167 = n < 1;
+    if ($167) {
+      return xs;
+    }
+    ;
+    return slice2(n)(length3(xs))(xs);
+  };
 };
 
 // output/Data.Map.Internal/index.js
@@ -3094,6 +3157,9 @@ var fromFoldable2 = function(dictOrd) {
 };
 
 // output/Data.Set/index.js
+var foldMap2 = /* @__PURE__ */ foldMap(foldableList);
+var foldl4 = /* @__PURE__ */ foldl(foldableList);
+var foldr3 = /* @__PURE__ */ foldr(foldableList);
 var $$Set = function(x) {
   return x;
 };
@@ -3107,6 +3173,33 @@ var toUnfoldable3 = function(dictUnfoldable) {
   };
 };
 var fromMap = $$Set;
+var foldableSet = {
+  foldMap: function(dictMonoid) {
+    var foldMap1 = foldMap2(dictMonoid);
+    return function(f) {
+      var $129 = foldMap1(f);
+      return function($130) {
+        return $129(toList($130));
+      };
+    };
+  },
+  foldl: function(f) {
+    return function(x) {
+      var $131 = foldl4(f)(x);
+      return function($132) {
+        return $131(toList($132));
+      };
+    };
+  },
+  foldr: function(f) {
+    return function(x) {
+      var $133 = foldr3(f)(x);
+      return function($134) {
+        return $133(toList($134));
+      };
+    };
+  }
+};
 var eqSet = function(dictEq) {
   var eq6 = eq(eqMap(dictEq)(eqUnit));
   return {
@@ -3214,6 +3307,7 @@ var hasTimesDeduction = {
 var times = function(dict) {
   return dict.times;
 };
+var thresholdAsTaxableIncome = coerce2;
 var taxableAsIncome = coerce2;
 var roundHalfUp = function($141) {
   return toNumber(round2($141));
@@ -3407,8 +3501,10 @@ var toUnfoldable4 = /* @__PURE__ */ toUnfoldable2(unfoldableArray);
 var toUnfoldable1 = /* @__PURE__ */ toUnfoldable3(unfoldableList);
 var bind2 = /* @__PURE__ */ bind(bindMaybe);
 var find3 = /* @__PURE__ */ find(foldableList);
+var fromFoldable3 = /* @__PURE__ */ fromFoldable(foldableSet);
+var map5 = /* @__PURE__ */ map(functorMaybe);
 var fromJust7 = /* @__PURE__ */ fromJust();
-var map1 = /* @__PURE__ */ map(functorMap);
+var map12 = /* @__PURE__ */ map(functorMap);
 var makeFromInt2 = /* @__PURE__ */ makeFromInt(hasMakeFromIntIncomeThres);
 var map22 = /* @__PURE__ */ map(functorArray);
 var toPairs = function(dictTaxRate) {
@@ -3439,9 +3535,34 @@ var safeBracketWidth = function(dictTaxRate) {
     };
   };
 };
+var rateSuccessor = function(dictTaxRate) {
+  var eq6 = eq(dictTaxRate.Ord0().Eq0());
+  return function(rate) {
+    return function(brackets) {
+      var rates = fromFoldable3(keys2(brackets));
+      var ratesTail = drop2(1)(rates);
+      var pairs = zip2(rates)(ratesTail);
+      var pair = find2(function(p) {
+        return eq6(fst(p))(rate);
+      })(pairs);
+      return map5(snd)(pair);
+    };
+  };
+};
+var taxableIncomeToEndOfBracket = function(dictTaxRate) {
+  var rateSuccessor1 = rateSuccessor(dictTaxRate);
+  var lookup4 = lookup(dictTaxRate.Ord0());
+  return function(brackets) {
+    return function(bracketRate) {
+      var successorRate = fromJust7(rateSuccessor1(bracketRate)(brackets));
+      var startOfSuccessor = fromJust7(lookup4(successorRate)(brackets));
+      return thresholdAsTaxableIncome(startOfSuccessor);
+    };
+  };
+};
 var inflateThresholds = function(dictTaxRate) {
   return function(factor) {
-    return map1(inflateThreshold(factor));
+    return map12(inflateThreshold(factor));
   };
 };
 var fromRPairs = function(dictTaxRate) {
@@ -3525,7 +3646,7 @@ var taxRateFederalTaxRate = {
 // output/TaxFunction/index.js
 var amountOverThreshold2 = /* @__PURE__ */ amountOverThreshold(hasAmountOverThresholdTax);
 var toUnfoldable5 = /* @__PURE__ */ toUnfoldable2(unfoldableList);
-var map5 = /* @__PURE__ */ map(functorList);
+var map6 = /* @__PURE__ */ map(functorList);
 var mempty2 = /* @__PURE__ */ mempty(monoidIncomeThreshold);
 var fold3 = /* @__PURE__ */ fold(foldableList)(/* @__PURE__ */ monoidFn(monoidTaxPayable));
 var thresholdTaxFunction = function(dictTaxRate) {
@@ -3543,8 +3664,8 @@ var rateDeltasForBrackets = function(dictTaxRate) {
   var zeroRate2 = zeroRate(dictTaxRate);
   return function(brackets) {
     var pairs = toUnfoldable5(brackets);
-    var rates = map5(fst)(pairs);
-    var thresholds = map5(snd)(pairs);
+    var rates = map6(fst)(pairs);
+    var thresholds = map6(snd)(pairs);
     var deltas = zipWith(absoluteDifference2)(new Cons(zeroRate2, rates))(rates);
     return zip(thresholds)(deltas);
   };
@@ -3557,13 +3678,14 @@ var bracketsTaxFunction = function(dictTaxRate) {
   var thresholdTaxFunction1 = thresholdTaxFunction(dictTaxRate);
   return function(brackets) {
     var pairs = rateDeltasForBrackets1(brackets);
-    var taxFuncs = map5(uncurry(thresholdTaxFunction1))(pairs);
+    var taxFuncs = map6(uncurry(thresholdTaxFunction1))(pairs);
     return fold3(taxFuncs);
   };
 };
 
 // output/Federal.OrdinaryBrackets/index.js
 var toPairs1 = /* @__PURE__ */ toPairs(taxRateFederalTaxRate);
+var taxableIncomeToEndOfBracket2 = /* @__PURE__ */ taxableIncomeToEndOfBracket(taxRateFederalTaxRate);
 var coerce3 = /* @__PURE__ */ coerce();
 var bracketsTaxFunction2 = /* @__PURE__ */ bracketsTaxFunction(taxRateFederalTaxRate);
 var bracketWidth2 = /* @__PURE__ */ bracketWidth(taxRateFederalTaxRate);
@@ -3571,6 +3693,9 @@ var inflateThresholds1 = /* @__PURE__ */ inflateThresholds(taxRateFederalTaxRate
 var fromRPairs1 = /* @__PURE__ */ fromRPairs(taxRateFederalTaxRate);
 var toPairs2 = function(v) {
   return toPairs1(v);
+};
+var taxableIncomeToEndOfOrdinaryBracket = function(brackets) {
+  return taxableIncomeToEndOfBracket2(coerce3(brackets));
 };
 var taxFunctionFor = function(v) {
   return bracketsTaxFunction2(v);
@@ -4082,11 +4207,68 @@ var values8 = /* @__PURE__ */ function() {
   };
 }();
 
+// output/Federal.Yearly.Year2023/index.js
+var makeFromInt10 = /* @__PURE__ */ makeFromInt(hasMakeFromIntDeduction);
+var values9 = /* @__PURE__ */ function() {
+  return {
+    regime: TCJA.value,
+    year: unsafeMakeYear(2023),
+    perPersonExemption: makeFromInt10(0),
+    unadjustedStandardDeduction: function(v) {
+      if (v instanceof Married) {
+        return makeFromInt10(27700);
+      }
+      ;
+      if (v instanceof HeadOfHousehold) {
+        return makeFromInt10(20800);
+      }
+      ;
+      if (v instanceof Single) {
+        return makeFromInt10(13850);
+      }
+      ;
+      throw new Error("Failed pattern match at Federal.Yearly.Year2023 (line 20, column 7 - line 23, column 36): " + [v.constructor.name]);
+    },
+    adjustmentWhenOver65: makeFromInt10(1500),
+    adjustmentWhenOver65AndSingle: makeFromInt10(350),
+    ordinaryBrackets: function(v) {
+      if (v instanceof Married) {
+        return fromRPairs2([new Tuple(0, 10), new Tuple(22e3, 12), new Tuple(89450, 22), new Tuple(190750, 24), new Tuple(364200, 32), new Tuple(462500, 35), new Tuple(693750, 37)]);
+      }
+      ;
+      if (v instanceof HeadOfHousehold) {
+        return fromRPairs2([new Tuple(0, 10), new Tuple(15700, 12), new Tuple(59850, 22), new Tuple(95350, 24), new Tuple(182100, 32), new Tuple(231250, 35), new Tuple(578100, 37)]);
+      }
+      ;
+      if (v instanceof Single) {
+        return fromRPairs2([new Tuple(0, 10), new Tuple(11e3, 12), new Tuple(44725, 22), new Tuple(95375, 24), new Tuple(182100, 32), new Tuple(231250, 35), new Tuple(578125, 37)]);
+      }
+      ;
+      throw new Error("Failed pattern match at Federal.Yearly.Year2023 (line 27, column 7 - line 57, column 14): " + [v.constructor.name]);
+    },
+    qualifiedBrackets: function(v) {
+      if (v instanceof Married) {
+        return fromRPairs3([new Tuple(0, 0), new Tuple(89250, 15), new Tuple(553850, 20)]);
+      }
+      ;
+      if (v instanceof HeadOfHousehold) {
+        return fromRPairs3([new Tuple(0, 0), new Tuple(59750, 15), new Tuple(523050, 20)]);
+      }
+      ;
+      if (v instanceof Single) {
+        return fromRPairs3([new Tuple(0, 0), new Tuple(44625, 15), new Tuple(492300, 20)]);
+      }
+      ;
+      throw new Error("Failed pattern match at Federal.Yearly.Year2023 (line 59, column 7 - line 77, column 14): " + [v.constructor.name]);
+    }
+  };
+}();
+
 // output/Federal.Yearly.YearlyValues/index.js
 var nonZero2 = /* @__PURE__ */ nonZero(hasNonZeroIncomeThreshold);
 var bind3 = /* @__PURE__ */ bind(bindArray);
 var pure2 = /* @__PURE__ */ pure(applicativeArray);
-var fromFoldable3 = /* @__PURE__ */ fromFoldable2(/* @__PURE__ */ ordTuple(ordFilingStatus)(ordFederalTaxRate))(foldableArray);
+var fromFoldable4 = /* @__PURE__ */ fromFoldable2(/* @__PURE__ */ ordTuple(ordFilingStatus)(ordFederalTaxRate))(foldableArray);
 var eq5 = /* @__PURE__ */ eq(/* @__PURE__ */ eqSet(/* @__PURE__ */ eqTuple(eqFilingStatus)(eqFederalTaxRate)));
 var fromFoldable1 = /* @__PURE__ */ fromFoldable2(ordYear);
 var fromJust11 = /* @__PURE__ */ fromJust();
@@ -4095,10 +4277,10 @@ var compare5 = /* @__PURE__ */ compare(ordYear);
 var lessThan2 = /* @__PURE__ */ lessThan(ordYear);
 var eq13 = /* @__PURE__ */ eq(eqRegime);
 var toUnfoldable6 = /* @__PURE__ */ toUnfoldable2(unfoldableList);
-var map6 = /* @__PURE__ */ map(functorList);
+var map7 = /* @__PURE__ */ map(functorList);
 var append2 = /* @__PURE__ */ append(semigroupList);
 var divide2 = /* @__PURE__ */ divide(hasDivideIncomeThreshold);
-var foldl4 = /* @__PURE__ */ foldl(foldableList);
+var foldl5 = /* @__PURE__ */ foldl(foldableList);
 var hasNonZeroThreshold = function(v) {
   return nonZero2(v.value1);
 };
@@ -4109,7 +4291,7 @@ var ordinaryNonZeroThresholdsMap = function(yv) {
       return pure2(new Tuple(new Tuple(fs, v.value0), v.value1));
     });
   });
-  return fromFoldable3(pairs);
+  return fromFoldable4(pairs);
 };
 var haveCongruentOrdinaryBrackets = function(left) {
   return function(right) {
@@ -4123,7 +4305,7 @@ var qualifiedNonZeroThresholdsMap = function(yv) {
       return pure2(new Tuple(new Tuple(fs, v.value0), v.value1));
     });
   });
-  return fromFoldable3(pairs);
+  return fromFoldable4(pairs);
 };
 var haveCongruentQualifiedBrackets = function(left) {
   return function(right) {
@@ -4133,7 +4315,7 @@ var haveCongruentQualifiedBrackets = function(left) {
 var forYear = /* @__PURE__ */ function() {
   return fromFoldable1(foldableArray)(map(functorArray)(function(v) {
     return new Tuple(unsafeMakeYear(v.value0), v.value1);
-  })([new Tuple(2016, values2), new Tuple(2017, values3), new Tuple(2018, values4), new Tuple(2019, values5), new Tuple(2020, values6), new Tuple(2021, values7), new Tuple(2022, values8)]));
+  })([new Tuple(2016, values2), new Tuple(2017, values3), new Tuple(2018, values4), new Tuple(2019, values5), new Tuple(2020, values6), new Tuple(2021, values7), new Tuple(2022, values8), new Tuple(2023, values9)]));
 }();
 var unsafeValuesForYear = function(y) {
   return fromJust11(lookup2(y)(forYear));
@@ -4162,7 +4344,7 @@ var averageThresholdChange = function(left) {
   return function(right) {
     var valuesByAscendingKey = function(m) {
       var orderedEntries = toUnfoldable6(m);
-      return map6(function(v) {
+      return map7(function(v) {
         return v.value1;
       })(orderedEntries);
     };
@@ -4175,7 +4357,7 @@ var averageThresholdChange = function(left) {
         return Nil.value;
       }
       ;
-      throw new Error("Failed pattern match at Federal.Yearly.YearlyValues (line 142, column 5 - line 146, column 29): " + []);
+      throw new Error("Failed pattern match at Federal.Yearly.YearlyValues (line 144, column 5 - line 148, column 29): " + []);
     }();
     var ordPairs = function() {
       if (haveCongruentOrdinaryBrackets(left)(right)) {
@@ -4186,13 +4368,13 @@ var averageThresholdChange = function(left) {
         return Nil.value;
       }
       ;
-      throw new Error("Failed pattern match at Federal.Yearly.YearlyValues (line 136, column 5 - line 140, column 29): " + []);
+      throw new Error("Failed pattern match at Federal.Yearly.YearlyValues (line 138, column 5 - line 142, column 29): " + []);
     }();
     var pairs = append2(ordPairs)(qualPairs);
-    var changes = map6(function(v) {
+    var changes = map7(function(v) {
       return divide2(v.value1)(v.value0);
     })(pairs);
-    var changesSum = foldl4(function(x) {
+    var changesSum = foldl5(function(x) {
       return function(y) {
         return x + y;
       };
@@ -4204,7 +4386,7 @@ var averageThresholdChange = function(left) {
 var memoizedAverageThresholdChanges = /* @__PURE__ */ function() {
   var yvs = values(forYear);
   var yvPairs = zip(yvs)(fromJust11(tail(yvs)));
-  var mapPairs = map6(function(v) {
+  var mapPairs = map7(function(v) {
     return new Tuple(v.value1.year, averageThresholdChange(v.value0)(v.value1));
   })(yvPairs);
   return fromFoldable1(foldableList)(mapPairs);
@@ -4223,7 +4405,7 @@ var show5 = /* @__PURE__ */ show(showYear);
 var fromEnum4 = /* @__PURE__ */ fromEnum(boundedEnumYear);
 var bind4 = /* @__PURE__ */ bind(bindList);
 var pure3 = /* @__PURE__ */ pure(applicativeList);
-var foldl5 = /* @__PURE__ */ foldl(foldableList);
+var foldl6 = /* @__PURE__ */ foldl(foldableList);
 var BoundRegime = function(x) {
   return x;
 };
@@ -4331,7 +4513,7 @@ var boundRegimeForFutureYear = function(r) {
           var factor = fromMaybe(annualInflationFactor)(averageThresholdChangeOverPrevious(unsafeMakeYear(ywi)));
           return pure3(factor);
         });
-        var netInflationFactor = foldl5(function(a) {
+        var netInflationFactor = foldl6(function(a) {
           return function(b) {
             return a * b;
           };
@@ -4358,7 +4540,7 @@ var taxDueOnQualifiedIncome = function(brackets) {
 var taxDueOnOrdinaryIncome = taxFunctionFor;
 
 // output/Federal.TaxableSocialSecurity/index.js
-var makeFromInt10 = /* @__PURE__ */ makeFromInt(hasMakeFromIntIncome);
+var makeFromInt11 = /* @__PURE__ */ makeFromInt(hasMakeFromIntIncome);
 var mul4 = /* @__PURE__ */ mul2(hasMulIncome);
 var min3 = /* @__PURE__ */ min(ordIncome);
 var amountOverThreshold3 = /* @__PURE__ */ amountOverThreshold(hasAmountOverThresholdInc);
@@ -4371,7 +4553,7 @@ var amountTaxable = function(filingStatus) {
       var f = function(combinedIncome2) {
         return function(v) {
           if (isBelow(combinedIncome2)(v.value0)) {
-            return makeFromInt10(0);
+            return makeFromInt11(0);
           }
           ;
           if (isBelow(combinedIncome2)(v.value1)) {
@@ -4658,7 +4840,7 @@ var taxRateStateMATaxRate = {
 
 // output/StateMA.Calculator/index.js
 var fromEnum6 = /* @__PURE__ */ fromEnum(boundedEnumYear);
-var makeFromInt11 = /* @__PURE__ */ makeFromInt(hasMakeFromIntDeduction);
+var makeFromInt12 = /* @__PURE__ */ makeFromInt(hasMakeFromIntDeduction);
 var fold4 = /* @__PURE__ */ fold2(monoidDeduction);
 var taxRate = function(year) {
   var selectRate = function(i4) {
@@ -4695,15 +4877,15 @@ var taxFunction = /* @__PURE__ */ function() {
 var personalExemptionFor = function(v) {
   return function(v1) {
     if (v1 instanceof Married) {
-      return makeFromInt11(8800);
+      return makeFromInt12(8800);
     }
     ;
     if (v1 instanceof HeadOfHousehold) {
-      return makeFromInt11(6800);
+      return makeFromInt12(6800);
     }
     ;
     if (v1 instanceof Single) {
-      return makeFromInt11(4400);
+      return makeFromInt12(4400);
     }
     ;
     throw new Error("Failed pattern match at StateMA.Calculator (line 29, column 1 - line 29, column 58): " + [v.constructor.name, v1.constructor.name]);
@@ -4715,8 +4897,8 @@ var taxDue = function(year) {
       return function(dependents) {
         return function(maGrossIncome) {
           var personalExemption = personalExemptionFor(year)(filingStatus);
-          var dependentsExemption = makeFromInt11(1e3 * dependents | 0);
-          var ageExemption = makeFromInt11(function() {
+          var dependentsExemption = makeFromInt12(1e3 * dependents | 0);
+          var ageExemption = makeFromInt12(function() {
             var $13 = isAge65OrOlder(bd)(year);
             if ($13) {
               return 700;
@@ -4796,6 +4978,23 @@ function TIR_ORDINARY_BRACKET_WIDTH(year, filingStatus, ordinaryRatePercentage) 
 }
 
 /**
+ * End of an ordinary income tax bracket for a known year.
+ * Example: TIR_ORDINARY_BRACKET_END(2022, "Single", 10)
+ * 
+ * @param {number} year a year between 2016 and the current year
+ * @param {string} filingStatus one of "Single", "HeadOfHousehold", "Married"
+ * @param {number} ordinaryRatePercentage rate for a tax bracket e.g. 22
+ * @returns {number} The end of the specified ordinary bracket
+ * @customfunction
+ */
+function TIR_ORDINARY_BRACKET_END(year, filingStatus, ordinaryRatePercentage) {
+  const br = bindRegimeForKnownYear(year, filingStatus);  
+  const rate = ordinaryRatePercentage / 100.0;
+
+  return taxableIncomeToEndOfOrdinaryBracket(br.ordinaryBrackets)(rate);
+}
+
+/**
  * Width of an ordinary income tax bracket for a future year.
  * Example: TIR_FUTURE_ORDINARY_BRACKET_WIDTH("PreTCJA", 2030, "HeadOfHousehold", 10)
  * 
@@ -4814,6 +5013,26 @@ function TIR_FUTURE_ORDINARY_BRACKET_WIDTH(regime, year, bracketInflationRate, f
   return ordinaryIncomeBracketWidth(br.ordinaryBrackets)(rate);
 }
 
+// TODO: expose taxableIncomeToEndOfOrdinaryBracket
+
+/**
+ * End of an ordinary income tax bracket for a future year.
+ * Example: TIR_FUTURE_ORDINARY_BRACKET_END("PreTCJA", 2030, "HeadOfHousehold", 10)
+ * 
+ * @param {string} regime the tax regime to use, one of "TCJA", "PreTCJA"
+ * @param {number} year a year in the future, after the current year
+ * @param {number} bracketInflationRate estimate of future tax bracket inflation, e.g. 2%
+ * @param {string} filingStatus one of "Single", "HeadOfHousehold", "Married"
+ * @param {number} ordinaryRatePercentage rate for a tax bracket e.g. 22
+ * @returns {number} The end of the specified ordinary income bracket.
+ * @customfunction
+ */
+function TIR_FUTURE_ORDINARY_BRACKET_END(regime, year, bracketInflationRate, filingStatus, ordinaryRatePercentage) {
+  const br = bindRegimeForFutureYear(regime, year, bracketInflationRate, filingStatus);  
+  const rate = ordinaryRatePercentage / 100.0;
+
+  return taxableIncomeToEndOfOrdinaryBracket(br.ordinaryBrackets)(rate);
+}
 
 /**
  * Threshold above which long term capital gains are taxed, for a known year.
@@ -5190,4 +5409,4 @@ function use() {
   var ui = SpreadsheetApp.getUi();
   ui.alert(title, message, ui.ButtonSet.OK);
 }
-function TIR_VERSION() { return '7b0d9b5'; }
+function TIR_VERSION() { return '81075f8'; }
