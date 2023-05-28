@@ -2437,7 +2437,7 @@ var sortBy = function(comp) {
       return -1 | 0;
     }
     ;
-    throw new Error("Failed pattern match at Data.Array (line 829, column 31 - line 832, column 11): " + [v.constructor.name]);
+    throw new Error("Failed pattern match at Data.Array (line 870, column 31 - line 873, column 11): " + [v.constructor.name]);
   });
 };
 var index2 = /* @__PURE__ */ function() {
@@ -2462,8 +2462,8 @@ var find2 = function(f) {
 };
 var drop2 = function(n) {
   return function(xs) {
-    var $167 = n < 1;
-    if ($167) {
+    var $170 = n < 1;
+    if ($170) {
       return xs;
     }
     ;
@@ -4412,11 +4412,11 @@ var BoundRegime = function(x) {
 var standardDeduction = function(v) {
   return function(birthDate) {
     return append3(v.unadjustedStandardDeduction)(function() {
-      var $59 = isAge65OrOlder(birthDate)(v.year);
-      if ($59) {
+      var $58 = isAge65OrOlder(birthDate)(v.year);
+      if ($58) {
         return append3(v.adjustmentWhenOver65)(function() {
-          var $60 = isUnmarried(v.filingStatus);
-          if ($60) {
+          var $59 = isUnmarried(v.filingStatus);
+          if ($59) {
             return v.adjustmentWhenOver65AndSingle;
           }
           ;
@@ -4499,8 +4499,8 @@ var boundRegimeForFutureYear = function(r) {
     return function(annualInflationFactor) {
       return function(fs) {
         var v = function() {
-          var $66 = yearIsFuture(y);
-          if ($66) {
+          var $65 = yearIsFuture(y);
+          if ($65) {
             return unit;
           }
           ;
@@ -5409,4 +5409,4 @@ function use() {
   var ui = SpreadsheetApp.getUi();
   ui.alert(title, message, ui.ButtonSet.OK);
 }
-function TIR_VERSION() { return '81075f8'; }
+function TIR_VERSION() { return '533de64'; }
