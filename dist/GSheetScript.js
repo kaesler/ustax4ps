@@ -5194,8 +5194,8 @@ function TIR_FUTURE_FEDERAL_TAX_DUE(
 
 
 /**
- * The marginal tax rate for a known year.
- * Example: TIR_FEDERAL_TAX_SLOPE(2022, "Single", 1955-10-02, 0, 10000, 40000, 5000, 0)
+ * The marginal tax rate on ordinary income for a known year.
+ * Example: TIR_FEDERAL_TAX_SLOPE(2022, "Single", 1955-10-02, 0, 10000, 40000, 5000, 0, 1000)
  * 
  * @param {number} year a year between 2016 and the current year
  * @param {string} filingStatus one of "Single", "HeadOfHousehold", "Married"
@@ -5205,6 +5205,7 @@ function TIR_FUTURE_FEDERAL_TAX_DUE(
  * @param {number} ordinaryIncomeNonSS  ordinary income excluding Social Security
  * @param {number} qualifiedIncome qualified dividends and long term capital gains
  * @param {number} itemizedDeductions total of any itemized deductions
+ * @param {number} ordinaryIncomeDelta the change to ordinaryIncomeNonSS with which to calculate a slope
  * @returns {number} the marginal tax rate as a percentage.
  * @customfunction
  */
@@ -5216,9 +5217,11 @@ function TIR_FEDERAL_TAX_SLOPE(
   socSec, 
   ordinaryIncomeNonSS, 
   qualifiedIncome,
-  itemizedDeductions
+  itemizedDeductions,
+  ordinaryIncomeDelta
   ) {
-    const deltaX = 1000.0
+    const start = Math.min(ordinaryIncomeNonSS, ordinaryIncomeNonSS + ordinaryIncomeDelta)
+    const end = Math.max(ordinaryIncomeNonSS, ordinaryIncomeNonSS + ordinaryIncomeDelta)
 
   const federalTaxAtStart = TIR_FEDERAL_TAX_DUE(
     year, 
@@ -5226,7 +5229,7 @@ function TIR_FEDERAL_TAX_SLOPE(
     birthDate,
     personalExemptions,
     socSec, 
-    ordinaryIncomeNonSS, 
+    start, 
     qualifiedIncome,
     itemizedDeductions
   );
@@ -5236,18 +5239,18 @@ function TIR_FEDERAL_TAX_SLOPE(
     birthDate,
     personalExemptions,
     socSec, 
-    ordinaryIncomeNonSS + deltaX, 
+    end, 
     qualifiedIncome,
     itemizedDeductions
   );
   const deltaY = (federalTaxAtEnd - federalTaxAtStart);
 
-  return deltaY/deltaX;
+  return deltaY/Math.abs(ordinaryIncomeDelta);
 }
 
 /**
- * The marginal tax rate for a future year.
- * Example: TIR_FUTURE_FEDERAL_TAX_SLOPE("TCJA", 2023, 0.034, "Single", 1955-10-02, 0, 10000, 40000, 5000, 0)
+ * The marginal tax rate on ordinary income for a future year.
+ * Example: TIR_FUTURE_FEDERAL_TAX_SLOPE("TCJA", 2023, 0.034, "Single", 1955-10-02, 0, 10000, 40000, 5000, 0, 1000)
  * 
  * @param {string} regime the tax regime to use, one of "TCJA", "PreTCJA"
  * @param {number} year a year in the future, after the current year
@@ -5259,6 +5262,7 @@ function TIR_FEDERAL_TAX_SLOPE(
  * @param {number} ordinaryIncomeNonSS  ordinary income excluding Social Security
  * @param {number} qualifiedIncome qualified dividends and long term capital gains
  * @param {number} itemizedDeductions total of any itemized deductions
+ * @param {number} ordinaryIncomeDelta the change to ordinaryIncomeNonSS with which to calculate a slope
  * @returns {number} the marginal tax rate as a percentage.
  * @customfunction
  */
@@ -5272,9 +5276,11 @@ function TIR_FUTURE_FEDERAL_TAX_SLOPE(
   socSec, 
   ordinaryIncomeNonSS, 
   qualifiedIncome,
-  itemizedDeductions
+  itemizedDeductions,
+  ordinaryIncomeDelta
   ) {
-  const deltaX = 1000.0;
+  const start = Math.min(ordinaryIncomeNonSS, ordinaryIncomeNonSS + ordinaryIncomeDelta)
+  const end = Math.max(ordinaryIncomeNonSS, ordinaryIncomeNonSS + ordinaryIncomeDelta)
 
   const federalTaxAtStart = TIR_FUTURE_FEDERAL_TAX_DUE(
     regime,
@@ -5284,7 +5290,7 @@ function TIR_FUTURE_FEDERAL_TAX_SLOPE(
     birthDate,
     personalExemptions,
     socSec, 
-    ordinaryIncomeNonSS, 
+    start, 
     qualifiedIncome,
     itemizedDeductions
   );
@@ -5296,13 +5302,13 @@ function TIR_FUTURE_FEDERAL_TAX_SLOPE(
     birthDate,
     personalExemptions,
     socSec, 
-    ordinaryIncomeNonSS + deltaX, 
+    end, 
     qualifiedIncome,
     itemizedDeductions
   );
   const deltaY = (federalTaxAtEnd - federalTaxAtStart);
 
-  return deltaY/deltaX;
+  return deltaY/Math.abs(ordinaryIncomeDelta);
 }
 
 /**
@@ -5409,4 +5415,4 @@ function use() {
   var ui = SpreadsheetApp.getUi();
   ui.alert(title, message, ui.ButtonSet.OK);
 }
-function TIR_VERSION() { return '533de64'; }
+function TIR_VERSION() { return '91d97ac'; }
