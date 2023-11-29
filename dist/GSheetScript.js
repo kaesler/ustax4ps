@@ -4264,6 +4264,63 @@ var values9 = /* @__PURE__ */ function() {
   };
 }();
 
+// output/Federal.Yearly.Year2024/index.js
+var makeFromInt11 = /* @__PURE__ */ makeFromInt(hasMakeFromIntDeduction);
+var values10 = /* @__PURE__ */ function() {
+  return {
+    regime: TCJA.value,
+    year: unsafeMakeYear(2024),
+    perPersonExemption: makeFromInt11(0),
+    unadjustedStandardDeduction: function(v) {
+      if (v instanceof Married) {
+        return makeFromInt11(29200);
+      }
+      ;
+      if (v instanceof HeadOfHousehold) {
+        return makeFromInt11(21900);
+      }
+      ;
+      if (v instanceof Single) {
+        return makeFromInt11(14600);
+      }
+      ;
+      throw new Error("Failed pattern match at Federal.Yearly.Year2024 (line 20, column 7 - line 23, column 36): " + [v.constructor.name]);
+    },
+    adjustmentWhenOver65: makeFromInt11(1550),
+    adjustmentWhenOver65AndSingle: makeFromInt11(400),
+    ordinaryBrackets: function(v) {
+      if (v instanceof Married) {
+        return fromRPairs2([new Tuple(0, 10), new Tuple(23200, 12), new Tuple(94300, 22), new Tuple(201050, 24), new Tuple(383900, 32), new Tuple(487450, 35), new Tuple(731200, 37)]);
+      }
+      ;
+      if (v instanceof HeadOfHousehold) {
+        return fromRPairs2([new Tuple(0, 10), new Tuple(16550, 12), new Tuple(63100, 22), new Tuple(100500, 24), new Tuple(191950, 32), new Tuple(243700, 35), new Tuple(609350, 37)]);
+      }
+      ;
+      if (v instanceof Single) {
+        return fromRPairs2([new Tuple(0, 10), new Tuple(11600, 12), new Tuple(47150, 22), new Tuple(100525, 24), new Tuple(191950, 32), new Tuple(243725, 35), new Tuple(609350, 37)]);
+      }
+      ;
+      throw new Error("Failed pattern match at Federal.Yearly.Year2024 (line 27, column 7 - line 57, column 14): " + [v.constructor.name]);
+    },
+    qualifiedBrackets: function(v) {
+      if (v instanceof Married) {
+        return fromRPairs3([new Tuple(0, 0), new Tuple(94050, 15), new Tuple(583750, 20)]);
+      }
+      ;
+      if (v instanceof HeadOfHousehold) {
+        return fromRPairs3([new Tuple(0, 0), new Tuple(63e3, 15), new Tuple(551350, 20)]);
+      }
+      ;
+      if (v instanceof Single) {
+        return fromRPairs3([new Tuple(0, 0), new Tuple(47025, 15), new Tuple(518900, 20)]);
+      }
+      ;
+      throw new Error("Failed pattern match at Federal.Yearly.Year2024 (line 59, column 7 - line 77, column 14): " + [v.constructor.name]);
+    }
+  };
+}();
+
 // output/Federal.Yearly.YearlyValues/index.js
 var nonZero2 = /* @__PURE__ */ nonZero(hasNonZeroIncomeThreshold);
 var bind3 = /* @__PURE__ */ bind(bindArray);
@@ -4315,7 +4372,7 @@ var haveCongruentQualifiedBrackets = function(left) {
 var forYear = /* @__PURE__ */ function() {
   return fromFoldable1(foldableArray)(map(functorArray)(function(v) {
     return new Tuple(unsafeMakeYear(v.value0), v.value1);
-  })([new Tuple(2016, values2), new Tuple(2017, values3), new Tuple(2018, values4), new Tuple(2019, values5), new Tuple(2020, values6), new Tuple(2021, values7), new Tuple(2022, values8), new Tuple(2023, values9)]));
+  })([new Tuple(2016, values2), new Tuple(2017, values3), new Tuple(2018, values4), new Tuple(2019, values5), new Tuple(2020, values6), new Tuple(2021, values7), new Tuple(2022, values8), new Tuple(2023, values9), new Tuple(2024, values10)]));
 }();
 var unsafeValuesForYear = function(y) {
   return fromJust11(lookup2(y)(forYear));
@@ -4357,7 +4414,7 @@ var averageThresholdChange = function(left) {
         return Nil.value;
       }
       ;
-      throw new Error("Failed pattern match at Federal.Yearly.YearlyValues (line 144, column 5 - line 148, column 29): " + []);
+      throw new Error("Failed pattern match at Federal.Yearly.YearlyValues (line 146, column 5 - line 150, column 29): " + []);
     }();
     var ordPairs = function() {
       if (haveCongruentOrdinaryBrackets(left)(right)) {
@@ -4368,7 +4425,7 @@ var averageThresholdChange = function(left) {
         return Nil.value;
       }
       ;
-      throw new Error("Failed pattern match at Federal.Yearly.YearlyValues (line 138, column 5 - line 142, column 29): " + []);
+      throw new Error("Failed pattern match at Federal.Yearly.YearlyValues (line 140, column 5 - line 144, column 29): " + []);
     }();
     var pairs = append2(ordPairs)(qualPairs);
     var changes = map7(function(v) {
@@ -4540,7 +4597,7 @@ var taxDueOnQualifiedIncome = function(brackets) {
 var taxDueOnOrdinaryIncome = taxFunctionFor;
 
 // output/Federal.TaxableSocialSecurity/index.js
-var makeFromInt11 = /* @__PURE__ */ makeFromInt(hasMakeFromIntIncome);
+var makeFromInt12 = /* @__PURE__ */ makeFromInt(hasMakeFromIntIncome);
 var mul4 = /* @__PURE__ */ mul2(hasMulIncome);
 var min3 = /* @__PURE__ */ min(ordIncome);
 var amountOverThreshold3 = /* @__PURE__ */ amountOverThreshold(hasAmountOverThresholdInc);
@@ -4553,7 +4610,7 @@ var amountTaxable = function(filingStatus) {
       var f = function(combinedIncome2) {
         return function(v) {
           if (isBelow(combinedIncome2)(v.value0)) {
-            return makeFromInt11(0);
+            return makeFromInt12(0);
           }
           ;
           if (isBelow(combinedIncome2)(v.value1)) {
@@ -4840,7 +4897,7 @@ var taxRateStateMATaxRate = {
 
 // output/StateMA.Calculator/index.js
 var fromEnum6 = /* @__PURE__ */ fromEnum(boundedEnumYear);
-var makeFromInt12 = /* @__PURE__ */ makeFromInt(hasMakeFromIntDeduction);
+var makeFromInt13 = /* @__PURE__ */ makeFromInt(hasMakeFromIntDeduction);
 var fold4 = /* @__PURE__ */ fold2(monoidDeduction);
 var taxRate = function(year) {
   var selectRate = function(i4) {
@@ -4877,15 +4934,15 @@ var taxFunction = /* @__PURE__ */ function() {
 var personalExemptionFor = function(v) {
   return function(v1) {
     if (v1 instanceof Married) {
-      return makeFromInt12(8800);
+      return makeFromInt13(8800);
     }
     ;
     if (v1 instanceof HeadOfHousehold) {
-      return makeFromInt12(6800);
+      return makeFromInt13(6800);
     }
     ;
     if (v1 instanceof Single) {
-      return makeFromInt12(4400);
+      return makeFromInt13(4400);
     }
     ;
     throw new Error("Failed pattern match at StateMA.Calculator (line 29, column 1 - line 29, column 58): " + [v.constructor.name, v1.constructor.name]);
@@ -4897,8 +4954,8 @@ var taxDue = function(year) {
       return function(dependents) {
         return function(maGrossIncome) {
           var personalExemption = personalExemptionFor(year)(filingStatus);
-          var dependentsExemption = makeFromInt12(1e3 * dependents | 0);
-          var ageExemption = makeFromInt12(function() {
+          var dependentsExemption = makeFromInt13(1e3 * dependents | 0);
+          var ageExemption = makeFromInt13(function() {
             var $13 = isAge65OrOlder(bd)(year);
             if ($13) {
               return 700;
@@ -5415,4 +5472,4 @@ function use() {
   var ui = SpreadsheetApp.getUi();
   ui.alert(title, message, ui.ButtonSet.OK);
 }
-function TIR_VERSION() { return '91d97ac'; }
+function TIR_VERSION() { return '6341be9'; }
