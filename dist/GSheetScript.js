@@ -481,12 +481,12 @@ var read = function(dict) {
 // output/CommonTypes/index.js
 var compare2 = /* @__PURE__ */ compare(ordInt);
 var fromJust2 = /* @__PURE__ */ fromJust();
-var Married = /* @__PURE__ */ function() {
-  function Married2() {
+var MarriedJoint = /* @__PURE__ */ function() {
+  function MarriedJoint2() {
   }
   ;
-  Married2.value = new Married2();
-  return Married2;
+  MarriedJoint2.value = new MarriedJoint2();
+  return MarriedJoint2;
 }();
 var HeadOfHousehold = /* @__PURE__ */ function() {
   function HeadOfHousehold2() {
@@ -504,8 +504,8 @@ var Single = /* @__PURE__ */ function() {
 }();
 var readFilingStatus = {
   read: function(s) {
-    if (s === "Married") {
-      return new Just(Married.value);
+    if (s === "MarriedJoint") {
+      return new Just(MarriedJoint.value);
     }
     ;
     if (s === "HOH") {
@@ -527,7 +527,7 @@ var read2 = /* @__PURE__ */ read(readFilingStatus);
 var eqFilingStatus = {
   eq: function(x) {
     return function(y) {
-      if (x instanceof Married && y instanceof Married) {
+      if (x instanceof MarriedJoint && y instanceof MarriedJoint) {
         return true;
       }
       ;
@@ -546,15 +546,15 @@ var eqFilingStatus = {
 var ordFilingStatus = {
   compare: function(x) {
     return function(y) {
-      if (x instanceof Married && y instanceof Married) {
+      if (x instanceof MarriedJoint && y instanceof MarriedJoint) {
         return EQ.value;
       }
       ;
-      if (x instanceof Married) {
+      if (x instanceof MarriedJoint) {
         return LT.value;
       }
       ;
-      if (y instanceof Married) {
+      if (y instanceof MarriedJoint) {
         return GT.value;
       }
       ;
@@ -602,7 +602,7 @@ var unsafeReadFilingStatus = function(s) {
   return fromJust2(read2(s));
 };
 var isUnmarried = function(v) {
-  if (v instanceof Married) {
+  if (v instanceof MarriedJoint) {
     return false;
   }
   ;
@@ -3816,7 +3816,7 @@ var values2 = /* @__PURE__ */ function() {
     year: unsafeMakeYear(2016),
     perPersonExemption: makeFromInt3(4050),
     unadjustedStandardDeduction: function(v) {
-      if (v instanceof Married) {
+      if (v instanceof MarriedJoint) {
         return makeFromInt3(12600);
       }
       ;
@@ -3833,7 +3833,7 @@ var values2 = /* @__PURE__ */ function() {
     adjustmentWhenOver65: makeFromInt3(1250),
     adjustmentWhenOver65AndSingle: makeFromInt3(300),
     ordinaryBrackets: function(v) {
-      if (v instanceof Married) {
+      if (v instanceof MarriedJoint) {
         return fromRPairs2([new Tuple(0, 10), new Tuple(18550, 15), new Tuple(75300, 25), new Tuple(151900, 28), new Tuple(231450, 33), new Tuple(413350, 35), new Tuple(466950, 39.6)]);
       }
       ;
@@ -3848,7 +3848,7 @@ var values2 = /* @__PURE__ */ function() {
       throw new Error("Failed pattern match at Federal.Yearly.Year2016 (line 27, column 7 - line 57, column 14): " + [v.constructor.name]);
     },
     qualifiedBrackets: function(v) {
-      if (v instanceof Married) {
+      if (v instanceof MarriedJoint) {
         return fromRPairs3([new Tuple(0, 0), new Tuple(75300, 15), new Tuple(466950, 20)]);
       }
       ;
@@ -3873,7 +3873,7 @@ var values3 = /* @__PURE__ */ function() {
     year: unsafeMakeYear(2017),
     perPersonExemption: makeFromInt4(4050),
     unadjustedStandardDeduction: function(v) {
-      if (v instanceof Married) {
+      if (v instanceof MarriedJoint) {
         return makeFromInt4(12700);
       }
       ;
@@ -3890,7 +3890,7 @@ var values3 = /* @__PURE__ */ function() {
     adjustmentWhenOver65: makeFromInt4(1250),
     adjustmentWhenOver65AndSingle: makeFromInt4(300),
     ordinaryBrackets: function(v) {
-      if (v instanceof Married) {
+      if (v instanceof MarriedJoint) {
         return fromRPairs2([new Tuple(0, 10), new Tuple(18650, 15), new Tuple(75900, 25), new Tuple(153100, 28), new Tuple(233350, 33), new Tuple(416700, 35), new Tuple(470700, 39.6)]);
       }
       ;
@@ -3905,7 +3905,7 @@ var values3 = /* @__PURE__ */ function() {
       throw new Error("Failed pattern match at Federal.Yearly.Year2017 (line 27, column 7 - line 57, column 14): " + [v.constructor.name]);
     },
     qualifiedBrackets: function(v) {
-      if (v instanceof Married) {
+      if (v instanceof MarriedJoint) {
         return fromRPairs3([new Tuple(0, 0), new Tuple(75900, 15), new Tuple(470700, 20)]);
       }
       ;
@@ -3930,7 +3930,7 @@ var values4 = /* @__PURE__ */ function() {
     year: unsafeMakeYear(2018),
     perPersonExemption: makeFromInt5(0),
     unadjustedStandardDeduction: function(v) {
-      if (v instanceof Married) {
+      if (v instanceof MarriedJoint) {
         return makeFromInt5(24e3);
       }
       ;
@@ -3947,7 +3947,7 @@ var values4 = /* @__PURE__ */ function() {
     adjustmentWhenOver65: makeFromInt5(1300),
     adjustmentWhenOver65AndSingle: makeFromInt5(300),
     ordinaryBrackets: function(v) {
-      if (v instanceof Married) {
+      if (v instanceof MarriedJoint) {
         return fromRPairs2([new Tuple(0, 10), new Tuple(19050, 12), new Tuple(77400, 22), new Tuple(165e3, 24), new Tuple(315e3, 32), new Tuple(4e5, 35), new Tuple(6e5, 37)]);
       }
       ;
@@ -3962,7 +3962,7 @@ var values4 = /* @__PURE__ */ function() {
       throw new Error("Failed pattern match at Federal.Yearly.Year2018 (line 27, column 7 - line 57, column 14): " + [v.constructor.name]);
     },
     qualifiedBrackets: function(v) {
-      if (v instanceof Married) {
+      if (v instanceof MarriedJoint) {
         return fromRPairs3([new Tuple(0, 0), new Tuple(77200, 15), new Tuple(479e3, 20)]);
       }
       ;
@@ -3987,7 +3987,7 @@ var values5 = /* @__PURE__ */ function() {
     year: unsafeMakeYear(2019),
     perPersonExemption: makeFromInt6(0),
     unadjustedStandardDeduction: function(v) {
-      if (v instanceof Married) {
+      if (v instanceof MarriedJoint) {
         return makeFromInt6(24400);
       }
       ;
@@ -4004,7 +4004,7 @@ var values5 = /* @__PURE__ */ function() {
     adjustmentWhenOver65: makeFromInt6(1300),
     adjustmentWhenOver65AndSingle: makeFromInt6(350),
     ordinaryBrackets: function(v) {
-      if (v instanceof Married) {
+      if (v instanceof MarriedJoint) {
         return fromRPairs2([new Tuple(0, 10), new Tuple(19400, 12), new Tuple(78950, 22), new Tuple(168400, 24), new Tuple(321450, 32), new Tuple(408200, 35), new Tuple(612350, 37)]);
       }
       ;
@@ -4019,7 +4019,7 @@ var values5 = /* @__PURE__ */ function() {
       throw new Error("Failed pattern match at Federal.Yearly.Year2019 (line 27, column 7 - line 57, column 14): " + [v.constructor.name]);
     },
     qualifiedBrackets: function(v) {
-      if (v instanceof Married) {
+      if (v instanceof MarriedJoint) {
         return fromRPairs3([new Tuple(0, 0), new Tuple(78750, 15), new Tuple(488850, 20)]);
       }
       ;
@@ -4044,7 +4044,7 @@ var values6 = /* @__PURE__ */ function() {
     year: unsafeMakeYear(2020),
     perPersonExemption: makeFromInt7(0),
     unadjustedStandardDeduction: function(v) {
-      if (v instanceof Married) {
+      if (v instanceof MarriedJoint) {
         return makeFromInt7(24800);
       }
       ;
@@ -4061,7 +4061,7 @@ var values6 = /* @__PURE__ */ function() {
     adjustmentWhenOver65: makeFromInt7(1300),
     adjustmentWhenOver65AndSingle: makeFromInt7(350),
     ordinaryBrackets: function(v) {
-      if (v instanceof Married) {
+      if (v instanceof MarriedJoint) {
         return fromRPairs2([new Tuple(0, 10), new Tuple(19750, 12), new Tuple(80250, 22), new Tuple(171050, 24), new Tuple(326600, 32), new Tuple(414700, 35), new Tuple(622050, 37)]);
       }
       ;
@@ -4076,7 +4076,7 @@ var values6 = /* @__PURE__ */ function() {
       throw new Error("Failed pattern match at Federal.Yearly.Year2020 (line 27, column 7 - line 57, column 14): " + [v.constructor.name]);
     },
     qualifiedBrackets: function(v) {
-      if (v instanceof Married) {
+      if (v instanceof MarriedJoint) {
         return fromRPairs3([new Tuple(0, 0), new Tuple(8e4, 15), new Tuple(496600, 20)]);
       }
       ;
@@ -4101,7 +4101,7 @@ var values7 = /* @__PURE__ */ function() {
     year: unsafeMakeYear(2021),
     perPersonExemption: makeFromInt8(0),
     unadjustedStandardDeduction: function(v) {
-      if (v instanceof Married) {
+      if (v instanceof MarriedJoint) {
         return makeFromInt8(25100);
       }
       ;
@@ -4118,7 +4118,7 @@ var values7 = /* @__PURE__ */ function() {
     adjustmentWhenOver65: makeFromInt8(1350),
     adjustmentWhenOver65AndSingle: makeFromInt8(350),
     ordinaryBrackets: function(v) {
-      if (v instanceof Married) {
+      if (v instanceof MarriedJoint) {
         return fromRPairs2([new Tuple(0, 10), new Tuple(19900, 12), new Tuple(81050, 22), new Tuple(172750, 24), new Tuple(329850, 32), new Tuple(418850, 35), new Tuple(628300, 37)]);
       }
       ;
@@ -4133,7 +4133,7 @@ var values7 = /* @__PURE__ */ function() {
       throw new Error("Failed pattern match at Federal.Yearly.Year2021 (line 27, column 7 - line 57, column 14): " + [v.constructor.name]);
     },
     qualifiedBrackets: function(v) {
-      if (v instanceof Married) {
+      if (v instanceof MarriedJoint) {
         return fromRPairs3([new Tuple(0, 0), new Tuple(80800, 15), new Tuple(501600, 20)]);
       }
       ;
@@ -4158,7 +4158,7 @@ var values8 = /* @__PURE__ */ function() {
     year: unsafeMakeYear(2022),
     perPersonExemption: makeFromInt9(0),
     unadjustedStandardDeduction: function(v) {
-      if (v instanceof Married) {
+      if (v instanceof MarriedJoint) {
         return makeFromInt9(25900);
       }
       ;
@@ -4175,7 +4175,7 @@ var values8 = /* @__PURE__ */ function() {
     adjustmentWhenOver65: makeFromInt9(1400),
     adjustmentWhenOver65AndSingle: makeFromInt9(350),
     ordinaryBrackets: function(v) {
-      if (v instanceof Married) {
+      if (v instanceof MarriedJoint) {
         return fromRPairs2([new Tuple(0, 10), new Tuple(20550, 12), new Tuple(83550, 22), new Tuple(178150, 24), new Tuple(340100, 32), new Tuple(431900, 35), new Tuple(647850, 37)]);
       }
       ;
@@ -4190,7 +4190,7 @@ var values8 = /* @__PURE__ */ function() {
       throw new Error("Failed pattern match at Federal.Yearly.Year2022 (line 27, column 7 - line 57, column 14): " + [v.constructor.name]);
     },
     qualifiedBrackets: function(v) {
-      if (v instanceof Married) {
+      if (v instanceof MarriedJoint) {
         return fromRPairs3([new Tuple(0, 0), new Tuple(83350, 15), new Tuple(517200, 20)]);
       }
       ;
@@ -4215,7 +4215,7 @@ var values9 = /* @__PURE__ */ function() {
     year: unsafeMakeYear(2023),
     perPersonExemption: makeFromInt10(0),
     unadjustedStandardDeduction: function(v) {
-      if (v instanceof Married) {
+      if (v instanceof MarriedJoint) {
         return makeFromInt10(27700);
       }
       ;
@@ -4232,7 +4232,7 @@ var values9 = /* @__PURE__ */ function() {
     adjustmentWhenOver65: makeFromInt10(1500),
     adjustmentWhenOver65AndSingle: makeFromInt10(350),
     ordinaryBrackets: function(v) {
-      if (v instanceof Married) {
+      if (v instanceof MarriedJoint) {
         return fromRPairs2([new Tuple(0, 10), new Tuple(22e3, 12), new Tuple(89450, 22), new Tuple(190750, 24), new Tuple(364200, 32), new Tuple(462500, 35), new Tuple(693750, 37)]);
       }
       ;
@@ -4247,7 +4247,7 @@ var values9 = /* @__PURE__ */ function() {
       throw new Error("Failed pattern match at Federal.Yearly.Year2023 (line 27, column 7 - line 57, column 14): " + [v.constructor.name]);
     },
     qualifiedBrackets: function(v) {
-      if (v instanceof Married) {
+      if (v instanceof MarriedJoint) {
         return fromRPairs3([new Tuple(0, 0), new Tuple(89250, 15), new Tuple(553850, 20)]);
       }
       ;
@@ -4272,7 +4272,7 @@ var values10 = /* @__PURE__ */ function() {
     year: unsafeMakeYear(2024),
     perPersonExemption: makeFromInt11(0),
     unadjustedStandardDeduction: function(v) {
-      if (v instanceof Married) {
+      if (v instanceof MarriedJoint) {
         return makeFromInt11(29200);
       }
       ;
@@ -4289,7 +4289,7 @@ var values10 = /* @__PURE__ */ function() {
     adjustmentWhenOver65: makeFromInt11(1550),
     adjustmentWhenOver65AndSingle: makeFromInt11(400),
     ordinaryBrackets: function(v) {
-      if (v instanceof Married) {
+      if (v instanceof MarriedJoint) {
         return fromRPairs2([new Tuple(0, 10), new Tuple(23200, 12), new Tuple(94300, 22), new Tuple(201050, 24), new Tuple(383900, 32), new Tuple(487450, 35), new Tuple(731200, 37)]);
       }
       ;
@@ -4304,7 +4304,7 @@ var values10 = /* @__PURE__ */ function() {
       throw new Error("Failed pattern match at Federal.Yearly.Year2024 (line 27, column 7 - line 57, column 14): " + [v.constructor.name]);
     },
     qualifiedBrackets: function(v) {
-      if (v instanceof Married) {
+      if (v instanceof MarriedJoint) {
         return fromRPairs3([new Tuple(0, 0), new Tuple(94050, 15), new Tuple(583750, 20)]);
       }
       ;
@@ -4342,7 +4342,7 @@ var hasNonZeroThreshold = function(v) {
   return nonZero2(v.value1);
 };
 var ordinaryNonZeroThresholdsMap = function(yv) {
-  var pairs = bind3([Single.value, HeadOfHousehold.value, Married.value])(function(fs) {
+  var pairs = bind3([Single.value, HeadOfHousehold.value, MarriedJoint.value])(function(fs) {
     var obs = yv.ordinaryBrackets(fs);
     return bind3(filter(hasNonZeroThreshold)(toPairs2(obs)))(function(v) {
       return pure2(new Tuple(new Tuple(fs, v.value0), v.value1));
@@ -4356,7 +4356,7 @@ var haveCongruentOrdinaryBrackets = function(left) {
   };
 };
 var qualifiedNonZeroThresholdsMap = function(yv) {
-  var pairs = bind3([Single.value, HeadOfHousehold.value, Married.value])(function(fs) {
+  var pairs = bind3([Single.value, HeadOfHousehold.value, MarriedJoint.value])(function(fs) {
     var qbs = yv.qualifiedBrackets(fs);
     return bind3(filter(hasNonZeroThreshold)(toPairs3(qbs)))(function(v) {
       return pure2(new Tuple(new Tuple(fs, v.value0), v.value1));
@@ -4628,7 +4628,7 @@ var amountTaxable = function(filingStatus) {
         };
       };
       var lowThreshold = makeFromInt1(function() {
-        if (filingStatus instanceof Married) {
+        if (filingStatus instanceof MarriedJoint) {
           return 32e3;
         }
         ;
@@ -4643,7 +4643,7 @@ var amountTaxable = function(filingStatus) {
         throw new Error("Failed pattern match at Federal.TaxableSocialSecurity (line 30, column 9 - line 33, column 26): " + [filingStatus.constructor.name]);
       }());
       var highThreshold = makeFromInt1(function() {
-        if (filingStatus instanceof Married) {
+        if (filingStatus instanceof MarriedJoint) {
           return 44e3;
         }
         ;
@@ -4933,7 +4933,7 @@ var taxFunction = /* @__PURE__ */ function() {
 }();
 var personalExemptionFor = function(v) {
   return function(v1) {
-    if (v1 instanceof Married) {
+    if (v1 instanceof MarriedJoint) {
       return makeFromInt13(8800);
     }
     ;
@@ -5472,4 +5472,4 @@ function use() {
   var ui = SpreadsheetApp.getUi();
   ui.alert(title, message, ui.ButtonSet.OK);
 }
-function TIR_VERSION() { return '6341be9'; }
+function TIR_VERSION() { return '2a3774f'; }
