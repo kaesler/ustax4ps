@@ -1,0 +1,2352 @@
+
+test/AgeSpec.purs,35
+module AgeSpec1,0
+ageSpec 25,564
+
+test/FutureYearsGoldenTestsAgainstScalaImpl.purs,74
+module FutureYearsGoldenTestsAgainstScalaImpl1,0
+type Expectation32,847
+
+test/FutureYearsGoldenTestCasesFromScala.purs,47
+module FutureYearsGoldenTestCasesFromScala1,0
+
+test/Test.Main.purs,20
+import Effect 6,66
+
+test/Federal/OrdinaryBracketSpec.purs,124
+module Federal.OrdinaryBracketSpecOrdinaryBracketSpec1,0
+boundRegimeFor fs 51,1861
+prop_zeroTaxOnlyOnZeroIncome 82,3102
+
+test/Federal/Yearly/YearlyValuesSpec.purs,86
+module Federal.Yearly.YearlyValuesSpec(YearlyValuesSpec1,0
+yearlyValuesSpec 28,735
+
+test/KnownYearsGoldenTestsAgainstScalaImpl.purs,73
+module KnownYearsGoldenTestsAgainstScalaImpl1,0
+type Expectation32,844
+
+test/KnownYearsGoldenTestCasesFromScala.purs,46
+module KnownYearsGoldenTestCasesFromScala1,0
+
+.spago/nonempty/v7.0.0/test/Main.purs,36
+import Data.Foldable Foldable5,40
+
+.spago/nonempty/v7.0.0/src/Data/NonEmpty.purs,101
+-- | This module defines a generic non-empty data structure,1,0
+module Data.NonEmptyNonEmpty3,122
+
+.spago/fork/v6.0.0/test/Main.purs,20
+import Effect 5,40
+
+.spago/fork/v6.0.0/src/Control/Monad/Fork/Class.purs,55
+import Prelude hiding 3,39
+  uninterruptible 96,2797
+
+.spago/catenable-lists/v7.0.0/test/Test/Main.purs,20
+import Effect 5,40
+
+.spago/catenable-lists/v7.0.0/test/Test/Data/CatList.purs,38
+module Test.Data.CatList CatList1,0
+
+.spago/catenable-lists/v7.0.0/test/Test/Data/CatQueue.purs,40
+module Test.Data.CatQueue CatQueue1,0
+
+.spago/catenable-lists/v7.0.0/benchmarks/src/Benchmark.purs,251
+module Test.Benchmark Benchmark1,0
+snocBenchmark 40,922
+unconsBenchmark 55,1426
+appendBenchmark 77,2361
+snocUnconsBenchmark 96,3027
+consUnconsNBenchmark 111,3818
+snocUnconsNBenchmark 125,4549
+randomCatQueue :: forall eff. Int -> Gen 139,5372
+
+.spago/catenable-lists/v7.0.0/src/Data/CatList.purs,17
+-- | `O(O4,128
+
+.spago/catenable-lists/v7.0.0/src/Data/CatQueue.purs,36
+-- | operations require `O(O4,127
+
+.spago/strings/v6.0.1/bench/Main.purs,35
+import Control.Monad.Eff Eff5,41
+
+.spago/strings/v6.0.1/test/Test/Main.purs,20
+import Effect 5,40
+
+.spago/strings/v6.0.1/test/Test/Data/String.purs,106
+module Test.Data.String String1,0
+  -- this is a re-export from Data.String.CodeUnits,CodeUnits27,631
+
+.spago/strings/v6.0.1/test/Test/Data/String/Regex.purs,41
+module Test.Data.String.Regex Regex1,0
+
+.spago/strings/v6.0.1/test/Test/Data/String/NonEmpty/CodeUnits.purs,73
+module Test.Data.String.NonEmpty.CodeUnits CodeUnits1,0
+nea 450,12247
+
+.spago/strings/v6.0.1/test/Test/Data/String/CodePoints.purs,65
+module Test.Data.String.CodePoints CodePoints1,0
+cp 653,15015
+
+.spago/strings/v6.0.1/test/Test/Data/String/NonEmpty.purs,103
+module Test.Data.String.NonEmpty NonEmpty1,0
+  assert $ NES.contains contains55,1377
+nea 220,6959
+
+.spago/strings/v6.0.1/test/Test/Data/String/CodeUnits.purs,80
+module Test.Data.String.CodeUnits CodeUnits1,0
+  assert $ isNothing 140,2947
+
+.spago/strings/v6.0.1/test/Test/Data/String/Unsafe.purs,43
+module Test.Data.String.Unsafe Unsafe1,0
+
+.spago/strings/v6.0.1/test/Test/Data/String/CaseInsensitive.purs,61
+module Test.Data.String.CaseInsensitive CaseInsensitive1,0
+
+.spago/strings/v6.0.1/src/Data/Char/Gen.purs,35
+import Control.Monad.Gen Gen5,44
+
+.spago/strings/v6.0.1/src/Data/String.purs,30
+module Data.StringString1,0
+
+.spago/strings/v6.0.1/src/Data/String/Regex.purs,57
+-- | For details of the underlying implementation,3,121
+
+.spago/strings/v6.0.1/src/Data/String/NonEmpty/CodePoints.purs,178
+module Data.String.NonEmpty.CodePointsCodePoints1,0
+uncons nes 94,2797
+length 103,2984
+splitAt i nes 136,3893
+    { before, after } -> { before: fromString before,138,3957
+
+.spago/strings/v6.0.1/src/Data/String/NonEmpty/Internal.purs,89
+-- | While most of the code in this module is safe,1,0
+-- | their type signature,4,221
+
+.spago/strings/v6.0.1/src/Data/String/NonEmpty/CodeUnits.purs,214
+module Data.String.NonEmpty.CodeUnitsCodeUnits1,0
+uncons :: NonEmptyString -> { head :: Char,187,6088
+uncons nes 188,6163
+splitAt i nes 306,9941
+    { before, after } -> { before: fromString before,308,10005
+
+.spago/strings/v6.0.1/src/Data/String/NonEmpty/CaseInsensitive.purs,34
+import Data.Newtype Newtype5,67
+
+.spago/strings/v6.0.1/src/Data/String/CodePoints.purs,105
+-- | of code points from the beginning,149,4433
+uncons s 192,5839
+      cu0 197,5973
+length 216,6541
+
+.spago/strings/v6.0.1/src/Data/String/NonEmpty.purs,41
+module Data.String.NonEmptyNonEmpty1,0
+
+.spago/strings/v6.0.1/src/Data/String/Gen.purs,35
+import Control.Monad.Gen Gen5,46
+
+.spago/strings/v6.0.1/src/Data/String/CodeUnits.purs,43
+module Data.String.CodeUnitsCodeUnits1,0
+
+.spago/strings/v6.0.1/src/Data/String/Pattern.purs,25
+-- | pursPattern 10,179
+
+.spago/strings/v6.0.1/src/Data/String/Regex/Flags.purs,189
+import Control.MonadPlus MonadPlus5,54
+newtype RegexFlags 19,354
+global 36,708
+ignoreCase 47,911
+multiline 58,1116
+sticky 69,1314
+unicode 80,1511
+dotAll 91,1707
+  mempty 111,2252
+
+.spago/strings/v6.0.1/src/Data/String/Regex/Unsafe.purs,43
+module Data.String.Regex.UnsafeUnsafe1,0
+
+.spago/strings/v6.0.1/src/Data/String/Common.purs,37
+module Data.String.CommonCommon1,0
+
+.spago/strings/v6.0.1/src/Data/String/Unsafe.purs,38
+module Data.String.UnsafeUnsafe2,44
+
+.spago/strings/v6.0.1/src/Data/String/CaseInsensitive.purs,34
+import Data.Newtype Newtype5,58
+
+.spago/strings/v6.0.0/bench/Main.purs,35
+import Control.Monad.Eff Eff5,41
+
+.spago/strings/v6.0.0/test/Test/Main.purs,20
+import Effect 5,40
+
+.spago/strings/v6.0.0/test/Test/Data/String.purs,106
+module Test.Data.String String1,0
+  -- this is a re-export from Data.String.CodeUnits,CodeUnits27,631
+
+.spago/strings/v6.0.0/test/Test/Data/String/Regex.purs,41
+module Test.Data.String.Regex Regex1,0
+
+.spago/strings/v6.0.0/test/Test/Data/String/NonEmpty/CodeUnits.purs,73
+module Test.Data.String.NonEmpty.CodeUnits CodeUnits1,0
+nea 450,12247
+
+.spago/strings/v6.0.0/test/Test/Data/String/CodePoints.purs,65
+module Test.Data.String.CodePoints CodePoints1,0
+cp 653,15015
+
+.spago/strings/v6.0.0/test/Test/Data/String/NonEmpty.purs,103
+module Test.Data.String.NonEmpty NonEmpty1,0
+  assert $ NES.contains contains55,1377
+nea 220,6959
+
+.spago/strings/v6.0.0/test/Test/Data/String/CodeUnits.purs,80
+module Test.Data.String.CodeUnits CodeUnits1,0
+  assert $ isNothing 140,2947
+
+.spago/strings/v6.0.0/test/Test/Data/String/Unsafe.purs,43
+module Test.Data.String.Unsafe Unsafe1,0
+
+.spago/strings/v6.0.0/test/Test/Data/String/CaseInsensitive.purs,61
+module Test.Data.String.CaseInsensitive CaseInsensitive1,0
+
+.spago/strings/v6.0.0/src/Data/Char/Gen.purs,35
+import Control.Monad.Gen Gen5,44
+
+.spago/strings/v6.0.0/src/Data/String.purs,30
+module Data.StringString1,0
+
+.spago/strings/v6.0.0/src/Data/String/Regex.purs,57
+-- | For details of the underlying implementation,3,121
+
+.spago/strings/v6.0.0/src/Data/String/NonEmpty/CodePoints.purs,178
+module Data.String.NonEmpty.CodePointsCodePoints1,0
+uncons nes 94,2797
+length 103,2984
+splitAt i nes 136,3893
+    { before, after } -> { before: fromString before,138,3957
+
+.spago/strings/v6.0.0/src/Data/String/NonEmpty/Internal.purs,89
+-- | While most of the code in this module is safe,1,0
+-- | their type signature,4,221
+
+.spago/strings/v6.0.0/src/Data/String/NonEmpty/CodeUnits.purs,214
+module Data.String.NonEmpty.CodeUnitsCodeUnits1,0
+uncons :: NonEmptyString -> { head :: Char,187,6088
+uncons nes 188,6163
+splitAt i nes 306,9941
+    { before, after } -> { before: fromString before,308,10005
+
+.spago/strings/v6.0.0/src/Data/String/NonEmpty/CaseInsensitive.purs,34
+import Data.Newtype Newtype5,67
+
+.spago/strings/v6.0.0/src/Data/String/CodePoints.purs,105
+-- | of code points from the beginning,149,4433
+uncons s 192,5839
+      cu0 197,5973
+length 216,6541
+
+.spago/strings/v6.0.0/src/Data/String/NonEmpty.purs,41
+module Data.String.NonEmptyNonEmpty1,0
+
+.spago/strings/v6.0.0/src/Data/String/Gen.purs,35
+import Control.Monad.Gen Gen5,46
+
+.spago/strings/v6.0.0/src/Data/String/CodeUnits.purs,43
+module Data.String.CodeUnitsCodeUnits1,0
+
+.spago/strings/v6.0.0/src/Data/String/Pattern.purs,25
+-- | pursPattern 10,179
+
+.spago/strings/v6.0.0/src/Data/String/Regex/Flags.purs,189
+import Control.MonadPlus MonadPlus5,54
+newtype RegexFlags 19,354
+global 36,708
+ignoreCase 47,911
+multiline 58,1116
+sticky 69,1314
+unicode 80,1511
+dotAll 91,1707
+  mempty 111,2252
+
+.spago/strings/v6.0.0/src/Data/String/Regex/Unsafe.purs,43
+module Data.String.Regex.UnsafeUnsafe1,0
+
+.spago/strings/v6.0.0/src/Data/String/Common.purs,37
+module Data.String.CommonCommon1,0
+
+.spago/strings/v6.0.0/src/Data/String/Unsafe.purs,38
+module Data.String.UnsafeUnsafe2,44
+
+.spago/strings/v6.0.0/src/Data/String/CaseInsensitive.purs,34
+import Data.Newtype Newtype5,58
+
+.spago/parallel/v6.0.0/test/Main.purs,73
+import Control.Monad.Cont.Trans Trans5,40
+get req 18,377
+main 24,507
+
+.spago/parallel/v6.0.0/src/Control/Parallel/Class.purs,29
+import Control.Alt Alt5,53
+
+.spago/parallel/v6.0.0/src/Control/Parallel.purs,37
+module Control.ParallelParallel1,0
+
+.spago/invariant/v6.0.0/src/Data/Functor/Invariant.purs,34
+import Data.Functor Functor4,73
+
+.spago/either/v6.1.0/test/Main.purs,55
+import Data.Either.Inject Inject5,40
+      x 32,651
+
+.spago/either/v6.1.0/src/Data/Either/Inject.purs,32
+import Data.Either Either5,49
+
+.spago/either/v6.1.0/src/Data/Either.purs,29
+import Control.Alt Alt5,42
+
+.spago/numbers/v9.0.0/test/Test/Main.purs,51
+import Data.Maybe Maybe5,40
+    10.0 ~=184,4672
+
+.spago/lcg/v4.0.0/src/Random/LCG.purs,26
+module Random.LCGLCG1,0
+
+.spago/ordered-collections/v3.0.0/bench/Bench/Main.purs,32
+import Bench.Data.Map Map5,41
+
+.spago/ordered-collections/v3.0.0/bench/Bench/Data/Map.purs,32
+import Data.Tuple Tuple10,191
+
+.spago/ordered-collections/v3.0.0/bench/Bench/Data/Map2a0bff.purs,391
+-- | This module defines a type of maps as balanced 2-3 trees,1,0
+module Bench.Data.Map2a0bffMap2a0bff4,149
+lookupLE k 245,7347
+lookupLT k 262,7969
+lookupGE k 279,8584
+lookupGT k 296,9206
+findMax 313,9775
+findMin 321,10085
+-- | argument means that the fold has no lower or upper bound,329,10438
+-- | starts from 330,10515
+  maxNode m 561,21302
+  removeMaxNode :: List 569,21590
+
+.spago/ordered-collections/v3.0.0/test/Test/Main.purs,20
+import Effect 5,40
+
+.spago/ordered-collections/v3.0.0/test/Test/Data/Map.purs,309
+    let f m' = M.fromFoldable (M.toUnfoldable m' :: List 173,6766
+      isCloserKey k2 266,11090
+      isCloserKey k2 277,11503
+      isCloserKey k2 288,11917
+      isCloserKey k2 297,12250
+    Just { key: k, value: v } -> M.lookup k m 305,12527
+    Just { key: k, value: v } -> M.lookup k m 310,12745
+
+.spago/ordered-collections/v3.0.0/test/Test/Data/Set.purs,30
+import Data.Maybe Maybe5,44
+
+.spago/ordered-collections/v3.0.0/src/Data/Map.purs,24
+module Data.MapMap1,0
+
+.spago/ordered-collections/v3.0.0/src/Data/Map/Gen.purs,35
+import Control.Monad.Gen Gen5,43
+
+.spago/ordered-collections/v3.0.0/src/Data/Map/Internal.purs,389
+-- | This module defines a type of maps as balanced 2-3 trees,1,0
+module Data.Map.InternalInternal4,149
+lookupLE k 260,8231
+lookupLT k 277,8853
+lookupGE k 294,9468
+lookupGT k 311,10090
+findMax 328,10659
+findMin 336,10969
+-- | argument means that the fold has no lower or upper bound,344,11322
+-- | starts from 345,11399
+  maxNode m 576,22186
+  removeMaxNode :: List 584,22474
+
+.spago/ordered-collections/v3.0.0/src/Data/Set/NonEmpty.purs,38
+module Data.Set.NonEmptyNonEmpty1,0
+
+.spago/ordered-collections/v3.0.0/src/Data/Set.purs,136
+-- | This module defines a type of sets as balanced 2-3 trees,1,0
+-- | Qualified import is encouraged,4,153
+module Data.SetSet6,239
+
+.spago/record/v4.0.0/test/Examples.purs,126
+import Type.Proxy Proxy6,63
+insertedX 16,236
+deletedX 19,286
+setX1 22,346
+setX2 25,403
+modifyX 28,464
+mergedXY 31,559
+
+.spago/record/v4.0.0/test/Main.purs,148
+import Effect 5,40
+  let testBuilder 41,1164
+    testBuilder.x x48,1503
+    in x 53,1735
+    in x 58,1952
+    in x 63,2174
+    in x 68,2407
+
+.spago/record/v4.0.0/src/Record/Builder.purs,611
+module Record.BuilderBuilder1,0
+-- | build (insert x 42 >>> insert y "testing") {} :: { x :: Int,44,1398
+newtype Builder a b 46,1487
+flip :: forall r1 r2 r3. (Record r1 -> Builder (Record r2) (Record r3)) -> Record r2 -> Builder 57,1912
+-- | build (merge { x: 1, y: "y" }) { y:y114,3468
+-- |  :: { x :: Int,115,3522
+-- |  :: { x :: Int, y :: String,115,3522
+   . Row.Union r1 r2 r3119,3610
+-- | build (union { x: 1, y: "y" }) { y:y133,4108
+-- |  :: { x :: Int,134,4162
+-- |  :: { x :: Int, y :: String,134,4162
+-- |  :: { x :: Int, y :: String, y :: Int,134,4162
+   . Row.Union r1 r2 r3138,4257
+
+.spago/record/v4.0.0/src/Record/Unsafe/Union.purs,47
+import Data.Function.Uncurried Uncurried3,34
+
+.spago/record/v4.0.0/src/Record.purs,540
+module Record1,0
+   . IsSymbol l38,831
+   . IsSymbol l56,1226
+   . IsSymbol l76,1676
+   . IsSymbol l96,2125
+   . IsSymbol l119,2739
+   . IsSymbol prev140,3406
+-- | merge { x: 1, y: "y" } { y:y159,3864
+-- |  :: { x :: Int,160,3910
+-- |  :: { x :: Int, y :: String,160,3910
+   . Union r1 r2 r3164,3998
+-- | union { x: 1, y: "y" } { y:y179,4461
+-- |  :: { x :: Int,180,4507
+-- |  :: { x :: Int, y :: String,180,4507
+-- |  :: { x :: Int, y :: String, y :: Int,180,4507
+   . Union r1 r2 r3184,4602
+   . Union r1 r2 r3201,5096
+
+.spago/identity/v6.0.0/src/Data/Identity.purs,29
+import Control.Alt Alt5,44
+
+.spago/partial/v4.0.0/test/Main.purs,36
+import Partial 3,24
+main _ 14,234
+
+.spago/lists/v7.0.0/bench/Bench/Data/List.purs,36
+import Data.Foldable Foldable4,45
+
+.spago/lists/v7.0.0/bench/Main.purs,20
+import Effect 4,40
+
+.spago/lists/v7.0.0/test/Test/Main.purs,20
+import Effect 5,40
+
+.spago/lists/v7.0.0/test/Test/Data/List.purs,32
+module Test.Data.List List1,0
+
+.spago/lists/v7.0.0/test/Test/Data/List/NonEmpty.purs,45
+module Test.Data.List.NonEmpty NonEmpty1,0
+
+.spago/lists/v7.0.0/test/Test/Data/List/Partial.purs,43
+module Test.Data.List.Partial Partial1,0
+
+.spago/lists/v7.0.0/test/Test/Data/List/ZipList.purs,43
+module Test.Data.List.ZipList ZipList1,0
+
+.spago/lists/v7.0.0/test/Test/Data/List/Lazy.purs,37
+module Test.Data.List.Lazy Lazy1,0
+
+.spago/lists/v7.0.0/src/Data/List.purs,213
+-- | This module defines a type of _strict_ linked lists,1,0
+-- | _Note_: Depending on your use-case,case4,126
+-- | `Data.Sequence` instead,5,189
+uncons Nil 260,7159
+unsnoc lst 268,7432
+  go Nil _ 270,7518
+
+.spago/lists/v7.0.0/src/Data/List/NonEmpty.purs,189
+module Data.List.NonEmptyNonEmpty1,0
+unsnoc :: forall a. NonEmptyList a -> { init :: L.List a,159,4190
+  Just un -> { init: x : un.init,init162,4352
+span 252,7510
+partition 267,8177
+
+.spago/lists/v7.0.0/src/Data/List/Internal.purs,275
+module Data.List.Internal Internal1,0
+insertAndLookupBy comp k orig 36,1102
+  down ctx Leaf 39,1237
+      LT -> down 43,1406
+        case c1,49,1629
+          _ 50,1659
+          _ , EQ -> { found: true,50,1659
+          LT,51,1709
+          LT, _  -> down 51,1709
+
+.spago/lists/v7.0.0/src/Data/List/ZipList.purs,93
+-- | This module defines the type of _zip lists_,1,0
+module Data.List.ZipListZipList4,111
+
+.spago/lists/v7.0.0/src/Data/List/Lazy.purs,219
+-- | This module defines a type of _lazy_ linked lists,1,0
+-- | _Note_: Depending on your use-case,case4,124
+-- | `Data.Sequence` instead,5,187
+uncons xs 288,7725
+slice start end xs 495,15152
+span p xs 550,16874
+
+.spago/lists/v7.0.0/src/Data/List/Types.purs,85
+module Data.List.TypesTypes1,0
+newtype NonEmptyList a 189,5748
+    go a 232,7310
+
+.spago/lists/v7.0.0/src/Data/List/Lazy/NonEmpty.purs,44
+module Data.List.Lazy.NonEmptyNonEmpty1,0
+
+.spago/lists/v7.0.0/src/Data/List/Lazy/Types.purs,135
+import Control.Alt Alt5,51
+-- | Running time: `O(O59,1949
+      go a 202,5884
+newtype NonEmptyList a 206,5982
+    go a 258,7823
+
+.spago/distributive/v6.0.0/src/Data/Distributive.purs,36
+import Data.Identity Identity5,48
+
+.spago/free/v7.0.0/benchmark/Benchmark/Main.purs,134
+module Benchmark.Main Main1,0
+  inputsPerSize 39,1161
+  inputsPerSize 69,2255
+  inputsPerSize 100,3396
+  inputsPerSize 130,4498
+
+.spago/free/v7.0.0/benchmark/Benchmark/Freef686f5f.purs,45
+module Benchmark.Freef686f5fFreef686f5f1,0
+
+.spago/free/v7.0.0/benchmark/Benchmark/Trampoline0df59c5.purs,90
+-- | A _trampoline_ monad,1,0
+module Benchmark.Trampoline0df59c5Trampoline0df59c55,155
+
+.spago/free/v7.0.0/benchmark/Benchmark/Free0df59c5.purs,63
+module Benchmark.Free0df59c5Free0df59c51,0
+gosub a f 43,955
+
+.spago/free/v7.0.0/benchmark/Benchmark/Trampolinef686f5f.purs,90
+-- | A _trampoline_ monad,1,0
+module Benchmark.Trampolinef686f5fTrampolinef686f5f4,154
+
+.spago/free/v7.0.0/test/Test/Main.purs,20
+import Effect 5,40
+
+.spago/free/v7.0.0/test/Test/Control/Monad/Free/Stratified.purs,37
+import Control.Monad.Free Free5,65
+
+.spago/free/v7.0.0/test/Test/Control/Monad/Free/Teletype.purs,20
+import Effect 5,63
+
+.spago/free/v7.0.0/test/Test/Control/Monad/Free/Coproduct.purs,37
+import Control.Monad.Free Free5,64
+
+.spago/free/v7.0.0/src/Data/Yoneda.purs,30
+module Data.YonedaYoneda1,0
+
+.spago/free/v7.0.0/src/Data/Coyoneda.purs,34
+module Data.CoyonedaCoyoneda1,0
+
+.spago/free/v7.0.0/src/Control/Comonad/Cofree/Class.purs,46
+module Control.Comonad.Cofree.ClassClass1,0
+
+.spago/free/v7.0.0/src/Control/Monad/Free/Class.purs,42
+module Control.Monad.Free.ClassClass1,0
+
+.spago/free/v7.0.0/src/Control/Monad/Free.purs,35
+module Control.Monad.FreeFree1,0
+
+.spago/free/v7.0.0/src/Control/Monad/Trampoline.purs,80
+-- | A _trampoline_ monad,1,0
+module Control.Monad.TrampolineTrampoline5,155
+
+.spago/datetime/v6.0.0/test/Test/Main.purs,20
+import Effect 5,40
+
+.spago/datetime/v6.0.0/src/Data/Interval.purs,34
+module Data.IntervalInterval1,0
+
+.spago/datetime/v6.0.0/src/Data/DateTime/Gen.purs,33
+module Data.DateTime.GenGen1,0
+
+.spago/datetime/v6.0.0/src/Data/DateTime/Instant.purs,41
+module Data.DateTime.InstantInstant1,0
+
+.spago/datetime/v6.0.0/src/Data/Interval/Duration.purs,43
+module Data.Interval.DurationDuration1,0
+
+.spago/datetime/v6.0.0/src/Data/Interval/Duration/Iso.purs,97
+module Data.Interval.Duration.IsoIso1,0
+  asList 67,2206
+checkWeekUsage {asMap}asMap81,2523
+
+.spago/datetime/v6.0.0/src/Data/Date/Gen.purs,29
+module Data.Date.GenGen1,0
+
+.spago/datetime/v6.0.0/src/Data/Date/Component/Gen.purs,35
+import Control.Monad.Gen Gen4,53
+
+.spago/datetime/v6.0.0/src/Data/Date/Component.purs,41
+module Data.Date.ComponentComponent1,0
+
+.spago/datetime/v6.0.0/src/Data/Time.purs,26
+module Data.TimeTime1,0
+
+.spago/datetime/v6.0.0/src/Data/Time/Gen.purs,29
+module Data.Time.GenGen1,0
+
+.spago/datetime/v6.0.0/src/Data/Time/Duration.purs,28
+newtype Milliseconds 8,134
+
+.spago/datetime/v6.0.0/src/Data/Time/Component/Gen.purs,35
+import Control.Monad.Gen Gen3,38
+
+.spago/datetime/v6.0.0/src/Data/Time/Component.purs,41
+module Data.Time.ComponentComponent1,0
+
+.spago/datetime/v6.0.0/src/Data/Time/Duration/Gen.purs,35
+import Control.Monad.Gen Gen5,53
+
+.spago/datetime/v6.0.0/src/Data/DateTime.purs,64
+module Data.DateTimeDateTime1,0
+-- TODO: these could 90,2812
+
+.spago/datetime/v6.0.0/src/Data/Date.purs,26
+module Data.DateDate1,0
+
+.spago/datetime/v6.1.0/test/Test/Main.purs,20
+import Effect 5,40
+
+.spago/datetime/v6.1.0/src/Data/Interval.purs,34
+module Data.IntervalInterval1,0
+
+.spago/datetime/v6.1.0/src/Data/DateTime/Gen.purs,33
+module Data.DateTime.GenGen1,0
+
+.spago/datetime/v6.1.0/src/Data/DateTime/Instant.purs,41
+module Data.DateTime.InstantInstant1,0
+
+.spago/datetime/v6.1.0/src/Data/Interval/Duration.purs,43
+module Data.Interval.DurationDuration1,0
+
+.spago/datetime/v6.1.0/src/Data/Interval/Duration/Iso.purs,97
+module Data.Interval.Duration.IsoIso1,0
+  asList 67,2206
+checkWeekUsage {asMap}asMap81,2523
+
+.spago/datetime/v6.1.0/src/Data/Date/Gen.purs,29
+module Data.Date.GenGen1,0
+
+.spago/datetime/v6.1.0/src/Data/Date/Component/Gen.purs,35
+import Control.Monad.Gen Gen4,53
+
+.spago/datetime/v6.1.0/src/Data/Date/Component.purs,41
+module Data.Date.ComponentComponent1,0
+
+.spago/datetime/v6.1.0/src/Data/Time.purs,26
+module Data.TimeTime1,0
+
+.spago/datetime/v6.1.0/src/Data/Time/Gen.purs,29
+module Data.Time.GenGen1,0
+
+.spago/datetime/v6.1.0/src/Data/Time/Duration.purs,28
+newtype Milliseconds 8,134
+
+.spago/datetime/v6.1.0/src/Data/Time/Component/Gen.purs,35
+import Control.Monad.Gen Gen3,38
+
+.spago/datetime/v6.1.0/src/Data/Time/Component.purs,41
+module Data.Time.ComponentComponent1,0
+
+.spago/datetime/v6.1.0/src/Data/Time/Duration/Gen.purs,35
+import Control.Monad.Gen Gen5,53
+
+.spago/datetime/v6.1.0/src/Data/DateTime.purs,64
+module Data.DateTimeDateTime1,0
+-- TODO: these could 90,2812
+
+.spago/datetime/v6.1.0/src/Data/Date.purs,26
+module Data.DateDate1,0
+
+.spago/psci-support/v6.0.0/test/Main.purs,21
+import Prelude 3,24
+
+.spago/functors/v5.0.0/test/Main.purs,82
+import Data.Const Const5,40
+testInjections 31,722
+    { expected: left 37,840
+
+.spago/functors/v5.0.0/src/Data/Functor/Coproduct/Inject.purs,32
+import Data.Either Either5,60
+
+.spago/functors/v5.0.0/src/Data/Functor/Coproduct/Nested.purs,30
+import Data.Const Const5,60
+
+.spago/functors/v5.0.0/src/Data/Functor/Costar.purs,37
+import Control.Comonad Comonad5,50
+
+.spago/functors/v5.0.0/src/Data/Functor/Flip.purs,49
+import Control.Biapplicative Biapplicative5,48
+
+.spago/functors/v5.0.0/src/Data/Functor/Product.purs,38
+import Data.Bifunctor Bifunctor5,51
+
+.spago/functors/v5.0.0/src/Data/Functor/Joker.purs,49
+import Control.Biapplicative Biapplicative5,49
+
+.spago/functors/v5.0.0/src/Data/Functor/Product/Nested.purs,30
+import Data.Const Const5,58
+
+.spago/functors/v5.0.0/src/Data/Functor/Compose.purs,29
+import Control.Alt Alt5,51
+
+.spago/functors/v5.0.0/src/Data/Functor/Coproduct.purs,37
+import Control.Comonad Comonad5,53
+
+.spago/functors/v5.0.0/src/Data/Functor/Product2.purs,49
+import Control.Biapplicative Biapplicative5,52
+
+.spago/functors/v5.0.0/src/Data/Functor/App.purs,29
+import Control.Alt Alt5,47
+
+.spago/functors/v5.0.0/src/Data/Functor/Clown.purs,49
+import Control.Biapplicative Biapplicative5,49
+
+.spago/tuples/v7.0.0/src/Data/Tuple/Nested.purs,20
+-- | > tuple 7,126
+
+.spago/exists/v6.0.0/test/Test/Main.purs,20
+import Effect 5,40
+
+.spago/exists/v6.0.0/src/Data/Exists.purs,92
+-- | Specifically,7,146
+-- | Existential types can be encoded using universal types 9,245
+
+.spago/avar/v5.0.0/test/Main.purs,20
+import Effect 4,39
+
+.spago/avar/v5.0.0/src/Effect/AVar.purs,46
+module Effect.AVarAVar1,0
+ffiUtil 125,4328
+
+.spago/avar/v5.0.0/src/Effect/Aff/AVar.purs,32
+module Effect.Aff.AVarAVar1,0
+
+.spago/integers/v6.0.0/test/Test/Main.purs,20
+import Effect 5,40
+
+.spago/integers/v6.0.0/test/Test/Data/Int.purs,30
+module Test.Data.Int Int1,0
+
+.spago/integers/v6.0.0/src/Data/Int.purs,24
+module Data.IntInt1,0
+
+.spago/ansi/v7.0.0/src/Ansi/Codes.purs,73
+-- | This module defines a data type representing ANSI escape codes,1,0
+
+.spago/ansi/v7.0.0/src/Ansi/Output.purs,42
+import Data.List.NonEmpty NonEmpty7,129
+
+.spago/read/v1.0.1/src/Data/String/Read.purs,20
+  -- * Classes2,24
+
+.spago/enums/v6.0.1/test/Test/Data/Enum/Generic.purs,28
+import Data.Enum Enum5,53
+
+.spago/enums/v6.0.1/test/Test/Data/Enum.purs,78
+module Test.Data.Enum Enum1,0
+  assertEqual187,4084
+  assertEqual199,4330
+
+.spago/enums/v6.0.1/test/Main.purs,20
+import Effect 5,40
+
+.spago/enums/v6.0.1/src/Data/Enum/Gen.purs,35
+import Control.Monad.Gen Gen5,44
+
+.spago/enums/v6.0.1/src/Data/Enum/Generic.purs,28
+import Data.Enum Enum5,48
+
+.spago/enums/v6.0.1/src/Data/Enum.purs,26
+module Data.EnumEnum1,0
+
+.spago/enums/v6.0.0/test/Test/Data/Enum/Generic.purs,28
+import Data.Enum Enum5,53
+
+.spago/enums/v6.0.0/test/Test/Data/Enum.purs,55
+module Test.Data.Enum Enum1,0
+  assertEqual187,4066
+
+.spago/enums/v6.0.0/test/Main.purs,20
+import Effect 5,40
+
+.spago/enums/v6.0.0/src/Data/Enum/Gen.purs,35
+import Control.Monad.Gen Gen5,44
+
+.spago/enums/v6.0.0/src/Data/Enum/Generic.purs,28
+import Data.Enum Enum5,48
+
+.spago/enums/v6.0.0/src/Data/Enum.purs,26
+module Data.EnumEnum1,0
+
+.spago/spec/v7.0.0/test/Test/Spec/AssertionSpec.purs,40
+import Effect.Exception Exception4,53
+
+.spago/spec/v7.0.0/test/Test/Spec/Fixtures.purs,36
+import Data.Identity Identity5,49
+
+.spago/spec/v7.0.0/test/Test/Spec/ParallelSpec.purs,41
+import Data.Time.Duration Duration5,53
+
+.spago/spec/v7.0.0/test/Test/Spec/RunnerSpec.purs,38
+import Data.Bifunctor Bifunctor5,51
+
+.spago/spec/v7.0.0/test/Test/Spec/HoistSpec.purs,116
+import Control.Monad.Reader Reader5,50
+hoistSpecSpecReaderT 24,677
+    go 31,903
+delaySpecExample opts 45,1325
+
+.spago/spec/v7.0.0/test/Test/Spec/HookSpec.purs,28
+import Test.Spec Spec5,49
+
+.spago/spec/v7.0.0/test/Main.purs,20
+import Effect 5,40
+
+.spago/spec/v7.0.0/example/Main.purs,41
+import Data.Time.Duration Duration5,35
+
+.spago/spec/v7.0.0/src/Test/Spec/Tree.purs,31
+module Test.Spec.TreeTree1,0
+
+.spago/spec/v7.0.0/src/Test/Spec/Assertions.purs,43
+module Test.Spec.AssertionsAssertions1,0
+
+.spago/spec/v7.0.0/src/Test/Spec/Reporter/Base.purs,289
+module Test.Spec.Reporter.BaseBase1,0
+      when 49,1433
+    go 63,1965
+        State.modify_ _{_66,2055
+        State.modify_ _{_68,2114
+      S.Node Node69,2155
+        {i, crumbs} <- State.modify \s -> s{s71,2234
+        let label 72,2290
+  -> (Event -> StateT s 120,3769
+
+.spago/spec/v7.0.0/src/Test/Spec/Reporter/Dot.purs,59
+module Test.Spec.Reporter.Dot Dot1,0
+dotReporter 19,517
+
+.spago/spec/v7.0.0/src/Test/Spec/Reporter/Tap.purs,39
+module Test.Spec.Reporter.Tap Tap1,0
+
+.spago/spec/v7.0.0/src/Test/Spec/Reporter/Console.purs,306
+module Test.Spec.Reporter.Console Console1,0
+initialState 28,961
+consoleReporter 31,1064
+printSummary :: forall m. MonadWriter String m 51,1818
+    printPassedFailed p f 60,2155
+   . MonadState { lastPrintedSuitePath :: Maybe Path | s} m85,2927
+      tellLn $ "  " <> styled Style.red red105,3648
+
+.spago/spec/v7.0.0/src/Test/Spec/Reporter/Spec.purs,269
+module Test.Spec.Reporter.Spec Spec1,0
+initialState 29,947
+specReporter 32,1031
+data PrintAction55,1927
+   . MonadState { numFailures :: Int | s } m65,2172
+    {numFailures} <- modify \s -> s{s80,2703
+    tellLn $ (indent path) <> styled Style.red red81,2771
+
+.spago/spec/v7.0.0/src/Test/Spec/Runner/Event.purs,28
+import Test.Spec Spec5,53
+
+.spago/spec/v7.0.0/src/Test/Spec/Assertions/String.purs,46
+module Test.Spec.Assertions.StringString1,0
+
+.spago/spec/v7.0.0/src/Test/Spec/Runner.purs,58
+module Test.Spec.RunnerRunner1,0
+defaultConfig 59,1697
+
+.spago/spec/v7.0.0/src/Test/Spec/Style.purs,30
+import Ansi.Codes Codes5,46
+
+.spago/spec/v7.0.0/src/Test/Spec/Speed.purs,37
+import Data.Eq.Generic Generic5,46
+
+.spago/spec/v7.0.0/src/Test/Spec/Console.purs,37
+module Test.Spec.ConsoleConsole1,0
+
+.spago/spec/v7.0.0/src/Test/Spec/Reporter.purs,40
+module Test.Spec.Reporter Reporter1,0
+
+.spago/spec/v7.0.0/src/Test/Spec/Result.purs,36
+import Data.Function Function5,47
+
+.spago/spec/v7.0.0/src/Test/Spec/Summary.purs,64
+module Test.Spec.Summary Summary1,0
+successful groups 32,957
+
+.spago/spec/v7.0.0/src/Test/Spec.purs,70
+module Test.SpecSpec1,0
+   . Monad m165,5831
+   . Monad m206,6991
+
+.spago/spec/v7.1.0/test/Test/Spec/AssertionSpec.purs,45
+import Control.Monad.Error.Class Class5,54
+
+.spago/spec/v7.1.0/test/Test/Spec/Fixtures.purs,36
+import Data.Identity Identity5,49
+
+.spago/spec/v7.1.0/test/Test/Spec/ParallelSpec.purs,41
+import Data.Time.Duration Duration5,53
+
+.spago/spec/v7.1.0/test/Test/Spec/RunnerSpec.purs,38
+import Data.Bifunctor Bifunctor5,51
+
+.spago/spec/v7.1.0/test/Test/Spec/HoistSpec.purs,116
+import Control.Monad.Reader Reader5,50
+hoistSpecSpecReaderT 24,677
+    go 31,903
+delaySpecExample opts 45,1325
+
+.spago/spec/v7.1.0/test/Test/Spec/HookSpec.purs,28
+import Test.Spec Spec5,49
+
+.spago/spec/v7.1.0/test/Main.purs,20
+import Effect 5,40
+
+.spago/spec/v7.1.0/example/Main.purs,41
+import Data.Time.Duration Duration5,35
+
+.spago/spec/v7.1.0/src/Test/Spec/Tree.purs,31
+module Test.Spec.TreeTree1,0
+
+.spago/spec/v7.1.0/src/Test/Spec/Assertions.purs,43
+module Test.Spec.AssertionsAssertions1,0
+
+.spago/spec/v7.1.0/src/Test/Spec/Reporter/Base.purs,289
+module Test.Spec.Reporter.BaseBase1,0
+      when 49,1433
+    go 63,1965
+        State.modify_ _{_66,2055
+        State.modify_ _{_68,2114
+      S.Node Node69,2155
+        {i, crumbs} <- State.modify \s -> s{s71,2234
+        let label 72,2290
+  -> (Event -> StateT s 120,3769
+
+.spago/spec/v7.1.0/src/Test/Spec/Reporter/Dot.purs,59
+module Test.Spec.Reporter.Dot Dot1,0
+dotReporter 19,517
+
+.spago/spec/v7.1.0/src/Test/Spec/Reporter/Tap.purs,39
+module Test.Spec.Reporter.Tap Tap1,0
+
+.spago/spec/v7.1.0/src/Test/Spec/Reporter/Console.purs,306
+module Test.Spec.Reporter.Console Console1,0
+initialState 28,961
+consoleReporter 31,1064
+printSummary :: forall m. MonadWriter String m 51,1818
+    printPassedFailed p f 60,2155
+   . MonadState { lastPrintedSuitePath :: Maybe Path | s} m85,2927
+      tellLn $ "  " <> styled Style.red red105,3648
+
+.spago/spec/v7.1.0/src/Test/Spec/Reporter/Spec.purs,269
+module Test.Spec.Reporter.Spec Spec1,0
+initialState 29,947
+specReporter 32,1031
+data PrintAction55,1927
+   . MonadState { numFailures :: Int | s } m65,2172
+    {numFailures} <- modify \s -> s{s80,2703
+    tellLn $ (indent path) <> styled Style.red red81,2771
+
+.spago/spec/v7.1.0/src/Test/Spec/Runner/Event.purs,28
+import Test.Spec Spec5,53
+
+.spago/spec/v7.1.0/src/Test/Spec/Assertions/String.purs,46
+module Test.Spec.Assertions.StringString1,0
+
+.spago/spec/v7.1.0/src/Test/Spec/Runner.purs,58
+module Test.Spec.RunnerRunner1,0
+defaultConfig 59,1697
+
+.spago/spec/v7.1.0/src/Test/Spec/Style.purs,30
+import Ansi.Codes Codes5,46
+
+.spago/spec/v7.1.0/src/Test/Spec/Speed.purs,37
+import Data.Eq.Generic Generic5,46
+
+.spago/spec/v7.1.0/src/Test/Spec/Console.purs,37
+module Test.Spec.ConsoleConsole1,0
+
+.spago/spec/v7.1.0/src/Test/Spec/Reporter.purs,40
+module Test.Spec.Reporter Reporter1,0
+
+.spago/spec/v7.1.0/src/Test/Spec/Result.purs,36
+import Data.Function Function5,47
+
+.spago/spec/v7.1.0/src/Test/Spec/Summary.purs,64
+module Test.Spec.Summary Summary1,0
+successful groups 32,957
+
+.spago/spec/v7.1.0/src/Test/Spec.purs,70
+module Test.SpecSpec1,0
+   . Monad m165,5831
+   . Monad m206,6991
+
+.spago/effect/v4.0.0/src/Effect.purs,49
+-- | This module provides the `Effect` type,1,0
+
+.spago/effect/v4.0.0/src/Effect/Class.purs,39
+import Control.Category Category3,27
+
+.spago/effect/v4.0.0/src/Effect/Uncurried.purs,616
+-- | In particular,13,374
+-- | receiving all of its parameters,14,452
+-- | String String Unit`Unit15,531
+-- | This method,37,1214
+-- | This method, unfortunately,37,1214
+-- |  * the ability to give the real `logMessage` function a PureScript type,40,1371
+-- | message to some external server,74,2566
+-- | message to some external server, and in those cases,74,2566
+-- | function logMessage(78,2713
+-- | And,101,3253
+-- | And, as before,101,3253
+-- | exports.logMessageImpl logMessageImpl104,3332
+-- | * `EffectFn{N}` means,123,3860
+-- | * `runEffectFn{N}` takes an `EffectFn` of N arguments,126,4078
+
+.spago/maybe/v6.0.0/src/Data/Maybe.purs,29
+import Control.Alt Alt5,41
+
+.spago/maybe/v6.0.0/src/Data/Maybe/Last.purs,29
+import Control.Alt Alt5,46
+
+.spago/maybe/v6.0.0/src/Data/Maybe/First.purs,29
+import Control.Alt Alt5,47
+
+.spago/gen/v4.0.0/test/Main.purs,154
+import Control.Monad.Rec.Class Class7,112
+    one :: NonEmpty Array Int ← Gen.resize resize35,923
+    let testElems 39,1176
+type GenState 59,1880
+
+.spago/gen/v4.0.0/test/Frequency.purs,35
+import Control.Monad.Gen Gen5,45
+
+.spago/gen/v4.0.0/src/Control/Monad/Gen.purs,33
+module Control.Monad.GenGen1,0
+
+.spago/gen/v4.0.0/src/Control/Monad/Gen/Common.purs,33
+import Control.Apply Apply5,55
+
+.spago/exceptions/v6.0.0/src/Effect/Exception.purs,40
+-- | This module defines an effect,1,0
+
+.spago/exceptions/v6.0.0/src/Effect/Exception/Unsafe.purs,40
+import Effect.Exception Exception3,38
+
+.spago/newtype/v5.0.0/src/Data/Newtype.purs,43
+import Data.Monoid.Additive Additive3,27
+
+.spago/unsafe-coerce/v6.0.0/test/Main.purs,20
+import Effect 3,24
+
+.spago/unsafe-coerce/v6.0.0/src/Unsafe/Coerce.purs,32
+module Unsafe.CoerceCoerce2,1
+
+.spago/st/v6.0.0/test/Main.purs,20
+import Effect 5,40
+
+.spago/st/v6.0.0/src/Control/Monad/ST/Ref.purs,37
+module Control.Monad.ST.Ref Ref1,0
+
+.spago/st/v6.0.0/src/Control/Monad/ST/Internal.purs,65
+module Control.Monad.ST.InternalInternal1,0
+modify f 126,4059
+
+.spago/st/v6.0.0/src/Control/Monad/ST/Global.purs,42
+module Control.Monad.ST.GlobalGlobal1,0
+
+.spago/st/v6.0.0/src/Control/Monad/ST/Class.purs,33
+import Control.Monad.ST ST5,53
+
+.spago/st/v6.0.0/src/Control/Monad/ST.purs,32
+module Control.Monad.ST ST1,0
+
+.spago/st/v6.2.0/test/Main.purs,20
+import Effect 5,40
+
+.spago/st/v6.2.0/src/Control/Monad/ST/Ref.purs,37
+module Control.Monad.ST.Ref Ref1,0
+
+.spago/st/v6.2.0/src/Control/Monad/ST/Internal.purs,65
+module Control.Monad.ST.InternalInternal1,0
+modify f 133,4256
+
+.spago/st/v6.2.0/src/Control/Monad/ST/Global.purs,42
+module Control.Monad.ST.GlobalGlobal1,0
+
+.spago/st/v6.2.0/src/Control/Monad/ST/Class.purs,33
+import Control.Monad.ST ST5,53
+
+.spago/st/v6.2.0/src/Control/Monad/ST/Uncurried.purs,89
+-- | * `STFn{N}` means,7,230
+-- | * `runSTFn{N}` takes an `STFn` of N arguments,10,440
+
+.spago/st/v6.2.0/src/Control/Monad/ST.purs,32
+module Control.Monad.ST ST1,0
+
+.spago/pipes/v8.0.0/examples/Example.purs,20
+import Effect 5,38
+
+.spago/pipes/v8.0.0/src/Pipes/ListT.purs,28
+import Prelude hiding 3,26
+
+.spago/pipes/v8.0.0/src/Pipes/Internal.purs,29
+import Control.Alt Alt5,45
+
+.spago/pipes/v8.0.0/src/Pipes/Prelude.purs,206
+import Prelude hiding 3,28
+             . Monad m61,1770
+takeWhile :: forall a m. Monad m 90,2642
+    go 107,3092
+dropWhile :: forall a m r. Monad m 127,3513
+findIndex :: forall a m. Monad m 288,8317
+
+.spago/pipes/v8.0.0/src/Pipes.purs,60
+import Prelude 3,20
+next :: forall a m r. Monad m 93,2299
+
+.spago/const/v6.0.0/src/Data/Const.purs,24
+import Data.Eq Eq5,41
+
+.spago/transformers/v6.0.0/test/Test/Main.purs,20
+import Effect 5,40
+
+.spago/transformers/v6.0.0/test/Example/List.purs,44
+import Control.Monad.List.Trans Trans5,43
+
+.spago/transformers/v6.0.0/test/Example/Writer.purs,41
+import Control.Monad.Writer Writer5,45
+
+.spago/transformers/v6.0.0/test/Example/Reader.purs,41
+import Control.Monad.Reader Reader5,45
+
+.spago/transformers/v6.0.0/test/Example/Cont.purs,44
+import Control.Monad.Cont.Trans Trans5,43
+
+.spago/transformers/v6.0.0/test/Example/RWS.purs,43
+import Control.Monad.Rec.Class Class5,42
+
+.spago/transformers/v6.0.0/test/Example/State.purs,39
+import Control.Monad.State State5,44
+
+.spago/transformers/v6.0.0/test/Example/StateEff.purs,60
+import Control.Monad.State.Trans Trans5,47
+push x 24,550
+
+.spago/transformers/v6.0.0/src/Control/Comonad/Traced/Class.purs,38
+import Control.Comonad Comonad7,135
+
+.spago/transformers/v6.0.0/src/Control/Comonad/Traced/Trans.purs,101
+-- | This module defines the cowriter comonad transformer,1,0
+import Control.Comonad Comonad7,130
+
+.spago/transformers/v6.0.0/src/Control/Comonad/Env/Class.purs,38
+import Control.Comonad Comonad5,113
+
+.spago/transformers/v6.0.0/src/Control/Comonad/Env/Trans.purs,104
+-- | This module defines the environment comonad transformer,1,0
+import Control.Comonad Comonad7,127
+
+.spago/transformers/v6.0.0/src/Control/Comonad/Env.purs,36
+module Control.Comonad.EnvEnv3,45
+
+.spago/transformers/v6.0.0/src/Control/Comonad/Trans/Class.purs,135
+-- | takes a `Comonad` as its first argument,10,325
+-- | process,13,496
+-- | process, we create comonad transformer _stacks_,13,496
+
+.spago/transformers/v6.0.0/src/Control/Comonad/Store.purs,40
+module Control.Comonad.StoreStore3,47
+
+.spago/transformers/v6.0.0/src/Control/Comonad/Traced.purs,42
+module Control.Comonad.TracedTraced3,48
+
+.spago/transformers/v6.0.0/src/Control/Comonad/Store/Class.purs,38
+import Control.Comonad Comonad7,133
+
+.spago/transformers/v6.0.0/src/Control/Comonad/Store/Trans.purs,98
+-- | This module defines the store comonad transformer,1,0
+import Control.Comonad Comonad7,125
+
+.spago/transformers/v6.0.0/src/Control/Monad/Reader/Class.purs,28
+class MonadAsk r m 38,1213
+
+.spago/transformers/v6.0.0/src/Control/Monad/Reader/Trans.purs,104
+-- | This module defines the reader monad transformer,1,0
+module Control.Monad.Reader.TransTrans3,67
+
+.spago/transformers/v6.0.0/src/Control/Monad/Except.purs,74
+module Control.Monad.ExceptExcept2,1
+-- | exception; naturally,33,1285
+
+.spago/transformers/v6.0.0/src/Control/Monad/RWS/Trans.purs,114
+-- | This module defines the reader-writer-state monad transformer,1,0
+module Control.Monad.RWS.TransTrans3,77
+
+.spago/transformers/v6.0.0/src/Control/Monad/Identity/Trans.purs,29
+import Control.Alt Alt5,59
+
+.spago/transformers/v6.0.0/src/Control/Monad/Except/Trans.purs,45
+module Control.Monad.Except.TransTrans3,71
+
+.spago/transformers/v6.0.0/src/Control/Monad/Writer.purs,40
+module Control.Monad.WriterWriter3,46
+
+.spago/transformers/v6.0.0/src/Control/Monad/Reader.purs,40
+module Control.Monad.ReaderReader3,46
+
+.spago/transformers/v6.0.0/src/Control/Monad/Maybe/Trans.purs,44
+module Control.Monad.Maybe.TransTrans3,58
+
+.spago/transformers/v6.0.0/src/Control/Monad/State/Class.purs,22
+import Prelude 5,113
+
+.spago/transformers/v6.0.0/src/Control/Monad/State/Trans.purs,102
+-- | This module defines the state monad transformer,1,0
+module Control.Monad.State.TransTrans3,65
+
+.spago/transformers/v6.0.0/src/Control/Monad/Writer/Class.purs,47
+-- | monoidal accumulator of type `w`w10,236
+
+.spago/transformers/v6.0.0/src/Control/Monad/Writer/Trans.purs,104
+-- | This module defines the writer monad transformer,1,0
+module Control.Monad.Writer.TransTrans3,67
+
+.spago/transformers/v6.0.0/src/Control/Monad/Cont.purs,36
+module Control.Monad.ContCont3,52
+
+.spago/transformers/v6.0.0/src/Control/Monad/RWS.purs,34
+module Control.Monad.RWSRWS3,43
+
+.spago/transformers/v6.0.0/src/Control/Monad/List/Trans.purs,264
+-- | This module defines the list monad transformer,1,0
+module Control.Monad.List.TransTrans3,63
+-- | Fold a list from the left,223,7751
+foldl :: forall f a b. Monad f 224,7837
+-- | Fold a list from the left,241,8443
+scanl :: forall f a b. Monad f 242,8538
+
+.spago/transformers/v6.0.0/src/Control/Monad/State.purs,38
+module Control.Monad.StateState3,45
+
+.spago/transformers/v6.0.0/src/Control/Monad/Trans/Class.purs,169
+-- | takes a `Monad` as its first argument,10,303
+-- | process,13,467
+-- | process, we create monad transformer _stacks_,13,467
+  lift :: forall m a. Monad m 23,798
+
+.spago/transformers/v6.0.0/src/Control/Monad/Error/Class.purs,33
+import Data.Either Either7,129
+
+.spago/transformers/v6.0.0/src/Control/Monad/Cont/Class.purs,43
+module Control.Monad.Cont.ClassClass3,72
+
+.spago/transformers/v6.0.0/src/Control/Monad/Cont/Trans.purs,43
+module Control.Monad.Cont.TransTrans3,53
+
+.spago/now/v6.0.0/test/Main.purs,45
+import Control.Monad.Error.Class Class5,40
+
+.spago/now/v6.0.0/src/Effect/Now.purs,26
+module Effect.NowNow1,0
+
+.spago/mmorph/v7.0.0/src/Control/Monad/Morph.purs,44
+import Control.Comonad.Cofree Cofree6,171
+
+.spago/arrays/v7.0.0/bench/Main.purs,36
+import Bench.Data.Array Array5,41
+
+.spago/arrays/v7.0.0/bench/Data/Array.purs,30
+import Data.Maybe Maybe6,74
+
+.spago/arrays/v7.0.0/test/Test/Main.purs,20
+import Effect 5,40
+
+.spago/arrays/v7.0.0/test/Test/Data/UndefinedOr.purs,39
+instance eqUndefinedOr :: Eq a 13,475
+
+.spago/arrays/v7.0.0/test/Test/Data/Array/NonEmpty.purs,95
+module Test.Data.Array.NonEmpty NonEmpty1,0
+  assert $ NEA.splitAt (-1) (fromArray 204,9919
+
+.spago/arrays/v7.0.0/test/Test/Data/Array/Partial.purs,44
+module Test.Data.Array.Partial Partial1,0
+
+.spago/arrays/v7.0.0/test/Test/Data/Array/ST/Partial.purs,47
+module Test.Data.Array.ST.Partial Partial1,0
+
+.spago/arrays/v7.0.0/test/Test/Data/Array/ST.purs,34
+module Test.Data.Array.ST ST1,0
+
+.spago/arrays/v7.0.0/test/Test/Data/Array.purs,297
+module Test.Data.Array Array1,0
+  assert $ A.splitAt splitAt235,9734
+  assert $ A.splitAt splitAt236,9813
+  assert $ A.splitAt splitAt237,9880
+  assert $ A.splitAt splitAt238,9949
+  assert $ A.splitAt splitAt239,10018
+  let testBigSpan n 352,15295
+  assert $ A.group group363,15612
+
+.spago/arrays/v7.0.0/src/Data/Array/NonEmpty.purs,186
+module Data.Array.NonEmptyNonEmpty1,0
+fromFoldable :: forall f a. Foldable f 178,3483
+uncons 252,5724
+unsnoc 255,5824
+partition f 327,8419
+splitAt i xs 338,8685
+span f 405,10804
+
+.spago/arrays/v7.0.0/src/Data/Array/ST/Iterator.purs,43
+module Data.Array.ST.IteratorIterator1,0
+
+.spago/arrays/v7.0.0/src/Data/Array.purs,485
+-- |   array to each value in the second,17,872
+-- | * `Bind`Bind19,1020
+uncons 358,9591
+-- | unsnoc 370,9863
+-- | unsnoc 371,9916
+unsnoc xs 376,10086
+-- | sentence 386,10509
+  -> { yes :: Array a,671,18876
+-- | Splits an array into two subarrays,673,18916
+-- | up to 674,18994
+-- | Thus,682,19229
+-- | `length arr`arr683,19304
+-- | splitAt 688,19480
+splitAt :: forall a. Int -> Array a -> { before :: Array a,690,19560
+splitAt i xs 692,19689
+-- | powerSet 698,19914
+
+.spago/arrays/v7.1.0/bench/Main.purs,36
+import Bench.Data.Array Array5,41
+
+.spago/arrays/v7.1.0/bench/Data/Array.purs,30
+import Data.Maybe Maybe6,74
+
+.spago/arrays/v7.1.0/test/Test/Main.purs,20
+import Effect 5,40
+
+.spago/arrays/v7.1.0/test/Test/Data/UndefinedOr.purs,39
+instance eqUndefinedOr :: Eq a 13,475
+
+.spago/arrays/v7.1.0/test/Test/Data/Array/NonEmpty.purs,95
+module Test.Data.Array.NonEmpty NonEmpty1,0
+  assert $ NEA.splitAt (-1) (fromArray 204,9919
+
+.spago/arrays/v7.1.0/test/Test/Data/Array/Partial.purs,44
+module Test.Data.Array.Partial Partial1,0
+
+.spago/arrays/v7.1.0/test/Test/Data/Array/ST/Partial.purs,47
+module Test.Data.Array.ST.Partial Partial1,0
+
+.spago/arrays/v7.1.0/test/Test/Data/Array/ST.purs,34
+module Test.Data.Array.ST ST1,0
+
+.spago/arrays/v7.1.0/test/Test/Data/Array.purs,297
+module Test.Data.Array Array1,0
+  assert $ A.splitAt splitAt235,9734
+  assert $ A.splitAt splitAt236,9813
+  assert $ A.splitAt splitAt237,9880
+  assert $ A.splitAt splitAt238,9949
+  assert $ A.splitAt splitAt239,10018
+  let testBigSpan n 366,15874
+  assert $ A.group group377,16191
+
+.spago/arrays/v7.1.0/src/Data/Array/NonEmpty.purs,186
+module Data.Array.NonEmptyNonEmpty1,0
+fromFoldable :: forall f a. Foldable f 181,3540
+uncons 255,5781
+unsnoc 258,5881
+partition f 330,8476
+splitAt i xs 341,8742
+span f 446,12382
+
+.spago/arrays/v7.1.0/src/Data/Array/ST/Iterator.purs,43
+module Data.Array.ST.IteratorIterator1,0
+
+.spago/arrays/v7.1.0/src/Data/Array.purs,485
+-- |   array to each value in the second,17,872
+-- | * `Bind`Bind19,1020
+uncons 359,9605
+-- | unsnoc 371,9877
+-- | unsnoc 372,9930
+unsnoc xs 377,10100
+-- | sentence 387,10523
+  -> { yes :: Array a,672,18890
+-- | Splits an array into two subarrays,674,18930
+-- | up to 675,19008
+-- | Thus,683,19243
+-- | `length arr`arr684,19318
+-- | splitAt 689,19494
+splitAt :: forall a. Int -> Array a -> { before :: Array a,691,19574
+splitAt i xs 693,19703
+-- | powerSet 699,19928
+
+.spago/refs/v6.0.0/test/Main.purs,142
+import Effect 5,40
+newtype RefBox 34,686
+selfRef 37,774
+  Ref.modify_ (\(RefBox r) -> RefBox 45,1035
+    <<< { expected:expected53,1338
+
+.spago/refs/v6.0.0/src/Effect/Ref.purs,18
+modify f 66,2617
+
+.spago/bifunctors/v6.0.0/src/Data/Bifunctor.purs,39
+import Control.Category Category3,29
+
+.spago/bifunctors/v6.0.0/src/Data/Bifunctor/Join.purs,49
+import Control.Biapplicative Biapplicative5,50
+
+.spago/bifunctors/v6.0.0/src/Control/Biapplicative.purs,37
+import Control.Biapply Biapply3,36
+
+.spago/bifunctors/v6.0.0/src/Control/Biapply.purs,36
+import Data.Function Function3,30
+
+.spago/lazy/v6.0.0/src/Data/Lazy.purs,37
+import Control.Comonad Comonad5,40
+
+.spago/interpolate/v5.0.0/benchmark/Benchmark.purs,20
+import Effect 4,39
+
+.spago/interpolate/v5.0.0/test/Main.purs,42
+import Data.Interpolate Interpolate5,40
+
+.spago/interpolate/v5.0.2/benchmark/Benchmark.purs,20
+import Effect 4,39
+
+.spago/interpolate/v5.0.2/test/Main.purs,42
+import Data.Interpolate Interpolate5,40
+
+.spago/functions/v6.0.0/src/Data/Function/Uncurried.purs,21
+type Fn1 a b 11,202
+
+.spago/profunctor/v6.0.0/src/Data/Profunctor.purs,100
+-- | In other words,9,193
+-- | arguments,10,263
+-- | - Identity: `dimap identity identity 20,571
+
+.spago/profunctor/v6.0.0/src/Data/Profunctor/Join.purs,46
+import Data.Functor.Invariant Invariant5,51
+
+.spago/profunctor/v6.0.0/src/Data/Profunctor/Split.purs,39
+module Data.Profunctor.SplitSplit1,0
+
+.spago/profunctor/v6.0.0/src/Data/Profunctor/Star.purs,29
+import Control.Alt Alt5,51
+
+.spago/profunctor/v6.0.0/src/Data/Profunctor/Costrong.purs,30
+import Data.Tuple Tuple3,39
+
+.spago/profunctor/v6.0.0/src/Data/Profunctor/Strong.purs,40
+import Data.Profunctor Profunctor5,53
+
+.spago/profunctor/v6.0.0/src/Data/Profunctor/Choice.purs,32
+import Data.Either Either5,53
+
+.spago/profunctor/v6.0.0/src/Data/Profunctor/Cochoice.purs,32
+import Data.Either Either3,39
+
+.spago/profunctor/v6.0.0/src/Data/Profunctor/Closed.purs,26
+class Profunctor p 8,175
+
+.spago/unfoldable/v6.0.0/test/Main.purs,24
+import Data.Eq Eq5,40
+
+.spago/unfoldable/v6.0.0/src/Data/Unfoldable1.purs,40
+module Data.Unfoldable1Unfoldable11,0
+
+.spago/unfoldable/v6.0.0/src/Data/Unfoldable.purs,269
+-- | This module provides a type class for _unfoldable functors_,1,0
+-- | This allows us to unify various operations on arrays,4,128
+-- | This allows us to unify various operations on arrays, lists,4,128
+-- | sequences,5,194
+module Data.UnfoldableUnfoldable7,216
+
+.spago/orders/v6.0.0/test/Main.purs,34
+import Data.Newtype Newtype6,41
+
+.spago/orders/v6.0.0/src/Data/Ord/Max.purs,31
+-- | `Bounded` instance,8,155
+
+.spago/orders/v6.0.0/src/Data/Ord/Min.purs,31
+-- | `Bounded` instance,8,155
+
+.spago/orders/v6.0.0/src/Data/Ord/Down.purs,34
+import Data.Newtype Newtype5,44
+
+.spago/safe-coerce/v2.0.0/test/Main.purs,20
+import Effect 4,39
+
+.spago/safe-coerce/v2.0.0/src/Safe/Coerce.purs,30
+module Safe.CoerceCoerce1,0
+
+.spago/prelude/v6.0.1/test/Test/Utils.purs,21
+type AlmostEff 5,41
+
+.spago/prelude/v6.0.1/test/Test/Main.purs,897
+import Data.HeytingAlgebra HeytingAlgebra4,39
+  assert "Record show nil" $ show 127,3752
+  assert "Record one" $ one 132,4092
+  assert "Record zero" $ zero 133,4140
+  assert "Record sub" $ { a: 2, b: 2.0 } - { a:a134,4190
+  assert "Record append" $ { a: [], b: "T" } <> { a:a135,4270
+  assert "Record mempty" $ mempty 136,4362
+  assert "Record ff" $ ff 137,4429
+  assert "Record tt" $ tt 138,4481
+  assert "Record not" $ not 139,4531
+  assert "Record conj" $ conj140,4606
+  assert "Record disj" $ disj144,4775
+  assert "Record implies" $ implies148,4942
+  testOrd { a: 0, b: "hello" } { a:a152,5115
+  testOrd { a: 42, b: "hello" } { a:a153,5171
+  testOrd { a: 42, b: "hello" } { a:a154,5227
+  testOrd { a: 42, b: "hell" } { a:a155,5284
+  testOrd { a: 42, b: "hello" } { a:a156,5340
+    (bottom :: { a :: Boolean }).aa158,5423
+    (top :: { a :: Boolean }).aa161,5496
+
+.spago/prelude/v6.0.1/test/Data/Generic/Rep.purs,181
+import Data.HeytingAlgebra HeytingAlgebra13,347
+cons head tail 19,527
+derive instance genericList :: G.Generic Generic21,565
+  eq a 114,3490
+  eq a 132,3967
+    A1 204,6263
+
+.spago/prelude/v6.0.1/src/Data/Reflectable.purs,58
+module Data.ReflectableReflectable1,0
+  coerce 57,1587
+
+.spago/prelude/v6.0.1/src/Data/BooleanAlgebra.purs,46
+module Data.BooleanAlgebraBooleanAlgebra1,0
+
+.spago/prelude/v6.0.1/src/Data/Show.purs,26
+module Data.ShowShow1,0
+
+.spago/prelude/v6.0.1/src/Data/CommutativeRing.purs,48
+module Data.CommutativeRingCommutativeRing1,0
+
+.spago/prelude/v6.0.1/src/Data/Monoid/Disj.purs,24
+import Data.Eq Eq5,47
+
+.spago/prelude/v6.0.1/src/Data/Monoid/Multiplicative.purs,24
+import Data.Eq Eq5,57
+
+.spago/prelude/v6.0.1/src/Data/Monoid/Additive.purs,24
+import Data.Eq Eq5,51
+
+.spago/prelude/v6.0.1/src/Data/Monoid/Dual.purs,24
+import Data.Eq Eq5,47
+
+.spago/prelude/v6.0.1/src/Data/Monoid/Generic.purs,39
+module Data.Monoid.GenericGeneric1,0
+
+.spago/prelude/v6.0.1/src/Data/Monoid/Conj.purs,24
+import Data.Eq Eq5,47
+
+.spago/prelude/v6.0.1/src/Data/Unit.purs,156
+-- | The `Unit` type has a single inhabitant,3,24
+-- | `Unit` is often used,6,147
+-- | `Unit` is often used, wrapped in a monadic type constructor,6,147
+
+.spago/prelude/v6.0.1/src/Data/Void.purs,137
+module Data.Void Void1,0
+-- | public class Foo 13,502
+-- |   void doSomething(14,526
+-- | In PureScript,18,613
+newtype Void 20,730
+
+.spago/prelude/v6.0.1/src/Data/Eq/Generic.purs,35
+module Data.Eq.GenericGeneric1,0
+
+.spago/prelude/v6.0.1/src/Data/Show/Generic.purs,37
+module Data.Show.GenericGeneric1,0
+
+.spago/prelude/v6.0.1/src/Data/Ring.purs,26
+module Data.RingRing1,0
+
+.spago/prelude/v6.0.1/src/Data/Monoid.purs,30
+module Data.MonoidMonoid1,0
+
+.spago/prelude/v6.0.1/src/Data/Semiring/Generic.purs,34
+import Data.Generic.Rep Rep5,52
+
+.spago/prelude/v6.0.1/src/Data/Semigroup.purs,36
+module Data.SemigroupSemigroup1,0
+
+.spago/prelude/v6.0.1/src/Data/Semigroup/Last.purs,24
+import Data.Eq Eq5,50
+
+.spago/prelude/v6.0.1/src/Data/Semigroup/Generic.purs,42
+module Data.Semigroup.GenericGeneric1,0
+
+.spago/prelude/v6.0.1/src/Data/Semigroup/First.purs,24
+import Data.Eq Eq5,51
+
+.spago/prelude/v6.0.1/src/Data/Bounded.purs,89
+module Data.BoundedBounded1,0
+class BoundedRecord 70,1757
+  bottomRecord _ _ 77,2130
+
+.spago/prelude/v6.0.1/src/Data/Symbol.purs,47
+module Data.SymbolSymbol1,0
+  coerce 24,607
+
+.spago/prelude/v6.0.1/src/Data/Bounded/Generic.purs,40
+module Data.Bounded.GenericGeneric1,0
+
+.spago/prelude/v6.0.1/src/Data/Generic/Rep.purs,32
+module Data.Generic.RepRep1,0
+
+.spago/prelude/v6.0.1/src/Data/Eq.purs,22
+module Data.EqEq1,0
+
+.spago/prelude/v6.0.1/src/Data/EuclideanRing.purs,177
+module Data.EuclideanRingEuclideanRing1,0
+-- |     let `q = a / b` and ``r = a `mod` b``; then `a a32,982
+-- | For any `EuclideanRing` which is also a `Field`Field44,1667
+
+.spago/prelude/v6.0.1/src/Data/Ord.purs,24
+module Data.OrdOrd1,0
+
+.spago/prelude/v6.0.1/src/Data/Ring/Generic.purs,34
+import Data.Generic.Rep Rep5,48
+
+.spago/prelude/v6.0.1/src/Data/Ord/Generic.purs,36
+module Data.Ord.GenericGeneric1,0
+
+.spago/prelude/v6.0.1/src/Data/Ordering.purs,35
+module Data.Ordering Ordering1,0
+
+.spago/prelude/v6.0.1/src/Data/Field.purs,399
+module Data.FieldField1,0
+-- | respectively. However,21,782
+-- | `DivisionRing` as superclasses,22,852
+-- | (since `CommutativeRing` is a superclass of `EuclideanRing`). In fact,23,929
+-- | is not stronger,24,1008
+-- | `div` on that type,28,1306
+-- | This class has no laws or members of its own;30,1380
+-- | This class has no laws or members of its own; it exists as a convenience,30,1380
+
+.spago/prelude/v6.0.1/src/Data/Functor.purs,32
+module Data.FunctorFunctor1,0
+
+.spago/prelude/v6.0.1/src/Data/HeytingAlgebra/Generic.purs,34
+import Data.Generic.Rep Rep5,58
+
+.spago/prelude/v6.0.1/src/Data/HeytingAlgebra.purs,183
+module Data.HeytingAlgebraHeytingAlgebra1,0
+  disjRecord _ _ _ 120,3522
+  ffRecord _ _ 121,3546
+  impliesRecord _ _ _ 122,3566
+  notRecord _ _ 123,3593
+  ttRecord _ _ 124,3614
+
+.spago/prelude/v6.0.1/src/Data/Function.purs,58
+module Data.FunctionFunction1,0
+-- | compareX 117,3181
+
+.spago/prelude/v6.0.1/src/Data/DivisionRing.purs,142
+module Data.DivisionRingDivisionRing1,0
+-- | If a type has both `DivisionRing` and `CommutativeRing` instances,27,815
+class Ring a 29,947
+
+.spago/prelude/v6.0.1/src/Data/Semiring.purs,115
+module Data.SemiringSemiring1,0
+  mulRecord _ _ _ 105,3202
+  oneRecord _ _ 106,3225
+  zeroRecord _ _ 107,3246
+
+.spago/prelude/v6.0.1/src/Prelude.purs,44
+-- | Typically,4,202
+module Prelude13,450
+
+.spago/prelude/v6.0.1/src/Control/Monad.purs,31
+module Control.MonadMonad1,0
+
+.spago/prelude/v6.0.1/src/Control/Category.purs,37
+module Control.CategoryCategory1,0
+
+.spago/prelude/v6.0.1/src/Control/Apply.purs,31
+module Control.ApplyApply1,0
+
+.spago/prelude/v6.0.1/src/Control/Bind.purs,29
+module Control.BindBind1,0
+
+.spago/prelude/v6.0.1/src/Control/Applicative.purs,43
+module Control.ApplicativeApplicative1,0
+
+.spago/prelude/v6.0.1/src/Control/Semigroupoid.purs,44
+-- | A `Semigroupoid` is similar to a 3,35
+
+.spago/prelude/v6.0.0/test/Test/Utils.purs,21
+type AlmostEff 5,41
+
+.spago/prelude/v6.0.0/test/Test/Main.purs,893
+import Data.HeytingAlgebra HeytingAlgebra4,39
+  assert "Record show" $ show 127,3752
+  assert "Record one" $ one 130,3972
+  assert "Record zero" $ zero 131,4020
+  assert "Record sub" $ { a: 2, b: 2.0 } - { a:a132,4070
+  assert "Record append" $ { a: [], b: "T" } <> { a:a133,4150
+  assert "Record mempty" $ mempty 134,4242
+  assert "Record ff" $ ff 135,4309
+  assert "Record tt" $ tt 136,4361
+  assert "Record not" $ not 137,4411
+  assert "Record conj" $ conj138,4486
+  assert "Record disj" $ disj142,4655
+  assert "Record implies" $ implies146,4822
+  testOrd { a: 0, b: "hello" } { a:a150,4995
+  testOrd { a: 42, b: "hello" } { a:a151,5051
+  testOrd { a: 42, b: "hello" } { a:a152,5107
+  testOrd { a: 42, b: "hell" } { a:a153,5164
+  testOrd { a: 42, b: "hello" } { a:a154,5220
+    (bottom :: { a :: Boolean }).aa156,5303
+    (top :: { a :: Boolean }).aa159,5376
+
+.spago/prelude/v6.0.0/test/Data/Generic/Rep.purs,181
+import Data.HeytingAlgebra HeytingAlgebra13,347
+cons head tail 19,527
+derive instance genericList :: G.Generic Generic21,565
+  eq a 114,3490
+  eq a 132,3967
+    A1 204,6263
+
+.spago/prelude/v6.0.0/src/Data/Reflectable.purs,58
+module Data.ReflectableReflectable1,0
+  coerce 57,1587
+
+.spago/prelude/v6.0.0/src/Data/BooleanAlgebra.purs,46
+module Data.BooleanAlgebraBooleanAlgebra1,0
+
+.spago/prelude/v6.0.0/src/Data/Show.purs,26
+module Data.ShowShow1,0
+
+.spago/prelude/v6.0.0/src/Data/CommutativeRing.purs,48
+module Data.CommutativeRingCommutativeRing1,0
+
+.spago/prelude/v6.0.0/src/Data/Monoid/Disj.purs,24
+import Data.Eq Eq5,47
+
+.spago/prelude/v6.0.0/src/Data/Monoid/Multiplicative.purs,24
+import Data.Eq Eq5,57
+
+.spago/prelude/v6.0.0/src/Data/Monoid/Additive.purs,24
+import Data.Eq Eq5,51
+
+.spago/prelude/v6.0.0/src/Data/Monoid/Dual.purs,24
+import Data.Eq Eq5,47
+
+.spago/prelude/v6.0.0/src/Data/Monoid/Generic.purs,39
+module Data.Monoid.GenericGeneric1,0
+
+.spago/prelude/v6.0.0/src/Data/Monoid/Conj.purs,24
+import Data.Eq Eq5,47
+
+.spago/prelude/v6.0.0/src/Data/Unit.purs,156
+-- | The `Unit` type has a single inhabitant,5,55
+-- | `Unit` is often used,8,178
+-- | `Unit` is often used, wrapped in a monadic type constructor,8,178
+
+.spago/prelude/v6.0.0/src/Data/Void.purs,137
+module Data.Void Void1,0
+-- | public class Foo 15,533
+-- |   void doSomething(16,557
+-- | In PureScript,20,644
+newtype Void 22,761
+
+.spago/prelude/v6.0.0/src/Data/Eq/Generic.purs,35
+module Data.Eq.GenericGeneric1,0
+
+.spago/prelude/v6.0.0/src/Data/Show/Generic.purs,37
+module Data.Show.GenericGeneric1,0
+
+.spago/prelude/v6.0.0/src/Data/Ring.purs,26
+module Data.RingRing1,0
+
+.spago/prelude/v6.0.0/src/Data/Monoid.purs,30
+module Data.MonoidMonoid1,0
+
+.spago/prelude/v6.0.0/src/Data/Semiring/Generic.purs,34
+import Data.Generic.Rep Rep5,52
+
+.spago/prelude/v6.0.0/src/Data/Semigroup.purs,36
+module Data.SemigroupSemigroup1,0
+
+.spago/prelude/v6.0.0/src/Data/Semigroup/Last.purs,24
+import Data.Eq Eq5,50
+
+.spago/prelude/v6.0.0/src/Data/Semigroup/Generic.purs,42
+module Data.Semigroup.GenericGeneric1,0
+
+.spago/prelude/v6.0.0/src/Data/Semigroup/First.purs,24
+import Data.Eq Eq5,51
+
+.spago/prelude/v6.0.0/src/Data/Bounded.purs,89
+module Data.BoundedBounded1,0
+class BoundedRecord 70,1757
+  bottomRecord _ _ 77,2130
+
+.spago/prelude/v6.0.0/src/Data/Symbol.purs,47
+module Data.SymbolSymbol1,0
+  coerce 24,607
+
+.spago/prelude/v6.0.0/src/Data/Bounded/Generic.purs,40
+module Data.Bounded.GenericGeneric1,0
+
+.spago/prelude/v6.0.0/src/Data/Generic/Rep.purs,32
+module Data.Generic.RepRep1,0
+
+.spago/prelude/v6.0.0/src/Data/Eq.purs,22
+module Data.EqEq1,0
+
+.spago/prelude/v6.0.0/src/Data/EuclideanRing.purs,177
+module Data.EuclideanRingEuclideanRing1,0
+-- |     let `q = a / b` and ``r = a `mod` b``; then `a a32,982
+-- | For any `EuclideanRing` which is also a `Field`Field44,1667
+
+.spago/prelude/v6.0.0/src/Data/Ord.purs,24
+module Data.OrdOrd1,0
+
+.spago/prelude/v6.0.0/src/Data/Ring/Generic.purs,34
+import Data.Generic.Rep Rep5,48
+
+.spago/prelude/v6.0.0/src/Data/Ord/Generic.purs,36
+module Data.Ord.GenericGeneric1,0
+
+.spago/prelude/v6.0.0/src/Data/Ordering.purs,35
+module Data.Ordering Ordering1,0
+
+.spago/prelude/v6.0.0/src/Data/Field.purs,399
+module Data.FieldField1,0
+-- | respectively. However,21,782
+-- | `DivisionRing` as superclasses,22,852
+-- | (since `CommutativeRing` is a superclass of `EuclideanRing`). In fact,23,929
+-- | is not stronger,24,1008
+-- | `div` on that type,28,1306
+-- | This class has no laws or members of its own;30,1380
+-- | This class has no laws or members of its own; it exists as a convenience,30,1380
+
+.spago/prelude/v6.0.0/src/Data/Functor.purs,32
+module Data.FunctorFunctor1,0
+
+.spago/prelude/v6.0.0/src/Data/HeytingAlgebra/Generic.purs,34
+import Data.Generic.Rep Rep5,58
+
+.spago/prelude/v6.0.0/src/Data/HeytingAlgebra.purs,183
+module Data.HeytingAlgebraHeytingAlgebra1,0
+  disjRecord _ _ _ 120,3522
+  ffRecord _ _ 121,3546
+  impliesRecord _ _ _ 122,3566
+  notRecord _ _ 123,3593
+  ttRecord _ _ 124,3614
+
+.spago/prelude/v6.0.0/src/Data/Function.purs,58
+module Data.FunctionFunction1,0
+-- | compareX 117,3181
+
+.spago/prelude/v6.0.0/src/Data/DivisionRing.purs,142
+module Data.DivisionRingDivisionRing1,0
+-- | If a type has both `DivisionRing` and `CommutativeRing` instances,27,815
+class Ring a 29,947
+
+.spago/prelude/v6.0.0/src/Data/Semiring.purs,115
+module Data.SemiringSemiring1,0
+  mulRecord _ _ _ 105,3202
+  oneRecord _ _ 106,3225
+  zeroRecord _ _ 107,3246
+
+.spago/prelude/v6.0.0/src/Prelude.purs,44
+-- | Typically,4,202
+module Prelude13,450
+
+.spago/prelude/v6.0.0/src/Control/Monad.purs,31
+module Control.MonadMonad1,0
+
+.spago/prelude/v6.0.0/src/Control/Category.purs,37
+module Control.CategoryCategory1,0
+
+.spago/prelude/v6.0.0/src/Control/Apply.purs,31
+module Control.ApplyApply1,0
+
+.spago/prelude/v6.0.0/src/Control/Bind.purs,29
+module Control.BindBind1,0
+
+.spago/prelude/v6.0.0/src/Control/Applicative.purs,43
+module Control.ApplicativeApplicative1,0
+
+.spago/prelude/v6.0.0/src/Control/Semigroupoid.purs,44
+-- | A `Semigroupoid` is similar to a 3,35
+
+.spago/random/v6.0.0/src/Effect/Random.purs,20
+import Effect 5,44
+
+.spago/foldable-traversable/v6.0.0/test/Main.purs,132
+import Data.Bifoldable Bifoldable5,40
+      Just { index, value } -> index 145,4873
+    assert $ findMapWithIndex pred 153,5178
+
+.spago/foldable-traversable/v6.0.0/src/Data/Traversable.purs,40
+module Data.TraversableTraversable1,0
+
+.spago/foldable-traversable/v6.0.0/src/Data/TraversableWithIndex.purs,59
+module Data.TraversableWithIndex TraversableWithIndex1,0
+
+.spago/foldable-traversable/v6.0.0/src/Data/Traversable/Accum.purs,40
+module Data.Traversable.AccumAccum1,0
+
+.spago/foldable-traversable/v6.0.0/src/Data/Traversable/Accum/Internal.purs,141
+module Data.Traversable.Accum.InternalInternal1,0
+    { accum: s1, value: a } -> { accum: s1,18,371
+instance applyStateL :: Apply 20,429
+
+.spago/foldable-traversable/v6.0.0/src/Data/Bifoldable.purs,33
+import Control.Apply Apply5,46
+
+.spago/foldable-traversable/v6.0.0/src/Data/FunctorWithIndex.purs,50
+module Data.FunctorWithIndexFunctorWithIndex1,0
+
+.spago/foldable-traversable/v6.0.0/src/Data/Bitraversable.purs,44
+module Data.BitraversableBitraversable1,0
+
+.spago/foldable-traversable/v6.0.0/src/Data/Foldable.purs,499
+module Data.FoldableFoldable1,0
+  go { init: true } x 311,8945
+  go { acc: acc }   x 312,8993
+-- | `all f` is the same as `and <<< map f`; map a function over the structure,367,10505
+all :: forall a b f. Foldable f 369,10635
+-- | `any f` is the same as `or <<< map f`; map a function over the structure,372,10737
+any :: forall a b f. Foldable f 374,10866
+  go cursor a 397,11745
+indexr :: forall a f. Foldable f 406,12019
+  go a cursor 409,12144
+find :: forall a f. Foldable f 418,12432
+
+.spago/foldable-traversable/v6.0.0/src/Data/FoldableWithIndex.purs,267
+module Data.FoldableWithIndexFoldableWithIndex1,0
+-- | structure,293,10357
+   . FoldableWithIndex i f296,10451
+-- | structure,304,10688
+   . FoldableWithIndex i f307,10782
+findWithIndex p 322,11171
+    go i Nothing x | p i x 329,11336
+    go _ r _ 330,11393
+
+.spago/foldable-traversable/v6.0.0/src/Data/Semigroup/Traversable.purs,36
+import Data.Identity Identity5,57
+
+.spago/foldable-traversable/v6.0.0/src/Data/Semigroup/Foldable.purs,44
+module Data.Semigroup.FoldableFoldable1,0
+
+.spago/aff/v7.0.0/test/Test/Bench.purs,43
+import Control.Monad.Rec.Class Class4,40
+
+.spago/aff/v7.0.0/test/Test/Main.purs,231
+import Control.Lazy Lazy6,67
+  f1 <- forkAff $ bracketAction "foo" (const 247,6718
+            delay 362,9980
+          delay 392,10837
+  killFiber 428,12027
+      <*> parallel 442,12363
+  pure 461,12921
+  delay 545,15293
+
+.spago/aff/v7.0.0/src/Effect/Aff.purs,339
+module Effect.AffAff1,0
+-- | memoized,161,4418
+newtype Fiber a 162,4474
+  map f t 171,4811
+-- | some resource,299,9668
+type Supervised a 311,10148
+  killError 329,10754
+-- | exception,367,12488
+-- | exception, thrown an exception,367,12488
+makeFiber :: forall a. Aff a -> Effect 376,12995
+ffiUtil 388,13362
+  isLeft 397,13541
+
+.spago/aff/v7.0.0/src/Effect/Aff/Compat.purs,20
+-- | myAff 46,1440
+
+.spago/aff/v7.0.0/src/Effect/Aff/Class.purs,44
+import Control.Monad.Cont.Trans Trans4,46
+
+.spago/aff/v7.1.0/test/Test/Bench.purs,43
+import Control.Monad.Rec.Class Class4,40
+
+.spago/aff/v7.1.0/test/Test/Main.purs,231
+import Control.Lazy Lazy6,67
+  f1 <- forkAff $ bracketAction "foo" (const 247,6718
+            delay 362,9980
+          delay 392,10837
+  killFiber 428,12027
+      <*> parallel 442,12363
+  pure 461,12921
+  delay 545,15293
+
+.spago/aff/v7.1.0/src/Effect/Aff.purs,339
+module Effect.AffAff1,0
+-- | memoized,166,4594
+newtype Fiber a 167,4650
+  map f t 176,4987
+-- | some resource,304,9844
+type Supervised a 316,10324
+  killError 334,10930
+-- | exception,372,12664
+-- | exception, thrown an exception,372,12664
+makeFiber :: forall a. Aff a -> Effect 381,13171
+ffiUtil 393,13538
+  isLeft 402,13717
+
+.spago/aff/v7.1.0/src/Effect/Aff/Compat.purs,20
+-- | myAff 46,1440
+
+.spago/aff/v7.1.0/src/Effect/Aff/Class.purs,44
+import Control.Monad.Cont.Trans Trans4,46
+
+.spago/control/v6.0.0/test/Test/Main.purs,27
+module Test.Main Main1,0
+
+.spago/control/v6.0.0/test/Test/Control/Lazy.purs,35
+module Test.Control.Lazy Lazy1,0
+
+.spago/control/v6.0.0/src/Data/Monoid/Alternate.purs,45
+import Control.Alternative Alternative5,52
+
+.spago/control/v6.0.0/src/Control/Comonad.purs,35
+module Control.ComonadComonad1,0
+
+.spago/control/v6.0.0/src/Control/Alt.purs,27
+module Control.AltAlt1,0
+
+.spago/control/v6.0.0/src/Control/MonadPlus.purs,39
+module Control.MonadPlusMonadPlus1,0
+
+.spago/control/v6.0.0/src/Control/Lazy.purs,20
+-- | Usually,8,158
+
+.spago/control/v6.0.0/src/Control/Extend.purs,33
+module Control.ExtendExtend1,0
+
+.spago/control/v6.0.0/src/Control/Alternative.purs,43
+module Control.AlternativeAlternative1,0
+
+.spago/control/v6.0.0/src/Control/Plus.purs,29
+module Control.PlusPlus1,0
+
+.spago/contravariant/v6.0.0/src/Data/Functor/Contravariant.purs,68
+-- | of a consumer of input,8,167
+-- | - Identity `cmap id 14,409
+
+.spago/contravariant/v6.0.0/src/Data/Divisible.purs,40
+import Data.Comparison Comparison5,45
+
+.spago/contravariant/v6.0.0/src/Data/Op.purs,54
+import Data.Functor.Contravariant Contravariant5,38
+
+.spago/contravariant/v6.0.0/src/Data/Decidable.purs,40
+import Data.Comparison Comparison5,45
+
+.spago/contravariant/v6.0.0/src/Data/Equivalence.purs,40
+import Data.Comparison Comparison5,47
+
+.spago/contravariant/v6.0.0/src/Data/Comparison.purs,36
+import Data.Function Function5,46
+
+.spago/contravariant/v6.0.0/src/Data/Predicate.purs,54
+import Data.Functor.Contravariant Contravariant5,45
+
+.spago/contravariant/v6.0.0/src/Data/Divide.purs,40
+import Data.Comparison Comparison5,42
+
+.spago/contravariant/v6.0.0/src/Data/Decide.purs,40
+import Data.Comparison Comparison5,42
+
+.spago/tailrec/v6.0.0/test/Test/Main.purs,194
+import Control.Monad.Rec.Class Class5,40
+loop n 23,557
+loopFunction 31,730
+  test "whileJust" {acc:acc62,1302
+      st <- Ref.modify modify65,1405
+      st <- Ref.modify modify73,1603
+
+.spago/tailrec/v6.0.0/src/Control/Monad/Rec/Class.purs,177
+module Control.Monad.Rec.ClassClass1,0
+tailRecM2 f a b 65,1676
+   . MonadRec m70,1853
+tailRecM3 f a b c 76,1959
+-- | pow n p 84,2159
+-- |   go 87,2250
+tailRec f 91,2429
+
+.spago/tailrec/v6.1.0/test/Test/Main.purs,200
+import Control.Monad.Rec.Class Class5,40
+trianglePure 23,574
+loopFunction 37,868
+  test "whileJust" {acc:acc71,1496
+      st <- Ref.modify modify74,1599
+      st <- Ref.modify modify82,1797
+
+.spago/tailrec/v6.1.0/src/Control/Monad/Rec/Class.purs,330
+module Control.Monad.Rec.ClassClass1,0
+tailRecM2 f a b 72,1841
+tailRecM3 f a b c 86,2243
+-- | pow n p 94,2443
+-- |   go 97,2534
+tailRec f 101,2713
+tailRec2 f a b 111,3044
+tailRec3 f a b c 118,3377
+  tailRecM f 121,3492
+loop2 a b 186,5586
+-- | A curried version of the `Loop` constructor,188,5613
+loop3 a b c 191,5809
+
+.spago/type-equality/v4.0.1/test/Main.purs,47
+import Effect 4,39
+  TypeEquals inner 13,278
+
+.spago/type-equality/v4.0.1/src/Type/Equality.purs,34
+module Type.EqualityEquality1,0
+
+.spago/debug/v6.0.0/test/Main.purs,95
+import Debug 4,39
+          traceM 16,309
+  effInt 35,621
+  effRec 38,675
+  eatInt 41,737
+
+.spago/debug/v6.0.0/src/Debug.purs,17
+module Debug1,0
+
+.spago/console/v6.0.0/test/Main.purs,20
+import Effect 5,40
+
+.spago/console/v6.0.0/src/Effect/Console.purs,20
+import Effect 3,29
+
+.spago/console/v6.0.0/src/Effect/Class/Console.purs,28
+import Data.Show Show4,64
+
+.spago/quickcheck/v8.0.1/test/Main.purs,30
+import Data.Array Array6,79
+
+.spago/quickcheck/v8.0.1/src/Test/QuickCheck/Gen.purs,155
+-- | module,2,82
+newtype Gen a 69,1834
+stateful f 97,2900
+suchThat gen pred 106,3317
+  (_ 120,3772
+choose a b 125,3968
+randomSampleOne gen 243,8269
+
+.spago/quickcheck/v8.0.1/src/Test/QuickCheck/Arbitrary.purs,47
+module Test.QuickCheck.ArbitraryArbitrary1,0
+
+src/UnsafeDates.purs,23
+module UnsafeDates1,0
+
+src/Age.purs,15
+module Age1,0
+
+src/TaxRate.purs,19
+module TaxRate1,0
+
+src/Undfined.purs,22
+module Undefined(1,0
+
+src/Brackets.purs,20
+module Brackets1,0
+
+src/Moneys.purs,18
+module Moneys1,0
+
+src/GoogleSheetModule.purs,29
+module GoogleSheetModule1,0
+
+src/CommonTypes.purs,23
+module CommonTypes1,0
+
+src/Federal/FederalTaxRate.purs,49
+module Federal.FederalTaxRateFederalTaxRate1,0
+
+src/Federal/Regime.purs,33
+module Federal.RegimeRegime1,0
+
+src/Federal/TaxFunctions.purs,45
+module Federal.TaxFunctionsTaxFunctions1,0
+
+src/Federal/BoundRegime.purs,188
+module Federal.BoundRegimeBoundRegime1,0
+mkBoundRegime r y fs ppe uasd a65 a65s ob qb 57,1664
+standardDeduction 71,2051
+boundRegimeForFutureYear r y annualInflationFactor fs 108,3495
+
+src/Federal/Calculator.purs,202
+module Federal.CalculatorCalculator1,0
+newtype FederalTaxResults 52,2358
+taxResultsForKnownYear year filingStatus birthDate personalExemptions socSec ordinaryIncome qualifiedIncome itemized 75,2994
+
+src/Federal/OrdinaryBrackets.purs,53
+module Federal.OrdinaryBracketsOrdinaryBrackets1,0
+
+src/Federal/Types.purs,31
+module Federal.TypesTypes1,0
+
+src/Federal/TaxableSocialSecurity.purs,63
+module Federal.TaxableSocialSecurityTaxableSocialSecurity1,0
+
+src/Federal/QualifiedBrackets.purs,55
+module Federal.QualifiedBracketsQualifiedBrackets1,0
+
+src/Federal/Yearly/Type.purs,205
+module Federal.Yearly.Type(Type1,0
+mkYearlyValues regime year perPersonExemption unadjustedStandardDeduction adjustmentWhenOver65 adjustmentWhenOver65AndSingle ordinaryBrackets qualifiedBrackets 33,893
+
+src/Federal/Yearly/Year2016.purs,44
+module Federal.Yearly.Year2016Year20161,0
+
+src/Federal/Yearly/Year2020.purs,44
+module Federal.Yearly.Year2020Year20201,0
+
+src/Federal/Yearly/YearlyValues.purs,52
+module Federal.Yearly.YearlyValuesYearlyValues1,0
+
+src/Federal/Yearly/Year2021.purs,44
+module Federal.Yearly.Year2021Year20211,0
+
+src/Federal/Yearly/Year2017.purs,44
+module Federal.Yearly.Year2017Year20171,0
+
+src/Federal/Yearly/Year2018.purs,44
+module Federal.Yearly.Year2018Year20181,0
+
+src/Federal/Yearly/Year2022.purs,44
+module Federal.Yearly.Year2022Year20221,0
+
+src/Federal/Yearly/Year2023.purs,44
+module Federal.Yearly.Year2023Year20231,0
+
+src/Federal/Yearly/Year2019.purs,44
+module Federal.Yearly.Year2019Year20191,0
+
+src/Federal/Yearly/Year2024.purs,44
+module Federal.Yearly.Year2024Year20241,0
+
+src/Federal/RMDs.purs,29
+module Federal.RMDsRMDs1,0
+
+src/StateMA/Calculator.purs,41
+module StateMA.CalculatorCalculator1,0
+
+src/StateMA/Types.purs,31
+module StateMA.TypesTypes1,0
+
+src/StateMA/StateMATaxRate.purs,50
+module StateMA.StateMATaxRate(StateMATaxRate1,0
+
+src/TaxFunction.purs,23
+module TaxFunction1,0
+
+.spago/quickcheck/v8.0.1/src/Test/QuickCheck.purs,0
+
+.spago/prelude/v6.0.0/src/Data/Boolean.purs,0
+
+.spago/prelude/v6.0.0/src/Data/NaturalTransformation.purs,0
+
+.spago/prelude/v6.0.0/src/Data/Monoid/Endo.purs,0
+
+.spago/prelude/v6.0.0/src/Type/Proxy.purs,0
+
+.spago/prelude/v6.0.0/src/Record/Unsafe.purs,0
+
+.spago/prelude/v6.0.1/src/Data/Boolean.purs,0
+
+.spago/prelude/v6.0.1/src/Data/NaturalTransformation.purs,0
+
+.spago/prelude/v6.0.1/src/Data/Monoid/Endo.purs,0
+
+.spago/prelude/v6.0.1/src/Type/Proxy.purs,0
+
+.spago/prelude/v6.0.1/src/Record/Unsafe.purs,0
+
+.spago/interpolate/v5.0.2/src/Data/Interpolate.purs,0
+
+.spago/interpolate/v5.0.0/src/Data/Interpolate.purs,0
+
+.spago/arrays/v7.1.0/src/Data/Array/ST.purs,0
+
+.spago/arrays/v7.1.0/src/Data/Array/ST/Partial.purs,0
+
+.spago/arrays/v7.1.0/src/Data/Array/Partial.purs,0
+
+.spago/arrays/v7.1.0/src/Data/Array/NonEmpty/Internal.purs,0
+
+.spago/arrays/v7.0.0/src/Data/Array/ST.purs,0
+
+.spago/arrays/v7.0.0/src/Data/Array/ST/Partial.purs,0
+
+.spago/arrays/v7.0.0/src/Data/Array/Partial.purs,0
+
+.spago/arrays/v7.0.0/src/Data/Array/NonEmpty/Internal.purs,0
+
+.spago/mmorph/v7.0.0/test/Main.purs,0
+
+.spago/pipes/v8.0.0/src/Pipes/Core.purs,0
+
+.spago/gen/v4.0.0/src/Control/Monad/Gen/Class.purs,0
+
+.spago/effect/v4.0.0/src/Effect/Unsafe.purs,0
+
+.spago/integers/v6.0.0/src/Data/Int/Bits.purs,0
+
+.spago/tuples/v7.0.0/src/Data/Tuple.purs,0
+
+.spago/psci-support/v6.0.0/src/PSCI/Support.purs,0
+
+.spago/free/v7.0.0/src/Control/Comonad/Cofree.purs,0
+
+.spago/lists/v7.0.0/src/Data/List/Partial.purs,0
+
+.spago/partial/v4.0.0/src/Partial.purs,0
+
+.spago/partial/v4.0.0/src/Partial/Unsafe.purs,0
+
+.spago/numbers/v9.0.0/src/Data/Number.purs,0
+
+.spago/numbers/v9.0.0/src/Data/Number/Approximate.purs,0
+
+.spago/numbers/v9.0.0/src/Data/Number/Format.purs,0
+
+.spago/either/v6.1.0/src/Data/Either/Nested.purs,0
+
+.spago/strings/v6.0.0/src/Data/Char.purs,0
+
+.spago/strings/v6.0.1/src/Data/Char.purs,0

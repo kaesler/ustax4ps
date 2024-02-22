@@ -18,14 +18,14 @@ values =
   , perPersonExemption: makeFromInt 4050
   , unadjustedStandardDeduction:
       case _ of
-        Married -> makeFromInt 12700
+        MarriedJoint -> makeFromInt 12700
         HeadOfHousehold -> makeFromInt 9350
         Single -> makeFromInt 6350
   , adjustmentWhenOver65: makeFromInt 1250
   , adjustmentWhenOver65AndSingle: makeFromInt 300
   , ordinaryBrackets:
       case _ of
-        Married ->
+        MarriedJoint ->
           OB.fromRPairs
             [ (Tuple 0 10.0)
             , (Tuple 18650 15.0)
@@ -57,7 +57,7 @@ values =
             ]
   , qualifiedBrackets:
       case _ of
-        Married ->
+        MarriedJoint ->
           QB.fromRPairs
             [ (Tuple 0 0.0)
             , (Tuple 75900 15.0)

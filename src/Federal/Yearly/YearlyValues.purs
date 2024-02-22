@@ -100,7 +100,7 @@ ordinaryNonZeroThresholdsMap :: YearlyValues -> Map.Map (Tuple FilingStatus Fede
 ordinaryNonZeroThresholdsMap yv =
   let
     pairs = do
-      fs <- [ Single, HeadOfHousehold, Married ]
+      fs <- [ Single, HeadOfHousehold, MarriedJoint ]
       let
         obs = (yv.ordinaryBrackets fs)
       (Tuple rate threshold) <- Array.filter hasNonZeroThreshold $ OB.toPairs obs
@@ -112,7 +112,7 @@ qualifiedNonZeroThresholdsMap :: YearlyValues -> Map.Map (Tuple FilingStatus Fed
 qualifiedNonZeroThresholdsMap yv =
   let
     pairs = do
-      fs <- [ Single, HeadOfHousehold, Married ]
+      fs <- [ Single, HeadOfHousehold, MarriedJoint ]
       let
         qbs = (yv.qualifiedBrackets fs)
       (Tuple rate threshold) <- Array.filter hasNonZeroThreshold $ QB.toPairs qbs

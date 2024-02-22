@@ -28,7 +28,7 @@ amountTaxable filingStatus ssBenefits relevantIncome =
   let
     lowThreshold =
       ( case filingStatus of
-          Married -> 32000
+          MarriedJoint -> 32000
           HeadOfHousehold -> 25000
           Single -> 25000
       )
@@ -36,7 +36,7 @@ amountTaxable filingStatus ssBenefits relevantIncome =
 
     highThreshold =
       ( case filingStatus of
-          Married -> 44000
+          MarriedJoint -> 44000
           HeadOfHousehold -> 34000
           Single -> 34000
       )
